@@ -1,0 +1,32 @@
+.game-map-pin {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 64px;
+  height: 64px;
+  pointer-events: none;
+  background-image: url("./ui/pin-red.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.5));
+  animation: fallDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.game-map-pin.variant-star {
+  background-image: url("./ui/pin-yellow.png");
+}
+
+.game-map-pin > img {
+  width: 32px;
+  position: relative;
+  top: 8px;
+}
+
+@keyframes fallDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}

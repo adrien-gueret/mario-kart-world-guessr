@@ -1,0 +1,26 @@
+.game-sticky-button-container {
+  position: fixed;
+  bottom: 64px;
+  width: 190px;
+  left: calc(50% - 190px / 2);
+  text-align: center;
+  transform: translateY(100%);
+  opacity: 0;
+  animation: slideUp 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  z-index: 20;
+}
+
+.game-sticky-button-container.with-delay {
+  animation-delay: 1s;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

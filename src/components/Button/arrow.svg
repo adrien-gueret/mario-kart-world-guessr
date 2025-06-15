@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 21 21">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#_名称未設定グラデーション_98);
+      }
+    </style>
+    <linearGradient id="_名称未設定グラデーション_98" data-name="名称未設定グラデーション 98" x1="-1188.7" y1="-5507.7" x2="-1188.7" y2="-5529.9" gradientTransform="translate(-3219.6 4643.7) rotate(47)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffa11c"/>
+      <stop offset="1" stop-color="#fff94b"/>
+    </linearGradient>
+  </defs>
+  <!-- Generator: Adobe Illustrator 28.7.0, SVG Export Plug-In . SVG Version: 1.2.0 Build 136)  -->
+  <g>
+    <g id="Ebene_1">
+      <path class="cls-1" d="M20.5,9.9c-2.6-1.8-5.6-3.4-8.9-5,.1,0-8.4-4.1-10-4.6C-.2-.4-.3.9.4,1.6c.7.7,2.5,2,2.9,2.9.4.9-.8.5.2,2.1,1.1,1.6,2.4,2.5,2.5,4,0,1.5-1.8,3-2.8,4-1.6,1.4-2.4,2.3-2.2,2.9.3,1,.9,1.1.1,1.6-1.6,1.1-.9,2.2.5,1.8,1.5-.4,5.9-2.4,6.9-2.8t0,0c4.3-1.8,8.4-3.5,11.8-5.5.8-.5.9-2.1.1-2.6Z"/>
+    </g>
+  </g>
+</svg>

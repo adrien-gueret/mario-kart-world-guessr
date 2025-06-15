@@ -1,0 +1,68 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color: #213547;
+  background-color: #f8f8f8;
+  background-image: url(./backgrounds/dirt.webp), url(./backgrounds/white.jpg);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  overflow: hidden;
+  width: 0;
+  height: 0;
+}
+
+h2 {
+  height: 60px;
+  line-height: 50px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-size: 1.5em;
+  background-image: url(./backgrounds/title.webp);
+  text-shadow: 1px 1px 0px #ffffff;
+  font-family: sans-serif;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+#root {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem 2rem 2rem 2rem;
+  text-align: center;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+@media screen and (max-width: 420px) {
+  h1 {
+    font-size: 2.7em;
+  }
+
+  h2 {
+    font-size: 1em;
+  }
+}

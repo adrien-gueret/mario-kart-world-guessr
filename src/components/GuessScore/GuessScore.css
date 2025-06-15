@@ -1,0 +1,45 @@
+.game-guess-score {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  color: rgba(0, 0, 0, 0.8);
+  border: none;
+  font-size: 1rem;
+  font-family: sans-serif;
+  padding: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(-100%);
+  opacity: 0;
+  animation: slideDown 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  animation-delay: 333ms;
+  z-index: 10;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  white-space: nowrap;
+}
+
+.game-guess-score > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.game-guess-score label {
+  font-weight: bold;
+  margin-right: 4px;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
