@@ -1,0 +1,23 @@
+.title-menu {
+  display: flex;
+  margin: 24px auto 0 auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  list-style: none;
+}
+
+.title-menu > li {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 33%;
+  min-width: 380px;
+}
+
+.title-menu > li > span {
+  font-size: 1em;
+  text-shadow: 1px 1px 0px #ffffff;
+  font-weight: bold;
+}

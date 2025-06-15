@@ -1,0 +1,6 @@
+.game-map {
+  cursor: crosshair;
+  max-width: 100%;
+  height: auto;
+  border: 2px solid rgba(0, 0, 0, 0.8);
+}

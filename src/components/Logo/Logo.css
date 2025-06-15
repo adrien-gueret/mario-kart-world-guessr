@@ -1,0 +1,51 @@
+.logo {
+  width: 50%;
+  min-width: 400px;
+  margin: 8px auto;
+  position: relative;
+  height: fit-content;
+  overflow: visible;
+  view-transition-name: logo;
+}
+
+.App-Game .logo {
+  width: 30%;
+  min-width: 200px;
+}
+
+.logo > img {
+  width: 100%;
+  left: 0;
+}
+
+.logo > .mkw {
+  top: 0;
+}
+
+.logo > .guessr {
+  position: absolute;
+  width: 65%;
+  bottom: -10%;
+  left: calc(50% - 32.5%);
+  opacity: 0;
+  transform: translateX(100%) scale(0);
+  animation: slideRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  animation-delay: 1s;
+}
+
+@keyframes slideRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100%) scale(0);
+  }
+
+  1% {
+    opacity: 1;
+    transform: translateX(100%) scale(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
