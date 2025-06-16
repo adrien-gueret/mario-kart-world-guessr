@@ -23,9 +23,12 @@ import Text from "../../components/Text";
 import { useTranslations } from "../../i18n";
 
 import "./Game.css";
+import Dialog from "../../components/Dialog";
+
+type GameMode = "survival" | "goal" | "daily";
 
 type Props = {
-  mode: "survival" | "goal" | "daily";
+  mode: GameMode;
 };
 
 function Game({ mode }: Props) {
@@ -37,6 +40,8 @@ function Game({ mode }: Props) {
     realCoordinates: LocationBase["coordinates"];
     renderedCoordinates: LocationBase["coordinates"];
   } | null>(null);
+  const [photoCount, setPhotoCount] = useState<number>(1);
+  const [isGameEnded, setIsGameEnded] = useState<boolean>(false);
 
   const [totalScore, setTotalScore] = useState<number>(0);
   const [guessData, setGuessData] = useState<{
@@ -47,7 +52,7 @@ function Game({ mode }: Props) {
   const mapRef = useRef<HTMLImageElement>(null);
 
   const shouldShowAnswer = Boolean(guessData);
-  const canGuess = !shouldShowAnswer;
+  const canGuess = !shouldShowAnswer && !isGameEnded;
 
   const nextPhoto = useCallback(() => {
     let nextLocation: Location;
@@ -59,6 +64,7 @@ function Game({ mode }: Props) {
     setCurrentLocation(nextLocation);
     setUserGuess(null);
     setGuessData(null);
+    setPhotoCount((prevCount) => prevCount + 1);
 
     window.scrollTo({
       top: 0,
@@ -70,6 +76,7 @@ function Game({ mode }: Props) {
     if (!userGuess) {
       return;
     }
+
     const distance = distanceBetweenCoordinatesInKilometers(
       userGuess.realCoordinates,
       currentLocation.coordinates
@@ -79,6 +86,10 @@ function Game({ mode }: Props) {
 
     setGuessData({ distance, score: newScore });
     setTotalScore((prevScore) => prevScore + newScore);
+
+    if (mode === "survival" && newScore < 3000) {
+      setIsGameEnded(true);
+    }
   };
 
   const userGuessPinPosition = userGuess
@@ -96,12 +107,34 @@ function Game({ mode }: Props) {
     currentLocationRenderedCoordinates
   );
 
+  const gameModeToRules: Record<
+    GameMode,
+    { title: string; description: string }
+  > = {
+    survival: {
+      title: translate("rules.mode.survival.title"),
+      description: translate("rules.mode.survival.description"),
+    },
+    goal: {
+      title: translate("rules.mode.goal.title"),
+      description: translate("rules.mode.goal.description"),
+    },
+    daily: {
+      title: translate("rules.mode.daily.title"),
+      description: translate("rules.mode.daily.description"),
+    },
+  };
+
+  const gameModeRules = gameModeToRules[mode];
+
   return (
     <div className="game-screen">
       <div className="game-area">
         <div className="rules-container">
           <h2>{translate("rules.title")}</h2>
           <Text component="p">{translate("rules.description")}</Text>
+          <h3>{gameModeRules.title}</h3>
+          <Text component="p">{gameModeRules.description}</Text>
         </div>
 
         <div className="photo-container">
@@ -180,11 +213,15 @@ function Game({ mode }: Props) {
         </StickyButtonContainer>
       )}
 
-      {shouldShowAnswer && (
+      {shouldShowAnswer && !isGameEnded && (
         <StickyButtonContainer withDelay>
           <Button onClick={nextPhoto}>{translate("next.label")}</Button>
         </StickyButtonContainer>
       )}
+
+      <Dialog title={`Fin du jeu !`} isOpen={isGameEnded}>
+        Vous avez bien joué.
+      </Dialog>
     </div>
   );
 }

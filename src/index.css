@@ -42,6 +42,23 @@ h2 {
   font-family: sans-serif;
   font-weight: 900;
   white-space: nowrap;
+  text-align: center;
+}
+
+h3 {
+  height: 40px;
+  line-height: 40px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-size: 1em;
+  padding: 0 24px;
+  background-image: url(./backgrounds/subtitle.webp);
+  color: #fff;
+  text-shadow: 1px 1px 0px #213547, 1px 1px 2px #000, -1px 0px 2px #000;
+  font-family: sans-serif;
+  font-weight: 900;
+  white-space: nowrap;
 }
 
 #root {
@@ -64,5 +81,9 @@ h2 {
 
   h2 {
     font-size: 1em;
+  }
+
+  h2 {
+    font-size: 0.8em;
   }
 }
