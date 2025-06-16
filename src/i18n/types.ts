@@ -19,6 +19,12 @@ export type Texts = {
   "mode.daily.description": string;
   "rules.title": string;
   "rules.description": string;
+  "rules.mode.survival.title": string;
+  "rules.mode.survival.description": string;
+  "rules.mode.goal.title": string;
+  "rules.mode.goal.description": string;
+  "rules.mode.daily.title": string;
+  "rules.mode.daily.description": string;
 } & Partial<Record<Location["photoName"], string>>;
 
 export type TranslationKey = keyof Texts;

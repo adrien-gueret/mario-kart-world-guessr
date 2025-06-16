@@ -18,13 +18,22 @@ const en: Texts = {
   "mode.goal.description": "In how many photos will you reach 50,000 points?",
   "mode.survival.label": "Survival",
   "mode.survival.description":
-    "Keep playing as long as you score at least 3500 points!",
+    "Keep playing as long as you score at least 3000 points!",
   "mode.daily.label": "Daily Photos",
   "mode.daily.description":
     "Every day, a new selection of three photos: get a better score than your friends!",
   "rules.title": "Game Rules",
   "rules.description":
     "Click on the map to guess where the photo was taken. The closer you are, the more points you score, up to 5000 per photo!",
+  "rules.mode.survival.title": "Survival Mode",
+  "rules.mode.survival.description":
+    "The game continues as long as you score at least 3000 points. How many photos can you guess?",
+  "rules.mode.goal.title": "Goal 50,000 Mode",
+  "rules.mode.goal.description":
+    "Guess photos until you reach 50,000 points. How many photos will it take?",
+  "rules.mode.daily.title": "Daily Photos Mode",
+  "rules.mode.daily.description":
+    "Get the best possible score on three daily photos!",
 };
 
 export default en;
