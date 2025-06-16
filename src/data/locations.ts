@@ -67,6 +67,62 @@ const localations = [
     photoName: "7aa89aa4-10ab-474f-8d24-d3239e9aea77",
     coordinates: { x: 944, y: 1039 },
   },
+  {
+    photoName: "97dad49f-d207-4ff5-a4e8-ae3c442fb8ca",
+    coordinates: { x: 1063, y: 1104 },
+  },
+  {
+    photoName: "9bf9209c-c821-4bbf-8c66-082d143ffdd0",
+    coordinates: { x: 1170, y: 1037 },
+  },
+  {
+    photoName: "dba9a5d6-f776-493d-8415-71c02244e687",
+    coordinates: { x: 1233, y: 1005 },
+  },
+  {
+    photoName: "3f48784a-5221-4c70-9a54-f4fc34e220ba",
+    coordinates: { x: 177, y: 760 },
+  },
+  {
+    photoName: "d9bfe8eb-799b-4c8b-8d8a-24abcf832c5f",
+    coordinates: { x: 865, y: 785 },
+  },
+  {
+    photoName: "9b88e8e0-23df-4f2c-9c02-c74dd12c0889",
+    coordinates: { x: 902, y: 200 },
+  },
+  {
+    photoName: "4a7d84ef-87df-4314-aaa4-4383a799bc68",
+    coordinates: { x: 820, y: 337 },
+  },
+  {
+    photoName: "088b3a66-b99e-45d8-882a-cc62c60c3fa0",
+    coordinates: { x: 754, y: 150 },
+  },
+  {
+    photoName: "ef16e447-71b8-4696-afd8-7ded946aa147",
+    coordinates: { x: 750, y: 236 },
+  },
+  {
+    photoName: "f16dcb7e-5474-4fcc-af2c-7d45ed08a523",
+    coordinates: { x: 544, y: 1134 },
+  },
+  {
+    photoName: "52376693-4951-4289-b94a-1504d8ea7edb",
+    coordinates: { x: 839, y: 959 },
+  },
+  {
+    photoName: "df9be67b-a019-4537-a185-60d8e465971a",
+    coordinates: { x: 805, y: 1007 },
+  },
+  {
+    photoName: "e80a2a99-c0b5-4da8-baff-5c8b7e0f9fdb",
+    coordinates: { x: 674, y: 991 },
+  },
+  {
+    photoName: "442631ad-3df3-4595-b394-52bbfed7e305",
+    coordinates: { x: 495, y: 407 },
+  },
 ] as const satisfies ReadonlyArray<LocationBase>;
 
 export type Location = (typeof localations)[number];
