@@ -11,6 +11,7 @@ import {
 } from "../../services/coordinatesTransformer";
 
 import Button from "../../components/Button";
+import Dialog from "../../components/Dialog";
 import StickyButtonContainer from "../../components/StickyButtonContainer";
 import GlobalScore from "../../components/GlobalScore";
 import GuessScore from "../../components/GuessScore";
@@ -20,18 +21,21 @@ import Line from "../../components/Line";
 import Photo from "../../components/Photo";
 import Text from "../../components/Text";
 
+import { useScreen } from "../ScreensProvider";
+
 import { useTranslations } from "../../i18n";
 
 import "./Game.css";
-import Dialog from "../../components/Dialog";
 
 type GameMode = "survival" | "goal" | "daily";
 
 type Props = {
   mode: GameMode;
+  onReplay: () => void;
 };
 
-function Game({ mode }: Props) {
+function Game({ mode, onReplay }: Props) {
+  const { setCurrentScreenName } = useScreen();
   const { translate } = useTranslations();
   const [currentLocation, setCurrentLocation] = useState<Location>(() =>
     getRandomLocation()
@@ -85,7 +89,15 @@ function Game({ mode }: Props) {
     const newScore = Math.ceil(5000 * Math.exp((-10 * distance) / 13.4));
 
     setGuessData({ distance, score: newScore });
-    setTotalScore((prevScore) => prevScore + newScore);
+    setTotalScore((prevScore) => {
+      const updatedScore = prevScore + newScore;
+
+      if (mode === "goal" && updatedScore >= 50000) {
+        setIsGameEnded(true);
+      }
+
+      return updatedScore;
+    });
 
     if (mode === "survival" && newScore < 3000) {
       setIsGameEnded(true);
@@ -219,8 +231,51 @@ function Game({ mode }: Props) {
         </StickyButtonContainer>
       )}
 
-      <Dialog title={`Fin du jeu !`} isOpen={isGameEnded}>
-        Vous avez bien joué.
+      <Dialog title={translate("endGame.title")} isOpen={isGameEnded}>
+        {(() => {
+          switch (mode) {
+            case "survival":
+              return (
+                <>
+                  <p>
+                    Avec un score de <b>{guessData?.score}</b>, votre
+                    proposition est située trop loin...
+                  </p>
+                  <p>
+                    Votre partie s'arrête après <b>{photoCount}</b> photo
+                    {photoCount > 1 ? "s" : ""}, pour un score total de{" "}
+                    <b>{totalScore}</b> ! Pouvez-vous faire mieux ?
+                  </p>
+                </>
+              );
+            case "goal":
+              return (
+                <>
+                  <p>Vous avez atteint l'objectif de 50.000 points !</p>
+                  <p>
+                    Vous avez gagné à la photo n°<b>{photoCount}</b> !
+                    Pouvez-vous faire mieux ?
+                  </p>
+                </>
+              );
+            case "daily":
+              return "ok";
+          }
+        })()}
+
+        <p
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            gap: 16,
+          }}
+        >
+          <Button onClick={() => setCurrentScreenName("Title")}>
+            Ecran titre
+          </Button>
+          <Button onClick={onReplay}>Rejouer</Button>
+        </p>
       </Dialog>
     </div>
   );
