@@ -1,4 +1,5 @@
 import Button from "../../components/Button";
+import { useTranslations } from "../../i18n";
 
 import { useScreen } from "../ScreensProvider";
 
@@ -6,6 +7,7 @@ import "./Title.css";
 
 function Title() {
   const { setCurrentScreenName } = useScreen();
+  const { translate } = useTranslations();
 
   return (
     <div className="title-screen">
@@ -14,20 +16,15 @@ function Title() {
       <menu className="title-menu">
         <li>
           <Button onClick={() => setCurrentScreenName("Game")}>
-            Objectif 20.000
+            {translate("mode.goal.label")}
           </Button>
-          <span>
-            En combien de photos atteindrez-vous le score de 20.000 points ?
-          </span>
+          <span>{translate("mode.goal.description")}</span>
         </li>
         <li>
           <Button onClick={() => setCurrentScreenName("Game")}>
-            Photos du jour
+            {translate("mode.daily.label")}
           </Button>
-          <span>
-            Chaque jour, une nouvelle sélection de trois photos : faites un
-            meilleur score que vos amis !
-          </span>
+          <span>{translate("mode.daily.description")}</span>
         </li>
       </menu>
     </div>

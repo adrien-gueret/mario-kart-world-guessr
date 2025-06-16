@@ -14,6 +14,11 @@ const en: Texts = {
     `${kilometersToMiles(distance)} miles`,
   "score.label": "Score: ",
   "score.value": (score: number) => `+${score}`,
+  "mode.goal.label": "Goal: 20,000",
+  "mode.goal.description": "In how many photos will you reach 20,000 points?",
+  "mode.daily.label": "Daily Photos",
+  "mode.daily.description":
+    "Every day, a new selection of three photos: get a better score than your friends!",
 };
 
 export default en;

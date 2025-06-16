@@ -9,6 +9,12 @@ const fr: Texts = {
   "distance.value": (distance: number) => `${distance.toFixed(2)} km`,
   "score.label": "Score : ",
   "score.value": (score: number) => `+ ${score}`,
+  "mode.goal.label": "Objectif : 20.000",
+  "mode.goal.description":
+    "En combien de photos atteindrez-vous 20.000 points ?",
+  "mode.daily.label": "Photos du jour",
+  "mode.daily.description":
+    "Chaque jour, une nouvelle sélection de trois photos : faites un meilleur score que vos amis !",
 };
 
 export default fr;
