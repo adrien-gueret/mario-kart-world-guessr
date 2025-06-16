@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import getRandomLocation, {
   type Location,
   type LocationBase,
@@ -7,6 +7,7 @@ import getRandomLocation, {
 import {
   bottomCenterTopTopLeft,
   distanceBetweenCoordinatesInKilometers,
+  getRenderedCoordinatesFromRealCoordinates,
 } from "../../services/coordinatesTransformer";
 
 import Button from "../../components/Button";
@@ -25,15 +26,18 @@ function Game() {
   const [currentLocation, setCurrentLocation] = useState<Location>(() =>
     getRandomLocation()
   );
-  const [userGuess, setUserGuess] = useState<
-    LocationBase["coordinates"] | null
-  >(null);
+  const [userGuess, setUserGuess] = useState<{
+    realCoordinates: LocationBase["coordinates"];
+    renderedCoordinates: LocationBase["coordinates"];
+  } | null>(null);
 
   const [totalScore, setTotalScore] = useState<number>(0);
   const [guessData, setGuessData] = useState<{
     distance: number;
     score: number;
   } | null>(null);
+
+  const mapRef = useRef<HTMLImageElement>(null);
 
   const shouldShowAnswer = Boolean(guessData);
   const canGuess = !shouldShowAnswer;
@@ -55,22 +59,12 @@ function Game() {
     });
   }, [currentLocation.photoName]);
 
-  const handleMapClick = (coordinates: LocationBase["coordinates"]) => {
-    const { x, y } = coordinates;
-
-    setUserGuess({ x, y });
-
-    if (process.env.NODE_ENV === "development") {
-      console.log({ x, y });
-    }
-  };
-
   const handleConfirmGuess = () => {
     if (!userGuess) {
       return;
     }
     const distance = distanceBetweenCoordinatesInKilometers(
-      userGuess,
+      userGuess.realCoordinates,
       currentLocation.coordinates
     );
 
@@ -81,11 +75,18 @@ function Game() {
   };
 
   const userGuessPinPosition = userGuess
-    ? bottomCenterTopTopLeft(userGuess)
+    ? bottomCenterTopTopLeft(userGuess.renderedCoordinates)
     : null;
 
+  const currentLocationRenderedCoordinates = mapRef.current
+    ? getRenderedCoordinatesFromRealCoordinates(
+        mapRef.current,
+        currentLocation.coordinates
+      )
+    : currentLocation.coordinates;
+
   const currentLocationPinPosition = bottomCenterTopTopLeft(
-    currentLocation.coordinates
+    currentLocationRenderedCoordinates
   );
 
   return (
@@ -106,7 +107,16 @@ function Game() {
               pointerEvents: canGuess ? "auto" : "none",
             }}
           >
-            <Map onClick={handleMapClick} />
+            <Map
+              onClick={({ realCoordinates, renderedCoordinates }) => {
+                setUserGuess({ realCoordinates, renderedCoordinates });
+
+                if (process.env.NODE_ENV === "development") {
+                  console.log(realCoordinates);
+                }
+              }}
+              ref={mapRef}
+            />
 
             {userGuessPinPosition &&
               userGuess &&
@@ -116,10 +126,10 @@ function Game() {
                   {shouldShowAnswer && (
                     <>
                       <Line
-                        x1={userGuess.x}
-                        y1={userGuess.y}
-                        x2={currentLocation.coordinates.x}
-                        y2={currentLocation.coordinates.y}
+                        x1={userGuess.renderedCoordinates.x}
+                        y1={userGuess.renderedCoordinates.y}
+                        x2={currentLocationRenderedCoordinates.x}
+                        y2={currentLocationRenderedCoordinates.y}
                       />
                       <Pin
                         x={currentLocationPinPosition.x}
@@ -129,10 +139,10 @@ function Game() {
                       <GuessScore
                         distance={guessData!.distance}
                         score={guessData!.score}
-                        x1={userGuess.x}
-                        y1={userGuess.y}
-                        x2={currentLocation.coordinates.x}
-                        y2={currentLocation.coordinates.y}
+                        x1={userGuess.renderedCoordinates.x}
+                        y1={userGuess.renderedCoordinates.y}
+                        x2={currentLocationRenderedCoordinates.x}
+                        y2={currentLocationRenderedCoordinates.y}
                       />
                     </>
                   )}

@@ -1,8 +1,8 @@
 export const PIN_SIZE = 64;
 
 export const MAP_SIZE_IN_PIXELS = {
-  width: 1430,
-  height: 1300,
+  width: 1431,
+  height: 1303,
 };
 
 export const MAP_SIZE_IN_KM = {
@@ -14,6 +14,41 @@ type Coordinates = {
   x: number;
   y: number;
 };
+
+export function getCoordinatesFromImage(
+  imageElement: HTMLImageElement,
+  clickedCordinates: Coordinates
+): {
+  renderedCoordinates: Coordinates;
+  realCoordinates: Coordinates;
+} {
+  const rect = imageElement.getBoundingClientRect();
+
+  const ratio = imageElement.naturalWidth / imageElement.width;
+
+  const x = Math.floor(clickedCordinates.x - rect.left);
+  const y = Math.floor(clickedCordinates.y - rect.top);
+
+  return {
+    renderedCoordinates: { x, y },
+    realCoordinates: {
+      x: Math.round(x * ratio),
+      y: Math.round(y * ratio),
+    },
+  };
+}
+
+export function getRenderedCoordinatesFromRealCoordinates(
+  imageElement: HTMLImageElement,
+  realCoordinates: Coordinates
+): Coordinates {
+  const ratio = imageElement.naturalWidth / imageElement.width;
+
+  return {
+    x: Math.round(realCoordinates.x / ratio),
+    y: Math.round(realCoordinates.y / ratio),
+  };
+}
 
 export function bottomCenterTopTopLeft(coordinates: Coordinates) {
   return {

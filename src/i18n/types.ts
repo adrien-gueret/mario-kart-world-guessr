@@ -11,6 +11,10 @@ export type Texts = {
   "distance.value": (distance: number) => string;
   "score.label": string;
   "score.value": (score: number) => string;
+  "mode.goal.label": string;
+  "mode.goal.description": string;
+  "mode.daily.label": string;
+  "mode.daily.description": string;
 } & Partial<Record<Location["photoName"], string>>;
 
 export type TranslationKey = keyof Texts;
