@@ -14,11 +14,17 @@ const en: Texts = {
     `${kilometersToMiles(distance)} miles`,
   "score.label": "Score: ",
   "score.value": (score: number) => `+${score}`,
-  "mode.goal.label": "Goal: 20,000",
-  "mode.goal.description": "In how many photos will you reach 20,000 points?",
+  "mode.goal.label": "Goal: 50,000",
+  "mode.goal.description": "In how many photos will you reach 50,000 points?",
+  "mode.survival.label": "Survival",
+  "mode.survival.description":
+    "Keep playing as long as you score at least 3500 points!",
   "mode.daily.label": "Daily Photos",
   "mode.daily.description":
     "Every day, a new selection of three photos: get a better score than your friends!",
+  "rules.title": "Game Rules",
+  "rules.description":
+    "Click on the map to guess where the photo was taken. The closer you are, the more points you score, up to 5000 per photo!",
 };
 
 export default en;

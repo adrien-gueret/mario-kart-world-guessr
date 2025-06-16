@@ -1,4 +1,5 @@
 import Button from "../../components/Button";
+import Text from "../../components/Text";
 import { useTranslations } from "../../i18n";
 
 import { useScreen } from "../ScreensProvider";
@@ -15,16 +16,22 @@ function Title() {
 
       <menu className="title-menu">
         <li>
-          <Button onClick={() => setCurrentScreenName("Game")}>
-            {translate("mode.goal.label")}
+          <Button onClick={() => setCurrentScreenName("SurvivalGame")}>
+            {translate("mode.survival.label")}
           </Button>
-          <span>{translate("mode.goal.description")}</span>
+          <Text>{translate("mode.survival.description")}</Text>
         </li>
         <li>
-          <Button onClick={() => setCurrentScreenName("Game")}>
+          <Button onClick={() => setCurrentScreenName("GoalGame")}>
+            {translate("mode.goal.label")}
+          </Button>
+          <Text>{translate("mode.goal.description")}</Text>
+        </li>
+        <li>
+          <Button onClick={() => setCurrentScreenName("DailyGame")}>
             {translate("mode.daily.label")}
           </Button>
-          <span>{translate("mode.daily.description")}</span>
+          <Text>{translate("mode.daily.description")}</Text>
         </li>
       </menu>
     </div>

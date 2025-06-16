@@ -12,12 +12,6 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  width: 33%;
+  width: 30%;
   min-width: 380px;
-}
-
-.title-menu > li > span {
-  font-size: 1em;
-  text-shadow: 1px 1px 0px #ffffff;
-  font-weight: bold;
 }
