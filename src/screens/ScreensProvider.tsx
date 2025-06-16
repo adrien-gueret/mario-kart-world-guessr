@@ -9,10 +9,10 @@ import {
 
 import { flushSync } from "react-dom";
 
-import Game from "./Game";
+import { SurvivalGame, GoalGame, DailyGame } from "./Game";
 import Title from "./Title";
 
-export type ScreenName = "Title" | "Game";
+export type ScreenName = "Title" | "SurvivalGame" | "GoalGame" | "DailyGame";
 
 type ScreenContextType = {
   currentScreenName: ScreenName;
@@ -31,8 +31,10 @@ export function ScreensProvider({ children }: { children: ReactNode }) {
     useState<ScreenName>("Title");
 
   const ScreenNameToScreen: Record<ScreenName, ElementType> = {
-    Game,
     Title,
+    SurvivalGame,
+    GoalGame,
+    DailyGame,
   };
 
   const goToScreen = useCallback((screenName: ScreenName) => {

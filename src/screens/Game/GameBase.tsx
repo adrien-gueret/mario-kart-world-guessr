@@ -18,10 +18,17 @@ import Map from "../../components/Map";
 import Pin from "../../components/Pin";
 import Line from "../../components/Line";
 import Photo from "../../components/Photo";
+import Text from "../../components/Text";
 
 import { useTranslations } from "../../i18n";
 
-function Game() {
+import "./Game.css";
+
+type Props = {
+  mode: "survival" | "goal" | "daily";
+};
+
+function Game({ mode }: Props) {
   const { translate } = useTranslations();
   const [currentLocation, setCurrentLocation] = useState<Location>(() =>
     getRandomLocation()
@@ -92,6 +99,11 @@ function Game() {
   return (
     <div className="game-screen">
       <div className="game-area">
+        <div className="rules-container">
+          <h2>{translate("rules.title")}</h2>
+          <Text component="p">{translate("rules.description")}</Text>
+        </div>
+
         <div className="photo-container">
           <h2>{translate("photo.subtitle")}</h2>
 
