@@ -1,5 +1,8 @@
 import GameBase from "./GameBase";
 
+import useReplay from "./useReplay";
+
 export default function DailyGame() {
-  return <GameBase mode="daily" />;
+  const { playIndex, replay } = useReplay();
+  return <GameBase key={playIndex} onReplay={replay} mode="daily" />;
 }

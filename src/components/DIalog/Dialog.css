@@ -35,7 +35,7 @@
   background-image: url(./backgrounds/dialog.jpg);
   border-radius: 27px;
   transform: translateY(-100%) skewX(-10deg);
-  padding: 30px 35px 31px;
+  padding: 10px 35px 30px 35px;
   text-align: left;
 }
 

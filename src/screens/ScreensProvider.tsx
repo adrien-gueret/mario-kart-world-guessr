@@ -41,6 +41,11 @@ export function ScreensProvider({ children }: { children: ReactNode }) {
     document.startViewTransition(() => {
       flushSync(() => {
         setCurrentScreenName(screenName);
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
       });
     });
   }, []);
