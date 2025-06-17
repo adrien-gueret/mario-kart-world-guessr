@@ -92,10 +92,6 @@ const localations = [
     coordinates: { x: 902, y: 200 },
   },
   {
-    photoName: "4a7d84ef-87df-4314-aaa4-4383a799bc68",
-    coordinates: { x: 820, y: 337 },
-  },
-  {
     photoName: "088b3a66-b99e-45d8-882a-cc62c60c3fa0",
     coordinates: { x: 754, y: 150 },
   },
