@@ -1,3 +1,5 @@
+import { useRef, useCallback, use } from "react";
+
 export type LocationBase = {
   photoName: string;
   coordinates: {
@@ -119,11 +121,49 @@ const localations = [
     photoName: "442631ad-3df3-4595-b394-52bbfed7e305",
     coordinates: { x: 495, y: 407 },
   },
+  {
+    photoName: "3bc536d8-b0a1-43f8-9cab-1fa33635e980",
+    coordinates: { x: 586, y: 806 },
+  },
+  {
+    photoName: "15274505-af4b-4e39-82a3-e9764cf38728",
+    coordinates: { x: 506, y: 776 },
+  },
+  {
+    photoName: "989f6e11-67ff-49bc-af28-73300a0e6fc8",
+    coordinates: { x: 184, y: 510 },
+  },
+  {
+    photoName: "fea3d543-ffa3-411b-ba4b-0e4df526f9d5",
+    coordinates: { x: 210, y: 533 },
+  },
 ] as const satisfies ReadonlyArray<LocationBase>;
 
 export type Location = (typeof localations)[number];
 
-export default function getRandomLocation(): Location {
-  const randomIndex = Math.floor(Math.random() * localations.length);
-  return localations[randomIndex];
+export default function useLocation() {
+  const locationsRef = useRef([...localations]);
+
+  function getRandomLocation(): Location {
+    if (locationsRef.current.length === 0) {
+      locationsRef.current = [...localations];
+    }
+
+    const randomIndex = Math.floor(Math.random() * locationsRef.current.length);
+    return locationsRef.current[randomIndex];
+  }
+
+  function removeLocation(photoName: string) {
+    const index = locationsRef.current.findIndex(
+      (location) => location.photoName === photoName
+    );
+    if (index !== -1) {
+      locationsRef.current.splice(index, 1);
+    }
+  }
+
+  return {
+    getRandomLocation: useCallback(getRandomLocation, []),
+    removeLocation: useCallback(removeLocation, []),
+  };
 }
