@@ -1,10 +1,13 @@
+import { useTranslations } from "../../i18n";
 import "./Credits.css";
 
 export default function Credits() {
+  const { translate } = useTranslations();
+
   return (
     <aside className="credits">
       <p>
-        Un jeu par <strong>Mario Universalis</strong>.
+        {translate("credits.by")} <strong>Mario Universalis</strong>.
       </p>
       <menu>
         <li>

@@ -59,6 +59,7 @@ const fr: Texts = {
       </p>
     </>
   ),
+  "credits.by": "Un jeu par ",
 };
 
 export default fr;
