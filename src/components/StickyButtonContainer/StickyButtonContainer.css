@@ -1,5 +1,5 @@
 .game-sticky-button-container {
-  position: fixed;
+  position: sticky;
   bottom: 64px;
   width: 190px;
   left: calc(50% - 190px / 2);
