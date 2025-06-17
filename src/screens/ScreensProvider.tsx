@@ -38,7 +38,9 @@ const ScreenContext = createContext<ScreenContextType>({
 const getScreenNameFromHash = (): ScreenName | null => {
   const newHash = window.location.hash as ScreenHashtag;
 
-  const newScreenName = screenHashtagsToScreenNames[newHash];
+  const newScreenName = newHash
+    ? screenHashtagsToScreenNames[newHash]
+    : "Title";
 
   return newScreenName || null;
 };
