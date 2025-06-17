@@ -27,6 +27,8 @@ export type Texts = {
   "rules.mode.daily.title": string;
   "rules.mode.daily.description": string;
   "endGame.title": string;
+  "endGame.titleScreen.label": string;
+  "endGame.replay.label": string;
   "endGame.survival.description": (
     lastGuess: number,
     photoCount: number,
