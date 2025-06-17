@@ -14,8 +14,22 @@ const TranslationsContext = createContext<TranslationsContextType>({
   translate: () => "",
 } as TranslationsContextType);
 
+const setDocumentLanguage = (locale: Locale) => {
+  document.documentElement.lang = locale;
+};
+
 export function TranslationsProvider({ children }: { children: ReactNode }) {
-  const [currentLocale, setCurrentLocale] = useState<Locale>("fr");
+  const [currentLocale, setCurrentLocale] = useState<Locale>(() => {
+    const userLang = navigator.language || navigator.languages[0];
+
+    if (userLang.startsWith("fr")) {
+      setDocumentLanguage("fr");
+      return "fr";
+    }
+
+    setDocumentLanguage("en");
+    return "en";
+  });
 
   const translate: TranslationsContextType["translate"] = (key) => {
     return translations[currentLocale][key];
@@ -25,7 +39,13 @@ export function TranslationsProvider({ children }: { children: ReactNode }) {
     <TranslationsContext value={{ currentLocale, translate }}>
       {children}
 
-      <LanguageSelector value={currentLocale} onChange={setCurrentLocale} />
+      <LanguageSelector
+        value={currentLocale}
+        onChange={(newLocale) => {
+          setCurrentLocale(newLocale);
+          setDocumentLanguage(newLocale);
+        }}
+      />
     </TranslationsContext>
   );
 }
