@@ -235,31 +235,17 @@ function Game({ mode, onReplay }: Props) {
         {(() => {
           switch (mode) {
             case "survival":
-              return (
-                <>
-                  <p>
-                    Avec un score de <b>{guessData?.score}</b>, votre
-                    proposition est située trop loin...
-                  </p>
-                  <p>
-                    Votre partie s'arrête après <b>{photoCount}</b> photo
-                    {photoCount > 1 ? "s" : ""}, pour un score total de{" "}
-                    <b>{totalScore}</b> ! Pouvez-vous faire mieux ?
-                  </p>
-                </>
+              return translate("endGame.survival.description")(
+                guessData?.score || 0,
+                photoCount,
+                totalScore
               );
+
             case "goal":
-              return (
-                <>
-                  <p>Vous avez atteint l'objectif de 50.000 points !</p>
-                  <p>
-                    Vous avez gagné à la photo n°<b>{photoCount}</b> !
-                    Pouvez-vous faire mieux ?
-                  </p>
-                </>
-              );
+              return translate("endGame.goal.description")(photoCount);
+
             case "daily":
-              return "ok";
+              return "Well played!";
           }
         })()}
 
