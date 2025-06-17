@@ -1,6 +1,7 @@
 .title-menu {
   display: flex;
   margin: 24px auto 0 auto;
+  padding: 0;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;

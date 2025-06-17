@@ -31,6 +31,32 @@ const fr: Texts = {
   "rules.mode.daily.description":
     "Faite le meilleur score possible sur trois photos du jour !",
   "endGame.title": "Partie terminée !",
+  "endGame.survival.description": (
+    lastGuess: number,
+    photoCount: number,
+    totalScore: number
+  ) => (
+    <>
+      <p>
+        Avec un score de <b>{lastGuess}</b>, votre proposition est située trop
+        loin...
+      </p>
+      <p>
+        Votre partie s'arrête après <b>{photoCount}</b> photo
+        {photoCount > 1 ? "s" : ""}, pour un score total de <b>{totalScore}</b>{" "}
+        ! Pouvez-vous faire mieux ?
+      </p>
+    </>
+  ),
+  "endGame.goal.description": (photoCount: number) => (
+    <>
+      <p>Vous avez atteint l'objectif de 50.000 points !</p>
+      <p>
+        Vous avez gagné à la photo n°<b>{photoCount}</b> ! Pouvez-vous faire
+        mieux ?
+      </p>
+    </>
+  ),
 };
 
 export default fr;

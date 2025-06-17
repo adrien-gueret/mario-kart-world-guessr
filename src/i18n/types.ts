@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { Location } from "../data/locations";
 
 export type Locale = "fr" | "en";
@@ -26,6 +27,12 @@ export type Texts = {
   "rules.mode.daily.title": string;
   "rules.mode.daily.description": string;
   "endGame.title": string;
+  "endGame.survival.description": (
+    lastGuess: number,
+    photoCount: number,
+    totalScore: number
+  ) => ReactNode;
+  "endGame.goal.description": (photoCount: number) => ReactNode;
 } & Partial<Record<Location["photoName"], string>>;
 
 export type TranslationKey = keyof Texts;
