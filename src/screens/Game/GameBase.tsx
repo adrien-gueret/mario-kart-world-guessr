@@ -56,6 +56,7 @@ function Game({ mode, onReplay }: Props) {
   } | null>(null);
 
   const mapRef = useRef<HTMLImageElement>(null);
+  const photoSubtitleRef = useRef<HTMLHeadingElement>(null);
 
   const shouldShowAnswer = Boolean(guessData);
   const canGuess = !shouldShowAnswer && !isGameEnded;
@@ -70,10 +71,12 @@ function Game({ mode, onReplay }: Props) {
     setGuessData(null);
     setPhotoCount((prevCount) => prevCount + 1);
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    if (photoSubtitleRef.current) {
+      photoSubtitleRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
   }, [currentLocation.photoName, getRandomLocation, removeLocation]);
 
   const handleConfirmGuess = () => {
@@ -150,7 +153,7 @@ function Game({ mode, onReplay }: Props) {
         </div>
 
         <div className="photo-container">
-          <h2>{translate("photo.subtitle")}</h2>
+          <h2 ref={photoSubtitleRef}>{translate("photo.subtitle")}</h2>
 
           <Photo photoName={currentLocation.photoName} />
         </div>
