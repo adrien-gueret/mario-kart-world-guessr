@@ -3,6 +3,7 @@ import {
   useContext,
   useState,
   useCallback,
+  useEffect,
   type ReactNode,
   type ElementType,
 } from "react";
@@ -13,6 +14,14 @@ import { SurvivalGame, GoalGame, DailyGame } from "./Game";
 import Title from "./Title";
 
 export type ScreenName = "Title" | "SurvivalGame" | "GoalGame" | "DailyGame";
+type ScreenHashtag = `#/${Lowercase<ScreenName>}`;
+
+const screenHashtagsToScreenNames: Record<ScreenHashtag, ScreenName> = {
+  "#/title": "Title",
+  "#/survivalgame": "SurvivalGame",
+  "#/goalgame": "GoalGame",
+  "#/dailygame": "DailyGame",
+};
 
 type ScreenContextType = {
   currentScreenName: ScreenName;
@@ -26,9 +35,18 @@ const ScreenContext = createContext<ScreenContextType>({
   setCurrentScreenName: () => "",
 } as ScreenContextType);
 
+const getScreenNameFromHash = (): ScreenName | null => {
+  const newHash = window.location.hash as ScreenHashtag;
+
+  const newScreenName = screenHashtagsToScreenNames[newHash];
+
+  return newScreenName || null;
+};
+
 export function ScreensProvider({ children }: { children: ReactNode }) {
-  const [currentScreenName, setCurrentScreenName] =
-    useState<ScreenName>("Title");
+  const [currentScreenName, setCurrentScreenName] = useState<ScreenName>(
+    () => getScreenNameFromHash() ?? "Title"
+  );
 
   const ScreenNameToScreen: Record<ScreenName, ElementType> = {
     Title,
@@ -38,16 +56,32 @@ export function ScreensProvider({ children }: { children: ReactNode }) {
   };
 
   const goToScreen = useCallback((screenName: ScreenName) => {
-    document.startViewTransition(() => {
-      flushSync(() => {
-        setCurrentScreenName(screenName);
+    window.location.hash = `/${screenName.toLowerCase()}`;
+  }, []);
 
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
+  useEffect(() => {
+    const handleHashChange = () => {
+      const newScreenName = getScreenNameFromHash();
+
+      if (newScreenName) {
+        document.startViewTransition(() => {
+          flushSync(() => {
+            setCurrentScreenName(newScreenName);
+
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+          });
         });
-      });
-    });
+      }
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange);
+    };
   }, []);
 
   return (
