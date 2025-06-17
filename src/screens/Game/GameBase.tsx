@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from "react";
-import getRandomLocation, {
+import useLocation, {
   type Location,
   type LocationBase,
 } from "../../data/locations";
@@ -37,9 +37,11 @@ type Props = {
 function Game({ mode, onReplay }: Props) {
   const { setCurrentScreenName } = useScreen();
   const { translate } = useTranslations();
-  const [currentLocation, setCurrentLocation] = useState<Location>(() =>
-    getRandomLocation()
-  );
+  const { getRandomLocation, removeLocation } = useLocation();
+
+  const [currentLocation, setCurrentLocation] = useState<Location>(() => {
+    return getRandomLocation();
+  });
   const [userGuess, setUserGuess] = useState<{
     realCoordinates: LocationBase["coordinates"];
     renderedCoordinates: LocationBase["coordinates"];
@@ -59,11 +61,9 @@ function Game({ mode, onReplay }: Props) {
   const canGuess = !shouldShowAnswer && !isGameEnded;
 
   const nextPhoto = useCallback(() => {
-    let nextLocation: Location;
+    removeLocation(currentLocation.photoName);
 
-    do {
-      nextLocation = getRandomLocation();
-    } while (nextLocation.photoName === currentLocation?.photoName);
+    const nextLocation = getRandomLocation();
 
     setCurrentLocation(nextLocation);
     setUserGuess(null);
@@ -74,7 +74,7 @@ function Game({ mode, onReplay }: Props) {
       top: 0,
       behavior: "smooth",
     });
-  }, [currentLocation.photoName]);
+  }, [currentLocation.photoName, getRandomLocation, removeLocation]);
 
   const handleConfirmGuess = () => {
     if (!userGuess) {
