@@ -261,9 +261,11 @@ function Game({ mode, onReplay }: Props) {
           }}
         >
           <Button onClick={() => setCurrentScreenName("Title")}>
-            Ecran titre
+            {translate("endGame.titleScreen.label")}
           </Button>
-          <Button onClick={onReplay}>Rejouer</Button>
+          <Button onClick={onReplay}>
+            {translate("endGame.replay.label")}
+          </Button>
         </p>
       </Modal>
     </div>

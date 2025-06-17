@@ -35,6 +35,8 @@ const en: Texts = {
   "rules.mode.daily.description":
     "Get the best possible score on three daily photos!",
   "endGame.title": "Game over!",
+  "endGame.titleScreen.label": "Home",
+  "endGame.replay.label": "Replay",
   "endGame.survival.description": (
     lastGuess: number,
     photoCount: number,
