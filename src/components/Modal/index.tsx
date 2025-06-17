@@ -2,7 +2,7 @@ import { type ReactNode, useLayoutEffect } from "react";
 
 import Text from "../Text";
 
-import "./Dialog.css";
+import "./Modal.css";
 
 type Props = {
   title: string;
@@ -10,7 +10,7 @@ type Props = {
   isOpen?: boolean;
 };
 
-export default function Dialog({ children, title, isOpen }: Props) {
+export default function Modal({ children, title, isOpen }: Props) {
   useLayoutEffect(() => {
     if (isOpen) {
       document.body.style.setProperty("overflow", "hidden");
@@ -20,9 +20,9 @@ export default function Dialog({ children, title, isOpen }: Props) {
   }, [isOpen]);
 
   return isOpen ? (
-    <div className="dialog-overlay">
-      <div className="dialog-box">
-        <div className="dialog-inner">
+    <div className="modal-overlay">
+      <div className="modal-box">
+        <div className="modal-inner">
           <h2>{title}</h2>
           <Text>{children}</Text>
         </div>

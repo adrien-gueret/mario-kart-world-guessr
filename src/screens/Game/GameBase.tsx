@@ -11,7 +11,7 @@ import {
 } from "../../services/coordinatesTransformer";
 
 import Button from "../../components/Button";
-import Dialog from "../../components/Dialog";
+import Modal from "../../components/Modal";
 import StickyButtonContainer from "../../components/StickyButtonContainer";
 import GlobalScore from "../../components/GlobalScore";
 import GuessScore from "../../components/GuessScore";
@@ -231,7 +231,7 @@ function Game({ mode, onReplay }: Props) {
         </StickyButtonContainer>
       )}
 
-      <Dialog title={translate("endGame.title")} isOpen={isGameEnded}>
+      <Modal title={translate("endGame.title")} isOpen={isGameEnded}>
         {(() => {
           switch (mode) {
             case "survival":
@@ -276,7 +276,7 @@ function Game({ mode, onReplay }: Props) {
           </Button>
           <Button onClick={onReplay}>Rejouer</Button>
         </p>
-      </Dialog>
+      </Modal>
     </div>
   );
 }

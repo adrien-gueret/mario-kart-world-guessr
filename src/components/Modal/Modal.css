@@ -1,4 +1,4 @@
-.dialog-overlay {
+.modal-overlay {
   position: fixed;
   display: flex;
   justify-content: center;
@@ -24,8 +24,8 @@
   }
 }
 
-.dialog-box {
-  animation: slideDialog 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+.modal-box {
+  animation: slideModal 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
   animation-delay: 1s;
   opacity: 0;
   overflow: auto;
@@ -39,7 +39,7 @@
   text-align: left;
 }
 
-@keyframes slideDialog {
+@keyframes slideModal {
   from {
     transform: translateY(-100%) skewX(-10deg);
     opacity: 0;
@@ -50,6 +50,6 @@
   }
 }
 
-.dialog-inner {
+.modal-inner {
   transform: skewX(10deg);
 }
