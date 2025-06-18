@@ -63,6 +63,7 @@ const en: Texts = {
     </>
   ),
   "credits.by": "A game by ",
+  "game.globalScore": "Score: ",
 };
 
 export default en;
