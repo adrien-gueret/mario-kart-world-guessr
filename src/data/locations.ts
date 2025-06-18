@@ -10,6 +10,10 @@ export type LocationBase = {
 
 const localations = [
   {
+    photoName: "237fec5b-fafc-454d-b1bb-2e481c967ce5",
+    coordinates: { x: 433, y: 1113 },
+  },
+  {
     photoName: "2be16eee-9c6d-4292-b959-d62676c32e7c",
     coordinates: { x: 761, y: 1075 },
   },
