@@ -1,21 +1,11 @@
 .language-selector {
-  position: fixed;
+  position: absolute;
   top: 16px;
   right: 16px;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 8px;
-  color: rgba(0, 0, 0, 0.8);
-  border: none;
   font-size: 1rem;
-  font-family: sans-serif;
-  text-transform: uppercase;
-  font-weight: bold;
-  padding: 8px 16px;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  filter: hue-rotate(195deg);
 }
 
-.language-selector:hover {
-  background-color: rgba(255, 255, 255, 1);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.language-selector img {
+  display: none;
 }

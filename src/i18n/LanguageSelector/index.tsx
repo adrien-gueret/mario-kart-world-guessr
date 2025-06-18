@@ -1,5 +1,7 @@
 import type { Locale } from "../types";
 
+import Button from "../../components/Button";
+
 import "./LanguageSelector.css";
 
 type Props = {
@@ -9,13 +11,13 @@ type Props = {
 
 export default function LanguageSelector({ value, onChange }: Props) {
   return (
-    <button
+    <Button
       className="language-selector"
       onClick={() => {
         onChange(value === "fr" ? "en" : "fr");
       }}
     >
       {value === "fr" ? "Français" : "English"}
-    </button>
+    </Button>
   );
 }
