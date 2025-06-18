@@ -199,10 +199,6 @@ function Game({ mode, onReplay }: Props) {
                       <GuessScore
                         distance={guessData!.distance}
                         score={guessData!.score}
-                        x1={userGuess.renderedCoordinates.x}
-                        y1={userGuess.renderedCoordinates.y}
-                        x2={currentLocationRenderedCoordinates.x}
-                        y2={currentLocationRenderedCoordinates.y}
                       />
                     </>
                   )}

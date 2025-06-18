@@ -1,5 +1,7 @@
 import { useState, useLayoutEffect } from "react";
 
+import { useTranslations } from "../../i18n";
+
 import "./GlobalScore.css";
 
 type Props = {
@@ -8,6 +10,7 @@ type Props = {
 
 export default function GlobalScore({ score }: Props) {
   const [scoreToRender, setScoreToRender] = useState(0);
+  const { translate } = useTranslations();
 
   useLayoutEffect(() => {
     const clock = setInterval(() => {
@@ -23,5 +26,10 @@ export default function GlobalScore({ score }: Props) {
     };
   }, [score, scoreToRender]);
 
-  return <aside className="global-score">{scoreToRender}</aside>;
+  return (
+    <aside className="global-score">
+      {translate("game.globalScore")}
+      {scoreToRender}
+    </aside>
+  );
 }
