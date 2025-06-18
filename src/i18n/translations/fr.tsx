@@ -9,6 +9,7 @@ const fr: Texts = {
   "distance.value": (distance: number) => `${distance.toFixed(2)} km`,
   "score.label": "Score : ",
   "score.value": (score: number) => `+ ${score}`,
+  "mode.select": "Choisissez un mode de jeu",
   "mode.goal.label": "Objectif 50.000",
   "mode.goal.description":
     "En combien de photos atteindrez-vous 50.000 points ?",

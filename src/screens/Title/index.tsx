@@ -12,7 +12,7 @@ function Title() {
 
   return (
     <div className="title-screen">
-      <h2>Choisissez un mode de jeu</h2>
+      <h2>{translate("mode.select")}</h2>
 
       <menu className="title-menu">
         <li>

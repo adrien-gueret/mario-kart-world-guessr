@@ -12,6 +12,7 @@ export type Texts = {
   "distance.value": (distance: number) => string;
   "score.label": string;
   "score.value": (score: number) => string;
+  "mode.select": string;
   "mode.goal.label": string;
   "mode.goal.description": string;
   "mode.survival.label": string;
