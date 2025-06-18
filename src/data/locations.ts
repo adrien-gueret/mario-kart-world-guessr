@@ -1,4 +1,4 @@
-import { useRef, useCallback, use } from "react";
+import { useRef, useCallback } from "react";
 
 export type LocationBase = {
   photoName: string;
@@ -8,7 +8,7 @@ export type LocationBase = {
   };
 };
 
-const localations = [
+const locations = [
   {
     photoName: "237fec5b-fafc-454d-b1bb-2e481c967ce5",
     coordinates: { x: 433, y: 1113 },
@@ -243,14 +243,14 @@ const localations = [
   },
 ] as const satisfies ReadonlyArray<LocationBase>;
 
-export type Location = (typeof localations)[number];
+export type Location = (typeof locations)[number];
 
 export default function useLocation() {
-  const locationsRef = useRef([...localations]);
+  const locationsRef = useRef([...locations]);
 
   function getRandomLocation(): Location {
     if (locationsRef.current.length === 0) {
-      locationsRef.current = [...localations];
+      locationsRef.current = [...locations];
     }
 
     const randomIndex = Math.floor(Math.random() * locationsRef.current.length);
