@@ -169,6 +169,18 @@ const localations = [
     photoName: "bfcc1b13-c8a2-4593-9f7f-6f8512cd62d0",
     coordinates: { x: 796, y: 459 },
   },
+  {
+    photoName: "04990cdd-e314-4bc4-993c-7791dc1c0f13",
+    coordinates: { x: 365, y: 413 },
+  },
+  {
+    photoName: "e481752b-b81a-46a7-87c9-fe16d01208d5",
+    coordinates: { x: 373, y: 489 },
+  },
+  {
+    photoName: "fa5467ec-a195-45db-8e88-a4ea5f1b4d62",
+    coordinates: { x: 159, y: 416 },
+  },
 ] as const satisfies ReadonlyArray<LocationBase>;
 
 export type Location = (typeof localations)[number];
