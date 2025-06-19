@@ -38,6 +38,10 @@ export type Texts = {
   "endGame.goal.description": (photoCount: number) => ReactNode;
   "credits.by": string;
   "game.globalScore": string;
+  "upload.title": string;
+  "upload.description": string;
+  "upload.form.photo.label": ReactNode;
+  "upload.form.submit.label": string;
 } & Partial<Record<Location["photoName"], string>>;
 
 export type TranslationKey = keyof Texts;

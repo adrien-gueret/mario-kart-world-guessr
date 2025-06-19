@@ -170,10 +170,6 @@ function Game({ mode, onReplay }: Props) {
             <Map
               onClick={({ realCoordinates, renderedCoordinates }) => {
                 setUserGuess({ realCoordinates, renderedCoordinates });
-
-                if (process.env.NODE_ENV === "development") {
-                  console.log(realCoordinates);
-                }
               }}
               ref={mapRef}
             />

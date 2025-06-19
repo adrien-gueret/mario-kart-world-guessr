@@ -64,6 +64,10 @@ const en: Texts = {
   ),
   "credits.by": "A game by ",
   "game.globalScore": "Score: ",
+  "upload.title": 'Suggest a photo',
+  "upload.description": 'Send a photo to enrich the game!',
+  "upload.form.photo.label": <>Photo (from the <b>Nintendo Switch App</b>)</>,
+  "upload.form.submit.label": 'Send',
 };
 
 export default en;
