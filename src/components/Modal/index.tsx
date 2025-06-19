@@ -8,9 +8,15 @@ type Props = {
   title: string;
   children: ReactNode;
   isOpen?: boolean;
+  noDelay?: boolean;
 };
 
-export default function Modal({ children, title, isOpen }: Props) {
+export default function Modal({
+  children,
+  title,
+  isOpen,
+  noDelay = false,
+}: Props) {
   useLayoutEffect(() => {
     if (isOpen) {
       document.body.style.setProperty("overflow", "hidden");
@@ -20,7 +26,7 @@ export default function Modal({ children, title, isOpen }: Props) {
   }, [isOpen]);
 
   return isOpen ? (
-    <div className="modal-overlay">
+    <div className={`modal-overlay ${noDelay ? "no-delay" : ""}`}>
       <div className="modal-box">
         <div className="modal-inner">
           <h2>{title}</h2>

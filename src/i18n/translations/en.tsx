@@ -64,10 +64,38 @@ const en: Texts = {
   ),
   "credits.by": "A game by ",
   "game.globalScore": "Score: ",
-  "upload.title": 'Suggest a photo',
-  "upload.description": 'Send a photo to enrich the game!',
-  "upload.form.photo.label": <>Photo (from the <b>Nintendo Switch App</b>)</>,
-  "upload.form.submit.label": 'Send',
+  "upload.title": "Suggest a photo",
+  "upload.description": "Send a photo to enrich the game!",
+  "upload.step1.title": "1. Select your photo",
+  "upload.step1.info1": (
+    <>
+      It must come from the <b>Nintendo Switch App</b>.
+    </>
+  ),
+  "upload.step1.info2":
+    "Note that your photo will go through a validation step before being visible in the game.",
+  "upload.step2.title": "2. Where did you take this photo?",
+  "upload.step2.info":
+    "Click on the map to indicate the location of your photo. Be as precise as possible!",
+  "upload.step2.help.label": "Show tracks and roads",
+  "upload.step3.title": "3. Confirm your submission",
+  "upload.step3.info":
+    "By sending your photo, you agree that it will be used in the game.",
+  "upload.form.submit.label": "Send",
+  "upload.loading.title": "Sending...",
+  "upload.loading.info": "Please wait while your photo is being sent.",
+  "upload.error": "An error occurred...",
+  "upload.error.missingFields": "Please fill in all the information.",
+  "upload.error.invalidPhoto": (
+    <>
+      Only photos from the <b>Nintendo Switch App</b> application are accepted.
+    </>
+  ),
+  "upload.error.serverError":
+    "An error occurred while sending your photo. Please try again later.",
+  "upload.success.title": "Photo sent!",
+  "upload.success.info":
+    "It will be visible after validation. Thank you for your contribution!",
 };
 
 export default en;

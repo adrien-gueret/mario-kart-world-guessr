@@ -1,5 +1,5 @@
 {
-  "name": "mario-kartwork-geoguessr",
+  "name": "mario-kart-world-geoguessr",
   "description": "A Mario Kart World-themed Geoguessr game built with React and Vite.",
   "private": true,
   "version": "1.0.0",
@@ -24,6 +24,7 @@
     "globals": "^16.0.0",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.30.1",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "vite-plugin-mkcert": "^1.17.8"
   }
 }

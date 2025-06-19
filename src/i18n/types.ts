@@ -40,8 +40,23 @@ export type Texts = {
   "game.globalScore": string;
   "upload.title": string;
   "upload.description": string;
-  "upload.form.photo.label": ReactNode;
+  "upload.step1.title": string;
+  "upload.step1.info1": ReactNode;
+  "upload.step1.info2": string;
+  "upload.step2.title": string;
+  "upload.step2.info": string;
+  "upload.step2.help.label": string;
+  "upload.step3.title": string;
+  "upload.step3.info": string;
   "upload.form.submit.label": string;
+  "upload.loading.title": string;
+  "upload.loading.info": string;
+  "upload.error": string;
+  "upload.error.missingFields": string;
+  "upload.error.invalidPhoto": ReactNode;
+  "upload.error.serverError": string;
+  "upload.success.title": string;
+  "upload.success.info": string;
 } & Partial<Record<Location["photoName"], string>>;
 
 export type TranslationKey = keyof Texts;

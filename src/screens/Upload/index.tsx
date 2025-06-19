@@ -1,12 +1,13 @@
-import  { useState } from "react";
+import { useState } from "react";
 
 import Button from "@/components/Button";
+import Modal from "@/components/Modal";
 import Map from "@/components/Map";
 import Pin from "@/components/Pin";
 import Text from "@/components/Text";
 import UploadCoordinates from "@/components/UploadCoordinates";
 
-import  { type LocationBase } from "@/data/locations";
+import { type LocationBase } from "@/data/locations";
 
 import { useTranslations } from "@/i18n";
 
@@ -20,23 +21,34 @@ function Upload() {
     renderedCoordinates: LocationBase["coordinates"];
   } | null>(null);
   const [showCourses, setShowCourses] = useState<boolean>(false);
+  const [uploadErrorStatus, setUploadErrorStatus] = useState<number | null>(
+    null
+  );
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
-  const pinCoordinates = locationCoordinates ? bottomCenterTopTopLeft(locationCoordinates.renderedCoordinates) : null;
+  const pinCoordinates = locationCoordinates
+    ? bottomCenterTopTopLeft(locationCoordinates.renderedCoordinates)
+    : null;
 
- // const { setCurrentScreenName } = useScreen();
   const { translate } = useTranslations();
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
+    setIsLoading(true);
+
     const form = event.target as HTMLFormElement;
     const formData = new FormData();
 
     const photo = form.photo.files[0];
-    const { x = 0, y = 0 } = locationCoordinates ? locationCoordinates.realCoordinates : {};
+    const { x = 0, y = 0 } = locationCoordinates
+      ? locationCoordinates.realCoordinates
+      : {};
 
     if (!photo || !x || !y) {
-      alert("Veuillez remplir tous les champs.");
+      setIsLoading(false);
+      setUploadErrorStatus(1);
       return;
     }
 
@@ -45,22 +57,26 @@ function Upload() {
     formData.append("y", `${y}`);
 
     try {
-      const response = await fetch("./api/", {
-        method: "POST",
-        body: formData,
-      });
-
-      const result = await response.json();
+      const response = await fetch(
+        "https://www.mariouniversalis.fr/mario-kart-world-guessr/api/",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       if (response.ok) {
-        alert("Photo envoyée avec succès !\nPR : " + result.pull_request_url);
+        setIsSuccess(true);
+        setUploadErrorStatus(null);
+        form.reset();
       } else {
-        alert("Erreur : " + (result.message || response.statusText));
+        setUploadErrorStatus(response.status);
       }
     } catch (err) {
-      console.error(err);
-      alert("Une erreur réseau s’est produite.");
+      setUploadErrorStatus(500);
     }
+
+    setIsLoading(false);
   }
 
   return (
@@ -70,42 +86,37 @@ function Upload() {
       <Text component="p">{translate("upload.description")}</Text>
 
       <form name="upload-form" className="upload-form" onSubmit={onSubmit}>
-
         <fieldset>
-          <h3>1. Sélectionnez votre photo</h3>
-          <Text component="p">Elle doit obligatoirement provenir de l'application <b>Nintendo Switch App</b>.</Text>
+          <h3>{translate("upload.step1.title")}</h3>
+          <Text component="p">{translate("upload.step1.info1")}</Text>
           <p>
-            <i>Notez que votre photo passera une étape de validation avant d'être visible dans le jeu.</i>
+            <i>{translate("upload.step1.info2")}</i>
           </p>
 
           <br />
 
           <input type="file" name="photo" accept=".jpg" required />
         </fieldset>
-      
-        <fieldset>
-          <h3>2. Où avez-vous pris cette photo ?</h3>
 
-          <Text component="p">Cliquez sur la carte pour indiquer l'emplacement de votre photo.<br />
-          Soyez le plus précis possible !</Text> 
+        <fieldset>
+          <h3>{translate("upload.step2.title")}</h3>
+
+          <Text component="p">{translate("upload.step2.info")}</Text>
 
           <label className="show-courses-label">
-            <input type="checkbox" checked={showCourses} onChange={() => setShowCourses(!showCourses)} />
-            Afficher les circuits et les routes
+            <input
+              type="checkbox"
+              checked={showCourses}
+              onChange={() => setShowCourses(!showCourses)}
+            />
+            {translate("upload.step2.help.label")}
           </label>
 
           <div style={{ position: "relative" }}>
-            <Map
-              onClick={setLocationCoordinates}
-              withCourses={showCourses}
-            />
+            <Map onClick={setLocationCoordinates} withCourses={showCourses} />
 
             {pinCoordinates && (
-              <Pin
-                x={pinCoordinates.x}
-                y={pinCoordinates.y}
-                variant="mario"
-              />
+              <Pin x={pinCoordinates.x} y={pinCoordinates.y} variant="mario" />
             )}
 
             {locationCoordinates && (
@@ -116,15 +127,70 @@ function Upload() {
             )}
           </div>
         </fieldset>
-        
-        <div>
+
+        <fieldset>
+          <h3>{translate("upload.step3.title")}</h3>
+
           <p>
-            <i>En envoyant votre photo, vous acceptez que celle-ci soit utilisée dans le jeu.</i>
+            <Text>{translate("upload.step3.info")}</Text>
           </p>
 
-          <Button type="submit">{translate("upload.form.submit.label")}</Button>
-        </div>
+          <Button
+            type="submit"
+            style={{
+              pointerEvents: isLoading ? "none" : "auto",
+            }}
+          >
+            {translate("upload.form.submit.label")}
+          </Button>
+        </fieldset>
       </form>
+
+      <Modal
+        title={translate("upload.error")}
+        isOpen={uploadErrorStatus !== null}
+        noDelay
+      >
+        <p>
+          {(() => {
+            switch (uploadErrorStatus) {
+              case 1:
+                return <Text>{translate("upload.error.missingFields")}</Text>;
+              case 400:
+                return <Text>{translate("upload.error.invalidPhoto")}</Text>;
+              default:
+                return <Text>{translate("upload.error.serverError")}</Text>;
+            }
+          })()}
+        </p>
+
+        <p style={{ textAlign: "center" }}>
+          <Button onClick={() => setUploadErrorStatus(null)}>OK</Button>
+        </p>
+      </Modal>
+
+      <Modal title={translate("upload.loading.title")} isOpen={isLoading}>
+        <p>
+          <Text>{translate("upload.loading.info")}</Text>
+        </p>
+        <div className="loader" />
+      </Modal>
+
+      <Modal title={translate("upload.success.title")} isOpen={isSuccess}>
+        <p>
+          <Text>{translate("upload.success.info")}</Text>
+        </p>
+        <p style={{ textAlign: "center" }}>
+          <Button
+            onClick={() => {
+              setIsSuccess(false);
+              setLocationCoordinates(null);
+            }}
+          >
+            OK
+          </Button>
+        </p>
+      </Modal>
     </div>
   );
 }
