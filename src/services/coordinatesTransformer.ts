@@ -28,7 +28,7 @@ export function getCoordinatesFromImage(
 
   const x = Math.floor(clickedCordinates.x - rect.left);
   const y = Math.floor(clickedCordinates.y - rect.top);
-
+  
   return {
     renderedCoordinates: { x, y },
     realCoordinates: {

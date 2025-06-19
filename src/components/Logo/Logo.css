@@ -1,5 +1,5 @@
 .logo {
-  max-width: 50vw;
+  max-width: 30vw;
   margin: 8px auto;
   position: relative;
   height: fit-content;
@@ -7,10 +7,8 @@
   view-transition-name: logo;
 }
 
-.App-SurvivalGame .logo,
-.App-GoalGame .logo,
-.App-DailyGame .logo {
-  max-width: 30vw;
+.App-Title .logo {
+  max-width: 50vw;
 }
 
 .logo > img {
