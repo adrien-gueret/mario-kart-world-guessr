@@ -62,10 +62,40 @@ const fr: Texts = {
   ),
   "credits.by": "Un jeu par ",
   "game.globalScore": "Score : ",
-  "upload.title": 'Proposer une photo',
-  "upload.description": 'Envoyez une photo pour enrichir le jeu !',
-  "upload.form.photo.label": <>Photo (provenant de l'application <b>Nintendo Switch App</b>)</>,
-  "upload.form.submit.label": 'Envoyer',
+  "upload.title": "Proposer une photo",
+  "upload.description": "Envoyez une photo pour enrichir le jeu !",
+  "upload.step1.title": "1. Sélectionnez votre photo",
+  "upload.step1.info1": (
+    <>
+      Elle doit obligatoirement provenir de l'application{" "}
+      <b>Nintendo Switch App</b>.
+    </>
+  ),
+  "upload.step1.info2":
+    "Notez que votre photo passera une étape de validation avant d'être visible dans le jeu.",
+  "upload.step2.title": "2. Où avez-vous pris cette photo ?",
+  "upload.step2.info":
+    "Cliquez sur la carte pour indiquer l'emplacement de votre photo. Soyez le plus précis possible !",
+  "upload.step2.help.label": "Afficher les circuits et les routes",
+  "upload.step3.title": "3. Confirmez votre envoi",
+  "upload.step3.info":
+    "En envoyant votre photo, vous acceptez que celle-ci soit utilisée dans le jeu.",
+  "upload.form.submit.label": "Envoyer",
+  "upload.loading.title": "Envoi en cours...",
+  "upload.loading.info": "Merci de patienter pendant l'envoi de votre photo.",
+  "upload.error": "Une erreur est survenue...",
+  "upload.error.missingFields": "Veuillez remplir toutes les informations.",
+  "upload.error.invalidPhoto": (
+    <>
+      Seules les photos venant de l'application <b>Nintendo Switch App</b> sont
+      acceptées.
+    </>
+  ),
+  "upload.error.serverError":
+    "Une erreur est survenue lors de l'envoi de votre photo. Veuillez réessayer plus tard.",
+  "upload.success.title": "Photo envoyée !",
+  "upload.success.info":
+    "Elle sera visible après une validation. Merci de votre contribution !",
 };
 
 export default fr;
