@@ -10,7 +10,7 @@ import UploadCoordinates from "@/components/UploadCoordinates";
 import GoogleLoginButton from "@/auth/GoogleLoginButton";
 import { useGoogleUser } from "@/auth/GoogleUserProvider";
 
-import { type LocationBase } from "@/data/locations";
+import { type Coordinates } from "@/locations/LocationsProvider";
 
 import { useTranslations } from "@/i18n";
 
@@ -24,8 +24,8 @@ function Upload() {
   console.log("in screen Upload", user);
 
   const [locationCoordinates, setLocationCoordinates] = useState<{
-    realCoordinates: LocationBase["coordinates"];
-    renderedCoordinates: LocationBase["coordinates"];
+    realCoordinates: Coordinates;
+    renderedCoordinates: Coordinates;
   } | null>(null);
   const [showCourses, setShowCourses] = useState<boolean>(false);
   const [uploadErrorStatus, setUploadErrorStatus] = useState<number | null>(
@@ -65,7 +65,7 @@ function Upload() {
 
     try {
       const response = await fetch(
-        "https://www.mariouniversalis.fr/mario-kart-world-guessr/api/",
+        "https://www.mariouniversalis.fr/mario-kart-world-guessr/api/upload-photo",
         {
           method: "POST",
           body: formData,

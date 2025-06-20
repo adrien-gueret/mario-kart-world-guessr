@@ -35,8 +35,6 @@ export function GoogleUserProvider({ children }: { children: ReactNode }) {
     googleLogout();
   }, []);
 
-  console.log("in provider", connectedUser);
-
   return (
     <GoogleUserContext
       value={{

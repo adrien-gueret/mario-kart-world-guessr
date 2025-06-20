@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import type { Location } from "../data/locations";
 
 export type Locale = "fr" | "en";
 
@@ -65,7 +64,7 @@ export type Texts = {
   "upload.error.serverError": string;
   "upload.success.title": string;
   "upload.success.info": string;
-} & Partial<Record<Location["photoName"], string>>;
+};
 
 export type TranslationKey = keyof Texts;
 
