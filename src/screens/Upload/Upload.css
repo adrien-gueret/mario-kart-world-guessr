@@ -30,6 +30,18 @@
   animation: l9 2s infinite linear;
 }
 
+.upload-form .author-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.upload-form .author-info p {
+  margin: 0;
+}
+
 @keyframes l9 {
   to {
     transform: rotate(1turn);

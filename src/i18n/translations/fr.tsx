@@ -67,8 +67,8 @@ const fr: Texts = {
   "upload.step1.title": "1. Sélectionnez votre photo",
   "upload.step1.info1": (
     <>
-      Elle doit obligatoirement provenir de l'application{" "}
-      <b>Nintendo Switch App</b>.
+      Elle doit obligatoirement provenir du système de partage de la{" "}
+      <b>Nintendo Switch 2</b>.
     </>
   ),
   "upload.step1.info2":
@@ -77,8 +77,35 @@ const fr: Texts = {
   "upload.step2.info":
     "Cliquez sur la carte pour indiquer l'emplacement de votre photo. Soyez le plus précis possible !",
   "upload.step2.help.label": "Afficher les circuits et les routes",
-  "upload.step3.title": "3. Confirmez votre envoi",
-  "upload.step3.info":
+  "upload.step3.title": "3. Optionnel : connectez-vous",
+  "upload.step3.info": (
+    <>
+      Cette étape est <b>facultative</b> ; vous pouvez publier votre photo sans
+      vous connecter.
+    </>
+  ),
+  "upload.step3.login.info": (userEmail: string) => (
+    <>
+      Vous êtes actuellement connecté via <b>Google</b> avec votre email{" "}
+      <b>{userEmail}</b> (
+      <i>
+        cet email ne sera <b>pas</b> publique
+      </i>
+      ).
+    </>
+  ),
+  "upload.step3.logout.label": "Se déconnecter",
+  "upload.step3.or": "ou",
+  "upload.step3.authorName.label": (userName: string) => (
+    <>
+      Afficher <b>{userName}</b>
+    </>
+  ),
+  "upload.step3.authorName.anonymous": "Ne pas afficher mon nom",
+  "upload.step3.shouldBeNotified.label":
+    "Me notifier par email de la validation de ma photo",
+  "upload.step4.title": "4. Confirmez votre envoi",
+  "upload.step4.info":
     "En envoyant votre photo, vous acceptez que celle-ci soit utilisée dans le jeu.",
   "upload.form.submit.label": "Envoyer",
   "upload.loading.title": "Envoi en cours...",
@@ -87,8 +114,8 @@ const fr: Texts = {
   "upload.error.missingFields": "Veuillez remplir toutes les informations.",
   "upload.error.invalidPhoto": (
     <>
-      Seules les photos venant de l'application <b>Nintendo Switch App</b> sont
-      acceptées.
+      Seules les photos venant du système de partage de la{" "}
+      <b>Nintendo Switch 2</b> sont acceptées.
     </>
   ),
   "upload.error.serverError":

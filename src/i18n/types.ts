@@ -47,7 +47,15 @@ export type Texts = {
   "upload.step2.info": string;
   "upload.step2.help.label": string;
   "upload.step3.title": string;
-  "upload.step3.info": string;
+  "upload.step3.info": ReactNode;
+  "upload.step3.login.info": (userEmail: string) => ReactNode;
+  "upload.step3.logout.label": string;
+  "upload.step3.or": string;
+  "upload.step3.authorName.label": (userName: string) => ReactNode;
+  "upload.step3.authorName.anonymous": string;
+  "upload.step3.shouldBeNotified.label": string;
+  "upload.step4.title": string;
+  "upload.step4.info": string;
   "upload.form.submit.label": string;
   "upload.loading.title": string;
   "upload.loading.info": string;

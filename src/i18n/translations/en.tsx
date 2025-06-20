@@ -69,7 +69,7 @@ const en: Texts = {
   "upload.step1.title": "1. Select your photo",
   "upload.step1.info1": (
     <>
-      It must come from the <b>Nintendo Switch App</b>.
+      It must come from the <b>Nintendo Switch 2</b> sharing system.
     </>
   ),
   "upload.step1.info2":
@@ -78,8 +78,35 @@ const en: Texts = {
   "upload.step2.info":
     "Click on the map to indicate the location of your photo. Be as precise as possible!",
   "upload.step2.help.label": "Show tracks and roads",
-  "upload.step3.title": "3. Confirm your submission",
-  "upload.step3.info":
+  "upload.step3.title": "3. Optional: log in",
+  "upload.step3.info": (
+    <>
+      This step is <b>optional</b>; you can publish your photo without logging
+      in.
+    </>
+  ),
+  "upload.step3.login.info": (userEmail: string) => (
+    <>
+      You are currently logged in via <b>Google</b> with your email{" "}
+      <b>{userEmail}</b> (
+      <i>
+        this email will <b>not</b> be public
+      </i>
+      ).
+    </>
+  ),
+  "upload.step3.logout.label": "Log out",
+  "upload.step3.or": "or",
+  "upload.step3.authorName.label": (userName: string) => (
+    <>
+      Display <b>{userName}</b>
+    </>
+  ),
+  "upload.step3.authorName.anonymous": "Do not display my name",
+  "upload.step3.shouldBeNotified.label":
+    "Notify me by email when my photo is validated",
+  "upload.step4.title": "4. Confirm your submission",
+  "upload.step4.info":
     "By sending your photo, you agree that it will be used in the game.",
   "upload.form.submit.label": "Send",
   "upload.loading.title": "Sending...",
@@ -88,7 +115,7 @@ const en: Texts = {
   "upload.error.missingFields": "Please fill in all the information.",
   "upload.error.invalidPhoto": (
     <>
-      Only photos from the <b>Nintendo Switch App</b> application are accepted.
+      Only photos from the <b>Nintendo Switch 2</b> sharing system are accepted.
     </>
   ),
   "upload.error.serverError":

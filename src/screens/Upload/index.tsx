@@ -7,6 +7,9 @@ import Pin from "@/components/Pin";
 import Text from "@/components/Text";
 import UploadCoordinates from "@/components/UploadCoordinates";
 
+import GoogleLoginButton from "@/auth/GoogleLoginButton";
+import { useGoogleUser } from "@/auth/GoogleUserProvider";
+
 import { type LocationBase } from "@/data/locations";
 
 import { useTranslations } from "@/i18n";
@@ -16,6 +19,10 @@ import { bottomCenterTopTopLeft } from "@/services/coordinatesTransformer";
 import "./Upload.css";
 
 function Upload() {
+  const { logout, user } = useGoogleUser();
+
+  console.log("in screen Upload", user);
+
   const [locationCoordinates, setLocationCoordinates] = useState<{
     realCoordinates: LocationBase["coordinates"];
     renderedCoordinates: LocationBase["coordinates"];
@@ -131,8 +138,63 @@ function Upload() {
         <fieldset>
           <h3>{translate("upload.step3.title")}</h3>
 
+          <Text component="p">{translate("upload.step3.info")}</Text>
+
+          <div className="author-info">
+            <p>{translate("mode.daily.description")}</p>
+
+            {/*user ? (
+              <>
+                <p>{translate("upload.step3.login.info")(user.email)}</p>
+
+                <label>
+                  <input
+                    type="radio"
+                    name="authorName"
+                    value={user.givenName}
+                    defaultChecked
+                  />
+                  {translate("upload.step3.authorName.label")(user.givenName)}
+                </label>
+
+                <label>
+                  <input type="radio" name="authorName" value={user.fullName} />
+                  {translate("upload.step3.authorName.label")(user.fullName)}
+                </label>
+
+                <label>
+                  <input type="radio" name="authorName" value={user.fullName} />
+                  {translate("upload.step3.authorName.anonymous")}
+                </label>
+
+                <label>
+                  <input
+                    type="checkbox"
+                    name="shouldBeNotified"
+                    defaultChecked
+                  />
+                  {translate("upload.step3.shouldBeNotified.label")}
+                </label>
+
+                <div className="divider">
+                  <span>{translate("upload.step3.or")}</span>
+                </div>
+
+                <Button variant="secondary" onClick={logout}>
+                  {translate("upload.step3.logout.label")}
+                </Button>
+              </>
+            ) : (
+              <GoogleLoginButton />
+            )*/}
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <h3>{translate("upload.step4.title")}</h3>
+
           <p>
-            <Text>{translate("upload.step3.info")}</Text>
+            <Text>{translate("upload.step4.info")}</Text>
           </p>
 
           <Button
