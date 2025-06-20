@@ -12,6 +12,7 @@ import {
 } from "@/services/coordinatesTransformer";
 
 import Button from "@/components/Button";
+import Loader from "@/components/Loader";
 import Modal from "@/components/Modal";
 import StickyButtonContainer from "@/components/StickyButtonContainer";
 import GlobalScore from "@/components/GlobalScore";
@@ -292,8 +293,8 @@ function Game({ mode, onReplay }: Props) {
 export default function GameContainer(props: Props) {
   const { isReady } = useLocations();
 
-  if (true) {
-    return <div className="game-loading">...</div>;
+  if (!isReady) {
+    return <Loader />;
   }
 
   return <Game {...props} />;
