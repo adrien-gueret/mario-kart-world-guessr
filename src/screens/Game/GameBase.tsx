@@ -1,29 +1,30 @@
 import { useState, useCallback, useRef } from "react";
-import useLocation, {
-  type Location,
+import useLocations, {
+  type Coordinates,
   type LocationBase,
-} from "../../data/locations";
+  type LocationFull,
+} from "@/locations/LocationsProvider";
 
 import {
   bottomCenterTopTopLeft,
   distanceBetweenCoordinatesInKilometers,
   getRenderedCoordinatesFromRealCoordinates,
-} from "../../services/coordinatesTransformer";
+} from "@/services/coordinatesTransformer";
 
-import Button from "../../components/Button";
-import Modal from "../../components/Modal";
-import StickyButtonContainer from "../../components/StickyButtonContainer";
-import GlobalScore from "../../components/GlobalScore";
-import GuessScore from "../../components/GuessScore";
-import Map from "../../components/Map";
-import Pin from "../../components/Pin";
-import Line from "../../components/Line";
-import Photo from "../../components/Photo";
-import Text from "../../components/Text";
+import Button from "@/components/Button";
+import Modal from "@/components/Modal";
+import StickyButtonContainer from "@/components/StickyButtonContainer";
+import GlobalScore from "@/components/GlobalScore";
+import GuessScore from "@/components/GuessScore";
+import Map from "@/components/Map";
+import Pin from "@/components/Pin";
+import Line from "@/components/Line";
+import Photo from "@/components/Photo";
+import Text from "@/components/Text";
+
+import { useTranslations } from "@/i18n";
 
 import { useScreen } from "../ScreensProvider";
-
-import { useTranslations } from "../../i18n";
 
 import "./Game.css";
 
@@ -37,14 +38,17 @@ type Props = {
 function Game({ mode, onReplay }: Props) {
   const { setCurrentScreenName } = useScreen();
   const { translate } = useTranslations();
-  const { getRandomLocation, removeLocation } = useLocation();
+  const { getRandomLocation, removeLocation } = useLocations();
 
-  const [currentLocation, setCurrentLocation] = useState<Location>(() => {
+  const [currentLocation, setCurrentLocation] = useState<LocationBase>(() => {
     return getRandomLocation();
   });
+  const [currentLocationCoordinates, setCurrentLocationCoordinates] =
+    useState<Coordinates | null>(null);
+
   const [userGuess, setUserGuess] = useState<{
-    realCoordinates: LocationBase["coordinates"];
-    renderedCoordinates: LocationBase["coordinates"];
+    realCoordinates: Coordinates;
+    renderedCoordinates: Coordinates;
   } | null>(null);
   const [photoCount, setPhotoCount] = useState<number>(1);
   const [isGameEnded, setIsGameEnded] = useState<boolean>(false);
@@ -79,14 +83,33 @@ function Game({ mode, onReplay }: Props) {
     }
   }, [currentLocation.photoName, getRandomLocation, removeLocation]);
 
-  const handleConfirmGuess = () => {
+  const handleConfirmGuess = async () => {
     if (!userGuess) {
       return;
     }
 
+    const response = await fetch(
+      `https://www.mariouniversalis.fr/mario-kart-world-guessr/api/get-photo?id=${currentLocation.photoName}`,
+      {
+        method: "GET",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error();
+    }
+
+    const locationData = (await response.json()) as LocationFull;
+    const coordinates = {
+      x: locationData.x,
+      y: locationData.y,
+    };
+
+    setCurrentLocationCoordinates(coordinates);
+
     const distance = distanceBetweenCoordinatesInKilometers(
       userGuess.realCoordinates,
-      currentLocation.coordinates
+      coordinates
     );
 
     const newScore = Math.ceil(5000 * Math.exp((-10 * distance) / 13.4));
@@ -111,12 +134,14 @@ function Game({ mode, onReplay }: Props) {
     ? bottomCenterTopTopLeft(userGuess.renderedCoordinates)
     : null;
 
-  const currentLocationRenderedCoordinates = mapRef.current
-    ? getRenderedCoordinatesFromRealCoordinates(
-        mapRef.current,
-        currentLocation.coordinates
-      )
-    : currentLocation.coordinates;
+  const currentLocationRenderedCoordinates = currentLocationCoordinates
+    ? mapRef.current
+      ? getRenderedCoordinatesFromRealCoordinates(
+          mapRef.current,
+          currentLocationCoordinates
+        )
+      : currentLocationCoordinates
+    : { x: 0, y: 0 };
 
   const currentLocationPinPosition = bottomCenterTopTopLeft(
     currentLocationRenderedCoordinates
@@ -264,4 +289,12 @@ function Game({ mode, onReplay }: Props) {
   );
 }
 
-export default Game;
+export default function GameContainer(props: Props) {
+  const { isReady } = useLocations();
+
+  if (true) {
+    return <div className="game-loading">...</div>;
+  }
+
+  return <Game {...props} />;
+}

@@ -1,6 +1,6 @@
 import type { MouseEvent } from "react";
 
-import type { LocationBase } from "../../data/locations";
+import type { Coordinates } from "@/locations/LocationsProvider";
 import { getCoordinatesFromImage } from "../../services/coordinatesTransformer";
 
 import "./Map.css";
@@ -9,14 +9,18 @@ import mapWithCoursesImageUrl from "./map_with_courses.png";
 
 type Props = {
   onClick: (coordinates: {
-    realCoordinates: LocationBase["coordinates"];
+    realCoordinates: Coordinates;
     renderedCoordinates: { x: number; y: number };
   }) => void;
   ref?: React.Ref<HTMLImageElement>;
   withCourses?: boolean;
 };
 
-export default function Map({ onClick, ref = null, withCourses = false }: Props) {
+export default function Map({
+  onClick,
+  ref = null,
+  withCourses = false,
+}: Props) {
   const handleMapClick = (event: MouseEvent<HTMLImageElement>) => {
     const coordinates = getCoordinatesFromImage(event.currentTarget, {
       x: event.clientX,

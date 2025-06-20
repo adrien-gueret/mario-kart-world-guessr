@@ -1,10 +1,8 @@
-import type { LocationBase } from "../../data/locations";
+import type { Coordinates } from "@/locations/LocationsProvider";
 
 import "./Pin.css";
 
-type Props = {
-  x: LocationBase["coordinates"]["x"];
-  y: LocationBase["coordinates"]["y"];
+type Props = Coordinates & {
   variant?: "mario" | "star";
 };
 
