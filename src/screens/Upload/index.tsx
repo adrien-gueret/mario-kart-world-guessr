@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import Button from "@/components/Button";
+import Loader from "@/components/Loader";
 import Modal from "@/components/Modal";
 import Map from "@/components/Map";
 import Pin from "@/components/Pin";
@@ -235,7 +236,7 @@ function Upload() {
         <p>
           <Text>{translate("upload.loading.info")}</Text>
         </p>
-        <div className="loader" />
+        <Loader />
       </Modal>
 
       <Modal title={translate("upload.success.title")} isOpen={isSuccess}>
