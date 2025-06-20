@@ -1,6 +1,9 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
+import { GoogleOAuthProvider } from "@react-oauth/google";
+
+import { GoogleUserProvider } from "./auth/GoogleUserProvider";
 import { TranslationsProvider } from "./i18n";
 import { ScreensProvider } from "./screens";
 import "./index.css";
@@ -10,7 +13,11 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ScreensProvider>
       <TranslationsProvider>
-        <App />
+        <GoogleOAuthProvider clientId="1063543539522-m89mibo9kp0esu299c8jgj2bali17ltl.apps.googleusercontent.com">
+          <GoogleUserProvider>
+            <App />
+          </GoogleUserProvider>
+        </GoogleOAuthProvider>
       </TranslationsProvider>
     </ScreensProvider>
   </StrictMode>

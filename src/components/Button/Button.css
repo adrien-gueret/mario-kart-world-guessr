@@ -27,6 +27,15 @@
   animation: 0.3s ease-out bounce;
 }
 
+.game-button.secondary {
+  font-size: 1rem;
+  filter: hue-rotate(195deg);
+}
+
+.game-button.secondary img {
+  display: none;
+}
+
 @keyframes bounce {
   0% {
     transform: skewX(-10deg) scale(1.2);
