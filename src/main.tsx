@@ -10,6 +10,18 @@ import { ScreensProvider } from "./screens";
 import "./index.css";
 import App from "./App.tsx";
 
+if (!document.startViewTransition) {
+  // @ts-ignore
+  document.startViewTransition = (callback) => {
+    // @ts-ignore
+    callback();
+
+    return {
+      finished: Promise.resolve(),
+    };
+  };
+}
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ScreensProvider>
