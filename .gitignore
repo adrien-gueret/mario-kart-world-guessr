@@ -23,6 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
-*.php
+___database.php
+___middleware.php
+upload-photo.php
 *.env
 .prettierignore
