@@ -26,5 +26,6 @@ dist-ssr
 ___database.php
 ___middleware.php
 upload-photo.php
+webhook.php
 *.env
 .prettierignore
