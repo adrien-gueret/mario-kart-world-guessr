@@ -91,7 +91,7 @@ function Game({ mode, onReplay }: Props) {
       return;
     }
 
-    if (import.meta.env.DEV) {
+    if (!import.meta.env.DEV) {
       const formData = new FormData();
       formData.append("photoName", currentLocation.photoName);
       formData.append("x", `${userGuess.realCoordinates.x}`);
