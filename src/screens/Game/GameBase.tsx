@@ -91,6 +91,14 @@ function Game({ mode, onReplay }: Props) {
       return;
     }
 
+    if (import.meta.env.DEV) {
+      const formData = new FormData();
+      formData.append("photoName", currentLocation.photoName);
+      formData.append("x", `${userGuess.realCoordinates.x}`);
+      formData.append("y", `${userGuess.realCoordinates.y}`);
+      fetchApi("/add-guess", "POST", formData);
+    }
+
     const response = await fetchApi(
       `/get-photo?id=${currentLocation.photoName}`
     );
