@@ -16,6 +16,7 @@ import { type Coordinates } from "@/locations/LocationsProvider";
 import { useTranslations } from "@/i18n";
 
 import { bottomCenterTopTopLeft } from "@/services/coordinatesTransformer";
+import fetchApi from "@/services/api";
 
 import "./Upload.css";
 
@@ -65,13 +66,7 @@ function Upload() {
     formData.append("y", `${y}`);
 
     try {
-      const response = await fetch(
-        "https://www.mariouniversalis.fr/mario-kart-world-guessr/api/upload-photo",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await fetchApi("/upload-photo", "POST", formData);
 
       if (response.ok) {
         setIsSuccess(true);

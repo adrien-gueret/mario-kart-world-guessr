@@ -8,6 +8,8 @@ import {
   type ReactNode,
 } from "react";
 
+import fetchApi from "@/services/api";
+
 export type LocationBase = {
   photoName: string;
   authorName: string;
@@ -33,12 +35,7 @@ const LocationsContext = createContext<LocationsContextType>({
 } as LocationsContextType);
 
 async function fetchLocations(): Promise<LocationBase[]> {
-  const response = await fetch(
-    "https://www.mariouniversalis.fr/mario-kart-world-guessr/api/random-photos",
-    {
-      method: "GET",
-    }
-  );
+  const response = await fetchApi("/random-photos");
 
   if (!response.ok) {
     throw new Error();

@@ -23,6 +23,8 @@ import Line from "@/components/Line";
 import Photo from "@/components/Photo";
 import Text from "@/components/Text";
 
+import fetchApi from "@/services/api";
+
 import { useTranslations } from "@/i18n";
 
 import { useScreen } from "../ScreensProvider";
@@ -89,11 +91,8 @@ function Game({ mode, onReplay }: Props) {
       return;
     }
 
-    const response = await fetch(
-      `https://www.mariouniversalis.fr/mario-kart-world-guessr/api/get-photo?id=${currentLocation.photoName}`,
-      {
-        method: "GET",
-      }
+    const response = await fetchApi(
+      `/get-photo?id=${currentLocation.photoName}`
     );
 
     if (!response.ok) {
