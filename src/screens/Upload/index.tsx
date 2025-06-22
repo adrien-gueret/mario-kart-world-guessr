@@ -11,7 +11,7 @@ import UploadCoordinates from "@/components/UploadCoordinates";
 import GoogleLoginButton from "@/auth/GoogleLoginButton";
 import { useGoogleUser } from "@/auth/GoogleUserProvider";
 
-import { type Coordinates } from "@/locations/LocationsProvider";
+import { type Coordinates } from "@/types/location";
 
 import { useTranslations } from "@/i18n";
 
@@ -22,8 +22,6 @@ import "./Upload.css";
 
 function Upload() {
   const { logout, user } = useGoogleUser();
-
-  console.log("in screen Upload", user);
 
   const [locationCoordinates, setLocationCoordinates] = useState<{
     realCoordinates: Coordinates;

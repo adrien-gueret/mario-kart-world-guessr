@@ -22,7 +22,7 @@ const en: Texts = {
     "Keep playing as long as you score at least 3000 points!",
   "mode.daily.label": "Daily Photos",
   "mode.daily.description": "Available soon!",
-  //"Every day, a new selection of three photos: get a better score than your friends!",
+  //"Every day, a new selection of five photos: get a better score than your friends!",
   "rules.title": "Game Rules",
   "rules.description":
     "Click on the map to guess where the photo was taken. The closer you are, the more points you score, up to 5000 per photo!",
@@ -34,7 +34,7 @@ const en: Texts = {
     "Guess photos until you reach 50,000 points. How many photos will it take?",
   "rules.mode.daily.title": "Daily Photos Mode",
   "rules.mode.daily.description":
-    "Get the best possible score on three daily photos!",
+    "Get the best possible score on five daily photos!",
   "endGame.title": "Game over!",
   "endGame.titleScreen.label": "Home",
   "endGame.replay.label": "Replay",

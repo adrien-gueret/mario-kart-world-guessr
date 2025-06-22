@@ -1,9 +1,9 @@
-import { useState, useCallback, useRef } from "react";
-import useLocations, {
+import { useState, useCallback, useRef, useEffect } from "react";
+import {
   type Coordinates,
   type LocationBase,
   type LocationFull,
-} from "@/locations/LocationsProvider";
+} from "@/types/location";
 
 import {
   bottomCenterTopTopLeft,
@@ -38,14 +38,43 @@ type Props = {
   onReplay: () => void;
 };
 
-function Game({ mode, onReplay }: Props) {
+function useRandomLocation() {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [currentLocation, setCurrentLocation] = useState<LocationBase | null>(
+    null
+  );
+
+  const getNextPhoto = useCallback(async (): Promise<LocationBase> => {
+    setIsLoading(true);
+
+    const response = await fetchApi("/get-random-photo");
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch random location");
+    }
+
+    const locationData = (await response.json()) as LocationBase;
+
+    setCurrentLocation(locationData);
+    setIsLoading(false);
+
+    return locationData;
+  }, []);
+
+  return {
+    isLocationLoading: isLoading,
+    getNextPhoto,
+    currentLocation,
+  };
+}
+
+export default function Game({ mode, onReplay }: Props) {
+  const firstLocationRequested = useRef(false);
   const { setCurrentScreenName } = useScreen();
   const { translate } = useTranslations();
-  const { getRandomLocation, removeLocation } = useLocations();
+  const { currentLocation, getNextPhoto, isLocationLoading } =
+    useRandomLocation();
 
-  const [currentLocation, setCurrentLocation] = useState<LocationBase>(() => {
-    return getRandomLocation();
-  });
   const [currentLocationCoordinates, setCurrentLocationCoordinates] =
     useState<Coordinates | null>(null);
 
@@ -68,12 +97,9 @@ function Game({ mode, onReplay }: Props) {
   const shouldShowAnswer = Boolean(guessData);
   const canGuess = !shouldShowAnswer && !isGameEnded;
 
-  const nextPhoto = useCallback(() => {
-    removeLocation(currentLocation.photoName);
+  const requestNextPhoto = useCallback(async () => {
+    await getNextPhoto();
 
-    const nextLocation = getRandomLocation();
-
-    setCurrentLocation(nextLocation);
     setUserGuess(null);
     setGuessData(null);
     setPhotoCount((prevCount) => prevCount + 1);
@@ -84,10 +110,19 @@ function Game({ mode, onReplay }: Props) {
         block: "start",
       });
     }
-  }, [currentLocation.photoName, getRandomLocation, removeLocation]);
+  }, [getNextPhoto]);
+
+  useEffect(() => {
+    if (firstLocationRequested.current) {
+      return;
+    }
+
+    firstLocationRequested.current = true;
+    requestNextPhoto();
+  }, [requestNextPhoto]);
 
   const handleConfirmGuess = async () => {
-    if (!userGuess) {
+    if (!userGuess || !currentLocation) {
       return;
     }
 
@@ -188,7 +223,11 @@ function Game({ mode, onReplay }: Props) {
         <div className="photo-container">
           <h2 ref={photoSubtitleRef}>{translate("photo.subtitle")}</h2>
 
-          <Photo photoName={currentLocation.photoName} />
+          {isLocationLoading || !currentLocation ? (
+            <Loader />
+          ) : (
+            <Photo photoName={currentLocation.photoName} />
+          )}
         </div>
 
         <div className="map-container">
@@ -255,7 +294,7 @@ function Game({ mode, onReplay }: Props) {
 
       {shouldShowAnswer && !isGameEnded && (
         <StickyButtonContainer withDelay>
-          <Button onClick={nextPhoto}>{translate("next.label")}</Button>
+          <Button onClick={requestNextPhoto}>{translate("next.label")}</Button>
         </StickyButtonContainer>
       )}
 
@@ -295,14 +334,4 @@ function Game({ mode, onReplay }: Props) {
       </Modal>
     </div>
   );
-}
-
-export default function GameContainer(props: Props) {
-  const { isReady } = useLocations();
-
-  if (!isReady) {
-    return <Loader />;
-  }
-
-  return <Game {...props} />;
 }

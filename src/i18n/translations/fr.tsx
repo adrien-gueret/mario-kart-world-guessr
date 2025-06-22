@@ -18,7 +18,7 @@ const fr: Texts = {
     "Continuez à jouer tant que vous marquez au moins 3000 points !",
   "mode.daily.label": "Photos du jour",
   "mode.daily.description": "Bientôt disponible !",
-  //"Chaque jour, une nouvelle sélection de trois photos : faites un meilleur score que vos amis !",
+  //"Chaque jour, une nouvelle sélection de cinq photos : faites un meilleur score que vos amis !",
   "rules.title": "Règles du jeu",
   "rules.description":
     "Cliquez sur la carte pour deviner où la photo a été prise. Plus vous êtes proche, plus vous marquez de points, jusqu'à 5000 par photo !",
@@ -30,7 +30,7 @@ const fr: Texts = {
     "Devinez des photos jusqu'à atteindre 50.000 points. Combien de photos vous faudra-t-il ?",
   "rules.mode.daily.title": "Mode Photos du jour",
   "rules.mode.daily.description":
-    "Faite le meilleur score possible sur trois photos du jour !",
+    "Faite le meilleur score possible sur cinq photos du jour !",
   "endGame.title": "Partie terminée !",
   "endGame.titleScreen.label": "Accueil",
   "endGame.replay.label": "Rejouer",
