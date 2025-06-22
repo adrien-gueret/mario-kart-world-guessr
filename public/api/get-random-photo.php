@@ -6,6 +6,7 @@ allowMethod('GET');
 
 ini_set('session.cookie_samesite', 'None');
 ini_set('session.cookie_secure', 1);
+ini_set('session.cookie_lifetime', 2592000);
 
 session_start();
 

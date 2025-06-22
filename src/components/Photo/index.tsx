@@ -1,29 +1,66 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useLayoutEffect } from "react";
 
 import Loader from "../Loader";
 
 import "./Photo.css";
 
-export default function Photo({ photoName }: { photoName: string }) {
+export default function Photo({ photoName }: { photoName?: string }) {
   const [isComplete, setIsComplete] = useState(false);
-  const imageRef = useRef<HTMLImageElement>(null);
-  const photoUrl = `./photos/${photoName}.jpg`;
+  const [width, setWidth] = useState<number>(0);
+  const [height, setHeight] = useState<number>(0);
+  const photoUrl = photoName ? `./photos/${photoName}.jpg` : null;
+
+  useLayoutEffect(() => {
+    const onResize = () => {
+      setWidth(0);
+      setHeight(0);
+    };
+
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
 
   return (
-    <>
-      <div style={{ display: isComplete ? "none" : "block" }}>
+    <div
+      style={{
+        position: "relative",
+        minWidth: `${width}px`,
+        minHeight: `${height}px`,
+      }}
+    >
+      <div
+        style={{
+          display: !photoUrl || !isComplete ? "block" : "none",
+          position: "absolute",
+          top: `calc(50% - 32px)`,
+          left: `calc(50% - 32px)`,
+        }}
+      >
         <Loader />
       </div>
 
-      <img
-        ref={imageRef}
-        className="game-photo"
-        draggable={false}
-        src={photoUrl}
-        style={{ opacity: isComplete ? 1 : 0.1 }}
-        onLoad={() => setIsComplete(true)}
-        alt=""
-      />
-    </>
+      {photoUrl && (
+        <img
+          className="game-photo"
+          draggable={false}
+          src={photoUrl}
+          style={{ opacity: isComplete ? 1 : 0.1 }}
+          onLoad={(e) => {
+            setIsComplete(true);
+
+            const image = e.currentTarget as HTMLImageElement;
+
+            window.requestAnimationFrame(() => {
+              setHeight(image.height);
+              setWidth(image.width);
+            });
+          }}
+          alt=""
+        />
+      )}
+    </div>
   );
 }

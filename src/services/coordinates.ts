@@ -28,7 +28,7 @@ export function getCoordinatesFromImage(
 
   const x = Math.floor(clickedCordinates.x - rect.left);
   const y = Math.floor(clickedCordinates.y - rect.top);
-  
+
   return {
     renderedCoordinates: { x, y },
     realCoordinates: {
@@ -76,4 +76,21 @@ export function distanceBetweenCoordinatesInKilometers(
   const distanceInKm = distanceInPixels * averageKmPerPixel;
 
   return distanceInKm;
+}
+
+export function getScoreFromDistanceInKilometers(distanceInKm: number): number {
+  return Math.ceil(5000 * Math.exp((-10 * distanceInKm) / 13.4));
+}
+
+export function getDistanceAndScoreFromCoordinates(
+  pointA: Coordinates,
+  pointB: Coordinates
+): {
+  distance: number;
+  score: number;
+} {
+  const distance = distanceBetweenCoordinatesInKilometers(pointA, pointB);
+  const score = getScoreFromDistanceInKilometers(distance);
+
+  return { distance, score };
 }

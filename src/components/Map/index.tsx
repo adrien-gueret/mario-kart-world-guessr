@@ -1,7 +1,7 @@
 import type { MouseEvent } from "react";
 
-import type { Coordinates } from "@/locations/LocationsProvider";
-import { getCoordinatesFromImage } from "../../services/coordinatesTransformer";
+import type { Coordinates } from "@/types/location";
+import { getCoordinatesFromImage } from "@/services/coordinates";
 
 import "./Map.css";
 import mapImageUrl from "./map.png";

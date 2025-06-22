@@ -62,6 +62,8 @@ const fr: Texts = {
   ),
   "credits.by": "Un jeu par ",
   "game.globalScore": "Score : ",
+  "game.globalScore.photoIndex": "Photo n° ",
+  "home.button": "Accueil",
   "upload.title": "Proposer une photo",
   "upload.description": "Envoyez une photo pour enrichir le jeu !",
   "upload.step1.title": "1. Sélectionnez votre photo",

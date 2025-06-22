@@ -15,7 +15,7 @@ import { type Coordinates } from "@/types/location";
 
 import { useTranslations } from "@/i18n";
 
-import { bottomCenterTopTopLeft } from "@/services/coordinatesTransformer";
+import { bottomCenterTopTopLeft } from "@/services/coordinates";
 import fetchApi from "@/services/api";
 
 import "./Upload.css";
