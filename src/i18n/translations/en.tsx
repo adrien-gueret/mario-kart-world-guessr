@@ -62,15 +62,12 @@ const en: Texts = {
       </p>
     </>
   ),
-  "endGame.daily.description": (totalScore: number) => (
-    <>
-      <p>You have finished locating all 5 photos of the day!</p>
-      <p>
-        You scored a total of <b>{totalScore}</b> points: do you think you're
-        better than your friends?
-      </p>
-    </>
-  ),
+  "endGame.daily.description":
+    "You have finished locating all 5 photos of the day!",
+  "share.text.title": "Mario Kart World Guessr - Daily Photos",
+  "share.copy.button.label": "Copy",
+  "share.copy.success": "Copied to clipboard",
+  "share.share.button.label": "Share",
   "credits.by": "A game by ",
   "game.globalScore": "Score: ",
   "game.globalScore.photoIndex": "Photo n°",

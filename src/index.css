@@ -1,3 +1,12 @@
+@font-face {
+  font-family: "DigitalDisplay";
+  src: url("./Digital Display.woff2") format("woff2"),
+    url("./Digital Display.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

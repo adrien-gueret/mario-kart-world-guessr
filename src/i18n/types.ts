@@ -35,7 +35,11 @@ export type Texts = {
     totalScore: number
   ) => ReactNode;
   "endGame.goal.description": (photoCount: number) => ReactNode;
-  "endGame.daily.description": (totalScore: number) => ReactNode;
+  "endGame.daily.description": string;
+  "share.text.title": string;
+  "share.copy.button.label": string;
+  "share.copy.success": string;
+  "share.share.button.label": string;
   "credits.by": string;
   "game.globalScore": string;
   "game.globalScore.photoIndex": string;
