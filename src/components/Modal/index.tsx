@@ -9,6 +9,7 @@ type Props = {
   children: ReactNode;
   isOpen?: boolean;
   noDelay?: boolean;
+  disableSkew?: boolean;
 };
 
 export default function Modal({
@@ -16,6 +17,7 @@ export default function Modal({
   title,
   isOpen,
   noDelay = false,
+  disableSkew = false,
 }: Props) {
   useLayoutEffect(() => {
     if (isOpen) {
@@ -27,7 +29,7 @@ export default function Modal({
 
   return isOpen ? (
     <div className={`modal-overlay ${noDelay ? "no-delay" : ""}`}>
-      <div className="modal-box">
+      <div className={`modal-box ${disableSkew ? "no-skew" : ""}`}>
         <div className="modal-inner">
           <h2>{title}</h2>
           <Text>{children}</Text>

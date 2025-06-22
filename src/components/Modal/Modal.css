@@ -29,18 +29,23 @@
 }
 
 .modal-box {
+  --skew: -10deg;
   animation: slideModal 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
   animation-delay: 1s;
   opacity: 0;
   overflow: auto;
+  overflow-x: hidden;
   max-height: 80vh;
   min-width: 350px;
   background-color: #f8f8f8;
   background-image: url(./backgrounds/dialog.jpg);
   border-radius: 27px;
-  transform: translateY(-100%) skewX(-10deg);
+  transform: translateY(-100%) skewX(var(--skew));
   padding: 10px 35px 30px 35px;
   text-align: left;
+}
+.modal-box.no-skew {
+  --skew: -0;
 }
 
 .modal-overlay.no-delay .modal-box {
@@ -53,15 +58,15 @@
 
 @keyframes slideModal {
   from {
-    transform: translateY(-100%) skewX(-10deg);
+    transform: translateY(-100%) skewX(var(--skew));
     opacity: 0;
   }
   to {
-    transform: translateY(0) skewX(-10deg);
+    transform: translateY(0) skewX(var(--skew));
     opacity: 1;
   }
 }
 
 .modal-inner {
-  transform: skewX(10deg);
+  transform: skewX(calc(var(--skew) * -1));
 }

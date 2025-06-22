@@ -2,16 +2,13 @@ import { useState, useCallback } from "react";
 
 import fetchApi from "@/services/api";
 
-import type { LocationBase, Coordinates } from "@/types/location";
+import type { GameHistory } from "@/types/game";
+import type { LocationBase } from "@/types/location";
 
 type DailyGame = {
   photos: LocationBase[];
   todayDailyDate: string;
   nextDailyDate: string;
-};
-
-type DailyGamePlayState = {
-  coordinates: Coordinates[];
 };
 
 function shouldFetchDailyGame(nextDailyDate?: string): boolean {
@@ -24,15 +21,12 @@ function shouldFetchDailyGame(nextDailyDate?: string): boolean {
   return today >= nextDaily;
 }
 
-export default function useDailyGame() {
+export default function useDailyGame(history: GameHistory) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [dailyGame, setDailyGame] = useState<DailyGame | null>(null);
-  const [dailyGameState, setDailyGameState] = useState<DailyGamePlayState>({
-    coordinates: [],
-  });
 
-  const hasReachedLimitPhotos = dailyGame
-    ? dailyGame.photos.length === dailyGameState.coordinates.length
+  const hasReachedLimit = dailyGame
+    ? dailyGame.photos.length === history.scores.length
     : false;
 
   const fetchDailyGame = useCallback(async () => {
@@ -52,8 +46,8 @@ export default function useDailyGame() {
     return data;
   }, []);
 
-  const getNextDailyPhoto = useCallback(async () => {
-    if (hasReachedLimitPhotos) {
+  const getNextDailyLocation = useCallback(async () => {
+    if (hasReachedLimit) {
       return null;
     }
 
@@ -61,24 +55,13 @@ export default function useDailyGame() {
       ? await fetchDailyGame()
       : (dailyGame as DailyGame);
 
-    return photos[dailyGameState.coordinates.length] ?? null;
-  }, [dailyGame, fetchDailyGame, hasReachedLimitPhotos, dailyGameState]);
-
-  const addGuess = useCallback(
-    (coordinates: Coordinates) => {
-      setDailyGameState((prevState) => ({
-        ...prevState,
-        coordinates: [...prevState.coordinates, coordinates],
-      }));
-    },
-    [setDailyGameState]
-  );
+    return photos[history.scores.length] ?? null;
+  }, [dailyGame, fetchDailyGame, hasReachedLimit, history]);
 
   return {
-    addGuess,
-    getNextDailyPhoto,
+    getNextDailyLocation,
     isLoading,
-    hasReachedLimitPhotos,
-    maxPhotos: dailyGame?.photos.length ?? 0,
+    hasReachedLimit,
+    maxLocations: dailyGame?.photos.length ?? 0,
   };
 }
