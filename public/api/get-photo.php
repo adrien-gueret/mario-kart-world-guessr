@@ -13,7 +13,7 @@ try {
         exit;
     }
 
-    $stmt = $pdo->prepare("SELECT id as photoName, x, y, author_name as authorName FROM `mario-kart-world-photos` WHERE id = :id AND is_validated = 1");
+    $stmt = $pdo->prepare("SELECT id as photoName, x, y, author_name as authorName FROM `mario-kart-world-photos` WHERE id = :id AND validated_at IS NOT NULL");
     $stmt->bindParam(':id', $id, PDO::PARAM_STR);
     $stmt->execute();
     

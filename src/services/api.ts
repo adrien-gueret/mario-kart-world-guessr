@@ -18,6 +18,8 @@ export default function fetchApi(
       method,
       body,
       headers,
+      credentials: "include",
+      mode: "cors",
     }
   );
 }
