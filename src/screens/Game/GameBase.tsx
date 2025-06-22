@@ -45,7 +45,7 @@ export default function Game({ mode, onReplay }: Props) {
     getNextPhoto,
     currentLocationIndex,
     addDailyGuess,
-    isEnd,
+    hasReachedLimitPhotos,
     maxPhotos,
     isLocationLoading,
   } = useLocations(mode);
@@ -60,6 +60,10 @@ export default function Game({ mode, onReplay }: Props) {
   const [photoCount, setPhotoCount] = useState<number>(1);
   const [isGameEnded, setIsGameEnded] = useState<boolean>(false);
 
+  const isGameOver = isGameEnded || hasReachedLimitPhotos;
+
+  useEffect(() => {}, [hasReachedLimitPhotos]);
+
   const [totalScore, setTotalScore] = useState<number>(0);
   const [guessData, setGuessData] = useState<{
     distance: number;
@@ -70,7 +74,7 @@ export default function Game({ mode, onReplay }: Props) {
   const photoSubtitleRef = useRef<HTMLHeadingElement>(null);
 
   const shouldShowAnswer = Boolean(guessData);
-  const canGuess = !shouldShowAnswer && !isGameEnded;
+  const canGuess = !shouldShowAnswer && !isGameOver;
 
   const requestNextPhoto = useCallback(
     async (shouldScroll = false) => {
@@ -282,7 +286,7 @@ export default function Game({ mode, onReplay }: Props) {
         </StickyButtonContainer>
       )}
 
-      {shouldShowAnswer && !isGameEnded && (
+      {shouldShowAnswer && !isGameOver && (
         <StickyButtonContainer withDelay>
           <Button onClick={() => requestNextPhoto(true)}>
             {translate("next.label")}
@@ -290,7 +294,7 @@ export default function Game({ mode, onReplay }: Props) {
         </StickyButtonContainer>
       )}
 
-      <Modal title={translate("endGame.title")} isOpen={isGameEnded}>
+      <Modal title={translate("endGame.title")} isOpen={isGameOver}>
         {(() => {
           switch (mode) {
             case "survival":
@@ -304,7 +308,7 @@ export default function Game({ mode, onReplay }: Props) {
               return translate("endGame.goal.description")(photoCount);
 
             case "daily":
-              return "Well played!";
+              return translate("endGame.daily.description")(totalScore);
           }
         })()}
 
@@ -319,9 +323,11 @@ export default function Game({ mode, onReplay }: Props) {
           <Button onClick={() => setCurrentScreenName("Title")}>
             {translate("endGame.titleScreen.label")}
           </Button>
-          <Button onClick={onReplay}>
-            {translate("endGame.replay.label")}
-          </Button>
+          {mode !== "daily" && (
+            <Button onClick={onReplay}>
+              {translate("endGame.replay.label")}
+            </Button>
+          )}
         </p>
       </Modal>
     </div>

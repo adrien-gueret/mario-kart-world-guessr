@@ -31,7 +31,7 @@ export default function useDailyGame() {
     coordinates: [],
   });
 
-  const isEnd = dailyGame
+  const hasReachedLimitPhotos = dailyGame
     ? dailyGame.photos.length === dailyGameState.coordinates.length
     : false;
 
@@ -53,7 +53,7 @@ export default function useDailyGame() {
   }, []);
 
   const getNextDailyPhoto = useCallback(async () => {
-    if (isEnd) {
+    if (hasReachedLimitPhotos) {
       return null;
     }
 
@@ -62,7 +62,7 @@ export default function useDailyGame() {
       : (dailyGame as DailyGame);
 
     return photos[dailyGameState.coordinates.length] ?? null;
-  }, [dailyGame, fetchDailyGame, isEnd, dailyGameState]);
+  }, [dailyGame, fetchDailyGame, hasReachedLimitPhotos, dailyGameState]);
 
   const addGuess = useCallback(
     (coordinates: Coordinates) => {
@@ -78,7 +78,7 @@ export default function useDailyGame() {
     addGuess,
     getNextDailyPhoto,
     isLoading,
-    isEnd,
+    hasReachedLimitPhotos,
     maxPhotos: dailyGame?.photos.length ?? 0,
   };
 }

@@ -18,7 +18,7 @@ export default function useLocations(mode: GameMode) {
     getNextDailyPhoto,
     isLoading: isDailyGameLoading,
     addGuess: addDailyGuess,
-    isEnd,
+    hasReachedLimitPhotos,
     maxPhotos: dailyGameMaxPhotos,
   } = useDailyGame();
 
@@ -53,6 +53,6 @@ export default function useLocations(mode: GameMode) {
     currentLocation,
     currentLocationIndex,
     maxPhotos: mode === "daily" ? dailyGameMaxPhotos : 0,
-    isEnd,
+    hasReachedLimitPhotos,
   };
 }
