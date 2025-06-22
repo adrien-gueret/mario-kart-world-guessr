@@ -1,4 +1,4 @@
-import type { Coordinates } from "@/locations/LocationsProvider";
+import type { Coordinates } from "@/types/location";
 
 import "./Pin.css";
 

@@ -6,3 +6,9 @@
   gap: 24px;
   padding-bottom: 64px;
 }
+
+.game-back-button {
+  position: absolute;
+  top: 80px;
+  right: 16px;
+}

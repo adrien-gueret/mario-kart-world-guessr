@@ -64,6 +64,8 @@ const en: Texts = {
   ),
   "credits.by": "A game by ",
   "game.globalScore": "Score: ",
+  "game.globalScore.photoIndex": "Photo n°",
+  "home.button": "Home",
   "upload.title": "Suggest a photo",
   "upload.description": "Send a photo to enrich the game!",
   "upload.step1.title": "1. Select your photo",

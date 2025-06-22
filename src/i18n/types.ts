@@ -37,6 +37,8 @@ export type Texts = {
   "endGame.goal.description": (photoCount: number) => ReactNode;
   "credits.by": string;
   "game.globalScore": string;
+  "game.globalScore.photoIndex": string;
+  "home.button": string;
   "upload.title": string;
   "upload.description": string;
   "upload.step1.title": string;

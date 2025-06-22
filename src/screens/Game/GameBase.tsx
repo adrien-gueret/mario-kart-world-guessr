@@ -1,15 +1,11 @@
 import { useState, useCallback, useRef, useEffect } from "react";
-import {
-  type Coordinates,
-  type LocationBase,
-  type LocationFull,
-} from "@/types/location";
+import { type Coordinates, type LocationFull } from "@/types/location";
 
 import {
   bottomCenterTopTopLeft,
-  distanceBetweenCoordinatesInKilometers,
+  getDistanceAndScoreFromCoordinates,
   getRenderedCoordinatesFromRealCoordinates,
-} from "@/services/coordinatesTransformer";
+} from "@/services/coordinates";
 
 import Button from "@/components/Button";
 import Loader from "@/components/Loader";
@@ -25,55 +21,34 @@ import Text from "@/components/Text";
 
 import fetchApi from "@/services/api";
 
+import type { GameMode } from "@/types/game";
+
 import { useTranslations } from "@/i18n";
+
+import useLocations from "./hooks/useLocations";
 
 import { useScreen } from "../ScreensProvider";
 
 import "./Game.css";
-
-type GameMode = "survival" | "goal" | "daily";
 
 type Props = {
   mode: GameMode;
   onReplay: () => void;
 };
 
-function useRandomLocation() {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [currentLocation, setCurrentLocation] = useState<LocationBase | null>(
-    null
-  );
-
-  const getNextPhoto = useCallback(async (): Promise<LocationBase> => {
-    setIsLoading(true);
-
-    const response = await fetchApi("/get-random-photo");
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch random location");
-    }
-
-    const locationData = (await response.json()) as LocationBase;
-
-    setCurrentLocation(locationData);
-    setIsLoading(false);
-
-    return locationData;
-  }, []);
-
-  return {
-    isLocationLoading: isLoading,
-    getNextPhoto,
-    currentLocation,
-  };
-}
-
 export default function Game({ mode, onReplay }: Props) {
   const firstLocationRequested = useRef(false);
   const { setCurrentScreenName } = useScreen();
   const { translate } = useTranslations();
-  const { currentLocation, getNextPhoto, isLocationLoading } =
-    useRandomLocation();
+  const {
+    currentLocation,
+    getNextPhoto,
+    currentLocationIndex,
+    addDailyGuess,
+    isEnd,
+    maxPhotos,
+    isLocationLoading,
+  } = useLocations(mode);
 
   const [currentLocationCoordinates, setCurrentLocationCoordinates] =
     useState<Coordinates | null>(null);
@@ -97,20 +72,23 @@ export default function Game({ mode, onReplay }: Props) {
   const shouldShowAnswer = Boolean(guessData);
   const canGuess = !shouldShowAnswer && !isGameEnded;
 
-  const requestNextPhoto = useCallback(async () => {
-    await getNextPhoto();
+  const requestNextPhoto = useCallback(
+    async (shouldScroll = false) => {
+      await getNextPhoto();
 
-    setUserGuess(null);
-    setGuessData(null);
-    setPhotoCount((prevCount) => prevCount + 1);
+      setUserGuess(null);
+      setGuessData(null);
+      setPhotoCount((prevCount) => prevCount + 1);
 
-    if (photoSubtitleRef.current) {
-      photoSubtitleRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  }, [getNextPhoto]);
+      if (photoSubtitleRef.current && shouldScroll) {
+        photoSubtitleRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    },
+    [getNextPhoto]
+  );
 
   useEffect(() => {
     if (firstLocationRequested.current) {
@@ -118,7 +96,7 @@ export default function Game({ mode, onReplay }: Props) {
     }
 
     firstLocationRequested.current = true;
-    requestNextPhoto();
+    requestNextPhoto(false);
   }, [requestNextPhoto]);
 
   const handleConfirmGuess = async () => {
@@ -132,6 +110,10 @@ export default function Game({ mode, onReplay }: Props) {
       formData.append("x", `${userGuess.realCoordinates.x}`);
       formData.append("y", `${userGuess.realCoordinates.y}`);
       fetchApi("/add-guess", "POST", formData);
+    }
+
+    if (mode === "daily") {
+      addDailyGuess(userGuess.realCoordinates);
     }
 
     const response = await fetchApi(
@@ -150,12 +132,10 @@ export default function Game({ mode, onReplay }: Props) {
 
     setCurrentLocationCoordinates(coordinates);
 
-    const distance = distanceBetweenCoordinatesInKilometers(
+    const { distance, score: newScore } = getDistanceAndScoreFromCoordinates(
       userGuess.realCoordinates,
       coordinates
     );
-
-    const newScore = Math.ceil(5000 * Math.exp((-10 * distance) / 13.4));
 
     setGuessData({ distance, score: newScore });
     setTotalScore((prevScore) => {
@@ -212,6 +192,14 @@ export default function Game({ mode, onReplay }: Props) {
 
   return (
     <div className="game-screen">
+      <Button
+        className="game-back-button"
+        onClick={() => setCurrentScreenName("Title")}
+        variant="secondary"
+      >
+        {translate("home.button")}
+      </Button>
+
       <div className="game-area">
         <div className="rules-container">
           <h2>{translate("rules.title")}</h2>
@@ -223,11 +211,9 @@ export default function Game({ mode, onReplay }: Props) {
         <div className="photo-container">
           <h2 ref={photoSubtitleRef}>{translate("photo.subtitle")}</h2>
 
-          {isLocationLoading || !currentLocation ? (
-            <Loader />
-          ) : (
-            <Photo photoName={currentLocation.photoName} />
-          )}
+          <Photo
+            photoName={isLocationLoading ? "" : currentLocation?.photoName}
+          />
         </div>
 
         <div className="map-container">
@@ -282,7 +268,11 @@ export default function Game({ mode, onReplay }: Props) {
         </div>
       </div>
 
-      <GlobalScore score={totalScore} />
+      <GlobalScore
+        score={totalScore}
+        photoIndex={currentLocationIndex}
+        maxPhotos={maxPhotos}
+      />
 
       {userGuess && !shouldShowAnswer && (
         <StickyButtonContainer>
@@ -294,7 +284,9 @@ export default function Game({ mode, onReplay }: Props) {
 
       {shouldShowAnswer && !isGameEnded && (
         <StickyButtonContainer withDelay>
-          <Button onClick={requestNextPhoto}>{translate("next.label")}</Button>
+          <Button onClick={() => requestNextPhoto(true)}>
+            {translate("next.label")}
+          </Button>
         </StickyButtonContainer>
       )}
 

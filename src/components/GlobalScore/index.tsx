@@ -6,9 +6,15 @@ import "./GlobalScore.css";
 
 type Props = {
   score: number;
+  photoIndex?: number;
+  maxPhotos?: number;
 };
 
-export default function GlobalScore({ score }: Props) {
+export default function GlobalScore({
+  score,
+  photoIndex,
+  maxPhotos = 0,
+}: Props) {
   const [scoreToRender, setScoreToRender] = useState(0);
   const { translate } = useTranslations();
 
@@ -28,8 +34,17 @@ export default function GlobalScore({ score }: Props) {
 
   return (
     <aside className="global-score">
-      {translate("game.globalScore")}
-      {scoreToRender}
+      <div>
+        {translate("game.globalScore")}
+        {scoreToRender}
+      </div>
+      {
+        <div className="global-score-photo-index">
+          {translate("game.globalScore.photoIndex")}
+          {photoIndex || 1}
+          {maxPhotos > 0 && ` / ${maxPhotos}`}
+        </div>
+      }
     </aside>
   );
 }
