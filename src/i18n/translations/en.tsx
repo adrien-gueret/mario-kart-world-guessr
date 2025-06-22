@@ -62,6 +62,15 @@ const en: Texts = {
       </p>
     </>
   ),
+  "endGame.daily.description": (totalScore: number) => (
+    <>
+      <p>You have finished locating all 5 photos of the day!</p>
+      <p>
+        You scored a total of <b>{totalScore}</b> points: do you think you're
+        better than your friends?
+      </p>
+    </>
+  ),
   "credits.by": "A game by ",
   "game.globalScore": "Score: ",
   "game.globalScore.photoIndex": "Photo n°",

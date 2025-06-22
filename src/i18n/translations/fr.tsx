@@ -60,6 +60,15 @@ const fr: Texts = {
       </p>
     </>
   ),
+  "endGame.daily.description": (totalScore: number) => (
+    <>
+      <p>Vous avez fini de localiser les 5 photos du jour !</p>
+      <p>
+        Vous avez obtenu un score total de <b>{totalScore}</b> points :
+        pensez-vous faire mieux que vos amis ?
+      </p>
+    </>
+  ),
   "credits.by": "Un jeu par ",
   "game.globalScore": "Score : ",
   "game.globalScore.photoIndex": "Photo n° ",
