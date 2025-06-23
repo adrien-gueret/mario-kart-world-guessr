@@ -15,7 +15,6 @@ import { type Coordinates } from "@/types/location";
 
 import { useTranslations } from "@/i18n";
 
-import { bottomCenterTopTopLeft } from "@/services/coordinates";
 import fetchApi from "@/services/api";
 
 import "./Upload.css";
@@ -33,10 +32,6 @@ function Upload() {
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
-
-  const pinCoordinates = locationCoordinates
-    ? bottomCenterTopTopLeft(locationCoordinates.renderedCoordinates)
-    : null;
 
   const { translate } = useTranslations();
 
@@ -116,8 +111,13 @@ function Upload() {
           <div style={{ position: "relative" }}>
             <Map onClick={setLocationCoordinates} withCourses={showCourses} />
 
-            {pinCoordinates && (
-              <Pin x={pinCoordinates.x} y={pinCoordinates.y} variant="mario" />
+            {locationCoordinates && (
+              <Pin
+                x={locationCoordinates.renderedCoordinates.x}
+                y={locationCoordinates.renderedCoordinates.y}
+                variant="mario"
+                onlyHead
+              />
             )}
 
             {locationCoordinates && (

@@ -1,5 +1,3 @@
-export const PIN_SIZE = 64;
-
 export const MAP_SIZE_IN_PIXELS = {
   width: 1431,
   height: 1303,
@@ -47,13 +45,6 @@ export function getRenderedCoordinatesFromRealCoordinates(
   return {
     x: Math.round(realCoordinates.x / ratio),
     y: Math.round(realCoordinates.y / ratio),
-  };
-}
-
-export function bottomCenterTopTopLeft(coordinates: Coordinates) {
-  return {
-    x: coordinates.x - PIN_SIZE / 2,
-    y: coordinates.y - PIN_SIZE,
   };
 }
 

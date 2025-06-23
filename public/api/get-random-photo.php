@@ -16,7 +16,7 @@ if (!isset($_SESSION['seen_photos'])) {
 }
 
 function getRandomPhoto($pdo, $excludeIds = []) {
-    $where = "WHERE p.validated_at IS NOT NULL";
+    $where = "WHERE p.validated_at IS NOT NULL AND p.validated_at <= NOW() - INTERVAL 5 MINUTE";
     
     if (!empty($excludeIds)) {
         $placeholders = rtrim(str_repeat('?,', count($excludeIds)), ',');
