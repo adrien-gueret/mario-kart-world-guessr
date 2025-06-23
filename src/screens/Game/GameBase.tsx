@@ -2,7 +2,6 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import { type Coordinates, type LocationFull } from "@/types/location";
 
 import {
-  bottomCenterTopTopLeft,
   getDistanceAndScoreFromCoordinates,
   getRenderedCoordinatesFromRealCoordinates,
 } from "@/services/coordinates";
@@ -155,10 +154,6 @@ export default function Game({ mode, onReplay }: Props) {
     }
   };
 
-  const userGuessPinPosition = userGuess
-    ? bottomCenterTopTopLeft(userGuess.renderedCoordinates)
-    : null;
-
   const currentLocationRenderedCoordinates = currentLocationCoordinates
     ? mapRef.current
       ? getRenderedCoordinatesFromRealCoordinates(
@@ -167,10 +162,6 @@ export default function Game({ mode, onReplay }: Props) {
         )
       : currentLocationCoordinates
     : { x: 0, y: 0 };
-
-  const currentLocationPinPosition = bottomCenterTopTopLeft(
-    currentLocationRenderedCoordinates
-  );
 
   const gameModeToRules: Record<
     GameMode,
@@ -234,9 +225,8 @@ export default function Game({ mode, onReplay }: Props) {
               ref={mapRef}
             />
 
-            {userGuessPinPosition &&
-              userGuess &&
-              currentLocationPinPosition &&
+            {userGuess &&
+              currentLocationRenderedCoordinates &&
               currentLocation && (
                 <>
                   {shouldShowAnswer && (
@@ -248,8 +238,8 @@ export default function Game({ mode, onReplay }: Props) {
                         y2={currentLocationRenderedCoordinates.y}
                       />
                       <Pin
-                        x={currentLocationPinPosition.x}
-                        y={currentLocationPinPosition.y}
+                        x={currentLocationRenderedCoordinates.x}
+                        y={currentLocationRenderedCoordinates.y}
                         variant="star"
                       />
                       <GuessScore
@@ -260,8 +250,8 @@ export default function Game({ mode, onReplay }: Props) {
                   )}
 
                   <Pin
-                    x={userGuessPinPosition.x}
-                    y={userGuessPinPosition.y}
+                    x={userGuess.renderedCoordinates.x}
+                    y={userGuess.renderedCoordinates.y}
                     variant="mario"
                   />
                 </>

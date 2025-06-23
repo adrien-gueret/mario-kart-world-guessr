@@ -4,16 +4,53 @@ import "./Pin.css";
 
 type Props = Coordinates & {
   variant?: "mario" | "star";
+  onlyHead?: boolean;
 };
 
-export default function Pin({ x, y, variant = "mario" }: Props) {
+const FULL_PIN_SIZE = 64;
+const ONLY_HEAD_PIN_SIZE = 28;
+
+function targetCoordinatesToFullPinDomCoordinates(coordinates: Coordinates) {
+  return {
+    x: coordinates.x - FULL_PIN_SIZE / 2,
+    y: coordinates.y - FULL_PIN_SIZE,
+  };
+}
+
+function targetCoordinatesToOnlyHeadPinDomCoordinates(
+  coordinates: Coordinates
+) {
+  return {
+    x: coordinates.x - ONLY_HEAD_PIN_SIZE / 2,
+    y: coordinates.y - ONLY_HEAD_PIN_SIZE / 2,
+  };
+}
+
+export default function Pin({
+  x,
+  y,
+  variant = "mario",
+  onlyHead = false,
+}: Props) {
+  const { x: domX, y: domY } = onlyHead
+    ? targetCoordinatesToOnlyHeadPinDomCoordinates({
+        x,
+        y,
+      })
+    : targetCoordinatesToFullPinDomCoordinates({
+        x,
+        y,
+      });
+
   return (
     <div
-      key={`${x}-${y}`}
-      className={`game-map-pin variant-${variant}`}
+      key={`${domX}-${domY}`}
+      className={`game-map-pin variant-${variant} ${
+        onlyHead ? "only-head" : ""
+      }`}
       style={{
-        left: `${x}px`,
-        top: `${y}px`,
+        left: `${domX}px`,
+        top: `${domY}px`,
       }}
     >
       <img src={`./ui/icon-${variant}.webp`} alt="" />
