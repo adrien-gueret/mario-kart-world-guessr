@@ -36,6 +36,7 @@ export type Texts = {
   ) => ReactNode;
   "endGame.goal.description": (photoCount: number) => ReactNode;
   "endGame.daily.description": string;
+  "endGame.daily.next": string;
   "share.text.title": string;
   "share.copy.button.label": string;
   "share.copy.success": string;

@@ -73,6 +73,21 @@
   animation: copyFade 0.3s ease-in-out forwards;
 }
 
+.counter-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.counter {
+  font-family: "DigitalDisplay", Courier, monospace;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
 @keyframes copyFade {
   from {
     opacity: 0;
