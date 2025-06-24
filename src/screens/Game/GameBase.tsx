@@ -49,7 +49,16 @@ export default function Game({ mode, onReplay }: Props) {
     maxLocations,
     isLocationLoading,
     gameHistory,
+    nextDailyDate,
   } = useGame(mode);
+
+  const totalScore = gameHistory.scores.reduce((acc, score) => acc + score, 0);
+
+  useEffect(() => {
+    if (mode === "goal" && totalScore >= 50000) {
+      setIsGameEnded(true);
+    }
+  }, [mode, totalScore]);
 
   const [currentLocationCoordinates, setCurrentLocationCoordinates] =
     useState<Coordinates | null>(null);
@@ -63,7 +72,6 @@ export default function Game({ mode, onReplay }: Props) {
 
   const isGameOver = isGameEnded || hasReachedLimit;
 
-  const [totalScore, setTotalScore] = useState<number>(0);
   const [guessData, setGuessData] = useState<{
     distance: number;
     score: number;
@@ -139,15 +147,6 @@ export default function Game({ mode, onReplay }: Props) {
     addScoreInHistory(newScore);
 
     setGuessData({ distance, score: newScore });
-    setTotalScore((prevScore) => {
-      const updatedScore = prevScore + newScore;
-
-      if (mode === "goal" && updatedScore >= 50000) {
-        setIsGameEnded(true);
-      }
-
-      return updatedScore;
-    });
 
     if (mode === "survival" && newScore < 3000) {
       setIsGameEnded(true);
@@ -300,7 +299,12 @@ export default function Game({ mode, onReplay }: Props) {
               return translate("endGame.goal.description")(photoCount);
 
             case "daily":
-              return <EndDailyGame gameHistory={gameHistory} />;
+              return (
+                <EndDailyGame
+                  gameHistory={gameHistory}
+                  nextDailyDate={nextDailyDate}
+                />
+              );
           }
         })()}
 

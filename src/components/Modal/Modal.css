@@ -35,7 +35,7 @@
   opacity: 0;
   overflow: auto;
   overflow-x: hidden;
-  max-height: 80vh;
+  max-height: 95vh;
   min-width: 350px;
   background-color: #f8f8f8;
   background-image: url(./backgrounds/dialog.jpg);

@@ -63,5 +63,6 @@ export default function useDailyGame(history: GameHistory) {
     isLoading,
     hasReachedLimit,
     maxLocations: dailyGame?.photos.length ?? 0,
+    nextDailyDate: dailyGame?.nextDailyDate ?? null,
   };
 }

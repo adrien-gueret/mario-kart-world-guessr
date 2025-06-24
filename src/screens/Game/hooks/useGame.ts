@@ -5,23 +5,48 @@ import fetchApi from "@/services/api";
 import type { GameMode, GameHistory } from "@/types/game";
 import type { LocationBase } from "@/types/location";
 
+import { getKey, storeKey } from "@/services/store";
+
 import useDailyGame from "./useDailyGame";
 
 export default function useGame(mode: GameMode) {
-  const [gameHistory, setGameHistory] = useState<GameHistory>({
-    scores: [],
+  const [gameHistory, setGameHistory] = useState<GameHistory>(() => {
+    if (mode !== "daily") {
+      return { scores: [] };
+    }
+
+    const storedDaily = getKey("daily");
+    return storedDaily?.history || { scores: [] };
   });
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currentLocation, setCurrentLocation] = useState<LocationBase | null>(
     null
   );
-  const [currentLocationIndex, setCurrentLocationIndex] = useState<number>(0);
+  const [currentLocationIndex, setCurrentLocationIndex] = useState<number>(
+    () => {
+      if (mode !== "daily") {
+        return 0;
+      }
+
+      const storedDaily = getKey("daily");
+      return (storedDaily?.history.scores.length || 1) - 1;
+    }
+  );
 
   const addScoreInHistory = useCallback((score: number) => {
-    setGameHistory((prevState) => ({
-      ...prevState,
-      scores: [...prevState.scores, score],
-    }));
+    setGameHistory((prevState) => {
+      const newHistory = {
+        ...prevState,
+        scores: [...prevState.scores, score],
+      };
+
+      storeKey("daily", {
+        history: newHistory,
+      });
+
+      return newHistory;
+    });
   }, []);
 
   const {
@@ -29,6 +54,7 @@ export default function useGame(mode: GameMode) {
     isLoading: isDailyGameLoading,
     hasReachedLimit,
     maxLocations: dailyGameMaxLocations,
+    nextDailyDate,
   } = useDailyGame(gameHistory);
 
   const getNextLocation =
@@ -65,5 +91,6 @@ export default function useGame(mode: GameMode) {
     currentLocationIndex,
     maxLocations: mode === "daily" ? dailyGameMaxLocations : 0,
     hasReachedLimit,
+    nextDailyDate,
   };
 }
