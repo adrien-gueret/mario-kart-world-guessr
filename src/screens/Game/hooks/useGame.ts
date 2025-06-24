@@ -5,13 +5,14 @@ import fetchApi from "@/services/api";
 import type { GameMode, GameHistory } from "@/types/game";
 import type { LocationBase } from "@/types/location";
 
+import { shouldRunNewDailyGame } from "@/services/daily";
 import { getKey, storeKey } from "@/services/store";
 
 import useDailyGame from "./useDailyGame";
 
 export default function useGame(mode: GameMode) {
   const [gameHistory, setGameHistory] = useState<GameHistory>(() => {
-    if (mode !== "daily") {
+    if (mode !== "daily" || shouldRunNewDailyGame()) {
       return { scores: [] };
     }
 
@@ -25,7 +26,7 @@ export default function useGame(mode: GameMode) {
   );
   const [currentLocationIndex, setCurrentLocationIndex] = useState<number>(
     () => {
-      if (mode !== "daily") {
+      if (mode !== "daily" || shouldRunNewDailyGame()) {
         return 0;
       }
 
@@ -41,7 +42,10 @@ export default function useGame(mode: GameMode) {
         scores: [...prevState.scores, score],
       };
 
+      const storedDaily = getKey("daily");
+
       storeKey("daily", {
+        ...storedDaily,
         history: newHistory,
       });
 

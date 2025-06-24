@@ -1,9 +1,11 @@
 import { useState, useCallback } from "react";
 
 import fetchApi from "@/services/api";
+import { isDateInThePast } from "@/services/daily";
 
 import type { GameHistory } from "@/types/game";
 import type { LocationBase } from "@/types/location";
+import { storeKey } from "@/services/store";
 
 type DailyGame = {
   photos: LocationBase[];
@@ -16,9 +18,7 @@ function shouldFetchDailyGame(nextDailyDate?: string): boolean {
     return true;
   }
 
-  const today = new Date();
-  const nextDaily = new Date(nextDailyDate);
-  return today >= nextDaily;
+  return isDateInThePast(nextDailyDate);
 }
 
 export default function useDailyGame(history: GameHistory) {
@@ -51,9 +51,21 @@ export default function useDailyGame(history: GameHistory) {
       return null;
     }
 
-    const { photos } = shouldFetchDailyGame(dailyGame?.nextDailyDate)
-      ? await fetchDailyGame()
-      : (dailyGame as DailyGame);
+    let photos: LocationBase[] = [];
+
+    if (shouldFetchDailyGame(dailyGame?.nextDailyDate)) {
+      const response = await fetchDailyGame();
+      photos = response.photos;
+
+      storeKey("daily", {
+        history: {
+          scores: [],
+        },
+        nextDailyDate: response.nextDailyDate,
+      });
+    } else {
+      photos = dailyGame?.photos || [];
+    }
 
     return photos[history.scores.length] ?? null;
   }, [dailyGame, fetchDailyGame, hasReachedLimit, history]);
