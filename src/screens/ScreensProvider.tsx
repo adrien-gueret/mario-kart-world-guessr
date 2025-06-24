@@ -14,7 +14,12 @@ import { SurvivalGame, GoalGame, DailyGame } from "./Game";
 import Title from "./Title";
 import Upload from "./Upload";
 
-export type ScreenName = "Title" | "SurvivalGame" | "GoalGame" | "DailyGame" | "Upload";
+export type ScreenName =
+  | "Title"
+  | "SurvivalGame"
+  | "GoalGame"
+  | "DailyGame"
+  | "Upload";
 type ScreenHashtag = `#/${Lowercase<ScreenName>}`;
 
 const screenHashtagsToScreenNames: Record<ScreenHashtag, ScreenName> = {
@@ -37,14 +42,25 @@ const ScreenContext = createContext<ScreenContextType>({
   setCurrentScreenName: () => "",
 } as ScreenContextType);
 
-const getScreenNameFromHash = (): ScreenName | null => {
+const getScreenNameFromHash = (): ScreenName => {
   const newHash = window.location.hash as ScreenHashtag;
 
   const newScreenName = newHash
     ? screenHashtagsToScreenNames[newHash]
     : "Title";
 
-  return newScreenName || null;
+  return newScreenName ?? "Title";
+};
+
+const removeTitleTagFromHash = (currentScreenName: ScreenName): boolean => {
+  if (currentScreenName !== "Title") {
+    return false;
+  }
+
+  const noHashURL = window.location.href.replace(/#.*$/, "");
+  window.history.replaceState("", document.title, noHashURL);
+
+  return true;
 };
 
 export function ScreensProvider({ children }: { children: ReactNode }) {
@@ -60,28 +76,31 @@ export function ScreensProvider({ children }: { children: ReactNode }) {
     Upload,
   };
 
+  const handleHashChange = () => {
+    const newScreenName = getScreenNameFromHash();
+
+    document.startViewTransition(() => {
+      flushSync(() => {
+        setCurrentScreenName(newScreenName);
+        removeTitleTagFromHash(newScreenName);
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+    });
+  };
+
   const goToScreen = useCallback((screenName: ScreenName) => {
-    window.location.hash = `/${screenName.toLowerCase()}`;
+    if (removeTitleTagFromHash(screenName)) {
+      handleHashChange();
+    } else {
+      window.location.hash = `/${screenName.toLowerCase()}`;
+    }
   }, []);
 
   useEffect(() => {
-    const handleHashChange = () => {
-      const newScreenName = getScreenNameFromHash();
-
-      if (newScreenName) {
-        document.startViewTransition(() => {
-          flushSync(() => {
-            setCurrentScreenName(newScreenName);
-
-            window.scrollTo({
-              top: 0,
-              behavior: "smooth",
-            });
-          });
-        });
-      }
-    };
-
     window.addEventListener("hashchange", handleHashChange);
 
     return () => {
