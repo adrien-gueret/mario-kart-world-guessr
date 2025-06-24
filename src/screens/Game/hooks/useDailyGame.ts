@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 
 import fetchApi from "@/services/api";
-import { isDateInThePast } from "@/services/daily";
+import { isDateInThePast, shouldRunNewDailyGame } from "@/services/daily";
 
 import type { GameHistory } from "@/types/game";
 import type { LocationBase } from "@/types/location";
@@ -57,12 +57,14 @@ export default function useDailyGame(history: GameHistory) {
       const response = await fetchDailyGame();
       photos = response.photos;
 
-      storeKey("daily", {
-        history: {
-          scores: [],
-        },
-        nextDailyDate: response.nextDailyDate,
-      });
+      if (shouldRunNewDailyGame()) {
+        storeKey("daily", {
+          history: {
+            scores: [],
+          },
+          nextDailyDate: response.nextDailyDate,
+        });
+      }
     } else {
       photos = dailyGame?.photos || [];
     }
