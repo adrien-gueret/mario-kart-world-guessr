@@ -1,6 +1,6 @@
 import GameBase from "./GameBase";
 
-import useReplay from "./useReplay";
+import useReplay from "./hooks/useReplay";
 
 export default function DailyGame() {
   const { playIndex, replay } = useReplay();
