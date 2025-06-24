@@ -27,13 +27,7 @@ function Title() {
           </Button>
           <Text>{translate("mode.goal.description")}</Text>
         </li>
-        <li
-          style={{
-            pointerEvents: "none",
-            opacity: 0.5,
-            filter: "grayscale(100%)",
-          }}
-        >
+        <li>
           <Button onClick={() => setCurrentScreenName("DailyGame")}>
             {translate("mode.daily.label")}
           </Button>

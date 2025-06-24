@@ -21,8 +21,8 @@ const en: Texts = {
   "mode.survival.description":
     "Keep playing as long as you score at least 3000 points!",
   "mode.daily.label": "Daily Photos",
-  "mode.daily.description": "Available soon!",
-  //"Every day, a new selection of five photos: get a better score than your friends!",
+  "mode.daily.description":
+    "Every day, a new selection of five photos: get a better score than your friends!",
   "rules.title": "Game Rules",
   "rules.description":
     "Click on the map to guess where the photo was taken. The closer you are, the more points you score, up to 5000 per photo!",
