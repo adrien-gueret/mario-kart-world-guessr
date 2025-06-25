@@ -9,6 +9,8 @@ const en: Texts = {
   "clickMap.subtitle": "Click on the map to guess!",
   "guess.label": "Guess",
   "next.label": "Next",
+  "close.label": "Close",
+  "more.label": "More",
   "distance.label": "Distance: ",
   "distance.value": (distance: number) =>
     `${kilometersToMiles(distance)} miles`,
@@ -132,6 +134,13 @@ const en: Texts = {
   "upload.success.title": "Photo sent!",
   "upload.success.info":
     "It will be visible after validation. Thank you for your contribution!",
+  "photos.title": "All photos",
+  "photos.description": (
+    <>
+      Discover all the photos of <b>Mario Kart World Guessr</b>!
+    </>
+  ),
+  "photo.details.title": "Photo details",
 };
 
 export default en;

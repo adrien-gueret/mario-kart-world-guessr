@@ -7,6 +7,8 @@ export type Texts = {
   "clickMap.subtitle": string;
   "guess.label": string;
   "next.label": string;
+  "close.label": string;
+  "more.label": string;
   "distance.label": string;
   "distance.value": (distance: number) => string;
   "score.label": string;
@@ -72,6 +74,9 @@ export type Texts = {
   "upload.error.serverError": string;
   "upload.success.title": string;
   "upload.success.info": string;
+  "photos.title": string;
+  "photos.description": ReactNode;
+  "photo.details.title": string;
 };
 
 export type TranslationKey = keyof Texts;
