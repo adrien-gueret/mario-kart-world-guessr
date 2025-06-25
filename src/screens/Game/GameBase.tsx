@@ -52,6 +52,8 @@ export default function Game({ mode, onReplay }: Props) {
     nextDailyDate,
   } = useGame(mode);
 
+  const photoCount = gameHistory.scores.length;
+
   const totalScore = gameHistory.scores.reduce((acc, score) => acc + score, 0);
 
   useEffect(() => {
@@ -67,7 +69,6 @@ export default function Game({ mode, onReplay }: Props) {
     realCoordinates: Coordinates;
     renderedCoordinates: Coordinates;
   } | null>(null);
-  const [photoCount, setPhotoCount] = useState<number>(1);
   const [isGameEnded, setIsGameEnded] = useState<boolean>(false);
 
   const isGameOver = isGameEnded || hasReachedLimit;
@@ -89,7 +90,6 @@ export default function Game({ mode, onReplay }: Props) {
 
       setUserGuess(null);
       setGuessData(null);
-      setPhotoCount((prevCount) => prevCount + 1);
 
       if (photoSubtitleRef.current && shouldScroll) {
         photoSubtitleRef.current.scrollIntoView({
