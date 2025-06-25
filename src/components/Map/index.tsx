@@ -8,7 +8,7 @@ import mapImageUrl from "./map.png";
 import mapWithCoursesImageUrl from "./map_with_courses.png";
 
 type Props = {
-  onClick: (coordinates: {
+  onClick?: (coordinates: {
     realCoordinates: Coordinates;
     renderedCoordinates: { x: number; y: number };
   }) => void;
@@ -27,16 +27,16 @@ export default function Map({
       y: event.clientY,
     });
 
-    onClick(coordinates);
+    onClick?.(coordinates);
   };
   return (
     <img
       ref={ref}
       draggable={false}
-      className="game-map"
+      className={`game-map ${onClick ? "" : " no-interaction"}`}
       src={withCourses ? mapWithCoursesImageUrl : mapImageUrl}
       alt="Game Map"
-      onClick={handleMapClick}
+      onClick={onClick ? handleMapClick : void 0}
     />
   );
 }

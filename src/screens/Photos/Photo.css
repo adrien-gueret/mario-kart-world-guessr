@@ -1,0 +1,33 @@
+.photo-screen .photo-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  margin: 24px 0;
+}
+
+.photo-list img {
+  max-width: 394px;
+  transition: transform 200ms ease-in, box-shadow 200ms ease-in;
+  cursor: pointer;
+  border: 2px solid #222;
+}
+
+.photo-list img:hover,
+.photo-list img:focus-visible {
+  transform: scale(1.05);
+  box-shadow: 2px 2px 0 #222;
+}
+
+.photo-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+}

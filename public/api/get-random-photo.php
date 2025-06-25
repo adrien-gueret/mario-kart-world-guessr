@@ -23,10 +23,13 @@ function getRandomPhoto($pdo, $excludeIds = []) {
         $where .= " AND p.id NOT IN ($placeholders)";
     }
     
-    $sql = "SELECT p.id as photoName, p.author_name as authorName
+    $sql = "SELECT p.id as photoName, p.author_name as authorName,
+            COUNT(s.photo_id) as viewCount
             FROM `mario-kart-world-photos` p
+            LEFT JOIN `mario-kart-world-suggestions` s ON p.id = s.photo_id
             $where
-            ORDER BY RAND()
+            GROUP BY p.id, p.author_name
+            ORDER BY viewCount ASC, RAND()
             LIMIT 1";
     
     $stmt = $pdo->prepare($sql);
