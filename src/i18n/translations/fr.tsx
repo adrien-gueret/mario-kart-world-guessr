@@ -5,6 +5,8 @@ const fr: Texts = {
   "clickMap.subtitle": "Cliquez sur la carte pour deviner !",
   "guess.label": "Deviner",
   "next.label": "Continuer",
+  "close.label": "Fermer",
+  "more.label": "Plus",
   "distance.label": "Distance : ",
   "distance.value": (distance: number) => `${distance.toFixed(2)} km`,
   "score.label": "Score : ",
@@ -132,6 +134,13 @@ const fr: Texts = {
   "upload.success.title": "Photo envoyée !",
   "upload.success.info":
     "Elle sera visible après une validation. Merci de votre contribution !",
+  "photos.title": "Toutes les photos",
+  "photos.description": (
+    <>
+      Découvrez toutes les photos de <b>Mario Kart World Guessr</b>!
+    </>
+  ),
+  "photo.details.title": "Détails de la photo",
 };
 
 export default fr;

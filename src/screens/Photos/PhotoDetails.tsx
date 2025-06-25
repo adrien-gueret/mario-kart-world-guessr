@@ -5,6 +5,8 @@ import Map from "@/components/Map";
 import Photo from "@/components/Photo";
 import Loader from "@/components/Loader";
 
+import { useTranslations } from "@/i18n";
+
 import fetchApi from "@/services/api";
 
 import type { Coordinates } from "@/types/location";
@@ -24,6 +26,7 @@ export default function PhotoDetails({ photoName, onClose }: Props) {
   const lastPhotoFetched = useRef<string | null>(null);
   const mapRef = useRef<HTMLImageElement>(null);
   const [isMapReady, setIsMapReady] = useState(false);
+  const { translate } = useTranslations();
 
   useEffect(() => {
     if (lastPhotoFetched.current === photoName) {
@@ -44,8 +47,6 @@ export default function PhotoDetails({ photoName, onClose }: Props) {
         setIsLoading(false);
       });
   }, [photoName]);
-
-  console.log("guesses", guesses);
 
   return (
     <div className="photo-details">
@@ -78,7 +79,7 @@ export default function PhotoDetails({ photoName, onClose }: Props) {
         )}
       </div>
 
-      <Button onClick={onClose}>Close</Button>
+      <Button onClick={onClose}>{translate("close.label")}</Button>
     </div>
   );
 }

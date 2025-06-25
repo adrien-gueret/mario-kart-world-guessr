@@ -5,6 +5,7 @@ import Loader from "@/components/Loader";
 import Modal from "@/components/Modal";
 import Text from "@/components/Text";
 
+import { useTranslations } from "@/i18n";
 import fetchApi from "@/services/api";
 
 import PhotoDetails from "./PhotoDetails";
@@ -21,6 +22,7 @@ export default function Photos() {
   );
   const [photoNames, setPhotoNames] = useState<string[]>([]);
   const currentFetchingPage = useRef(0);
+  const { translate } = useTranslations();
 
   useEffect(() => {
     if (currentFetchingPage.current === currentPage) {
@@ -68,10 +70,8 @@ export default function Photos() {
 
   return (
     <div className="photo-screen">
-      <h2>All photos</h2>
-      <Text component="p">
-        Discover all <b>Mario Kart World Guessr</b> photos!
-      </Text>
+      <h2>{translate("photos.title")}</h2>
+      <Text component="p">{translate("photos.description")}</Text>
 
       {photoNames.length > 0 && (
         <ul className="photo-list">
@@ -99,14 +99,14 @@ export default function Photos() {
             setCurrentPage((prev) => prev + 1);
           }}
         >
-          More
+          {translate("more.label")}
         </Button>
       )}
 
       {isLoading && <Loader />}
 
       <Modal
-        title="Détails de la photo"
+        title={translate("photo.details.title")}
         isOpen={areDetailsOpen}
         disableSkew
         noDelay
