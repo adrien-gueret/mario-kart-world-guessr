@@ -82,7 +82,7 @@ export default function Photos() {
                 draggable={false}
                 tabIndex={1}
                 key={photoName}
-                src={`/photos/${photoName}.jpg`}
+                src={`./photos/${photoName}.jpg`}
                 alt=""
                 loading="lazy"
                 onClick={getHandleClick(photoName)}
