@@ -14,12 +14,14 @@ type Props = {
   }) => void;
   ref?: React.Ref<HTMLImageElement>;
   withCourses?: boolean;
+  onLoad?: () => void;
 };
 
 export default function Map({
   onClick,
   ref = null,
   withCourses = false,
+  onLoad,
 }: Props) {
   const handleMapClick = (event: MouseEvent<HTMLImageElement>) => {
     const coordinates = getCoordinatesFromImage(event.currentTarget, {
@@ -37,6 +39,7 @@ export default function Map({
       src={withCourses ? mapWithCoursesImageUrl : mapImageUrl}
       alt="Game Map"
       onClick={onClick ? handleMapClick : void 0}
+      onLoad={onLoad}
     />
   );
 }

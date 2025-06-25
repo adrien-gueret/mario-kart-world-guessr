@@ -23,6 +23,7 @@ export default function PhotoDetails({ photoName, onClose }: Props) {
   const [guesses, setGuesses] = useState<Guess[]>([]);
   const lastPhotoFetched = useRef<string | null>(null);
   const mapRef = useRef<HTMLImageElement>(null);
+  const [isMapReady, setIsMapReady] = useState(false);
 
   useEffect(() => {
     if (lastPhotoFetched.current === photoName) {
@@ -50,12 +51,12 @@ export default function PhotoDetails({ photoName, onClose }: Props) {
     <div className="photo-details">
       <Photo photoName={photoName} />
 
-      <div style={{ position: "relative" }}>
+      <div style={{ position: "relative", textAlign: "center" }}>
         <div style={{ display: isLoading ? "none" : "block" }}>
-          <Map ref={mapRef} />
+          <Map ref={mapRef} onLoad={() => setIsMapReady(true)} />
         </div>
 
-        {isLoading ? (
+        {isLoading || !isMapReady ? (
           <Loader />
         ) : (
           <>
