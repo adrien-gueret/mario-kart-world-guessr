@@ -10,6 +10,7 @@
   background-repeat: no-repeat;
   filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.5));
   animation: fallDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  text-align: center;
 }
 
 .game-map-pin.variant-star {

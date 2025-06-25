@@ -29,6 +29,7 @@ export default function Photo({ photoName }: { photoName?: string }) {
         position: "relative",
         minWidth: `${width}px`,
         minHeight: `${height}px`,
+        textAlign: "center",
       }}
     >
       <div
