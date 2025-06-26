@@ -14,6 +14,7 @@ import "./Photo.css";
 
 export default function Photos() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [seeFullMap, setSeeFullMap] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMorePhoto, setHasMorePhoto] = useState(false);
   const [areDetailsOpen, setAreDetailsOpen] = useState(false);
@@ -72,6 +73,26 @@ export default function Photos() {
     <div className="photo-screen">
       <h2>{translate("photos.title")}</h2>
       <Text component="p">{translate("photos.description")}</Text>
+
+      {import.meta.env.DEV && (
+        <div>
+          <p>
+            <label>
+              <input
+                type="checkbox"
+                name="see-full-map"
+                checked={seeFullMap}
+                onChange={() => {
+                  setSeeFullMap((prev) => !prev);
+                }}
+              />
+              See full map
+            </label>
+          </p>
+        </div>
+      )}
+
+      {seeFullMap && <div className="full-map"></div>}
 
       {photoNames.length > 0 && (
         <ul className="photo-list">
