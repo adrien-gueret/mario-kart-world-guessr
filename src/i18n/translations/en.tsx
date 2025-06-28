@@ -126,7 +126,7 @@ const en: Texts = {
   "upload.step2.title": "2. Where did you take this photo?",
   "upload.step2.info":
     "Click on the map to indicate the location of your photo. Be as precise as possible!",
-  "upload.step2.help.label": "Show tracks and roads",
+  "upload.step2.help.label": "Show courses and roads",
   "upload.step3.title": "3. Optional: log in",
   "upload.step3.info": (
     <>
