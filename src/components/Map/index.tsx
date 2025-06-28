@@ -12,7 +12,7 @@ import { getCoordinatesFromImage } from "@/services/coordinates";
 
 import "./Map.css";
 import mapImageUrl from "./map.png";
-import mapWithCoursesImageUrl from "./map_with_courses.png";
+import mapCoursesImageUrl from "./map_courses.png";
 
 type Props = {
   onClick?: (coordinates: {
@@ -93,11 +93,21 @@ export default function Map({
           ref={imgRef}
           draggable={false}
           className={`game-map ${onClick ? "" : " no-interaction"}`}
-          src={shouldShowCourses ? mapWithCoursesImageUrl : mapImageUrl}
+          src={mapImageUrl}
           alt="Game Map"
           onClick={onClick ? handleMapClick : void 0}
           onLoad={handleLoad}
         />
+
+        {shouldShowCourses && (
+          <img
+            draggable={false}
+            className="game-map-courses"
+            style={{ pointerEvents: "none" }}
+            src={mapCoursesImageUrl}
+            alt=""
+          />
+        )}
 
         <MapContext value={{ ratio }}>{children}</MapContext>
       </div>
