@@ -1,30 +1,53 @@
+import type { ReactNode } from "react";
+
+import Text from "@/components/Text";
+
+import { useTranslations } from "@/i18n";
+
 import type { Difficulty } from "@/types/game";
 
+import "./DifficultySelector.css";
+
 type Props = {
+  modeTitle: string;
+  modeDescription: string;
   value: Difficulty | null;
   onSelect: (difficulty: Difficulty) => void;
-  difficulties?: Difficulty[];
+  difficultiesLabels: Record<Difficulty, ReactNode>;
 };
 
+const DIFFICULTIES: Difficulty[] = ["50cc", "100cc", "150cc", "mirror"];
+
 export default function DifficultySelector({
+  modeTitle,
+  modeDescription,
   value,
   onSelect,
-  difficulties = ["50cc", "100cc", "150cc", "mirror"],
+  difficultiesLabels,
 }: Props) {
+  const { translate } = useTranslations();
+
   return (
-    <div className="difficulty-selector">
-      {difficulties.map((difficulty) => (
-        <label key={difficulty} className="difficulty-option">
-          <input
-            type="radio"
-            name="difficulty"
-            value={difficulty}
-            checked={value === difficulty}
-            onChange={() => onSelect(difficulty)}
-          />
-          <span>{difficulty}</span>
-        </label>
-      ))}
+    <div>
+      <h2>{modeTitle}</h2>
+      <Text component="p">{modeDescription}</Text>
+      <h3 className="difficulty-selector-title">
+        {translate("choose.difficulty")}
+      </h3>
+
+      <div className="difficulty-selector">
+        {DIFFICULTIES.map((difficulty) => (
+          <button
+            key={difficulty}
+            onClick={() => onSelect(difficulty)}
+            className={`difficulty-option difficulty-${difficulty}`}
+          >
+            <picture />
+
+            <span>{difficultiesLabels[difficulty]}</span>
+          </button>
+        ))}
+      </div>
     </div>
   );
 }

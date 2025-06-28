@@ -17,16 +17,54 @@ const fr: Texts = {
     "En combien de photos atteindrez-vous 50.000 points ?",
   "mode.survival.label": "Survie",
   "mode.survival.description":
-    "Continuez à jouer tant que vous marquez au moins 3000 points !",
+    "Continuez à jouer tant que vous marquez assez de points !",
   "mode.daily.label": "Photos du jour",
   "mode.daily.description":
     "Chaque jour, une nouvelle sélection de cinq photos : faites un meilleur score que vos amis !",
+  "choose.difficulty": "Choisissez la difficulté",
+  "difficulty.survival.50cc": (
+    <ul>
+      <li>Les photos les plus faciles</li>
+      <li>Possibilité d'afficher les circuits sur la carte</li>
+      <li>
+        La partie continue tant que vous marquez <b>2500 points</b>
+      </li>
+    </ul>
+  ),
+  "difficulty.survival.100cc": (
+    <ul>
+      <li>
+        La plupart des photos, <b>sauf</b> les plus difficiles
+      </li>
+      <li>Possibilité d'afficher les circuits sur la carte</li>
+      <li>
+        La partie continue tant que vous marquez <b>3000 points</b>
+      </li>
+    </ul>
+  ),
+  "difficulty.survival.150cc": (
+    <ul>
+      <li>
+        <b>TOUTES</b> les photos, y compris les plus difficiles
+      </li>
+      <li>Circuits non affichés sur la carte</li>
+      <li>
+        La partie continue tant que vous marquez <b>3500 points</b>
+      </li>
+    </ul>
+  ),
+  "difficulty.survival.mirror": (
+    <ul>
+      <li>Comme le 150cc mais...</li>
+      <li>Les photos et la carte sont inversées !</li>
+    </ul>
+  ),
   "rules.title": "Règles du jeu",
   "rules.description":
     "Cliquez sur la carte pour deviner où la photo a été prise. Plus vous êtes proche, plus vous marquez de points, jusqu'à 5000 par photo !",
   "rules.mode.survival.title": "Mode Survie",
   "rules.mode.survival.description":
-    "La partie continue tant que vous marquez au moins 3000 points. Combien de photos pouvez-vous deviner ?",
+    "La partie continue tant que vous marquez suffisament de points. Combien de photos pouvez-vous deviner ?",
   "rules.mode.goal.title": "Mode Objectif 50.000",
   "rules.mode.goal.description":
     "Devinez des photos jusqu'à atteindre 50.000 points. Combien de photos vous faudra-t-il ?",

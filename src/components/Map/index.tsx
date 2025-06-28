@@ -1,5 +1,12 @@
-import type { MouseEvent } from "react";
+import {
+  useState,
+  type MouseEvent,
+  useLayoutEffect,
+  createContext,
+  useRef,
+} from "react";
 
+import { useTranslations } from "@/i18n";
 import type { Coordinates } from "@/types/location";
 import { getCoordinatesFromImage } from "@/services/coordinates";
 
@@ -15,14 +22,29 @@ type Props = {
   ref?: React.Ref<HTMLImageElement>;
   withCourses?: boolean;
   onLoad?: () => void;
+  canShowCourses?: boolean;
+  children?: React.ReactNode;
 };
+
+type MapContextType = {
+  ratio: number;
+};
+
+export const MapContext = createContext<MapContextType>({
+  ratio: 1,
+} as MapContextType);
 
 export default function Map({
   onClick,
-  ref = null,
-  withCourses = false,
+  canShowCourses = false,
   onLoad,
+  children = null,
 }: Props) {
+  const { translate } = useTranslations();
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  const [ratio, setRatio] = useState(1);
+  const [shouldShowCourses, setShouldShowCourses] = useState(false);
   const handleMapClick = (event: MouseEvent<HTMLImageElement>) => {
     const coordinates = getCoordinatesFromImage(event.currentTarget, {
       x: event.clientX,
@@ -31,15 +53,54 @@ export default function Map({
 
     onClick?.(coordinates);
   };
+
+  const handleLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    onLoad?.();
+    const imageElement = event.currentTarget;
+    setRatio(imageElement.naturalWidth / imageElement.width);
+  };
+
+  useLayoutEffect(() => {
+    const onResize = () => {
+      if (!imgRef.current) {
+        return;
+      }
+      const imageElement = imgRef.current;
+      setRatio(imageElement.naturalWidth / imageElement.width);
+    };
+
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
+
   return (
-    <img
-      ref={ref}
-      draggable={false}
-      className={`game-map ${onClick ? "" : " no-interaction"}`}
-      src={withCourses ? mapWithCoursesImageUrl : mapImageUrl}
-      alt="Game Map"
-      onClick={onClick ? handleMapClick : void 0}
-      onLoad={onLoad}
-    />
+    <>
+      {canShowCourses && (
+        <label className="map-show-courses-label">
+          <input
+            type="checkbox"
+            checked={shouldShowCourses}
+            onChange={() => setShouldShowCourses(!shouldShowCourses)}
+          />
+          {translate("upload.step2.help.label")}
+        </label>
+      )}
+
+      <div style={{ position: "relative" }}>
+        <img
+          ref={imgRef}
+          draggable={false}
+          className={`game-map ${onClick ? "" : " no-interaction"}`}
+          src={shouldShowCourses ? mapWithCoursesImageUrl : mapImageUrl}
+          alt="Game Map"
+          onClick={onClick ? handleMapClick : void 0}
+          onLoad={handleLoad}
+        />
+
+        <MapContext value={{ ratio }}>{children}</MapContext>
+      </div>
+    </>
   );
 }

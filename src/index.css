@@ -83,6 +83,17 @@ h3 {
   flex-direction: column;
   gap: 64px;
 }
+
+.app-home-button {
+  position: absolute;
+  top: 80px;
+  right: 16px;
+}
+
+.App.App-Title .app-home-button {
+  display: none;
+}
+
 @media screen and (max-width: 420px) {
   #root {
     padding: 4px;

@@ -21,16 +21,54 @@ const en: Texts = {
   "mode.goal.description": "In how many photos will you reach 50,000 points?",
   "mode.survival.label": "Survival",
   "mode.survival.description":
-    "Keep playing as long as you score at least 3000 points!",
+    "Keep playing as long as you score enough points!",
   "mode.daily.label": "Daily Photos",
   "mode.daily.description":
     "Every day, a new selection of five photos: get a better score than your friends!",
+  "choose.difficulty": "Choose difficulty",
+  "difficulty.survival.50cc": (
+    <ul>
+      <li>Les photos les plus faciles</li>
+      <li>Possibilité d'afficher les circuits sur la carte</li>
+      <li>
+        La partie continue tant que vous marquez <b>2500 points</b>
+      </li>
+    </ul>
+  ),
+  "difficulty.survival.100cc": (
+    <ul>
+      <li>
+        La plupart des photos, <b>sauf</b> les plus difficiles
+      </li>
+      <li>Possibilité d'afficher les circuits sur la carte</li>
+      <li>
+        La partie continue tant que vous marquez <b>3000 points</b>
+      </li>
+    </ul>
+  ),
+  "difficulty.survival.150cc": (
+    <ul>
+      <li>
+        <b>TOUTES</b> les photos, y compris les plus difficiles
+      </li>
+      <li>Circuits non affichés sur la carte</li>
+      <li>
+        La partie continue tant que vous marquez <b>3500 points</b>
+      </li>
+    </ul>
+  ),
+  "difficulty.survival.mirror": (
+    <ul>
+      <li>Comme le 150cc mais...</li>
+      <li>Les photos et la carte sont inversées !</li>
+    </ul>
+  ),
   "rules.title": "Game Rules",
   "rules.description":
     "Click on the map to guess where the photo was taken. The closer you are, the more points you score, up to 5000 per photo!",
   "rules.mode.survival.title": "Survival Mode",
   "rules.mode.survival.description":
-    "The game continues as long as you score at least 3000 points. How many photos can you guess?",
+    "The game continues as long as you score at least targeted points. How many photos can you guess?",
   "rules.mode.goal.title": "Goal 50,000 Mode",
   "rules.mode.goal.description":
     "Guess photos until you reach 50,000 points. How many photos will it take?",

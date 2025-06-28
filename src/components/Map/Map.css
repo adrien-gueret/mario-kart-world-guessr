@@ -9,3 +9,10 @@
   cursor: default;
   pointer-events: none;
 }
+
+.map-show-courses-label {
+  display: block;
+  margin-top: 24px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}

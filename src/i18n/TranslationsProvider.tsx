@@ -37,8 +37,6 @@ export function TranslationsProvider({ children }: { children: ReactNode }) {
 
   return (
     <TranslationsContext value={{ currentLocale, translate }}>
-      {children}
-
       <LanguageSelector
         value={currentLocale}
         onChange={(newLocale) => {
@@ -46,6 +44,8 @@ export function TranslationsProvider({ children }: { children: ReactNode }) {
           setDocumentLanguage(newLocale);
         }}
       />
+
+      {children}
     </TranslationsContext>
   );
 }

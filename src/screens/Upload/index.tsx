@@ -22,11 +22,8 @@ import "./Upload.css";
 function Upload() {
   const { logout, user } = useGoogleUser();
 
-  const [locationCoordinates, setLocationCoordinates] = useState<{
-    realCoordinates: Coordinates;
-    renderedCoordinates: Coordinates;
-  } | null>(null);
-  const [showCourses, setShowCourses] = useState<boolean>(false);
+  const [locationCoordinates, setLocationCoordinates] =
+    useState<Coordinates | null>(null);
   const [uploadErrorStatus, setUploadErrorStatus] = useState<number | null>(
     null
   );
@@ -44,9 +41,7 @@ function Upload() {
     const formData = new FormData();
 
     const photo = form.photo.files[0];
-    const { x = 0, y = 0 } = locationCoordinates
-      ? locationCoordinates.realCoordinates
-      : {};
+    const { x = 0, y = 0 } = locationCoordinates ? locationCoordinates : {};
 
     if (!photo || !x || !y) {
       setIsLoading(false);
@@ -99,22 +94,16 @@ function Upload() {
 
           <Text component="p">{translate("upload.step2.info")}</Text>
 
-          <label className="show-courses-label">
-            <input
-              type="checkbox"
-              checked={showCourses}
-              onChange={() => setShowCourses(!showCourses)}
-            />
-            {translate("upload.step2.help.label")}
-          </label>
-
-          <div style={{ position: "relative" }}>
-            <Map onClick={setLocationCoordinates} withCourses={showCourses} />
-
+          <Map
+            onClick={({ realCoordinates }) => {
+              setLocationCoordinates(realCoordinates);
+            }}
+            canShowCourses
+          >
             {locationCoordinates && (
               <Pin
-                x={locationCoordinates.renderedCoordinates.x}
-                y={locationCoordinates.renderedCoordinates.y}
+                x={locationCoordinates.x}
+                y={locationCoordinates.y}
                 variant="mario"
                 onlyHead
               />
@@ -122,11 +111,11 @@ function Upload() {
 
             {locationCoordinates && (
               <UploadCoordinates
-                x={locationCoordinates.realCoordinates.x}
-                y={locationCoordinates.realCoordinates.y}
+                x={locationCoordinates.x}
+                y={locationCoordinates.y}
               />
             )}
-          </div>
+          </Map>
         </fieldset>
 
         <fieldset>

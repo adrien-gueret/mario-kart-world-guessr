@@ -12,13 +12,6 @@
   border: none;
 }
 
-.upload-form .show-courses-label {
-  display: block;
-  margin-top: 24px;
-  margin-bottom: 8px;
-  cursor: pointer;
-}
-
 .upload-form .author-info {
   display: flex;
   flex-direction: column;

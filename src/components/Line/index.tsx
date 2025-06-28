@@ -1,3 +1,7 @@
+import { useContext } from "react";
+
+import { MapContext } from "@/components/Map";
+
 import "./Line.css";
 
 interface LineProps {
@@ -8,6 +12,8 @@ interface LineProps {
 }
 
 export default function Line({ x1, y1, x2, y2 }: LineProps) {
+  const { ratio } = useContext(MapContext);
+
   return (
     <svg
       className="game-map-line"
@@ -21,7 +27,14 @@ export default function Line({ x1, y1, x2, y2 }: LineProps) {
         opacity: 0.5,
       }}
     >
-      <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#000" strokeWidth={3} />
+      <line
+        x1={x1 / ratio}
+        y1={y1 / ratio}
+        x2={x2 / ratio}
+        y2={y2 / ratio}
+        stroke="#000"
+        strokeWidth={3}
+      />
     </svg>
   );
 }
