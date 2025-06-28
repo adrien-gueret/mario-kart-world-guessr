@@ -1,3 +1,6 @@
+import { useContext } from "react";
+
+import { MapContext } from "@/components/Map";
 import type { Coordinates } from "@/types/location";
 
 import "./Pin.css";
@@ -32,14 +35,15 @@ export default function Pin({
   variant = "mario",
   onlyHead = false,
 }: Props) {
+  const { ratio } = useContext(MapContext);
   const { x: domX, y: domY } = onlyHead
     ? targetCoordinatesToOnlyHeadPinDomCoordinates({
-        x,
-        y,
+        x: x / ratio,
+        y: y / ratio,
       })
     : targetCoordinatesToFullPinDomCoordinates({
-        x,
-        y,
+        x: x / ratio,
+        y: y / ratio,
       });
 
   return (

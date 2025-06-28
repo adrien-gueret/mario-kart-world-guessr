@@ -19,7 +19,7 @@ import Text from "@/components/Text";
 
 import fetchApi from "@/services/api";
 
-import type { GameMode } from "@/types/game";
+import type { Difficulty, GameMode } from "@/types/game";
 
 import { useTranslations } from "@/i18n";
 
@@ -33,10 +33,11 @@ import "./Game.css";
 
 type Props = {
   mode: GameMode;
+  difficulty: Difficulty;
   onReplay: () => void;
 };
 
-export default function Game({ mode, onReplay }: Props) {
+export default function Game({ mode, difficulty, onReplay }: Props) {
   const firstLocationRequested = useRef(false);
   const { setCurrentScreenName } = useScreen();
   const { translate } = useTranslations();
@@ -65,10 +66,7 @@ export default function Game({ mode, onReplay }: Props) {
   const [currentLocationCoordinates, setCurrentLocationCoordinates] =
     useState<Coordinates | null>(null);
 
-  const [userGuess, setUserGuess] = useState<{
-    realCoordinates: Coordinates;
-    renderedCoordinates: Coordinates;
-  } | null>(null);
+  const [userGuess, setUserGuess] = useState<Coordinates | null>(null);
   const [isGameEnded, setIsGameEnded] = useState<boolean>(false);
 
   const isGameOver = isGameEnded || hasReachedLimit;
@@ -78,7 +76,6 @@ export default function Game({ mode, onReplay }: Props) {
     score: number;
   } | null>(null);
 
-  const mapRef = useRef<HTMLImageElement>(null);
   const photoSubtitleRef = useRef<HTMLHeadingElement>(null);
 
   const shouldShowAnswer = Boolean(guessData);
@@ -118,8 +115,8 @@ export default function Game({ mode, onReplay }: Props) {
     if (!import.meta.env.DEV) {
       const formData = new FormData();
       formData.append("photoName", currentLocation.photoName);
-      formData.append("x", `${userGuess.realCoordinates.x}`);
-      formData.append("y", `${userGuess.realCoordinates.y}`);
+      formData.append("x", `${userGuess.x}`);
+      formData.append("y", `${userGuess.y}`);
       fetchApi("/add-guess", "POST", formData);
     }
 
@@ -140,7 +137,7 @@ export default function Game({ mode, onReplay }: Props) {
     setCurrentLocationCoordinates(coordinates);
 
     const { distance, score: newScore } = getDistanceAndScoreFromCoordinates(
-      userGuess.realCoordinates,
+      userGuess,
       coordinates
     );
 
@@ -154,12 +151,7 @@ export default function Game({ mode, onReplay }: Props) {
   };
 
   const currentLocationRenderedCoordinates = currentLocationCoordinates
-    ? mapRef.current
-      ? getRenderedCoordinatesFromRealCoordinates(
-          mapRef.current,
-          currentLocationCoordinates
-        )
-      : currentLocationCoordinates
+    ? currentLocationCoordinates
     : { x: 0, y: 0 };
 
   const gameModeToRules: Record<
@@ -184,14 +176,6 @@ export default function Game({ mode, onReplay }: Props) {
 
   return (
     <div className="game-screen">
-      <Button
-        className="game-back-button"
-        onClick={() => setCurrentScreenName("Title")}
-        variant="secondary"
-      >
-        {translate("home.button")}
-      </Button>
-
       <div className="game-area">
         <div className="rules-container">
           <h2>{translate("rules.title")}</h2>
@@ -213,48 +197,43 @@ export default function Game({ mode, onReplay }: Props) {
 
           <div
             style={{
-              position: "relative",
               pointerEvents: canGuess ? "auto" : "none",
             }}
           >
             <Map
-              onClick={({ realCoordinates, renderedCoordinates }) => {
-                setUserGuess({ realCoordinates, renderedCoordinates });
+              canShowCourses={difficulty === "50cc" || difficulty === "100cc"}
+              onClick={({ realCoordinates }) => {
+                setUserGuess(realCoordinates);
               }}
-              ref={mapRef}
-            />
+            >
+              {userGuess &&
+                currentLocationRenderedCoordinates &&
+                currentLocation && (
+                  <>
+                    {shouldShowAnswer && (
+                      <>
+                        <Line
+                          x1={userGuess.x}
+                          y1={userGuess.y}
+                          x2={currentLocationRenderedCoordinates.x}
+                          y2={currentLocationRenderedCoordinates.y}
+                        />
+                        <Pin
+                          x={currentLocationRenderedCoordinates.x}
+                          y={currentLocationRenderedCoordinates.y}
+                          variant="star"
+                        />
+                        <GuessScore
+                          distance={guessData!.distance}
+                          score={guessData!.score}
+                        />
+                      </>
+                    )}
 
-            {userGuess &&
-              currentLocationRenderedCoordinates &&
-              currentLocation && (
-                <>
-                  {shouldShowAnswer && (
-                    <>
-                      <Line
-                        x1={userGuess.renderedCoordinates.x}
-                        y1={userGuess.renderedCoordinates.y}
-                        x2={currentLocationRenderedCoordinates.x}
-                        y2={currentLocationRenderedCoordinates.y}
-                      />
-                      <Pin
-                        x={currentLocationRenderedCoordinates.x}
-                        y={currentLocationRenderedCoordinates.y}
-                        variant="star"
-                      />
-                      <GuessScore
-                        distance={guessData!.distance}
-                        score={guessData!.score}
-                      />
-                    </>
-                  )}
-
-                  <Pin
-                    x={userGuess.renderedCoordinates.x}
-                    y={userGuess.renderedCoordinates.y}
-                    variant="mario"
-                  />
-                </>
-              )}
+                    <Pin x={userGuess.x} y={userGuess.y} variant="mario" />
+                  </>
+                )}
+            </Map>
           </div>
         </div>
       </div>

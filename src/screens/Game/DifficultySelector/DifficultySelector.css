@@ -1,0 +1,66 @@
+.difficulty-selector-title {
+  margin-top: 24px;
+}
+
+.difficulty-selector {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.difficulty-option {
+  --bx: 0;
+  cursor: pointer;
+  padding: 16px;
+  font-size: 1.1rem;
+  color: inherit;
+  border: 0;
+  background-color: transparent;
+  transition: all 333ms ease-in-out;
+}
+
+.difficulty-option:hover,
+.difficulty-option:focus-visible {
+  background-color: rgba(255, 255, 255, 0.75);
+  transform: scale(1.05);
+  outline: 2px solid #000;
+}
+
+.difficulty-option ul {
+  margin: 0;
+  margin-left: 16px;
+  margin-top: 16px;
+  padding: 0;
+  text-align: left;
+}
+
+.difficulty-option picture {
+  display: inline-block;
+  width: 90px;
+  height: 90px;
+  background-repeat: no-repeat;
+  background-image: url(./ui/difficulty.png);
+  background-position: var(--bx, 0);
+  overflow: hidden;
+  border-radius: 35%;
+  border: 3px solid #213547;
+}
+
+.difficulty-option.difficulty-50cc {
+  --bx: 0;
+}
+
+.difficulty-option.difficulty-100cc {
+  --bx: -90px;
+}
+
+.difficulty-option.difficulty-150cc {
+  --bx: -180px;
+}
+
+.difficulty-option.difficulty-mirror {
+  --bx: -270px;
+}
