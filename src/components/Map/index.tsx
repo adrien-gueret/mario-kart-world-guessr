@@ -20,7 +20,7 @@ type Props = {
     renderedCoordinates: { x: number; y: number };
   }) => void;
   ref?: React.Ref<HTMLImageElement>;
-  withCourses?: boolean;
+  isMirrored?: boolean;
   onLoad?: () => void;
   canShowCourses?: boolean;
   children?: React.ReactNode;
@@ -28,6 +28,7 @@ type Props = {
 
 type MapContextType = {
   ratio: number;
+  isMirrored: boolean;
 };
 
 export const MapContext = createContext<MapContextType>({
@@ -37,6 +38,7 @@ export const MapContext = createContext<MapContextType>({
 export default function Map({
   onClick,
   canShowCourses = false,
+  isMirrored = false,
   onLoad,
   children = null,
 }: Props) {
@@ -88,7 +90,7 @@ export default function Map({
         </label>
       )}
 
-      <div style={{ position: "relative" }}>
+      <div className={`map-container ${isMirrored ? "mirrored" : ""}`}>
         <img
           ref={imgRef}
           draggable={false}
@@ -109,7 +111,7 @@ export default function Map({
           />
         )}
 
-        <MapContext value={{ ratio }}>{children}</MapContext>
+        <MapContext value={{ ratio, isMirrored }}>{children}</MapContext>
       </div>
     </>
   );

@@ -2,3 +2,7 @@
   max-width: 90%;
   border: 2px solid rgba(0, 0, 0, 0.8);
 }
+
+.game-photo.mirrored {
+  transform: scaleX(-1);
+}

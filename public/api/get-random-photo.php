@@ -15,22 +15,62 @@ if (!isset($_SESSION['seen_photos'])) {
     $_SESSION['seen_photos'] = [];
 }
 
-function getRandomPhoto($pdo, $excludeIds = []) {
+$difficulty = isset($_GET['difficulty']) ? $_GET['difficulty'] : '150cc';
+
+$avalaibleDifficulties = ['50cc', '100cc', '150cc', 'mirror'];
+
+if (!in_array($difficulty, $avalaibleDifficulties)) {
+    http_response_code(400);
+    echo json_encode(['error' => 'Invalid difficulty']);
+    exit;
+}
+
+function getRandomPhoto($pdo, $difficulty, $excludeIds = []) {
     $where = "WHERE p.validated_at IS NOT NULL AND p.validated_at <= NOW() - INTERVAL 5 MINUTE";
     
     if (!empty($excludeIds)) {
         $placeholders = rtrim(str_repeat('?,', count($excludeIds)), ',');
         $where .= " AND p.id NOT IN ($placeholders)";
     }
-    
-    $sql = "SELECT p.id as photoName, p.author_name as authorName,
-            COUNT(s.photo_id) as viewCount
-            FROM `mario-kart-world-photos` p
-            LEFT JOIN `mario-kart-world-suggestions` s ON p.id = s.photo_id
-            $where
-            GROUP BY p.id, p.author_name
-            ORDER BY viewCount ASC, RAND()
-            LIMIT 1";
+
+    switch ($difficulty) {
+        case '50cc':
+        case '100cc':
+            $sql = "SELECT
+                        p.id as photoName, p.author_name as authorName, COUNT(s.photo_id) as viewCount
+                    FROM `mario-kart-world-photos` p
+                    LEFT JOIN `mario-kart-world-suggestions` s ON p.id = s.photo_id
+                    LEFT JOIN (
+                        SELECT DISTINCT
+                        s.photo_id,
+                        MEDIAN(
+                            SQRT(
+                            POW(CAST(s.x AS SIGNED) - CAST(p.x AS SIGNED), 2) +
+                            POW(CAST(s.y AS SIGNED) - CAST(p.y AS SIGNED), 2)
+                            )
+                        ) OVER (PARTITION BY s.photo_id) AS median_distance
+                        FROM 
+                        `mario-kart-world-suggestions` s
+                        JOIN
+                        `mario-kart-world-photos` p ON s.photo_id = p.id
+                    ) md ON p.id = md.photo_id
+                    $where AND md.median_distance <= ".($difficulty === '50cc' ? 90 : 200)."
+                    GROUP BY p.id, p.author_name
+                    ORDER BY viewCount ASC, RAND()
+                    LIMIT 1";
+            break;
+
+            default:
+                $sql = "SELECT p.id as photoName, p.author_name as authorName,
+                        COUNT(s.photo_id) as viewCount
+                        FROM `mario-kart-world-photos` p
+                        LEFT JOIN `mario-kart-world-suggestions` s ON p.id = s.photo_id
+                        $where
+                        GROUP BY p.id, p.author_name
+                        ORDER BY viewCount ASC, RAND()
+                        LIMIT 1";
+            break;
+    }
     
     $stmt = $pdo->prepare($sql);
     
@@ -44,11 +84,11 @@ function getRandomPhoto($pdo, $excludeIds = []) {
 }
 
 try {
-    $photo = getRandomPhoto($pdo, $_SESSION['seen_photos']);
+    $photo = getRandomPhoto($pdo, $difficulty, $_SESSION['seen_photos']);
     
     if (!$photo) {
         $_SESSION['seen_photos'] = [];
-        $photo = getRandomPhoto($pdo);
+        $photo = getRandomPhoto($pdo, $difficulty);
     }
     
     if ($photo) {
