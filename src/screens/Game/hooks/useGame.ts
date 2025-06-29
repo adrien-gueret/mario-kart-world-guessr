@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 
 import fetchApi from "@/services/api";
 
-import type { GameMode, GameHistory } from "@/types/game";
+import type { GameMode, GameHistory, Difficulty } from "@/types/game";
 import type { LocationBase } from "@/types/location";
 
 import { shouldRunNewDailyGame } from "@/services/daily";
@@ -10,7 +10,7 @@ import { getKey, storeKey } from "@/services/store";
 
 import useDailyGame from "./useDailyGame";
 
-export default function useGame(mode: GameMode) {
+export default function useGame(mode: GameMode, difficulty: Difficulty) {
   const [gameHistory, setGameHistory] = useState<GameHistory>(() => {
     if (mode !== "daily" || shouldRunNewDailyGame()) {
       return { scores: [] };
@@ -70,7 +70,9 @@ export default function useGame(mode: GameMode) {
       if (mode === "daily") {
         nextLocation = await getNextDailyLocation();
       } else {
-        const response = await fetchApi("/get-random-photo");
+        const response = await fetchApi(
+          `/get-random-photo?difficulty=${difficulty}`
+        );
 
         if (!response.ok) {
           throw new Error("Failed to fetch random location");

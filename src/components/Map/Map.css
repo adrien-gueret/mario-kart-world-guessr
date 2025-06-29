@@ -27,3 +27,12 @@
   bottom: 0;
   width: 100%;
 }
+
+.map-container {
+  position: relative;
+}
+
+.map-container.mirrored .game-map,
+.map-container.mirrored .game-map-courses {
+  transform: scaleX(-1);
+}

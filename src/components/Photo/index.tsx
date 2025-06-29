@@ -1,10 +1,16 @@
-import { useRef, useState, useLayoutEffect } from "react";
+import { useState, useLayoutEffect } from "react";
 
 import Loader from "../Loader";
 
 import "./Photo.css";
 
-export default function Photo({ photoName }: { photoName?: string }) {
+export default function Photo({
+  photoName,
+  isMirrored,
+}: {
+  photoName?: string;
+  isMirrored?: boolean;
+}) {
   const [isComplete, setIsComplete] = useState(false);
   const [width, setWidth] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);
@@ -45,7 +51,7 @@ export default function Photo({ photoName }: { photoName?: string }) {
 
       {photoUrl && (
         <img
-          className="game-photo"
+          className={`game-photo ${isMirrored ? "mirrored" : ""}`}
           draggable={false}
           src={photoUrl}
           style={{ opacity: isComplete ? 1 : 0.1 }}

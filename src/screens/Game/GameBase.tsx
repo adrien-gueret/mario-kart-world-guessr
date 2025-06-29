@@ -3,7 +3,7 @@ import { type Coordinates, type LocationFull } from "@/types/location";
 
 import {
   getDistanceAndScoreFromCoordinates,
-  getRenderedCoordinatesFromRealCoordinates,
+  MAP_SIZE_IN_PIXELS,
 } from "@/services/coordinates";
 
 import Button from "@/components/Button";
@@ -51,7 +51,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     isLocationLoading,
     gameHistory,
     nextDailyDate,
-  } = useGame(mode);
+  } = useGame(mode, difficulty);
 
   const photoCount = gameHistory.scores.length;
 
@@ -115,7 +115,14 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     if (!import.meta.env.DEV) {
       const formData = new FormData();
       formData.append("photoName", currentLocation.photoName);
-      formData.append("x", `${userGuess.x}`);
+      formData.append(
+        "x",
+        `${
+          difficulty === "mirror"
+            ? MAP_SIZE_IN_PIXELS.width - userGuess.x
+            : userGuess.x
+        }`
+      );
       formData.append("y", `${userGuess.y}`);
       fetchApi("/add-guess", "POST", formData);
     }
@@ -134,6 +141,10 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
       y: locationData.y,
     };
 
+    if (difficulty === "mirror") {
+      coordinates.x = MAP_SIZE_IN_PIXELS.width - coordinates.x;
+    }
+
     setCurrentLocationCoordinates(coordinates);
 
     const { distance, score: newScore } = getDistanceAndScoreFromCoordinates(
@@ -145,8 +156,13 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
 
     setGuessData({ distance, score: newScore });
 
-    if (mode === "survival" && newScore < 3000) {
-      setIsGameEnded(true);
+    if (mode === "survival") {
+      const shouldEndGame =
+        (difficulty === "50cc" && newScore < 2500) ||
+        (difficulty === "100cc" && newScore < 3000) ||
+        (difficulty === "150cc" && newScore < 3500) ||
+        (difficulty === "mirror" && newScore < 3500);
+      setIsGameEnded(shouldEndGame);
     }
   };
 
@@ -189,6 +205,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
 
           <Photo
             photoName={isLocationLoading ? "" : currentLocation?.photoName}
+            isMirrored={difficulty === "mirror"}
           />
         </div>
 
@@ -202,6 +219,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
           >
             <Map
               canShowCourses={difficulty === "50cc" || difficulty === "100cc"}
+              isMirrored={difficulty === "mirror"}
               onClick={({ realCoordinates }) => {
                 setUserGuess(realCoordinates);
               }}
