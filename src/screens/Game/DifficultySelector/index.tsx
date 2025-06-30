@@ -15,7 +15,7 @@ type Props = {
   difficultiesLabels: Record<Difficulty, ReactNode>;
 };
 
-const DIFFICULTIES: Difficulty[] = ["50cc", "100cc", "150cc", "mirror"];
+const DIFFICULTIES: Difficulty[] = ["50cc", "100cc", "150cc"];
 
 export default function DifficultySelector({
   modeTitle,
