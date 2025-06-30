@@ -26,6 +26,7 @@ const en: Texts = {
   "mode.daily.description":
     "Every day, a new selection of five photos: get a better score than your friends!",
   "choose.difficulty": "Choose difficulty",
+  "difficulty.label": "Difficulty: ",
   "difficulty.50cc.title": "50cc",
   "difficulty.100cc.title": "100cc",
   "difficulty.150cc.title": "150cc",
@@ -38,7 +39,7 @@ const en: Texts = {
       <li>
         The <b>easiest</b> photos
       </li>
-      <li>Option to display courses on the map</li>
+      <li>Option to display tracks on the map</li>
     </ul>
   ),
   "difficulty.survival.100cc": (
@@ -49,7 +50,7 @@ const en: Texts = {
       <li>
         Most photos, <b>except</b> the most difficult ones
       </li>
-      <li>Option to display courses on the map</li>
+      <li>Option to display tracks on the map</li>
     </ul>
   ),
   "difficulty.survival.150cc": (
@@ -60,7 +61,7 @@ const en: Texts = {
       <li>
         <b>ALL</b> photos, including the most difficult ones
       </li>
-      <li>Cannot display courses on the map</li>
+      <li>Cannot display tracks on the map</li>
     </ul>
   ),
   "difficulty.survival.mirror": (
@@ -71,12 +72,32 @@ const en: Texts = {
       </li>
     </ul>
   ),
+  "difficulty.survival.50cc.short": (
+    <>
+      Game continues as long as you score <b>2500 points</b>.
+    </>
+  ),
+  "difficulty.survival.100cc.short": (
+    <>
+      Game continues as long as you score <b>3000 points</b>.
+    </>
+  ),
+  "difficulty.survival.150cc.short": (
+    <>
+      Game continues as long as you score <b>3500 points</b>.
+    </>
+  ),
+  "difficulty.survival.mirror.short": (
+    <>
+      Game continues as long as you score <b>3500 points</b>.
+    </>
+  ),
   "rules.title": "Game Rules",
   "rules.description":
     "Click on the map to guess where the photo was taken. The closer you are, the more points you score, up to 5000 per photo!",
   "rules.mode.survival.title": "Survival Mode",
   "rules.mode.survival.description":
-    "The game continues as long as you score at least targeted points. How many photos can you guess?",
+    "Keep playing as long as you score enough points each round. How many photos can you guess?",
   "rules.mode.goal.title": "Goal 50,000 Mode",
   "rules.mode.goal.description":
     "Guess photos until you reach 50,000 points. How many photos will it take?",
@@ -134,7 +155,7 @@ const en: Texts = {
   "upload.step2.title": "2. Where did you take this photo?",
   "upload.step2.info":
     "Click on the map to indicate the location of your photo. Be as precise as possible!",
-  "upload.step2.help.label": "Show courses and roads",
+  "upload.step2.help.label": "Show tracks and roads",
   "upload.step3.title": "3. Optional: log in",
   "upload.step3.info": (
     <>

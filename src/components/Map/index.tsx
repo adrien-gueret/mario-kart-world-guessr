@@ -6,6 +6,7 @@ import {
   useRef,
 } from "react";
 
+import Text from "@/components/Text";
 import { useTranslations } from "@/i18n";
 import type { Coordinates } from "@/types/location";
 import { getCoordinatesFromImage } from "@/services/coordinates";
@@ -83,10 +84,12 @@ export default function Map({
         <label className="map-show-courses-label">
           <input
             type="checkbox"
+            className="map-show-courses-label__real_checkbox"
             checked={shouldShowCourses}
             onChange={() => setShouldShowCourses(!shouldShowCourses)}
           />
-          {translate("upload.step2.help.label")}
+          <span className="map-show-courses-label__checkbox" />
+          <Text>{translate("upload.step2.help.label")}</Text>
         </label>
       )}
 
