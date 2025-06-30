@@ -11,7 +11,6 @@ import "./DifficultySelector.css";
 type Props = {
   modeTitle: string;
   modeDescription: string;
-  value: Difficulty | null;
   onSelect: (difficulty: Difficulty) => void;
   difficultiesLabels: Record<Difficulty, ReactNode>;
 };
@@ -21,7 +20,6 @@ const DIFFICULTIES: Difficulty[] = ["50cc", "100cc", "150cc", "mirror"];
 export default function DifficultySelector({
   modeTitle,
   modeDescription,
-  value,
   onSelect,
   difficultiesLabels,
 }: Props) {
@@ -42,9 +40,16 @@ export default function DifficultySelector({
             onClick={() => onSelect(difficulty)}
             className={`difficulty-option difficulty-${difficulty}`}
           >
-            <picture />
+            <div className="difficulty-option__icon">
+              <picture />
+              <div className="difficulty-option__title">
+                {translate(`difficulty.${difficulty}.title`)}
+              </div>
+            </div>
 
-            <span>{difficultiesLabels[difficulty]}</span>
+            <div className="difficulty-option__desc">
+              <Text>{difficultiesLabels[difficulty]}</Text>
+            </div>
           </button>
         ))}
       </div>

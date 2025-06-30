@@ -26,41 +26,49 @@ const en: Texts = {
   "mode.daily.description":
     "Every day, a new selection of five photos: get a better score than your friends!",
   "choose.difficulty": "Choose difficulty",
+  "difficulty.50cc.title": "50cc",
+  "difficulty.100cc.title": "100cc",
+  "difficulty.150cc.title": "150cc",
+  "difficulty.mirror.title": "Mirror",
   "difficulty.survival.50cc": (
     <ul>
-      <li>Les photos les plus faciles</li>
-      <li>Possibilité d'afficher les circuits sur la carte</li>
       <li>
-        La partie continue tant que vous marquez <b>2500 points</b>
+        Game continues as long as you score <b>2500 points</b>
       </li>
+      <li>
+        The <b>easiest</b> photos
+      </li>
+      <li>Option to display courses on the map</li>
     </ul>
   ),
   "difficulty.survival.100cc": (
     <ul>
       <li>
-        La plupart des photos, <b>sauf</b> les plus difficiles
+        Game continues as long as you score <b>3000 points</b>
       </li>
-      <li>Possibilité d'afficher les circuits sur la carte</li>
       <li>
-        La partie continue tant que vous marquez <b>3000 points</b>
+        Most photos, <b>except</b> the most difficult ones
       </li>
+      <li>Option to display courses on the map</li>
     </ul>
   ),
   "difficulty.survival.150cc": (
     <ul>
       <li>
-        <b>TOUTES</b> les photos, y compris les plus difficiles
+        Game continues as long as you score <b>3500 points</b>
       </li>
-      <li>Circuits non affichés sur la carte</li>
       <li>
-        La partie continue tant que vous marquez <b>3500 points</b>
+        <b>ALL</b> photos, including the most difficult ones
       </li>
+      <li>Cannot display courses on the map</li>
     </ul>
   ),
   "difficulty.survival.mirror": (
     <ul>
-      <li>Comme le 150cc mais...</li>
-      <li>Les photos et la carte sont inversées !</li>
+      <li>Same as 150cc but...</li>
+      <li>
+        <b>Photos and map are mirrored!</b>
+      </li>
     </ul>
   ),
   "rules.title": "Game Rules",
