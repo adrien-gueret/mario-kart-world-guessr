@@ -34,6 +34,14 @@ export type Texts = {
   "difficulty.survival.100cc.short": ReactNode;
   "difficulty.survival.150cc.short": ReactNode;
   "difficulty.survival.mirror.short": ReactNode;
+  "difficulty.goal.50cc": ReactNode;
+  "difficulty.goal.100cc": ReactNode;
+  "difficulty.goal.150cc": ReactNode;
+  "difficulty.goal.mirror": ReactNode;
+  "difficulty.goal.50cc.short": ReactNode;
+  "difficulty.goal.100cc.short": ReactNode;
+  "difficulty.goal.150cc.short": ReactNode;
+  "difficulty.goal.mirror.short": ReactNode;
   "rules.title": string;
   "rules.description": string;
   "rules.mode.survival.title": string;
