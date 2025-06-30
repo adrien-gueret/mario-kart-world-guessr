@@ -25,6 +25,10 @@ export default function Modal({
     } else {
       document.body.style.removeProperty("overflow");
     }
+
+    return () => {
+      document.body.style.removeProperty("overflow");
+    };
   }, [isOpen]);
 
   return isOpen ? (
