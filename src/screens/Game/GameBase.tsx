@@ -33,7 +33,7 @@ import "./Game.css";
 
 type Props = {
   mode: GameMode;
-  difficulty: Difficulty;
+  difficulty?: Difficulty;
   onReplay: () => void;
 };
 
@@ -198,6 +198,18 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
           <Text component="p">{translate("rules.description")}</Text>
           <h3>{gameModeRules.title}</h3>
           <Text component="p">{gameModeRules.description}</Text>
+
+          {difficulty && mode !== "daily" && (
+            <>
+              <h3>
+                {translate("difficulty.label")}{" "}
+                {translate(`difficulty.${difficulty}.title`)}
+              </h3>
+              <Text component="p">
+                {translate(`difficulty.${mode}.${difficulty}.short`)}
+              </Text>
+            </>
+          )}
         </div>
 
         <div className="photo-container">

@@ -6,3 +6,13 @@
   gap: 24px;
   padding-bottom: 64px;
 }
+
+.rules-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.rules-container ul li:not(:first-child) {
+  display: none;
+}

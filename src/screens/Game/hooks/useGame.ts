@@ -10,7 +10,7 @@ import { getKey, storeKey } from "@/services/store";
 
 import useDailyGame from "./useDailyGame";
 
-export default function useGame(mode: GameMode, difficulty: Difficulty) {
+export default function useGame(mode: GameMode, difficulty?: Difficulty) {
   const [gameHistory, setGameHistory] = useState<GameHistory>(() => {
     if (mode !== "daily" || shouldRunNewDailyGame()) {
       return { scores: [] };

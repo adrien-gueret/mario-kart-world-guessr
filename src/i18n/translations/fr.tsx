@@ -22,6 +22,7 @@ const fr: Texts = {
   "mode.daily.description":
     "Chaque jour, une nouvelle sélection de cinq photos : faites un meilleur score que vos amis !",
   "choose.difficulty": "Choisissez la difficulté",
+  "difficulty.label": "Difficulté : ",
   "difficulty.50cc.title": "50cc",
   "difficulty.100cc.title": "100cc",
   "difficulty.150cc.title": "150cc",
@@ -66,6 +67,26 @@ const fr: Texts = {
         <b>Les photos et la carte sont inversées !</b>
       </li>
     </ul>
+  ),
+  "difficulty.survival.50cc.short": (
+    <>
+      La partie continue tant que vous marquez <b>2500 points</b>.
+    </>
+  ),
+  "difficulty.survival.100cc.short": (
+    <>
+      La partie continue tant que vous marquez <b>3000 points</b>.
+    </>
+  ),
+  "difficulty.survival.150cc.short": (
+    <>
+      La partie continue tant que vous marquez <b>3500 points</b>.
+    </>
+  ),
+  "difficulty.survival.mirror.short": (
+    <>
+      La partie continue tant que vous marquez <b>3500 points</b>.
+    </>
   ),
   "rules.title": "Règles du jeu",
   "rules.description":
