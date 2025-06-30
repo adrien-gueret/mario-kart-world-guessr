@@ -88,6 +88,58 @@ const fr: Texts = {
       La partie continue tant que vous marquez <b>3500 points</b>.
     </>
   ),
+  "difficulty.goal.50cc": (
+    <ul>
+      <li>
+        Les photos <b>les plus faciles</b>
+      </li>
+      <li>Possibilité d'afficher les circuits sur la carte</li>
+    </ul>
+  ),
+  "difficulty.goal.100cc": (
+    <ul>
+      <li>
+        La plupart des photos, <b>sauf</b> les plus difficiles
+      </li>
+      <li>Possibilité d'afficher les circuits sur la carte</li>
+    </ul>
+  ),
+  "difficulty.goal.150cc": (
+    <ul>
+      <li>
+        <b>TOUTES</b> les photos, y compris les plus difficiles
+      </li>
+      <li>Circuits non affichés sur la carte</li>
+    </ul>
+  ),
+  "difficulty.goal.mirror": (
+    <ul>
+      <li>Comme le 150cc mais...</li>
+      <li>
+        <b>Les photos et la carte sont inversées !</b>
+      </li>
+    </ul>
+  ),
+  "difficulty.goal.50cc.short": (
+    <>
+      Les photos <b>les plus faciles</b> !
+    </>
+  ),
+  "difficulty.goal.100cc.short": (
+    <>
+      La plupart des photos, <b>sauf</b> les plus difficiles.
+    </>
+  ),
+  "difficulty.goal.150cc.short": (
+    <>
+      <b>TOUTES</b> les photos, y compris les plus difficiles !
+    </>
+  ),
+  "difficulty.goal.mirror.short": (
+    <>
+      <b>TOUTES</b> les photos, y compris les plus difficiles !
+    </>
+  ),
   "rules.title": "Règles du jeu",
   "rules.description":
     "Cliquez sur la carte pour deviner où la photo a été prise. Plus vous êtes proche, plus vous marquez de points, jusqu'à 5000 par photo !",

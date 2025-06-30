@@ -92,6 +92,58 @@ const en: Texts = {
       Game continues as long as you score <b>3500 points</b>.
     </>
   ),
+  "difficulty.goal.50cc": (
+    <ul>
+      <li>
+        The <b>easiest</b> photos
+      </li>
+      <li>Option to display tracks on the map</li>
+    </ul>
+  ),
+  "difficulty.goal.100cc": (
+    <ul>
+      <li>
+        Most photos, <b>except</b> the most difficult ones
+      </li>
+      <li>Option to display tracks on the map</li>
+    </ul>
+  ),
+  "difficulty.goal.150cc": (
+    <ul>
+      <li>
+        <b>ALL</b> photos, including the most difficult ones
+      </li>
+      <li>Tracks not displayed on the map</li>
+    </ul>
+  ),
+  "difficulty.goal.mirror": (
+    <ul>
+      <li>Same as 150cc but...</li>
+      <li>
+        <b>Photos and map are mirrored!</b>
+      </li>
+    </ul>
+  ),
+  "difficulty.goal.50cc.short": (
+    <>
+      The <b>easiest</b> photos!
+    </>
+  ),
+  "difficulty.goal.100cc.short": (
+    <>
+      Most photos, <b>except</b> the most difficult ones.
+    </>
+  ),
+  "difficulty.goal.150cc.short": (
+    <>
+      <b>ALL</b> photos, including the most difficult ones!
+    </>
+  ),
+  "difficulty.goal.mirror.short": (
+    <>
+      <b>ALL</b> photos, including the most difficult ones!
+    </>
+  ),
   "rules.title": "Game Rules",
   "rules.description":
     "Click on the map to guess where the photo was taken. The closer you are, the more points you score, up to 5000 per photo!",
