@@ -22,41 +22,49 @@ const fr: Texts = {
   "mode.daily.description":
     "Chaque jour, une nouvelle sélection de cinq photos : faites un meilleur score que vos amis !",
   "choose.difficulty": "Choisissez la difficulté",
+  "difficulty.50cc.title": "50cc",
+  "difficulty.100cc.title": "100cc",
+  "difficulty.150cc.title": "150cc",
+  "difficulty.mirror.title": "Miroir",
   "difficulty.survival.50cc": (
     <ul>
-      <li>Les photos les plus faciles</li>
-      <li>Possibilité d'afficher les circuits sur la carte</li>
       <li>
         La partie continue tant que vous marquez <b>2500 points</b>
       </li>
+      <li>
+        Les photos <b>les plus faciles</b>
+      </li>
+      <li>Possibilité d'afficher les circuits sur la carte</li>
     </ul>
   ),
   "difficulty.survival.100cc": (
     <ul>
       <li>
+        La partie continue tant que vous marquez <b>3000 points</b>
+      </li>
+      <li>
         La plupart des photos, <b>sauf</b> les plus difficiles
       </li>
       <li>Possibilité d'afficher les circuits sur la carte</li>
-      <li>
-        La partie continue tant que vous marquez <b>3000 points</b>
-      </li>
     </ul>
   ),
   "difficulty.survival.150cc": (
     <ul>
       <li>
+        La partie continue tant que vous marquez <b>3500 points</b>
+      </li>
+      <li>
         <b>TOUTES</b> les photos, y compris les plus difficiles
       </li>
       <li>Circuits non affichés sur la carte</li>
-      <li>
-        La partie continue tant que vous marquez <b>3500 points</b>
-      </li>
     </ul>
   ),
   "difficulty.survival.mirror": (
     <ul>
       <li>Comme le 150cc mais...</li>
-      <li>Les photos et la carte sont inversées !</li>
+      <li>
+        <b>Les photos et la carte sont inversées !</b>
+      </li>
     </ul>
   ),
   "rules.title": "Règles du jeu",

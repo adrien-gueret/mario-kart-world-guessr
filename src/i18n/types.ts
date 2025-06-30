@@ -21,6 +21,10 @@ export type Texts = {
   "mode.daily.label": string;
   "mode.daily.description": string;
   "choose.difficulty": string;
+  "difficulty.50cc.title": string;
+  "difficulty.100cc.title": string;
+  "difficulty.150cc.title": string;
+  "difficulty.mirror.title": string;
   "difficulty.survival.50cc": ReactNode;
   "difficulty.survival.100cc": ReactNode;
   "difficulty.survival.150cc": ReactNode;

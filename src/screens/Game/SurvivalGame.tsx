@@ -21,7 +21,6 @@ export default function SurvivalGame() {
     <DifficultySelector
       modeTitle={translate("rules.mode.survival.title")}
       modeDescription={translate("rules.mode.survival.description")}
-      value={difficulty}
       onSelect={setDifficulty}
       difficultiesLabels={{
         "50cc": translate("difficulty.survival.50cc"),
