@@ -24,8 +24,8 @@
 }
 
 .game-map-pin.only-head {
-  width: 28px;
-  height: 28px;
+  width: 40px;
+  height: 40px;
   background-image: none;
   background-color: #fff;
   border-radius: 50%;
@@ -34,7 +34,7 @@
 }
 
 .game-map-pin.only-head > img {
-  width: 28px;
+  width: 40px;
   top: 0;
 }
 

@@ -56,6 +56,7 @@ function getRandomPhoto($pdo, $difficulty, $excludeIds = []) {
                     ) md ON p.id = md.photo_id
                     $where AND md.median_distance <= ".($difficulty === '50cc' ? 90 : 200)."
                     GROUP BY p.id, p.author_name
+                    HAVING viewCount >= 5
                     ORDER BY viewCount ASC, RAND()
                     LIMIT 1";
             break;

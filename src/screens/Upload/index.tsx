@@ -92,7 +92,9 @@ function Upload() {
         <fieldset>
           <h3>{translate("upload.step2.title")}</h3>
 
-          <Text component="p">{translate("upload.step2.info")}</Text>
+          <div>
+            <Text component="p">{translate("upload.step2.info")}</Text>
+          </div>
 
           <Map
             onClick={({ realCoordinates }) => {
