@@ -10,48 +10,6 @@
   pointer-events: none;
 }
 
-.map-show-courses-label {
-  display: inline-block;
-  margin-top: 24px;
-  margin-bottom: 8px;
-  cursor: pointer;
-}
-
-.map-show-courses-label__real_checkbox {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.map-show-courses-label__checkbox {
-  width: 32px;
-  height: 32px;
-  border-radius: 4px;
-  border: 2px solid #213547;
-  vertical-align: middle;
-  margin-right: 8px;
-  background-color: #fff;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.map-show-courses-label__real_checkbox:checked
-  + .map-show-courses-label__checkbox:before {
-  content: "";
-  width: 16px;
-  height: 16px;
-  background-color: red;
-  display: block;
-  border-radius: 4px;
-}
-
-.map-show-courses-label__real_checkbox:focus-visible
-  + .map-show-courses-label__checkbox {
-  outline: rgba(0, 0, 255, 0.5) solid 2px;
-}
-
 .game-map-courses {
   cursor: default;
   pointer-events: none;
@@ -70,4 +28,9 @@
 .map-container.mirrored .game-map,
 .map-container.mirrored .game-map-courses {
   transform: scaleX(-1);
+}
+
+.map-show-courses-container {
+  margin-top: 24px;
+  margin-bottom: 8px;
 }

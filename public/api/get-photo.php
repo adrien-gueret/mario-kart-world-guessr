@@ -13,7 +13,24 @@ try {
         exit;
     }
 
-    $stmt = $pdo->prepare("SELECT id as photoName, x, y, author_name as authorName FROM `mario-kart-world-photos` WHERE id = :id AND validated_at IS NOT NULL");
+    $stmt = $pdo->prepare(
+        "SELECT DISTINCT
+            p.id as photoName, p.x, p.y, p.author_name as authorName,
+            md.guess_median_x, md.guess_median_y,
+            COUNT(s.photo_id) as guesses_count
+            FROM `mario-kart-world-photos` p
+        LEFT JOIN `mario-kart-world-suggestions` s ON p.id = s.photo_id
+        LEFT JOIN (
+            SELECT DISTINCT
+                s.photo_id,
+                MEDIAN(s.x) OVER (PARTITION BY s.photo_id) AS guess_median_x,
+                MEDIAN(s.y) OVER (PARTITION BY s.photo_id) AS guess_median_y
+            FROM 
+                `mario-kart-world-suggestions` s
+            JOIN
+                `mario-kart-world-photos` p ON s.photo_id = p.id
+        ) md ON p.id = md.photo_id
+        WHERE p.id = :id AND p.validated_at IS NOT NULL");
     $stmt->bindParam(':id', $id, PDO::PARAM_STR);
     $stmt->execute();
     

@@ -8,4 +8,9 @@ export type Coordinates = {
   y: number;
 };
 
-export type LocationFull = LocationBase & Coordinates;
+export type LocationFull = LocationBase &
+  Coordinates & {
+    guess_median_x: number;
+    guess_median_y: number;
+    guesses_count: number;
+  };

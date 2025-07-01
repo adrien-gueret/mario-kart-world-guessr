@@ -67,7 +67,7 @@
   text-align: center;
   padding: 4px;
   background: rgba(255, 255, 255, 0.8);
-  z-index: 20;
+  z-index: 200;
   pointer-events: none;
   opacity: 0;
   animation: copyFade 0.3s ease-in-out forwards;
