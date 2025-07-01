@@ -193,6 +193,8 @@ const en: Texts = {
   "credits.by": "A game by ",
   "game.globalScore": "Score: ",
   "game.globalScore.photoIndex": "Photo n°",
+  "game.globalScore.showOtherPlayers":
+    "Show the median location of all players",
   "home.button": "Home",
   "upload.title": "Suggest a photo",
   "upload.description": "Send a photo to enrich the game!",

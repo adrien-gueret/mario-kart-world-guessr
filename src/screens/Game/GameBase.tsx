@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, use } from "react";
 import { type Coordinates, type LocationFull } from "@/types/location";
 
 import {
@@ -65,8 +65,16 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
 
   const [currentLocationCoordinates, setCurrentLocationCoordinates] =
     useState<Coordinates | null>(null);
+  const [
+    currentLocationPlayersCoordinates,
+    setCurrentLocationPlayersCoordinates,
+  ] = useState<Coordinates | null>(null);
 
   const [userGuess, setUserGuess] = useState<Coordinates | null>(null);
+  const [shouldShowOtherPlayersGuesses, setShouldShowOtherPlayersGuesses] =
+    useState(false);
+  const [canShowPlayersCoordinates, setCanShowPlayersCoordinates] =
+    useState(false);
   const [isGameEnded, setIsGameEnded] = useState<boolean>(false);
 
   const isGameOver = isGameEnded || hasReachedLimit;
@@ -140,12 +148,26 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
       x: locationData.x,
       y: locationData.y,
     };
+    const playersCoordinates = {
+      x: locationData.guess_median_x,
+      y: locationData.guess_median_y,
+    };
 
     if (difficulty === "mirror") {
       coordinates.x = MAP_SIZE_IN_PIXELS.width - coordinates.x;
+      playersCoordinates.x = MAP_SIZE_IN_PIXELS.width - playersCoordinates.x;
     }
 
     setCurrentLocationCoordinates(coordinates);
+    setCurrentLocationPlayersCoordinates(playersCoordinates);
+
+    const hasBeenGuessedMoreThan5Times = locationData.guesses_count >= 5;
+
+    setCanShowPlayersCoordinates(hasBeenGuessedMoreThan5Times);
+
+    if (!hasBeenGuessedMoreThan5Times) {
+      setShouldShowOtherPlayersGuesses(false);
+    }
 
     const { distance, score: newScore } = getDistanceAndScoreFromCoordinates(
       userGuess,
@@ -165,10 +187,6 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
       setIsGameEnded(shouldEndGame);
     }
   };
-
-  const currentLocationRenderedCoordinates = currentLocationCoordinates
-    ? currentLocationCoordinates
-    : { x: 0, y: 0 };
 
   const gameModeToRules: Record<
     GameMode,
@@ -224,47 +242,60 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
         <div className="map-container">
           <h2>{translate("clickMap.subtitle")}</h2>
 
-          <div
-            style={{
-              pointerEvents: canGuess ? "auto" : "none",
-            }}
+          <Map
+            canShowCourses={difficulty === "50cc" || difficulty === "100cc"}
+            isMirrored={difficulty === "mirror"}
+            onClick={
+              canGuess
+                ? ({ realCoordinates }) => {
+                    setUserGuess(realCoordinates);
+                  }
+                : undefined
+            }
           >
-            <Map
-              canShowCourses={difficulty === "50cc" || difficulty === "100cc"}
-              isMirrored={difficulty === "mirror"}
-              onClick={({ realCoordinates }) => {
-                setUserGuess(realCoordinates);
-              }}
-            >
-              {userGuess &&
-                currentLocationRenderedCoordinates &&
-                currentLocation && (
-                  <>
-                    {shouldShowAnswer && (
-                      <>
-                        <Line
-                          x1={userGuess.x}
-                          y1={userGuess.y}
-                          x2={currentLocationRenderedCoordinates.x}
-                          y2={currentLocationRenderedCoordinates.y}
-                        />
+            {userGuess && currentLocation && (
+              <>
+                {shouldShowAnswer &&
+                  currentLocationCoordinates &&
+                  currentLocationPlayersCoordinates && (
+                    <>
+                      <Line
+                        x1={userGuess.x}
+                        y1={userGuess.y}
+                        x2={currentLocationCoordinates.x}
+                        y2={currentLocationCoordinates.y}
+                      />
+                      <Pin
+                        x={currentLocationCoordinates.x}
+                        y={currentLocationCoordinates.y}
+                        variant="star"
+                      />
+                      {shouldShowOtherPlayersGuesses && (
                         <Pin
-                          x={currentLocationRenderedCoordinates.x}
-                          y={currentLocationRenderedCoordinates.y}
-                          variant="star"
+                          x={currentLocationPlayersCoordinates.x}
+                          y={currentLocationPlayersCoordinates.y}
+                          variant="luigi"
                         />
-                        <GuessScore
-                          distance={guessData!.distance}
-                          score={guessData!.score}
-                        />
-                      </>
-                    )}
+                      )}
 
-                    <Pin x={userGuess.x} y={userGuess.y} variant="mario" />
-                  </>
-                )}
-            </Map>
-          </div>
+                      <GuessScore
+                        distance={guessData!.distance}
+                        score={guessData!.score}
+                        canShowPlayersCoordinates={canShowPlayersCoordinates}
+                        shouldShowPlayersCoordinates={
+                          shouldShowOtherPlayersGuesses
+                        }
+                        onShowPlayersCoordinatesChange={
+                          setShouldShowOtherPlayersGuesses
+                        }
+                      />
+                    </>
+                  )}
+
+                <Pin x={userGuess.x} y={userGuess.y} variant="mario" />
+              </>
+            )}
+          </Map>
         </div>
       </div>
 

@@ -191,6 +191,8 @@ const fr: Texts = {
   "credits.by": "Un jeu par ",
   "game.globalScore": "Score : ",
   "game.globalScore.photoIndex": "Photo n° ",
+  "game.globalScore.showOtherPlayers":
+    "Afficher l'emplacement médian de tous les joueurs",
   "home.button": "Accueil",
   "upload.title": "Proposer une photo",
   "upload.description": "Envoyez une photo pour enrichir le jeu !",

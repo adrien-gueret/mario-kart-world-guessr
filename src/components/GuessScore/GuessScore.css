@@ -1,31 +1,36 @@
 .game-guess-score {
   position: sticky;
   bottom: 128px;
-  background-color: rgba(255, 255, 255, 0.9);
   color: rgba(0, 0, 0, 0.8);
-  border-radius: 4px;
-  font-size: 1rem;
   font-family: sans-serif;
-  padding: 8px;
-  z-index: 10;
+  z-index: 10000;
   margin: 16px 24px;
-  text-align: left;
   font-size: 1.5rem;
-  box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.35);
   opacity: 0;
   transform: translateY(100%);
   animation: guessScore 0.2s ease-in-out forwards;
   animation-delay: 333ms;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.game-guess-score-inner {
+.game-guess-score-banner {
+  background-image: url(./backgrounds/dialog.jpg);
+  border-radius: 4px;
+  padding: 8px;
+  text-align: left;
+  box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.35);
+}
+
+.game-guess-score-banner-inner {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
 }
 
-.game-guess-score-inner > div {
+.game-guess-score-banner-inner > div {
   display: flex;
   gap: 2px;
   flex-direction: row;
@@ -35,6 +40,15 @@
 .game-guess-score label {
   font-weight: bold;
   margin-right: 4px;
+}
+
+.game-guess-checkbox-container {
+  align-self: flex-end;
+}
+
+.game-guess-checkbox-container .text {
+  text-shadow: 1px 1px 0px #ffffff, -1px -1px 0px #ffffff, 0px -1px 0px #ffffff,
+    -1px 0px 0px #ffffff;
 }
 
 @media screen and (max-width: 420px) {

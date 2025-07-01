@@ -6,6 +6,7 @@ import {
   useRef,
 } from "react";
 
+import Checkbox from "@/components/Checkbox";
 import Text from "@/components/Text";
 import { useTranslations } from "@/i18n";
 import type { Coordinates } from "@/types/location";
@@ -81,16 +82,14 @@ export default function Map({
   return (
     <>
       {canShowCourses && (
-        <label className="map-show-courses-label">
-          <input
-            type="checkbox"
-            className="map-show-courses-label__real_checkbox"
+        <div className="map-show-courses-container">
+          <Checkbox
+            name="map-show-courses"
+            label={translate("upload.step2.help.label")}
             checked={shouldShowCourses}
-            onChange={() => setShouldShowCourses(!shouldShowCourses)}
+            onChange={setShouldShowCourses}
           />
-          <span className="map-show-courses-label__checkbox" />
-          <Text>{translate("upload.step2.help.label")}</Text>
-        </label>
+        </div>
       )}
 
       <div className={`map-container ${isMirrored ? "mirrored" : ""}`}>

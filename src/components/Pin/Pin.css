@@ -4,13 +4,20 @@
   top: 0;
   width: 64px;
   height: 64px;
-  pointer-events: none;
   background-image: url("./ui/pin-red.png");
   background-size: contain;
   background-repeat: no-repeat;
   filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.5));
   animation: fallDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
   text-align: center;
+}
+
+.game-map-pin:hover {
+  z-index: 3000 !important;
+}
+
+.game-map-pin.variant-luigi {
+  background-image: url("./ui/pin-green.png");
 }
 
 .game-map-pin.variant-star {

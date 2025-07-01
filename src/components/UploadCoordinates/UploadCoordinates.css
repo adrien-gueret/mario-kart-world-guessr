@@ -10,7 +10,7 @@
   font-size: 1rem;
   font-family: sans-serif;
   padding: 8px;
-  z-index: 10;
+  z-index: 100;
   text-align: left;
   display: flex;
   flex-direction: column;

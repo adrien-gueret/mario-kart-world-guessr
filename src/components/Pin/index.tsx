@@ -6,7 +6,7 @@ import type { Coordinates } from "@/types/location";
 import "./Pin.css";
 
 type Props = Coordinates & {
-  variant?: "mario" | "star";
+  variant?: "mario" | "luigi" | "star";
   onlyHead?: boolean;
 };
 
@@ -55,9 +55,10 @@ export default function Pin({
       style={{
         left: `${domX}px`,
         top: `${domY}px`,
+        zIndex: domY,
       }}
     >
-      <img src={`./ui/icon-${variant}.webp`} alt="" />
+      <img src={`./ui/icon-${variant}.png`} alt="" />
     </div>
   );
 }
