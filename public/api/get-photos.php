@@ -15,7 +15,7 @@ try {
     
     $stmt = $pdo->prepare("SELECT id as photoName
         FROM `mario-kart-world-photos`
-        WHERE validated_at IS NOT NULL
+        WHERE validated_at IS NOT NULL AND validated_at <= NOW() - INTERVAL 5 MINUTE
         ORDER BY validated_at DESC, photoName
         LIMIT :offset, :limit"
     );

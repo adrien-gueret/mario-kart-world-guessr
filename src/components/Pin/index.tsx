@@ -11,7 +11,7 @@ type Props = Coordinates & {
 };
 
 const FULL_PIN_SIZE = 64;
-const ONLY_HEAD_PIN_SIZE = 40;
+const ONLY_HEAD_PIN_SIZE = 36;
 
 function targetCoordinatesToFullPinDomCoordinates(coordinates: Coordinates) {
   return {
