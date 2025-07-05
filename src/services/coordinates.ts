@@ -1,3 +1,5 @@
+import type { Difficulty } from "@/types/game";
+
 export const MAP_SIZE_IN_PIXELS = {
   width: 1431,
   height: 1303,
@@ -7,6 +9,10 @@ export const MAP_SIZE_IN_KM = {
   width: 10,
   height: 9,
 };
+
+const DIST_MAX = Math.sqrt(
+  MAP_SIZE_IN_KM.width ** 2 + MAP_SIZE_IN_KM.height ** 2
+);
 
 type Coordinates = {
   x: number;
@@ -69,19 +75,46 @@ export function distanceBetweenCoordinatesInKilometers(
   return distanceInKm;
 }
 
-export function getScoreFromDistanceInKilometers(distanceInKm: number): number {
-  return Math.ceil(5000 * Math.exp((-10 * distanceInKm) / 13.4));
+const SCORE_MAX = 5000;
+
+export function getScoreFromDistanceInKilometers(
+  distanceInKm: number,
+  difficulty: Difficulty
+): number {
+  const distanceInMeters = distanceInKm * 1000;
+
+  const difficultyToToleranceForMaxScore: Record<Difficulty, number> = {
+    "50cc": 80,
+    "100cc": 70,
+    "150cc": 60,
+    mirror: 60,
+  };
+
+  if (distanceInMeters <= difficultyToToleranceForMaxScore[difficulty]) {
+    return SCORE_MAX;
+  }
+
+  const difficultyToThreshold: Record<Difficulty, number> = {
+    "50cc": 6,
+    "100cc": 8,
+    "150cc": 10,
+    mirror: 10,
+  };
+
+  const threshold = difficultyToThreshold[difficulty];
+  return Math.ceil(5000 * Math.exp((-threshold * distanceInKm) / DIST_MAX));
 }
 
 export function getDistanceAndScoreFromCoordinates(
   pointA: Coordinates,
-  pointB: Coordinates
+  pointB: Coordinates,
+  difficulty: Difficulty = "150cc"
 ): {
   distance: number;
   score: number;
 } {
   const distance = distanceBetweenCoordinatesInKilometers(pointA, pointB);
-  const score = getScoreFromDistanceInKilometers(distance);
+  const score = getScoreFromDistanceInKilometers(distance, difficulty);
 
   return { distance, score };
 }

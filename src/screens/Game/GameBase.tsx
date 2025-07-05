@@ -171,7 +171,8 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
 
     const { distance, score: newScore } = getDistanceAndScoreFromCoordinates(
       userGuess,
-      coordinates
+      coordinates,
+      difficulty
     );
 
     addScoreInHistory(newScore);

@@ -35,6 +35,7 @@ const fr: Texts = {
       <li>
         Les photos <b>les plus faciles</b>
       </li>
+      <li>La meilleure tolérance sur le calcul du score</li>
       <li>Possibilité d'afficher les circuits sur la carte</li>
     </ul>
   ),
@@ -46,6 +47,7 @@ const fr: Texts = {
       <li>
         La plupart des photos, <b>sauf</b> les plus difficiles
       </li>
+      <li>Une bonne tolérance sur le calcul du score</li>
       <li>Possibilité d'afficher les circuits sur la carte</li>
     </ul>
   ),
@@ -57,6 +59,7 @@ const fr: Texts = {
       <li>
         <b>TOUTES</b> les photos, y compris les plus difficiles
       </li>
+      <li>Une tolérance légère sur le calcul du score</li>
       <li>Circuits non affichés sur la carte</li>
     </ul>
   ),
@@ -93,6 +96,7 @@ const fr: Texts = {
       <li>
         Les photos <b>les plus faciles</b>
       </li>
+      <li>La meilleure tolérance sur le calcul du score</li>
       <li>Possibilité d'afficher les circuits sur la carte</li>
     </ul>
   ),
@@ -101,6 +105,7 @@ const fr: Texts = {
       <li>
         La plupart des photos, <b>sauf</b> les plus difficiles
       </li>
+      <li>Une bonne tolérance sur le calcul du score</li>
       <li>Possibilité d'afficher les circuits sur la carte</li>
     </ul>
   ),
@@ -109,6 +114,7 @@ const fr: Texts = {
       <li>
         <b>TOUTES</b> les photos, y compris les plus difficiles
       </li>
+      <li>Une tolérance légère sur le calcul du score</li>
       <li>Circuits non affichés sur la carte</li>
     </ul>
   ),
@@ -122,22 +128,26 @@ const fr: Texts = {
   ),
   "difficulty.goal.50cc.short": (
     <>
-      Les photos <b>les plus faciles</b> !
+      Les photos <b>les plus faciles</b> et la meilleure tolérance sur le calcul
+      du score.
     </>
   ),
   "difficulty.goal.100cc.short": (
     <>
-      La plupart des photos, <b>sauf</b> les plus difficiles.
+      La plupart des photos <b>sauf</b> les plus difficiles et une bonne
+      tolérance sur le calcul du score.
     </>
   ),
   "difficulty.goal.150cc.short": (
     <>
-      <b>TOUTES</b> les photos, y compris les plus difficiles !
+      <b>TOUTES</b> les photos, y compris les plus difficiles ! Et une tolérance
+      légère sur le calcul du score.
     </>
   ),
   "difficulty.goal.mirror.short": (
     <>
-      <b>TOUTES</b> les photos, y compris les plus difficiles !
+      <b>TOUTES</b> les photos, y compris les plus difficiles ! Et une tolérance
+      légère sur le calcul du score.
     </>
   ),
   "rules.title": "Règles du jeu",

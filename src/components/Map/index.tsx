@@ -7,7 +7,6 @@ import {
 } from "react";
 
 import Checkbox from "@/components/Checkbox";
-import Text from "@/components/Text";
 import { useTranslations } from "@/i18n";
 import type { Coordinates } from "@/types/location";
 import { getCoordinatesFromImage } from "@/services/coordinates";
