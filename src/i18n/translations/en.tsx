@@ -39,6 +39,7 @@ const en: Texts = {
       <li>
         The <b>easiest</b> photos
       </li>
+      <li>The most lenient scoring system</li>
       <li>Option to display tracks on the map</li>
     </ul>
   ),
@@ -50,6 +51,7 @@ const en: Texts = {
       <li>
         Most photos, <b>except</b> the most difficult ones
       </li>
+      <li>Moderate tolerance in score calculation</li>
       <li>Option to display tracks on the map</li>
     </ul>
   ),
@@ -61,6 +63,7 @@ const en: Texts = {
       <li>
         <b>ALL</b> photos, including the most difficult ones
       </li>
+      <li>The strictest scoring system</li>
       <li>Cannot display tracks on the map</li>
     </ul>
   ),
@@ -97,6 +100,7 @@ const en: Texts = {
       <li>
         The <b>easiest</b> photos
       </li>
+      <li>The most lenient scoring system</li>
       <li>Option to display tracks on the map</li>
     </ul>
   ),
@@ -105,6 +109,7 @@ const en: Texts = {
       <li>
         Most photos, <b>except</b> the most difficult ones
       </li>
+      <li>Moderate tolerance in score calculation</li>
       <li>Option to display tracks on the map</li>
     </ul>
   ),
@@ -113,6 +118,7 @@ const en: Texts = {
       <li>
         <b>ALL</b> photos, including the most difficult ones
       </li>
+      <li>The strictest scoring system</li>
       <li>Tracks not displayed on the map</li>
     </ul>
   ),
@@ -126,22 +132,25 @@ const en: Texts = {
   ),
   "difficulty.goal.50cc.short": (
     <>
-      The <b>easiest</b> photos!
+      The <b>easiest</b> photos and the most lenient scoring system.
     </>
   ),
   "difficulty.goal.100cc.short": (
     <>
-      Most photos, <b>except</b> the most difficult ones.
+      Most photos <b>except</b> the most difficult ones, and moderate tolerance
+      in score calculation
     </>
   ),
   "difficulty.goal.150cc.short": (
     <>
-      <b>ALL</b> photos, including the most difficult ones!
+      <b>ALL</b> photos, including the most difficult ones! And the strictest
+      scoring system.
     </>
   ),
   "difficulty.goal.mirror.short": (
     <>
-      <b>ALL</b> photos, including the most difficult ones!
+      <b>ALL</b> photos, including the most difficult ones! And the strictest
+      scoring system.
     </>
   ),
   "rules.title": "Game Rules",
