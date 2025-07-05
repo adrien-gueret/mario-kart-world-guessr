@@ -6,7 +6,7 @@ allowMethod('GET');
 
 try {
     $stmt = $pdo->prepare("
-        SELECT id as photoName, author_name as authorName
+        SELECT id as photoName
         FROM `mario-kart-world-photos`
         WHERE validated_at IS NOT NULL AND validated_at < CURDATE()
         ORDER BY RAND(TO_DAYS(CURDATE()))
