@@ -15,7 +15,7 @@ try {
 
     $stmt = $pdo->prepare(
         "SELECT DISTINCT
-            p.id as photoName, p.x, p.y, p.author_name as authorName,
+            p.id as photoName, p.x, p.y,
             md.guess_median_x, md.guess_median_y,
             COUNT(s.photo_id) as guesses_count
             FROM `mario-kart-world-photos` p
