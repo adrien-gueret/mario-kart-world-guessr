@@ -1,6 +1,5 @@
 export type LocationBase = {
   photoName: string;
-  authorName: string;
 };
 
 export type Coordinates = {
