@@ -35,23 +35,28 @@ export default function useGame(mode: GameMode, difficulty?: Difficulty) {
     }
   );
 
-  const addScoreInHistory = useCallback((score: number) => {
-    setGameHistory((prevState) => {
-      const newHistory = {
-        ...prevState,
-        scores: [...prevState.scores, score],
-      };
+  const addScoreInHistory = useCallback(
+    (score: number) => {
+      setGameHistory((prevState) => {
+        const newHistory = {
+          ...prevState,
+          scores: [...prevState.scores, score],
+        };
 
-      const storedDaily = getKey("daily");
+        if (mode === "daily") {
+          const storedDaily = getKey("daily");
 
-      storeKey("daily", {
-        ...storedDaily,
-        history: newHistory,
+          storeKey("daily", {
+            ...storedDaily,
+            history: newHistory,
+          });
+        }
+
+        return newHistory;
       });
-
-      return newHistory;
-    });
-  }, []);
+    },
+    [mode]
+  );
 
   const {
     getNextDailyLocation,
