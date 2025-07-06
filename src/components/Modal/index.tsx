@@ -1,4 +1,4 @@
-import { type ReactNode, useLayoutEffect } from "react";
+import { type ReactNode } from "react";
 
 import Text from "../Text";
 
@@ -19,18 +19,6 @@ export default function Modal({
   noDelay = false,
   disableSkew = false,
 }: Props) {
-  useLayoutEffect(() => {
-    if (isOpen) {
-      document.body.style.setProperty("overflow", "hidden");
-    } else {
-      document.body.style.removeProperty("overflow");
-    }
-
-    return () => {
-      document.body.style.removeProperty("overflow");
-    };
-  }, [isOpen]);
-
   return isOpen ? (
     <div className={`modal-overlay ${noDelay ? "no-delay" : ""}`}>
       <div className={`modal-box ${disableSkew ? "no-skew" : ""}`}>
