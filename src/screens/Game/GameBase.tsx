@@ -27,7 +27,7 @@ import useGame from "./hooks/useGame";
 
 import { useScreen } from "../ScreensProvider";
 
-import EndDailyGame from "./daily/End";
+import EndDailyGame from "./End";
 
 import "./Game.css";
 
