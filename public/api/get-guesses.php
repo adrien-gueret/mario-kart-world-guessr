@@ -13,7 +13,9 @@ try {
         exit;
     }
 
-    $stmt = $pdo->prepare("SELECT id, x, y FROM `mario-kart-world-suggestions` WHERE photo_id = :id");
+    $stmt = $pdo->prepare("SELECT id, x, y
+                            FROM `mario-kart-world-suggestions`
+                            WHERE photo_id = :id AND player_id != 1");
     $stmt->bindParam(':id', $id, PDO::PARAM_STR);
     $stmt->execute();
     

@@ -19,7 +19,7 @@ try {
             md.guess_median_x, md.guess_median_y,
             COUNT(s.photo_id) as guesses_count
             FROM `mario-kart-world-photos` p
-        LEFT JOIN `mario-kart-world-suggestions` s ON p.id = s.photo_id
+        LEFT JOIN `mario-kart-world-suggestions` s ON p.id = s.photo_id AND (s.player_id IS NULL OR s.player_id != 1)
         LEFT JOIN (
             SELECT DISTINCT
                 s.photo_id,
@@ -29,6 +29,7 @@ try {
                 `mario-kart-world-suggestions` s
             JOIN
                 `mario-kart-world-photos` p ON s.photo_id = p.id
+            WHERE (s.player_id IS NULL OR s.player_id != 1)
         ) md ON p.id = md.photo_id
         WHERE p.id = :id AND p.validated_at IS NOT NULL");
     $stmt->bindParam(':id', $id, PDO::PARAM_STR);
