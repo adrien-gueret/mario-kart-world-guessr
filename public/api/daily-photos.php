@@ -9,7 +9,7 @@ try {
         SELECT id as photoName
         FROM `mario-kart-world-photos`
         WHERE validated_at IS NOT NULL AND validated_at < CURDATE()
-        ORDER BY RAND(TO_DAYS(CURDATE()))
+        ORDER BY MD5(CONCAT(id, CURDATE()))
         LIMIT 5;"
     );
     $stmt->execute();
