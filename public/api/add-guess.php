@@ -14,12 +14,18 @@ if (!$photoName || $x === null || $y === null ) {
 }
 
 try {
-    $stmt = $pdo->prepare("INSERT INTO `mario-kart-world-suggestions` (photo_id, x, y) VALUES (:photoName, :x, :y)");
+    $stmt = $pdo->prepare("INSERT INTO `mario-kart-world-suggestions` (photo_id, x, y, player_id) VALUES (:photoName, :x, :y, :playerId)");
     
     $stmt->bindParam(':photoName', $photoName, PDO::PARAM_STR);
     $stmt->bindParam(':x', $x, PDO::PARAM_INT);
     $stmt->bindParam(':y', $y, PDO::PARAM_INT);
-    
+
+    if (empty($currentUser) || empty($currentUser['id'])) {
+        $stmt->bindValue(':playerId', null, PDO::PARAM_NULL);
+    } else {
+        $stmt->bindParam(':playerId', $currentUser['id'], PDO::PARAM_INT);
+    }
+   
     $stmt->execute();
     
     $lastInsertId = $pdo->lastInsertId();
