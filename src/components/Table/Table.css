@@ -1,0 +1,39 @@
+.table {
+  font-size: 2rem;
+  width: 70%;
+  margin: auto;
+  color: transparent;
+  background-color: rgba(0, 0, 0, 0.95);
+  text-shadow: none;
+  border: 2px solid #bdbdbd;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.table tr {
+  border: 2px solid #bdbdbd;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 4px;
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+  padding: 0 8px;
+}
+
+.table th {
+  text-align: left;
+  font-family: "Courier New", Courier, monospace;
+  color: #bdbdbd;
+}
+
+.table td {
+  text-align: right;
+  font-family: "DigitalDisplay", Courier, monospace;
+  color: #fff;
+  font-size: 2.5rem;
+}

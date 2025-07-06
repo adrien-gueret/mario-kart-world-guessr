@@ -4,8 +4,10 @@ import { useTranslations } from "@/i18n";
 
 import type { GameHistory } from "@/types/game";
 
-import "./End.css";
 import Button from "@/components/Button";
+import Table from "@/components/Table";
+
+import "./End.css";
 
 type Props = {
   gameHistory: GameHistory;
@@ -119,22 +121,22 @@ export default function DailyEnd({ gameHistory, nextDailyDate }: Props) {
   return (
     <div className="game-daily-end">
       <div>{translate("endGame.daily.description")}</div>
-      <table className="game-daily-score">
-        <tbody>
-          {gameHistory.scores.map((score, index) => (
-            <tr key={index}>
-              <th>{index + 1}</th>
-              <td>{score}</td>
-            </tr>
-          ))}
-        </tbody>
-        <tfoot>
+
+      <Table
+        footer={
           <tr>
             <th>Total</th>
             <td>{totalScore}</td>
           </tr>
-        </tfoot>
-      </table>
+        }
+      >
+        {gameHistory.scores.map((score, index) => (
+          <tr key={index}>
+            <th>{index + 1}</th>
+            <td>{score}</td>
+          </tr>
+        ))}
+      </Table>
 
       <div className="share-container">
         <div>
