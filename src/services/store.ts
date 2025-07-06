@@ -1,4 +1,5 @@
 import type { GameHistory } from "@/types/game";
+import type { User } from "@/types/user";
 
 const STORAGE_KEY = "mario-kart-world-guessr-store";
 
@@ -7,11 +8,13 @@ type Store = {
     history: GameHistory;
     nextDailyDate?: string;
   };
+  currentUser: User | null;
 };
 
 function getDefaultStore(): Store {
   return {
     daily: null,
+    currentUser: null,
   };
 }
 

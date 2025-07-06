@@ -1,28 +1,24 @@
 import { GoogleLogin } from "@react-oauth/google";
 
-import { jwtDecode } from "jwt-decode";
+import fetchApi from "@/services/api";
 
-import { useGoogleUser } from "./GoogleUserProvider";
+import { useCurrentser } from "./CurrentUserProvider";
 
 export default function GoogleLoginButton() {
-  const { setConnectedUser } = useGoogleUser();
+  const { setConnectedUser } = useCurrentser();
 
   return (
     <GoogleLogin
-      onSuccess={(credentialResponse) => {
-        const decoded = jwtDecode(credentialResponse.credential as string) as {
-          name: string;
-          given_name: string;
-          email: string;
-          exp: number;
-        };
+      onSuccess={async (credentialResponse) => {
+        const formData = new FormData();
+        formData.append("token", credentialResponse.credential as string);
 
-        setConnectedUser({
-          givenName: decoded.given_name,
-          fullName: decoded.name,
-          email: decoded.email,
-          expiredAt: decoded.exp * 1000,
-        });
+        const response = await fetchApi("/auth-google.php", "POST", formData);
+        const user = await response.json();
+
+        delete user.isNewUser;
+
+        setConnectedUser(user);
       }}
       onError={() => {
         console.log("Login Failed");

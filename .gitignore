@@ -25,6 +25,8 @@ dist-ssr
 
 ___database.php
 ___middleware.php
+___create_jwt.php
+auth-google.php
 upload-photo.php
 webhook.php
 *.env
