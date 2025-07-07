@@ -25,9 +25,9 @@ import { useTranslations } from "@/i18n";
 
 import useGame from "./hooks/useGame";
 
-import { useScreen } from "../ScreensProvider";
-
-import EndDailyGame from "./End";
+import EndDailyGame from "./End/Daily";
+import EndGoalGame from "./End/Goal";
+import EndSurvivalGame from "./End/Survival";
 
 import "./Game.css";
 
@@ -39,7 +39,7 @@ type Props = {
 
 export default function Game({ mode, difficulty, onReplay }: Props) {
   const firstLocationRequested = useRef(false);
-  const { setCurrentScreenName } = useScreen();
+
   const { translate } = useTranslations();
   const {
     currentLocation,
@@ -75,7 +75,8 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     useState(false);
   const [canShowPlayersCoordinates, setCanShowPlayersCoordinates] =
     useState(false);
-  const [isGameEnded, setIsGameEnded] = useState<boolean>(false);
+  const [isGameEnded, setIsGameEnded] = useState(false);
+  const [isLeaderboardShown, setIsLeaderboardShown] = useState(false);
 
   const isGameOver = isGameEnded || hasReachedLimit;
 
@@ -323,49 +324,55 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
       )}
 
       <Modal
-        title={translate("endGame.title")}
+        title={
+          isLeaderboardShown
+            ? `${translate("endGame.title.leaderboard")} - ${translate(
+                `mode.${mode}.label`
+              )}${
+                difficulty
+                  ? ` - ${translate(`difficulty.${difficulty}.title`)}`
+                  : ""
+              }`
+            : translate("endGame.title")
+        }
         isOpen={isGameOver}
-        disableSkew={mode === "daily"}
+        disableSkew={mode === "daily" || isLeaderboardShown}
       >
         {(() => {
           switch (mode) {
             case "survival":
-              return translate("endGame.survival.description")(
-                guessData?.score || 0,
-                photoCount,
-                totalScore
+              return (
+                <EndSurvivalGame
+                  lastScore={guessData?.score || 0}
+                  photoCount={photoCount}
+                  totalScore={totalScore}
+                  difficulty={difficulty!}
+                  onReplay={onReplay}
+                  onLeaderboardShow={() => setIsLeaderboardShown(true)}
+                />
               );
 
             case "goal":
-              return translate("endGame.goal.description")(photoCount);
+              return (
+                <EndGoalGame
+                  photoCount={photoCount}
+                  totalScore={totalScore}
+                  difficulty={difficulty!}
+                  onReplay={onReplay}
+                  onLeaderboardShow={() => setIsLeaderboardShown(true)}
+                />
+              );
 
             case "daily":
               return (
                 <EndDailyGame
                   gameHistory={gameHistory}
                   nextDailyDate={nextDailyDate}
+                  onLeaderboardShow={() => setIsLeaderboardShown(true)}
                 />
               );
           }
         })()}
-
-        <p
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
-            gap: 16,
-          }}
-        >
-          <Button onClick={() => setCurrentScreenName("Title")}>
-            {translate("endGame.titleScreen.label")}
-          </Button>
-          {mode !== "daily" && (
-            <Button onClick={onReplay}>
-              {translate("endGame.replay.label")}
-            </Button>
-          )}
-        </p>
       </Modal>
     </div>
   );

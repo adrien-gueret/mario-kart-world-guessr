@@ -2,10 +2,10 @@ import { GoogleLogin } from "@react-oauth/google";
 
 import fetchApi from "@/services/api";
 
-import { useCurrentser } from "./CurrentUserProvider";
+import { useCurrentUser } from "./CurrentUserProvider";
 
 export default function GoogleLoginButton() {
-  const { setConnectedUser } = useCurrentser();
+  const { setConnectedUser } = useCurrentUser();
 
   return (
     <GoogleLogin

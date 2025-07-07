@@ -47,7 +47,7 @@ try {
     echo json_encode([
         'id' => $user['id'],
         'email' => $user['email'],
-        'name' => $user['username'],
+        'username' => $user['username'],
         'accessToken' => $accessTokenData['accessToken'],
         'refreshToken' => $accessTokenData['refreshToken'],
         'expiredAt' => $accessTokenData['expiredAt'],
