@@ -5,7 +5,7 @@ import Loader from "@/components/Loader";
 import Modal from "@/components/Modal";
 import Text from "@/components/Text";
 import GoogleLoginButton from "@/auth/GoogleLoginButton";
-import { useCurrentser } from "@/auth/CurrentUserProvider";
+import { useCurrentUser } from "@/auth/CurrentUserProvider";
 
 import { useTranslations } from "@/i18n";
 
@@ -14,7 +14,7 @@ import fetchApi from "@/services/api";
 import "./Login.css";
 
 function Login() {
-  const { logout, user } = useCurrentser();
+  const { logout, user } = useCurrentUser();
   const { translate } = useTranslations();
 
   return (

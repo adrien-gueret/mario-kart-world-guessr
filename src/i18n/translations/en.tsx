@@ -166,7 +166,9 @@ const en: Texts = {
   "rules.mode.daily.description":
     "Get the best possible score on five daily photos!",
   "endGame.title": "Game over!",
+  "endGame.title.leaderboard": "Leaderboard",
   "endGame.titleScreen.label": "Home",
+  "leaderboard.you": "You!",
   "endGame.replay.label": "Replay",
   "endGame.survival.description": (
     lastGuess: number,
@@ -195,6 +197,7 @@ const en: Texts = {
   "endGame.daily.description":
     "You have finished locating all 5 photos of the day!",
   "endGame.daily.next": "Next daily photos in: ",
+  "endGame.next-button.label": "Next",
   "share.text.title": "Mario Kart World Guessr - Daily Photos",
   "share.copy.button.label": "Copy",
   "share.copy.success": "Copied to clipboard",

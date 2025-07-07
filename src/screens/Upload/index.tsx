@@ -8,7 +8,7 @@ import Pin from "@/components/Pin";
 import Text from "@/components/Text";
 import UploadCoordinates from "@/components/UploadCoordinates";
 
-import { useCurrentser } from "@/auth/CurrentUserProvider";
+import { useCurrentUser } from "@/auth/CurrentUserProvider";
 
 import { type Coordinates } from "@/types/location";
 
@@ -19,7 +19,7 @@ import fetchApi from "@/services/api";
 import "./Upload.css";
 
 function Upload() {
-  const { logout, user } = useCurrentser();
+  const { logout, user } = useCurrentUser();
 
   const [locationCoordinates, setLocationCoordinates] =
     useState<Coordinates | null>(null);

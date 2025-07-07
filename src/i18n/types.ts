@@ -51,7 +51,9 @@ export type Texts = {
   "rules.mode.daily.title": string;
   "rules.mode.daily.description": string;
   "endGame.title": string;
+  "endGame.title.leaderboard": string;
   "endGame.titleScreen.label": string;
+  "leaderboard.you": string;
   "endGame.replay.label": string;
   "endGame.survival.description": (
     lastGuess: number,
@@ -61,6 +63,7 @@ export type Texts = {
   "endGame.goal.description": (photoCount: number) => ReactNode;
   "endGame.daily.description": string;
   "endGame.daily.next": string;
+  "endGame.next-button.label": string;
   "share.text.title": string;
   "share.copy.button.label": string;
   "share.copy.success": string;

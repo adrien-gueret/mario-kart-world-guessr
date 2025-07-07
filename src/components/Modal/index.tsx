@@ -24,7 +24,9 @@ export default function Modal({
       <div className={`modal-box ${disableSkew ? "no-skew" : ""}`}>
         <div className="modal-inner">
           <h2>{title}</h2>
-          <Text component="div">{children}</Text>
+          <Text component="div" display="block">
+            {children}
+          </Text>
         </div>
       </div>
     </div>

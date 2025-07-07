@@ -86,11 +86,11 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function useCurrentser() {
+export function useCurrentUser() {
   const context = useContext(CurrentUserContext);
 
   if (!context) {
-    throw new Error("useCurrentser must be used within a CurrentUserProvider");
+    throw new Error("useCurrentUser must be used within a CurrentUserProvider");
   }
 
   return context;
