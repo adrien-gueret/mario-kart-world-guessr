@@ -42,3 +42,11 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: "httpdocs/mario-kart-world-guessr/"
+  cleanup:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete artifact
+        uses: c-hive/delete-artifact@v3
+        with:
+          name: mario-kart-world-guessr-build
