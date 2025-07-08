@@ -13,9 +13,11 @@ try {
         exit;
     }
 
-    $stmt = $pdo->prepare("SELECT id, x, y
-                            FROM `mario-kart-world-suggestions`
-                            WHERE photo_id = :id AND (player_id IS NULL OR player_id != 1)");
+    $stmt = $pdo->prepare("SELECT s.id, s.x, s.y
+                            FROM `mario-kart-world-suggestions` s
+                            LEFT JOIN `mario-kart-world-games` g ON s.game_id = g.id
+                            WHERE s.photo_id = :id
+                            AND (g.player_id IS NULL OR g.player_id != 1)");
     $stmt->bindParam(':id', $id, PDO::PARAM_STR);
     $stmt->execute();
     

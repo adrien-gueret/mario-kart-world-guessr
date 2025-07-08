@@ -43,11 +43,12 @@ function getRandomPhoto($pdo, $difficulty, $excludeIds = [], $currentUserId = nu
     if ($currentUserId !== null) {
         $userJoin = "LEFT JOIN (
             SELECT
-                photo_id,
+                s.photo_id,
                 COUNT(*) as userViewCount
-            FROM `mario-kart-world-suggestions`
-            WHERE player_id = ?
-            GROUP BY photo_id
+            FROM `mario-kart-world-suggestions` s
+            LEFT JOIN `mario-kart-world-games` g ON s.game_id = g.id
+            WHERE g.player_id = ?
+            GROUP BY s.photo_id
         ) user_sugg ON user_sugg.photo_id = p.id";
         $selectUserView = ", IFNULL(user_sugg.userViewCount, 0) as userViewCount";
         $orderBy = "ORDER BY userViewCount ASC, viewCount ASC, RAND()";
@@ -66,7 +67,10 @@ function getRandomPhoto($pdo, $difficulty, $excludeIds = [], $currentUserId = nu
                         COUNT(s.photo_id) as viewCount
                         $selectUserView
                     FROM `mario-kart-world-photos` p
-                    LEFT JOIN `mario-kart-world-suggestions` s ON p.id = s.photo_id AND (s.player_id IS NULL OR s.player_id != 1)
+                    LEFT JOIN `mario-kart-world-suggestions` s 
+                        ON p.id = s.photo_id
+                    LEFT JOIN `mario-kart-world-games` g
+                        ON s.game_id = g.id
                     LEFT JOIN (
                         SELECT DISTINCT
                             s.photo_id,
@@ -80,10 +84,12 @@ function getRandomPhoto($pdo, $difficulty, $excludeIds = [], $currentUserId = nu
                             `mario-kart-world-suggestions` s
                         JOIN
                             `mario-kart-world-photos` p ON s.photo_id = p.id
-                        WHERE (s.player_id IS NULL OR s.player_id != 1)
+                        LEFT JOIN `mario-kart-world-games` g ON s.game_id = g.id
+                        WHERE (g.player_id IS NULL OR g.player_id != 1)
                     ) md ON p.id = md.photo_id
                     $userJoin
                     $where AND md.median_distance <= $medianDistance
+                    AND (g.player_id IS NULL OR g.player_id != 1)
                     GROUP BY p.id
                     HAVING viewCount >= 5
                     $orderBy
@@ -96,9 +102,12 @@ function getRandomPhoto($pdo, $difficulty, $excludeIds = [], $currentUserId = nu
                         COUNT(s.photo_id) as viewCount
                         $selectUserView
                     FROM `mario-kart-world-photos` p
-                    LEFT JOIN `mario-kart-world-suggestions` s ON p.id = s.photo_id AND (s.player_id IS NULL OR s.player_id != 1)
+                    LEFT JOIN `mario-kart-world-suggestions` s 
+                        ON p.id = s.photo_id
+                    LEFT JOIN `mario-kart-world-games` g
+                        ON s.game_id = g.id
                     $userJoin
-                    $where
+                    $where AND (g.player_id IS NULL OR g.player_id != 1)
                     GROUP BY p.id
                     $orderBy
                     LIMIT 1";
@@ -110,6 +119,7 @@ function getRandomPhoto($pdo, $difficulty, $excludeIds = [], $currentUserId = nu
 
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
+
 
 try {
     $currentUserId = $currentUser ? $currentUser['id'] : null;
