@@ -79,24 +79,13 @@ try {
                             FROM `$table` l
                             LEFT JOIN `mario-kart-world-users` u ON l.player_id = u.id
                             WHERE l.daily_date IS NULL OR l.daily_date = CURDATE()
-                            ORDER BY l.score DESC, l.performed_at DESC"
+                            ORDER BY l.score DESC"
                         );
         }
     } else {
         $table = '';
-        $photoCountOrderType = 'DESC';
-
-        switch ($_GET['mode']) {
-            case 'survival':
-                $table = 'mario-kart-world-leaderboard-survival';
-                $photoCountOrderType = 'DESC';
-            break;
-
-            case 'goal':
-                $table = 'mario-kart-world-leaderboard-goal';
-                $photoCountOrderType = 'ASC';
-            break;
-        }
+        $photoCountOrderType = $_GET['mode'] === 'survival' ? 'DESC' : 'ASC';
+        $table = "mario-kart-world-leaderboard-goal-survival";
 
         if (isset($_GET['score']) && isset($_GET['photoCount'])) {
             $stmt = $pdo->prepare("WITH
@@ -109,7 +98,7 @@ try {
                     u.username
                 FROM `$table` l
                 LEFT JOIN `mario-kart-world-users` u ON l.player_id = u.id
-                WHERE l.difficulty = :difficulty
+                WHERE l.difficulty = :difficulty and l.mode = :mode
                 
                 UNION ALL
 
@@ -156,6 +145,7 @@ try {
             ORDER BY ranked.rank");
 
             $stmt->bindParam(':difficulty', $_GET['difficulty'], PDO::PARAM_STR);
+            $stmt->bindParam(':mode', $_GET['mode'], PDO::PARAM_STR);
             $stmt->bindParam(':score', $_GET['score'], PDO::PARAM_INT);
             $stmt->bindParam(':photo_count', $_GET['photoCount'], PDO::PARAM_INT);
             $stmt->bindValue(':username', empty($_GET['username']) ? 'You' : $_GET['username'], PDO::PARAM_STR);
@@ -163,12 +153,12 @@ try {
             $stmt = $pdo->prepare("SELECT l.player_id as playerId, l.score, l.photo_count as photoCount, u.username
                             FROM `$table` l
                             LEFT JOIN `mario-kart-world-users` u ON l.player_id = u.id
-                            WHERE difficulty = :difficulty
+                            WHERE difficulty = :difficulty AND mode = :mode
                             ORDER BY l.photo_count $photoCountOrderType, l.score DESC, l.performed_at DESC"
                         );
                         
-
             $stmt->bindParam(':difficulty', $_GET['difficulty'], PDO::PARAM_STR);
+            $stmt->bindParam(':mode', $_GET['mode'], PDO::PARAM_STR);
         }
     }
 
