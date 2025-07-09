@@ -2,7 +2,13 @@ import { getKey, storeKey } from "./store";
 
 const ROOT_URL = "https://www.mariouniversalis.fr/mario-kart-world-guessr/api";
 
-function getHeaders(accessToken?: string): Headers {
+function getHeaders({
+  accessToken,
+  acceptLanguage,
+}: {
+  accessToken?: string;
+  acceptLanguage?: "fr" | "en";
+}): Headers {
   const headers = new Headers();
 
   const authorizationHeader = [];
@@ -19,16 +25,24 @@ function getHeaders(accessToken?: string): Headers {
     headers.append("Authorization", `Bearer ${authorizationHeader.join(" ")}`);
   }
 
+  if (acceptLanguage) {
+    headers.append("Accept-Language", acceptLanguage);
+  }
+
   return headers;
 }
 
 export default async function fetchApi(
   path: `/${string}`,
   method: "GET" | "POST" = "GET",
-  body?: FormData
+  body?: FormData,
+  acceptLanguage?: "fr" | "en"
 ): Promise<Response> {
   const currentUser = getKey("currentUser");
-  let headers = getHeaders(currentUser?.accessToken ?? undefined);
+  let headers = getHeaders({
+    accessToken: currentUser?.accessToken ?? undefined,
+    acceptLanguage,
+  });
 
   if (
     currentUser?.accessToken &&
@@ -49,7 +63,10 @@ export default async function fetchApi(
       const newUser = await refreshReponse.json();
       storeKey("currentUser", newUser);
 
-      headers = getHeaders(newUser.accessToken);
+      headers = getHeaders({
+        accessToken: newUser.accessToken,
+        acceptLanguage,
+      });
     } catch (e) {
       storeKey("currentUser", null);
     }

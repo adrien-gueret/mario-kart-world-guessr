@@ -10,43 +10,51 @@ import {
 
 import { googleLogout } from "@react-oauth/google";
 
-import { getKey, storeKey } from "@/services/store";
+import { storeKey } from "@/services/store";
 
 import type { User } from "@/types/user";
 import fetchApi from "@/services/api";
 import Loader from "@/components/Loader";
 
 type CurrentUserContextType = {
-  user: User | null;
-  setConnectedUser: (user: User) => void;
+  user: User;
+  isAnonymous: boolean;
+  setCurrentUser: (user: User) => void;
   logout: () => void;
 };
 
 const CurrentUserContext = createContext<CurrentUserContextType>({
-  user: null,
-  setConnectedUser: () => {},
+  user: {
+    id: 0,
+    username: "",
+    email: "",
+    accessToken: "",
+    refreshToken: "",
+    expiredAt: "",
+  },
+  isAnonymous: true,
+  setCurrentUser: () => {},
   logout: () => {},
 } as CurrentUserContextType);
 
 export function CurrentUserProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
-  const [connectedUser, setConnectedUser] = useState<User | null>(() =>
-    getKey("currentUser")
-  );
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const hasBeenMounted = useRef(false);
 
   const logout = useCallback(() => {
-    setConnectedUser(null);
+    setCurrentUser(null);
     storeKey("currentUser", null);
     googleLogout();
+    window.location.reload();
   }, []);
 
   const storeConnectedUser = useCallback(
     (user: User | null) => {
       storeKey("currentUser", user);
-      setConnectedUser(user);
+      setCurrentUser(user);
     },
-    [setConnectedUser]
+    [setCurrentUser]
   );
 
   useEffect(() => {
@@ -56,32 +64,31 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
 
     hasBeenMounted.current = true;
 
-    if (connectedUser) {
-      setIsLoading(true);
-      fetchApi("/me", "GET")
-        .then((response) => response.json())
-        .then((response) => {
-          if (!response.user) {
-            logout();
-          }
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    } else {
-      setIsLoading(false);
-    }
-  }, [connectedUser, logout]);
+    setIsLoading(true);
 
-  return (
+    fetchApi("/me", "GET")
+      .then((response) => response.json())
+      .then((user) => {
+        setCurrentUser(user);
+        storeConnectedUser(user);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [currentUser, logout]);
+
+  return isLoading || !currentUser ? (
+    <Loader />
+  ) : (
     <CurrentUserContext
       value={{
-        user: connectedUser,
-        setConnectedUser: storeConnectedUser,
+        user: currentUser,
+        isAnonymous: !currentUser.email,
+        setCurrentUser: storeConnectedUser,
         logout,
       }}
     >
-      {isLoading ? <Loader /> : children}
+      {children}
     </CurrentUserContext>
   );
 }

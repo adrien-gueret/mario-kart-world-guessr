@@ -2,15 +2,25 @@ import { useState, useCallback } from "react";
 
 import fetchApi from "@/services/api";
 
-import type { GameMode, GameHistory, Difficulty } from "@/types/game";
+import type {
+  GameMode,
+  GameHistory,
+  Difficulty,
+  StartGameResponse,
+} from "@/types/game";
 import type { LocationBase } from "@/types/location";
 
 import { shouldRunNewDailyGame } from "@/services/daily";
 import { getKey, storeKey } from "@/services/store";
 
 import useDailyGame from "./useDailyGame";
+import { useCurrentUser } from "@/auth/CurrentUserProvider";
 
 export default function useGame(mode: GameMode, difficulty?: Difficulty) {
+  const { user } = useCurrentUser();
+
+  const [currentGameId, setCurrentGameId] = useState<number | null>(null);
+
   const [gameHistory, setGameHistory] = useState<GameHistory>(() => {
     if (mode !== "daily" || shouldRunNewDailyGame()) {
       return { scores: [] };
@@ -24,16 +34,7 @@ export default function useGame(mode: GameMode, difficulty?: Difficulty) {
   const [currentLocation, setCurrentLocation] = useState<LocationBase | null>(
     null
   );
-  const [currentLocationIndex, setCurrentLocationIndex] = useState<number>(
-    () => {
-      if (mode !== "daily" || shouldRunNewDailyGame()) {
-        return 0;
-      }
-
-      const storedDaily = getKey("daily");
-      return (storedDaily?.history.scores.length || 1) - 1;
-    }
-  );
+  const currentLocationIndex = gameHistory.scores.length + 1;
 
   const addScoreInHistory = useCallback(
     (score: number) => {
@@ -66,11 +67,31 @@ export default function useGame(mode: GameMode, difficulty?: Difficulty) {
     nextDailyDate,
   } = useDailyGame(gameHistory);
 
-  const getNextLocation =
-    useCallback(async (): Promise<LocationBase | null> => {
+  const getNextLocation = useCallback(
+    async (isFirstLocation: boolean): Promise<LocationBase | null> => {
       setIsLoading(true);
 
       let nextLocation: LocationBase | null = null;
+
+      if (isFirstLocation) {
+        const formData = new FormData();
+
+        formData.append("mode", mode);
+
+        if (difficulty) {
+          formData.append("difficulty", difficulty);
+        }
+
+        const response = await fetchApi(`/start-game`, "POST", formData);
+
+        const game = (await response.json()) as StartGameResponse;
+
+        setCurrentGameId(game.id);
+
+        setGameHistory({
+          scores: game.history || [],
+        });
+      }
 
       if (mode === "daily") {
         nextLocation = await getNextDailyLocation();
@@ -87,13 +108,15 @@ export default function useGame(mode: GameMode, difficulty?: Difficulty) {
       }
 
       setCurrentLocation(nextLocation);
-      setCurrentLocationIndex((prevIndex) => prevIndex + 1);
       setIsLoading(false);
 
       return nextLocation;
-    }, [mode, getNextDailyLocation]);
+    },
+    [mode, difficulty, getNextDailyLocation, user]
+  );
 
   return {
+    currentGameId,
     addScoreInHistory,
     gameHistory,
     isLocationLoading: isLoading || isDailyGameLoading,

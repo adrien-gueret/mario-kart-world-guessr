@@ -53,7 +53,6 @@ export type Texts = {
   "endGame.title": string;
   "endGame.title.leaderboard": string;
   "endGame.titleScreen.label": string;
-  "leaderboard.you": string;
   "endGame.replay.label": string;
   "endGame.survival.description": (
     lastGuess: number,

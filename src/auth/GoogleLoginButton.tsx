@@ -5,7 +5,7 @@ import fetchApi from "@/services/api";
 import { useCurrentUser } from "./CurrentUserProvider";
 
 export default function GoogleLoginButton() {
-  const { setConnectedUser } = useCurrentUser();
+  const { setCurrentUser } = useCurrentUser();
 
   return (
     <GoogleLogin
@@ -18,7 +18,7 @@ export default function GoogleLoginButton() {
 
         delete user.isNewUser;
 
-        setConnectedUser(user);
+        setCurrentUser(user);
       }}
       onError={() => {
         console.log("Login Failed");
