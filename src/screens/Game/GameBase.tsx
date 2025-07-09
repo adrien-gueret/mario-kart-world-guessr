@@ -1,5 +1,9 @@
 import { useState, useCallback, useRef, useEffect } from "react";
-import type { AddGuessResponse } from "@/types/game";
+import type {
+  AddGuessResponse,
+  StartGameResponse,
+  GameHistory,
+} from "@/types/game";
 import { type Coordinates } from "@/types/location";
 
 import { MAP_SIZE_IN_PIXELS } from "@/services/coordinates";
@@ -22,8 +26,6 @@ import type { Difficulty, GameMode } from "@/types/game";
 
 import { useTranslations } from "@/i18n";
 
-import useGame from "./hooks/useGame";
-
 import EndDailyGame from "./End/Daily";
 import EndGoalGame from "./End/Goal";
 import EndSurvivalGame from "./End/Survival";
@@ -37,32 +39,14 @@ type Props = {
 };
 
 export default function Game({ mode, difficulty, onReplay }: Props) {
-  const firstLocationRequested = useRef(false);
-  const { isAnonymous } = useCurrentUser();
+  const hasBeenInit = useRef(false);
 
-  const { translate } = useTranslations();
-  const {
-    currentGameId,
-    currentLocation,
-    getNextLocation,
-    currentLocationIndex,
-    addScoreInHistory,
-    hasReachedLimit,
-    maxLocations,
-    isLocationLoading,
-    gameHistory,
-    nextDailyDate,
-  } = useGame(mode, difficulty);
-
-  const photoCount = gameHistory.scores.length;
-
-  const totalScore = gameHistory.scores.reduce((acc, score) => acc + score, 0);
-
-  useEffect(() => {
-    if (mode === "goal" && totalScore >= 50000) {
-      setIsGameEnded(true);
-    }
-  }, [mode, totalScore]);
+  const [currentGameId, setCurrentGameId] = useState<number | null>(null);
+  const [currentPhotoId, setCurrentPhotoId] = useState<string | null>(null);
+  const [nextPhotoId, setNextPhotoId] = useState<string | null>(null);
+  const [photoCount, setPhotoCount] = useState(0);
+  const [totalScore, setTotalScore] = useState(0);
+  const [gameHistory, setGameHistory] = useState<GameHistory>([]);
 
   const [currentLocationCoordinates, setCurrentLocationCoordinates] =
     useState<Coordinates | null>(null);
@@ -79,46 +63,68 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
   const [isGameEnded, setIsGameEnded] = useState(false);
   const [isLeaderboardShown, setIsLeaderboardShown] = useState(false);
 
-  const isGameOver = isGameEnded || hasReachedLimit;
-
-  const [guessData, setGuessData] = useState<{
+  const [guessResults, setGuessResults] = useState<{
     distance: number;
     score: number;
   } | null>(null);
 
+  const { isAnonymous } = useCurrentUser();
+
+  const { translate } = useTranslations();
+
   const photoSubtitleRef = useRef<HTMLHeadingElement>(null);
 
-  const shouldShowAnswer = Boolean(guessData);
-  const canGuess = !shouldShowAnswer && !isGameOver;
-
-  const requestNextPhoto = useCallback(
-    async (isFirstPhoto: boolean) => {
-      await getNextLocation(isFirstPhoto);
-
-      setUserGuess(null);
-      setGuessData(null);
-
-      if (photoSubtitleRef.current && !isFirstPhoto) {
-        photoSubtitleRef.current.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
-    },
-    [getNextLocation]
-  );
-
   useEffect(() => {
-    if (firstLocationRequested.current) {
+    if (hasBeenInit.current) {
       return;
     }
 
-    firstLocationRequested.current = true;
-    requestNextPhoto(true);
-  }, [requestNextPhoto]);
+    hasBeenInit.current = true;
+
+    const initGame = async () => {
+      const formData = new FormData();
+      formData.append("mode", mode);
+
+      if (difficulty) {
+        formData.append("difficulty", difficulty);
+      }
+
+      const response = await fetchApi("/start-game", "POST", formData);
+
+      if (!response.ok) {
+        throw new Error("Failed to start game.");
+      }
+
+      const game = (await response.json()) as StartGameResponse;
+
+      setCurrentGameId(game.id);
+      setCurrentPhotoId(game.currentPhotoId);
+      setPhotoCount(game.history.length);
+      setTotalScore(game.totalScore);
+    };
+
+    initGame();
+  }, [mode, difficulty]);
+
+  const shouldShowAnswer = Boolean(guessResults);
+  const canGuess = !shouldShowAnswer && !isGameEnded;
+
+  const renderNextPhoto = useCallback(async () => {
+    setCurrentPhotoId(nextPhotoId);
+    setNextPhotoId(null);
+    setUserGuess(null);
+    setGuessResults(null);
+
+    if (photoSubtitleRef.current) {
+      photoSubtitleRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [nextPhotoId]);
 
   const handleConfirmGuess = async () => {
-    if (!userGuess || !currentLocation) {
+    if (!userGuess || !currentPhotoId) {
       return;
     }
 
@@ -133,7 +139,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     }
 
     const formData = new FormData();
-    formData.append("photoName", currentLocation.photoName);
+    formData.append("photoId", currentPhotoId);
     formData.append(
       "x",
       `${
@@ -144,25 +150,17 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     );
     formData.append("y", `${userGuess.y}`);
 
-    if (difficulty) {
-      formData.append("difficulty", difficulty);
-    }
+    formData.append("gameId", `${currentGameId}`);
 
-    formData.append("mode", mode);
-
-    if (currentGameId) {
-      formData.append("gameId", `${currentGameId}`);
-    }
-
-    const response = await fetchApi("/add-guess", "POST", formData);
+    const response = await fetchApi("/add-guess2", "POST", formData);
 
     if (!response.ok) {
       throw new Error();
     }
 
-    const guessData = (await response.json()) as AddGuessResponse;
-    const coordinates = guessData.actualCoordinates;
-    const playersCoordinates = guessData.playersMedianCoordinates;
+    const addGuessResponse = (await response.json()) as AddGuessResponse;
+    const coordinates = addGuessResponse.actualCoordinates;
+    const playersCoordinates = addGuessResponse.playersMedianCoordinates;
 
     if (difficulty === "mirror") {
       coordinates.x = MAP_SIZE_IN_PIXELS.width - coordinates.x;
@@ -172,7 +170,8 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     setCurrentLocationCoordinates(coordinates);
     setCurrentLocationPlayersCoordinates(playersCoordinates);
 
-    const hasBeenGuessedMoreThan5Times = guessData.playersGuessCount >= 5;
+    const hasBeenGuessedMoreThan5Times =
+      addGuessResponse.playersGuessCount >= 5;
 
     setCanShowPlayersCoordinates(hasBeenGuessedMoreThan5Times);
 
@@ -180,19 +179,19 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
       setShouldShowOtherPlayersGuesses(false);
     }
 
-    const { distanceInKm: distance, newScore } = guessData.currentPlayerGuess;
+    const { distanceInKm: distance, newScore } =
+      addGuessResponse.currentPlayerGuess;
 
-    addScoreInHistory(newScore);
+    setGuessResults({ distance, score: newScore });
 
-    setGuessData({ distance, score: newScore });
+    setNextPhotoId(addGuessResponse.gameData.nextPhotoId);
+    setPhotoCount(addGuessResponse.gameData.history.length);
+    setTotalScore(addGuessResponse.gameData.totalScore);
 
-    if (mode === "survival") {
-      const shouldEndGame =
-        (difficulty === "50cc" && newScore < 2500) ||
-        (difficulty === "100cc" && newScore < 3000) ||
-        (difficulty === "150cc" && newScore < 3500) ||
-        (difficulty === "mirror" && newScore < 3500);
-      setIsGameEnded(shouldEndGame);
+    setIsGameEnded(addGuessResponse.gameData.isFinished);
+
+    if (addGuessResponse.gameData.isFinished) {
+      setGameHistory(addGuessResponse.gameData.history);
     }
   };
 
@@ -242,7 +241,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
           <h2 ref={photoSubtitleRef}>{translate("photo.subtitle")}</h2>
 
           <Photo
-            photoName={isLocationLoading ? "" : currentLocation?.photoName}
+            photoName={!currentPhotoId ? "" : currentPhotoId}
             isMirrored={difficulty === "mirror"}
           />
         </div>
@@ -261,7 +260,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
                 : undefined
             }
           >
-            {userGuess && currentLocation && (
+            {userGuess && (
               <>
                 {shouldShowAnswer &&
                   currentLocationCoordinates &&
@@ -287,8 +286,8 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
                       )}
 
                       <GuessScore
-                        distance={guessData!.distance}
-                        score={guessData!.score}
+                        distance={guessResults!.distance}
+                        score={guessResults!.score}
                         canShowPlayersCoordinates={canShowPlayersCoordinates}
                         shouldShowPlayersCoordinates={
                           shouldShowOtherPlayersGuesses
@@ -309,8 +308,8 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
 
       <GlobalScore
         score={totalScore}
-        photoIndex={currentLocationIndex}
-        maxPhotos={maxLocations}
+        photoIndex={photoCount + 1}
+        maxPhotos={mode === "daily" ? 5 : 0}
       />
 
       {userGuess && !shouldShowAnswer && (
@@ -321,11 +320,9 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
         </StickyButtonContainer>
       )}
 
-      {shouldShowAnswer && !isGameOver && (
+      {shouldShowAnswer && !isGameEnded && (
         <StickyButtonContainer withDelay>
-          <Button onClick={() => requestNextPhoto(false)}>
-            {translate("next.label")}
-          </Button>
+          <Button onClick={renderNextPhoto}>{translate("next.label")}</Button>
         </StickyButtonContainer>
       )}
 
@@ -341,7 +338,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
               }`
             : translate("endGame.title")
         }
-        isOpen={isGameOver}
+        isOpen={isGameEnded}
         disableSkew={mode === "daily" || isLeaderboardShown}
       >
         {(() => {
@@ -349,7 +346,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
             case "survival":
               return (
                 <EndSurvivalGame
-                  lastScore={guessData?.score || 0}
+                  lastScore={guessResults?.score || 0}
                   photoCount={photoCount}
                   totalScore={totalScore}
                   difficulty={difficulty!}
@@ -373,6 +370,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
               return (
                 <EndDailyGame
                   gameHistory={gameHistory}
+                  /* TODO: handle nextDailyDate */
                   nextDailyDate={nextDailyDate}
                   onLeaderboardShow={() => setIsLeaderboardShown(true)}
                 />

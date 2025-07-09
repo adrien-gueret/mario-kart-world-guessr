@@ -4,6 +4,8 @@ require_once __DIR__ . '/___middleware.php';
 
 require_once __DIR__ . '/___coordinates.php';
 
+require_once __DIR__ . '/___photos.php';
+
 allowMethod('POST');
 
 if (empty($currentUser)) {
@@ -27,9 +29,11 @@ if ($_POST['mode'] !== 'daily' && (!isset($_POST['difficulty']) || !in_array($_P
 }
 
 try {
+    // TODO: handle daily mode separately
     $stmt = $pdo->prepare(
         "SELECT
             g.id AS id,
+            g.current_photo_id as currentPhotoId,
             COALESCE(
                 JSON_ARRAYAGG(
                     CASE
@@ -93,24 +97,33 @@ try {
 
         unset($game['guesses']);
 
+        $game["totalScore"] = array_sum($game["history"]);
+
         echo json_encode($game);
         exit;
     }
 
+    $firstPhoto = $mode === 'daily'
+        ? getDailyPhoto($pdo, 0)
+        : getRandomPhoto($pdo, $_POST['difficulty'], $currentUser['id']);
+
     $stmt = $pdo->prepare(
-        "INSERT INTO `mario-kart-world-games` (player_id, mode, difficulty, started_at)
-        VALUES (:player_id, :mode, :difficulty, NOW())"
+        "INSERT INTO `mario-kart-world-games` (player_id, mode, difficulty, current_photo_id)
+        VALUES (:player_id, :mode, :difficulty, :currentPhotoId)"
     );
     $stmt->bindParam(':player_id', $currentUser['id'], PDO::PARAM_INT);
     $stmt->bindParam(':mode', $_POST['mode'], PDO::PARAM_STR);
     $stmt->bindParam(':difficulty', $_POST['difficulty'], PDO::PARAM_STR);
+    $stmt->bindParam(':currentPhotoId', $firstPhoto['id'], PDO::PARAM_STR);
     $stmt->execute();
     $gameId = $pdo->lastInsertId();
 
     http_response_code(201);
     echo json_encode([
         'id' => intval($gameId),
-        'history' => []
+        'history' => [],
+        'totalScore' => 0,
+        'currentPhotoId' => $firstPhoto['id'],
     ]);
 } catch (PDOException $e) {
     http_response_code(500);

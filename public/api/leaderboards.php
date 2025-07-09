@@ -162,8 +162,6 @@ try {
         }
     }
 
-    
-
     $stmt->execute();
     
     $photos = $stmt->fetchAll(PDO::FETCH_ASSOC);  
