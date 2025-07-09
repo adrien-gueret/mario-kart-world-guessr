@@ -4,7 +4,7 @@ on:
     branches:
       - main
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -19,22 +19,8 @@ jobs:
         run: |
           npm ci
           npm run build
-      - name: Upload dist dir
-        uses: actions/upload-artifact@v4
-        with:
-          name: mario-kart-world-guessr-build
-          path: dist
         env:
           CI: true
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download dist dir
-        uses: actions/download-artifact@v4
-        with:
-          name: mario-kart-world-guessr-build
       - name: Upload to MU via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -42,11 +28,4 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: "httpdocs/mario-kart-world-guessr/"
-  cleanup:
-    needs: deploy
-    runs-on: ubuntu-latest
-    steps:
-      - name: Delete artifact
-        uses: c-hive/delete-artifact@v3
-        with:
-          name: mario-kart-world-guessr-build
+          local-dir: dist/
