@@ -19,7 +19,7 @@ import fetchApi from "@/services/api";
 import "./Upload.css";
 
 function Upload() {
-  const { logout, user } = useCurrentUser();
+  const { isAnonymous } = useCurrentUser();
 
   const [locationCoordinates, setLocationCoordinates] =
     useState<Coordinates | null>(null);
@@ -33,6 +33,16 @@ function Upload() {
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (import.meta.env.DEV && isAnonymous) {
+      if (
+        !confirm(
+          "You are in development mode without being connected! Do you want to continue?"
+        )
+      ) {
+        throw new Error("Upload canceled.");
+      }
+    }
 
     setIsLoading(true);
 

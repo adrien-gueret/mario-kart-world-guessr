@@ -104,10 +104,8 @@ export default function DailyEnd({
 
     hasBeenInit.current = true;
 
-    const username = user ? user.username : translate("leaderboard.you");
-
     fetchApi(
-      `/leaderboards?mode=daily&score=${totalScore}&username=${username}`,
+      `/leaderboards?mode=daily&score=${totalScore}&username=${user.username}`,
       "GET"
     )
       .then((response) => response.json())
@@ -223,9 +221,7 @@ export default function DailyEnd({
                     <tr
                       key={player.playerId}
                       className={
-                        !player.playerId || player.playerId === user?.id
-                          ? "is-highlighted"
-                          : ""
+                        player.playerId === user.id ? "is-highlighted" : ""
                       }
                     >
                       <th>{index + 1}</th>

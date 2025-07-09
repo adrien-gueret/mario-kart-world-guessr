@@ -168,7 +168,6 @@ const en: Texts = {
   "endGame.title": "Game over!",
   "endGame.title.leaderboard": "Leaderboard",
   "endGame.titleScreen.label": "Home",
-  "leaderboard.you": "You!",
   "endGame.replay.label": "Replay",
   "endGame.survival.description": (
     lastGuess: number,

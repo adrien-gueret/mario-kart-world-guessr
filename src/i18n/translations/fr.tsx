@@ -165,7 +165,6 @@ const fr: Texts = {
   "endGame.title": "Partie terminée !",
   "endGame.title.leaderboard": "Classement",
   "endGame.titleScreen.label": "Accueil",
-  "leaderboard.you": "Vous !",
   "endGame.replay.label": "Rejouer",
   "endGame.survival.description": (
     lastGuess: number,

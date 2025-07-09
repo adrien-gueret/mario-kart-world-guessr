@@ -1,11 +1,10 @@
-import { useState, useCallback, useRef, useEffect, use } from "react";
-import { type Coordinates, type LocationFull } from "@/types/location";
+import { useState, useCallback, useRef, useEffect } from "react";
+import type { AddGuessResponse } from "@/types/game";
+import { type Coordinates } from "@/types/location";
 
-import {
-  getDistanceAndScoreFromCoordinates,
-  MAP_SIZE_IN_PIXELS,
-} from "@/services/coordinates";
+import { MAP_SIZE_IN_PIXELS } from "@/services/coordinates";
 
+import { useCurrentUser } from "@/auth/CurrentUserProvider";
 import Button from "@/components/Button";
 import Modal from "@/components/Modal";
 import StickyButtonContainer from "@/components/StickyButtonContainer";
@@ -39,9 +38,11 @@ type Props = {
 
 export default function Game({ mode, difficulty, onReplay }: Props) {
   const firstLocationRequested = useRef(false);
+  const { isAnonymous } = useCurrentUser();
 
   const { translate } = useTranslations();
   const {
+    currentGameId,
     currentLocation,
     getNextLocation,
     currentLocationIndex,
@@ -91,13 +92,13 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
   const canGuess = !shouldShowAnswer && !isGameOver;
 
   const requestNextPhoto = useCallback(
-    async (shouldScroll = false) => {
-      await getNextLocation();
+    async (isFirstPhoto: boolean) => {
+      await getNextLocation(isFirstPhoto);
 
       setUserGuess(null);
       setGuessData(null);
 
-      if (photoSubtitleRef.current && shouldScroll) {
+      if (photoSubtitleRef.current && !isFirstPhoto) {
         photoSubtitleRef.current.scrollIntoView({
           behavior: "smooth",
           block: "start",
@@ -113,7 +114,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     }
 
     firstLocationRequested.current = true;
-    requestNextPhoto(false);
+    requestNextPhoto(true);
   }, [requestNextPhoto]);
 
   const handleConfirmGuess = async () => {
@@ -121,38 +122,47 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
       return;
     }
 
-    if (!import.meta.env.DEV) {
-      const formData = new FormData();
-      formData.append("photoName", currentLocation.photoName);
-      formData.append(
-        "x",
-        `${
-          difficulty === "mirror"
-            ? MAP_SIZE_IN_PIXELS.width - userGuess.x
-            : userGuess.x
-        }`
-      );
-      formData.append("y", `${userGuess.y}`);
-      fetchApi("/add-guess", "POST", formData);
+    if (import.meta.env.DEV && isAnonymous) {
+      if (
+        !confirm(
+          "You are in development mode without being connected! Do you want to continue?"
+        )
+      ) {
+        throw new Error("Guess canceled.");
+      }
     }
 
-    const response = await fetchApi(
-      `/get-photo?id=${currentLocation.photoName}`
+    const formData = new FormData();
+    formData.append("photoName", currentLocation.photoName);
+    formData.append(
+      "x",
+      `${
+        difficulty === "mirror"
+          ? MAP_SIZE_IN_PIXELS.width - userGuess.x
+          : userGuess.x
+      }`
     );
+    formData.append("y", `${userGuess.y}`);
+
+    if (difficulty) {
+      formData.append("difficulty", difficulty);
+    }
+
+    formData.append("mode", mode);
+
+    if (currentGameId) {
+      formData.append("gameId", `${currentGameId}`);
+    }
+
+    const response = await fetchApi("/add-guess", "POST", formData);
 
     if (!response.ok) {
       throw new Error();
     }
 
-    const locationData = (await response.json()) as LocationFull;
-    const coordinates = {
-      x: locationData.x,
-      y: locationData.y,
-    };
-    const playersCoordinates = {
-      x: locationData.guess_median_x,
-      y: locationData.guess_median_y,
-    };
+    const guessData = (await response.json()) as AddGuessResponse;
+    const coordinates = guessData.actualCoordinates;
+    const playersCoordinates = guessData.playersMedianCoordinates;
 
     if (difficulty === "mirror") {
       coordinates.x = MAP_SIZE_IN_PIXELS.width - coordinates.x;
@@ -162,7 +172,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     setCurrentLocationCoordinates(coordinates);
     setCurrentLocationPlayersCoordinates(playersCoordinates);
 
-    const hasBeenGuessedMoreThan5Times = locationData.guesses_count >= 5;
+    const hasBeenGuessedMoreThan5Times = guessData.playersGuessCount >= 5;
 
     setCanShowPlayersCoordinates(hasBeenGuessedMoreThan5Times);
 
@@ -170,11 +180,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
       setShouldShowOtherPlayersGuesses(false);
     }
 
-    const { distance, score: newScore } = getDistanceAndScoreFromCoordinates(
-      userGuess,
-      coordinates,
-      difficulty
-    );
+    const { distanceInKm: distance, newScore } = guessData.currentPlayerGuess;
 
     addScoreInHistory(newScore);
 
@@ -317,7 +323,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
 
       {shouldShowAnswer && !isGameOver && (
         <StickyButtonContainer withDelay>
-          <Button onClick={() => requestNextPhoto(true)}>
+          <Button onClick={() => requestNextPhoto(false)}>
             {translate("next.label")}
           </Button>
         </StickyButtonContainer>

@@ -44,10 +44,8 @@ export default function SurvivalEnd({
 
     hasBeenInit.current = true;
 
-    const username = user ? user.username : translate("leaderboard.you");
-
     fetchApi(
-      `/leaderboards?mode=survival&difficulty=${difficulty}&score=${totalScore}&photoCount=${photoCount}&username=${username}`,
+      `/leaderboards?mode=survival&difficulty=${difficulty}&score=${totalScore}&photoCount=${photoCount}&username=${user.username}`,
       "GET"
     )
       .then((response) => response.json())
@@ -72,9 +70,7 @@ export default function SurvivalEnd({
                   <tr
                     key={player.playerId}
                     className={
-                      !player.playerId || player.playerId === user?.id
-                        ? "is-highlighted"
-                        : ""
+                      player.playerId === user.id ? "is-highlighted" : ""
                     }
                   >
                     <th>{index + 1}</th>

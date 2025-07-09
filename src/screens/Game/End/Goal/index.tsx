@@ -40,10 +40,8 @@ export default function GoalEnd({
 
     hasBeenInit.current = true;
 
-    const username = user ? user.username : translate("leaderboard.you");
-
     fetchApi(
-      `/leaderboards?mode=goal&difficulty=${difficulty}&photoCount=${photoCount}&score=${totalScore}&username=${username}`,
+      `/leaderboards?mode=goal&difficulty=${difficulty}&photoCount=${photoCount}&score=${totalScore}&username=${user.username}`,
       "GET"
     )
       .then((response) => response.json())
@@ -64,9 +62,7 @@ export default function GoalEnd({
                   <tr
                     key={player.playerId}
                     className={
-                      !player.playerId || player.playerId === user?.id
-                        ? "is-highlighted"
-                        : ""
+                      player.playerId === user.id ? "is-highlighted" : ""
                     }
                   >
                     <th>{index + 1}</th>
