@@ -77,17 +77,56 @@ function getRandomPhoto($pdo, $difficulty, $currentUserId) {
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function getDailyPhoto($pdo, $index) {
-    $stmt = $pdo->prepare(
-        "SELECT id
-        FROM `mario-kart-world-photos`
-        WHERE validated_at IS NOT NULL AND validated_at < CURDATE()
-        ORDER BY MD5(CONCAT(id, CURDATE()))
-        LIMIT :index,1"
-    );
+function getDailyPhoto($pdo, $gameId = null) {
+    if ($gameId === null) {
+        $stmt = $pdo->prepare(
+            "SELECT photo_1_id as id
+            FROM `mario-kart-world-dailies`
+            WHERE daily_date = CURDATE()"
+        );
 
-    $stmt->bindParam(':index', $index, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    $stmt = $pdo->prepare(
+        "SELECT 
+            g.id AS game_id,
+            g.started_at,
+            COUNT(s.id) AS suggestions_count
+        FROM 
+            `mario-kart-world-games` g
+        LEFT JOIN 
+            `mario-kart-world-suggestions` s
+        ON s.game_id = g.id
+        WHERE
+            g.id = :gameId
+            AND g.mode = 'daily'
+            AND g.finished_at IS NULL
+        GROUP BY g.id"
+    );
+    $stmt->bindParam(':gameId', $gameId, PDO::PARAM_INT);
     $stmt->execute();
 
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+    $game = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (empty($game)) {
+        return null;
+    }
+
+    $index = min((int)$game['suggestions_count'], 4) + 1;
+    $col = "photo_{$index}_id";
+
+    $stmt = $pdo->prepare(
+        "SELECT $col as id
+        FROM `mario-kart-world-dailies`
+        WHERE daily_date = :dailyDate"
+    );
+    $date = (new DateTime($game['started_at']))->format('Y-m-d');
+    $stmt->bindParam(':dailyDate', $date, PDO::PARAM_STR);
+    $stmt->execute();
+
+    $photo = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $photo;
 }

@@ -45,7 +45,7 @@ export default function SurvivalEnd({
     hasBeenInit.current = true;
 
     fetchApi(
-      `/leaderboards?mode=survival&difficulty=${difficulty}&score=${totalScore}&photoCount=${photoCount}&username=${user.username}`,
+      `/leaderboards?mode=survival&difficulty=${difficulty}&score=${totalScore}&photoCount=${photoCount}`,
       "GET"
     )
       .then((response) => response.json())

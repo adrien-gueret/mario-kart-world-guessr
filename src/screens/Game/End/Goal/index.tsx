@@ -41,7 +41,7 @@ export default function GoalEnd({
     hasBeenInit.current = true;
 
     fetchApi(
-      `/leaderboards?mode=goal&difficulty=${difficulty}&photoCount=${photoCount}&score=${totalScore}&username=${user.username}`,
+      `/leaderboards?mode=goal&difficulty=${difficulty}&photoCount=${photoCount}&score=${totalScore}`,
       "GET"
     )
       .then((response) => response.json())

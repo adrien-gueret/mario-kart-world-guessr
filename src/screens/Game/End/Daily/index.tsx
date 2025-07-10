@@ -95,7 +95,7 @@ export default function DailyEnd({
     return () => clearInterval(clock);
   }, [nextDailyDate]);
 
-  const totalScore = gameHistory.scores.reduce((acc, score) => acc + score, 0);
+  const totalScore = gameHistory.reduce((acc, score) => acc + score, 0);
 
   useEffect(() => {
     if (hasBeenInit.current) {
@@ -104,10 +104,7 @@ export default function DailyEnd({
 
     hasBeenInit.current = true;
 
-    fetchApi(
-      `/leaderboards?mode=daily&score=${totalScore}&username=${user.username}`,
-      "GET"
-    )
+    fetchApi(`/leaderboards2?mode=daily&score=${totalScore}`, "GET")
       .then((response) => response.json())
       .then(setLeaderboard);
   }, [totalScore, user]);
@@ -117,7 +114,7 @@ export default function DailyEnd({
   const getTextToShare = () => {
     let textToShare = `${translate("share.text.title")}\n\n`;
 
-    gameHistory.scores.forEach((score, index) => {
+    gameHistory.forEach((score, index) => {
       textToShare += `${numberToEmoji(index + 1)} - ${score}\n`;
     });
 
@@ -164,7 +161,7 @@ export default function DailyEnd({
                   </tr>
                 }
               >
-                {gameHistory.scores.map((score, index) => (
+                {gameHistory.map((score, index) => (
                   <tr key={index}>
                     <th>{index + 1}</th>
                     <td>{score}</td>

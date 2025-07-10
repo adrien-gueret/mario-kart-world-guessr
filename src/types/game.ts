@@ -26,5 +26,5 @@ export type StartGameResponse = {
   id: number;
   history: GameHistory;
   totalScore: number;
-  currentPhotoId: string;
+  currentPhotoId: string | null;
 };

@@ -23,14 +23,15 @@ if (!isset($_POST['mode']) || !in_array($_POST['mode'], $possibleModes)) {
 
 $possibleDifficulties = ['50cc', '100cc', '150cc', 'mirror'];
 
-if ($_POST['mode'] !== 'daily' && (!isset($_POST['difficulty']) || !in_array($_POST['difficulty'], $possibleDifficulties))) {
+$isDailyMode = $_POST['mode'] === 'daily';
+
+if (!$isDailyMode && (!isset($_POST['difficulty']) || !in_array($_POST['difficulty'], $possibleDifficulties))) {
     http_response_code(400);
     die('{"error":true,"message":"Invalid difficulty"}');
 }
 
 try {
-    // TODO: handle daily mode separately
-    $stmt = $pdo->prepare(
+    $selectGameStmt = $pdo->prepare(
         "SELECT
             g.id AS id,
             g.current_photo_id as currentPhotoId,
@@ -48,29 +49,27 @@ try {
                 ),
                 JSON_ARRAY()
             ) AS guesses
-            FROM `mario-kart-world-games` g
-            LEFT JOIN `mario-kart-world-suggestions` s ON s.game_id = g.id
-            LEFT JOIN `mario-kart-world-photos` p ON s.photo_id = p.id
-            WHERE
+        FROM `mario-kart-world-games` g
+        LEFT JOIN `mario-kart-world-suggestions` s ON s.game_id = g.id
+        LEFT JOIN `mario-kart-world-photos` p ON s.photo_id = p.id
+        WHERE
             g.player_id = :player_id
             AND g.mode = :mode
-            AND g.difficulty = :difficulty
-            AND g.finished_at IS NULL
-            GROUP BY g.id
-            LIMIT 1");
+            AND ".($isDailyMode ? 'g.difficulty IS NULL' : 'g.difficulty = :difficulty')."
+            AND ".($isDailyMode ? 'DATE(g.started_at) = CURDATE()' : 'g.finished_at IS NULL')."
+        GROUP BY g.id
+        LIMIT 1");
 
-    $stmt->bindParam(':player_id', $currentUser['id'], PDO::PARAM_INT);
-    $stmt->bindParam(':mode', $_POST['mode'], PDO::PARAM_STR);
+    $selectGameStmt->bindParam(':player_id', $currentUser['id'], PDO::PARAM_INT);
+    $selectGameStmt->bindParam(':mode', $_POST['mode'], PDO::PARAM_STR);
 
-    if ($_POST['mode'] === 'daily') {
-        $stmt->bindValue(':difficulty', null, PDO::PARAM_NULL);
-    } else {
-        $stmt->bindParam(':difficulty', $_POST['difficulty'], PDO::PARAM_STR);
+    if (!$isDailyMode) {
+        $selectGameStmt->bindParam(':difficulty', $_POST['difficulty'], PDO::PARAM_STR);
     }
    
-    $stmt->execute();
+    $selectGameStmt->execute();
     
-    $game = $stmt->fetch(PDO::FETCH_ASSOC);
+    $game = $selectGameStmt->fetch(PDO::FETCH_ASSOC);
 
     if (!empty($game)) {
         http_response_code(200);
@@ -103,19 +102,19 @@ try {
         exit;
     }
 
-    $firstPhoto = $mode === 'daily'
-        ? getDailyPhoto($pdo, 0)
+    $firstPhoto = $isDailyMode
+        ? getDailyPhoto($pdo)
         : getRandomPhoto($pdo, $_POST['difficulty'], $currentUser['id']);
 
-    $stmt = $pdo->prepare(
+    $createGameStmt = $pdo->prepare(
         "INSERT INTO `mario-kart-world-games` (player_id, mode, difficulty, current_photo_id)
         VALUES (:player_id, :mode, :difficulty, :currentPhotoId)"
     );
-    $stmt->bindParam(':player_id', $currentUser['id'], PDO::PARAM_INT);
-    $stmt->bindParam(':mode', $_POST['mode'], PDO::PARAM_STR);
-    $stmt->bindParam(':difficulty', $_POST['difficulty'], PDO::PARAM_STR);
-    $stmt->bindParam(':currentPhotoId', $firstPhoto['id'], PDO::PARAM_STR);
-    $stmt->execute();
+    $createGameStmt->bindParam(':player_id', $currentUser['id'], PDO::PARAM_INT);
+    $createGameStmt->bindParam(':mode', $_POST['mode'], PDO::PARAM_STR);
+    $createGameStmt->bindParam(':difficulty', $_POST['difficulty'], PDO::PARAM_STR);
+    $createGameStmt->bindParam(':currentPhotoId', $firstPhoto['id'], PDO::PARAM_STR);
+    $createGameStmt->execute();
     $gameId = $pdo->lastInsertId();
 
     http_response_code(201);
