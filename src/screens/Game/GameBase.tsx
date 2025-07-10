@@ -101,6 +101,13 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
       setCurrentPhotoId(game.currentPhotoId);
       setPhotoCount(game.history.length);
       setTotalScore(game.totalScore);
+
+      const isFinished = game.currentPhotoId === null;
+
+      if (isFinished) {
+        setIsGameEnded(true);
+        setGameHistory(game.history);
+      }
     };
 
     initGame();
@@ -371,7 +378,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
                 <EndDailyGame
                   gameHistory={gameHistory}
                   /* TODO: handle nextDailyDate */
-                  nextDailyDate={nextDailyDate}
+                  nextDailyDate={null}
                   onLeaderboardShow={() => setIsLeaderboardShown(true)}
                 />
               );

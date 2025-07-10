@@ -36,7 +36,7 @@ try {
     }
 
     $selectGameStmt = $pdo->prepare(
-        "SELECT g.id, g.difficulty, g.mode,
+        "SELECT g.id, g.difficulty, g.mode, g.started_at,
          COALESCE(
             JSON_ARRAYAGG(
                 CASE
@@ -153,7 +153,6 @@ try {
 
     switch($mode) {
         case 'daily':
-            // TODO: should check if daily photo is finished (by date)
             $isFinished = $photoCount >= 5;
         break;
 
@@ -173,56 +172,85 @@ try {
     $nextPhotoId = null;
 
     if ($isFinished) {
-        $updateGameStmt = $pdo->prepare("UPDATE `mario-kart-world-games` SET finished_at = NOW() WHERE id = :gameId");
+        $updateGameStmt = $pdo->prepare(
+            "UPDATE `mario-kart-world-games`
+            SET finished_at = NOW(), current_photo_id = NULL
+            WHERE id = :gameId");
         $updateGameStmt->bindParam(':gameId', $game['id'], PDO::PARAM_INT);
         $updateGameStmt->execute();
 
-        $whatToSelect = $mode === 'goal' ? 'MIN(photo_count)' : 'MAX(photo_count)';
-
-        $selectLeaderBoardStmt = $pdo->prepare(
-            "SELECT $whatToSelect FROM `mario-kart-world-leaderboard-goal-survival`
-            WHERE player_id = :playerId
-            AND mode = :mode
-            AND difficulty = :difficulty
-        ");
-        $selectLeaderBoardStmt->bindParam(':playerId', $currentUser['id'], PDO::PARAM_INT);
-        $selectLeaderBoardStmt->bindParam(':mode', $mode, PDO::PARAM_STR);
-        $selectLeaderBoardStmt->bindParam(':difficulty', $difficulty, PDO::PARAM_STR);
-        $best = $selectLeaderBoardStmt->fetchColumn();
-
-        $leaderboardStmt = null;
-        
-        if (!$best) {
+        if ($mode === 'daily') {
             $leaderboardStmt = $pdo->prepare(
-                "INSERT INTO `mario-kart-world-leaderboard-goal-survival` (player_id, difficulty, mode, photo_count, score)
-                VALUES (:playerId, :difficulty, :mode, :photoCount, :score)
-            ");
-        } else if (($mode === 'goal' && $photoCount <= $best) || ($mode === 'survival' && $photoCount >= $best)) {
-            $leaderboardStmt = $pdo->prepare(
-                "UPDATE `mario-kart-world-leaderboard-goal-survival` SET photo_count = :photoCount, score = :score, performed_at = NOW()
-                WHERE player_id = :playerId AND difficulty = :difficulty AND mode = :mode
-            ");
-        }
+                "INSERT INTO `mario-kart-world-leaderboard-daily` (player_id, daily_id, score)
+                VALUES (
+                    :playerId,
+                    (
+                        SELECT d.id
+                        FROM `mario-kart-world-dailies` d
+                        JOIN `mario-kart-world-games` g ON DATE(g.started_at) = d.daily_date
+                        WHERE g.id = :gameId
+                        LIMIT 1
+                    ),
+                    :score
+                )");
 
-        if (!empty($leaderboardStmt)) {
             $leaderboardStmt->bindParam(':playerId', $currentUser['id'], PDO::PARAM_INT);
-            $leaderboardStmt->bindParam(':difficulty', $difficulty, PDO::PARAM_STR);
-            $leaderboardStmt->bindParam(':mode', $mode, PDO::PARAM_STR);
-            $leaderboardStmt->bindParam(':photoCount', $photoCount, PDO::PARAM_INT);
             $leaderboardStmt->bindParam(':score', $totalScore, PDO::PARAM_INT);
+            $leaderboardStmt->bindParam(':gameId', $game['id'], PDO::PARAM_INT);
 
             $leaderboardStmt->execute();
+        } else {
+            $whatToSelect = $mode === 'goal' ? 'MIN(photo_count)' : 'MAX(photo_count)';
+
+            $selectLeaderBoardStmt = $pdo->prepare(
+                "SELECT $whatToSelect FROM `mario-kart-world-leaderboard-goal-survival`
+                WHERE player_id = :playerId
+                AND mode = :mode
+                AND difficulty = :difficulty
+            ");
+            $selectLeaderBoardStmt->bindParam(':playerId', $currentUser['id'], PDO::PARAM_INT);
+            $selectLeaderBoardStmt->bindParam(':mode', $mode, PDO::PARAM_STR);
+            $selectLeaderBoardStmt->bindParam(':difficulty', $difficulty, PDO::PARAM_STR);
+            $best = $selectLeaderBoardStmt->fetchColumn();
+
+            $leaderboardStmt = null;
+            
+            if (!$best) {
+                $leaderboardStmt = $pdo->prepare(
+                    "INSERT INTO `mario-kart-world-leaderboard-goal-survival` (player_id, difficulty, mode, photo_count, score)
+                    VALUES (:playerId, :difficulty, :mode, :photoCount, :score)
+                ");
+            } else if (($mode === 'goal' && $photoCount <= $best) || ($mode === 'survival' && $photoCount >= $best)) {
+                $leaderboardStmt = $pdo->prepare(
+                    "UPDATE `mario-kart-world-leaderboard-goal-survival` SET photo_count = :photoCount, score = :score, performed_at = NOW()
+                    WHERE player_id = :playerId AND difficulty = :difficulty AND mode = :mode
+                ");
+            }
+
+            if (!empty($leaderboardStmt)) {
+                $leaderboardStmt->bindParam(':playerId', $currentUser['id'], PDO::PARAM_INT);
+                $leaderboardStmt->bindParam(':difficulty', $difficulty, PDO::PARAM_STR);
+                $leaderboardStmt->bindParam(':mode', $mode, PDO::PARAM_STR);
+                $leaderboardStmt->bindParam(':photoCount', $photoCount, PDO::PARAM_INT);
+                $leaderboardStmt->bindParam(':score', $totalScore, PDO::PARAM_INT);
+
+                $leaderboardStmt->execute();
+            }
         }
     } else {
         $updateGameStmt = $pdo->prepare("UPDATE `mario-kart-world-games` SET current_photo_id = :photoId WHERE id = :gameId");
 
         $nextPhoto = $mode === 'daily'
-            ? getDailyPhoto($pdo, $photoCount)
+            ? getDailyPhoto($pdo, $game['id'])
             : getRandomPhoto($pdo, $difficulty, $currentUser['id']);
 
         $nextPhotoId = $nextPhoto['id'];
 
-        $updateGameStmt->bindParam(':photoId', $nextPhotoId, PDO::PARAM_STR);
+        if (empty($nextPhotoId)) {
+            $updateGameStmt->bindParam(':photoId', null, PDO::PARAM_NULL);
+        } else {
+            $updateGameStmt->bindParam(':photoId', $nextPhotoId, PDO::PARAM_STR);
+        }
         $updateGameStmt->bindParam(':gameId', $game['id'], PDO::PARAM_INT);
         $updateGameStmt->execute();
     }
@@ -243,7 +271,7 @@ try {
         ],
         "gameData" => [
             "totalScore" => $totalScore,
-            "isFinished" => $isFinished,
+            "isFinished" => $isFinished || empty($nextPhotoId),
             "history" => $game['history'],
             "nextPhotoId" => $nextPhotoId,
         ],

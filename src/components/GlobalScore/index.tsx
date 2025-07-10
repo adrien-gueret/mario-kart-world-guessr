@@ -12,7 +12,7 @@ type Props = {
 
 export default function GlobalScore({
   score,
-  photoIndex,
+  photoIndex = 1,
   maxPhotos = 0,
 }: Props) {
   const [scoreToRender, setScoreToRender] = useState(0);
@@ -41,7 +41,7 @@ export default function GlobalScore({
       {
         <div className="global-score-photo-index">
           {translate("game.globalScore.photoIndex")}
-          {photoIndex || 1}
+          {maxPhotos > 0 ? Math.min(photoIndex, maxPhotos) : photoIndex}
           {maxPhotos > 0 && ` / ${maxPhotos}`}
         </div>
       }
