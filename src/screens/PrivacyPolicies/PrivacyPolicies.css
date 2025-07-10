@@ -1,0 +1,14 @@
+.privacy-policies {
+    max-width: 768px;
+    margin: auto;
+}
+
+.privacy-policies ul {
+    list-style: none;
+    text-align: left;   
+}
+
+.privacy-policies li {
+    font-size: 1rem;
+    display: block;
+}
