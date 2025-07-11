@@ -159,7 +159,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
 
     formData.append("gameId", `${currentGameId}`);
 
-    const response = await fetchApi("/add-guess2", "POST", formData);
+    const response = await fetchApi("/add-guess", "POST", formData);
 
     if (!response.ok) {
       throw new Error();
