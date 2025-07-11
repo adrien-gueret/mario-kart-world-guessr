@@ -31,8 +31,7 @@ try {
                     u.username
                 FROM `$table` l
                 LEFT JOIN `mario-kart-world-users` u ON l.player_id = u.id
-                WHERE (l.daily_date IS NULL OR l.daily_date = CURDATE())
-                AND l.player_id != 1
+                WHERE l.daily_date IS NULL OR l.daily_date = CURDATE()
                 
                 UNION ALL
 
@@ -100,7 +99,6 @@ try {
                 FROM `$table` l
                 LEFT JOIN `mario-kart-world-users` u ON l.player_id = u.id
                 WHERE l.difficulty = :difficulty and l.mode = :mode
-                AND l.player_id != 1
                 
                 UNION ALL
 
@@ -163,8 +161,6 @@ try {
             $stmt->bindParam(':mode', $_GET['mode'], PDO::PARAM_STR);
         }
     }
-
-    
 
     $stmt->execute();
     

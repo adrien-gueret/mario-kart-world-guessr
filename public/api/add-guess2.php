@@ -150,6 +150,7 @@ try {
     $totalScore = array_sum($game["history"]);
 
     $isFinished = false;
+    $newRecord = false;
 
     switch($mode) {
         case 'daily':
@@ -211,11 +212,13 @@ try {
             $selectLeaderBoardStmt->bindParam(':playerId', $currentUser['id'], PDO::PARAM_INT);
             $selectLeaderBoardStmt->bindParam(':mode', $mode, PDO::PARAM_STR);
             $selectLeaderBoardStmt->bindParam(':difficulty', $difficulty, PDO::PARAM_STR);
+            $selectLeaderBoardStmt->execute();
+
             $best = $selectLeaderBoardStmt->fetchColumn();
 
             $leaderboardStmt = null;
             
-            if (!$best) {
+            if (empty($best)) {
                 $leaderboardStmt = $pdo->prepare(
                     "INSERT INTO `mario-kart-world-leaderboard-goal-survival` (player_id, difficulty, mode, photo_count, score)
                     VALUES (:playerId, :difficulty, :mode, :photoCount, :score)
@@ -225,6 +228,8 @@ try {
                     "UPDATE `mario-kart-world-leaderboard-goal-survival` SET photo_count = :photoCount, score = :score, performed_at = NOW()
                     WHERE player_id = :playerId AND difficulty = :difficulty AND mode = :mode
                 ");
+
+                $newRecord = true;
             }
 
             if (!empty($leaderboardStmt)) {
@@ -272,6 +277,7 @@ try {
         "gameData" => [
             "totalScore" => $totalScore,
             "isFinished" => $isFinished || empty($nextPhotoId),
+            "newRecord" => $isFinished ? $newRecord : null,
             "history" => $game['history'],
             "nextPhotoId" => $nextPhotoId,
         ],

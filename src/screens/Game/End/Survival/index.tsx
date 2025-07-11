@@ -8,7 +8,7 @@ import { useCurrentUser } from "@/auth/CurrentUserProvider";
 import { useTranslations } from "@/i18n";
 import fetchApi from "@/services/api";
 
-import type { Difficulty } from "@/types/game";
+import type { RelativeLeaderbordsResponse } from "@/types/game";
 
 import EndGameContent from "../EndGameContent";
 
@@ -18,7 +18,7 @@ type Props = {
   lastScore: number;
   photoCount: number;
   totalScore: number;
-  difficulty: Difficulty;
+  gameId: number;
   onReplay: () => void;
   onLeaderboardShow: () => void;
 };
@@ -27,12 +27,14 @@ export default function SurvivalEnd({
   lastScore,
   photoCount,
   totalScore,
-  difficulty,
+  gameId,
   onReplay,
   onLeaderboardShow,
 }: Props) {
   const { translate } = useTranslations();
-  const [leaderboard, setLeaderboard] = useState<Array<any>>([]);
+  const [leaderboard, setLeaderboard] = useState<RelativeLeaderbordsResponse>(
+    []
+  );
   const { user } = useCurrentUser();
 
   const hasBeenInit = useRef(false);
@@ -44,13 +46,10 @@ export default function SurvivalEnd({
 
     hasBeenInit.current = true;
 
-    fetchApi(
-      `/leaderboards?mode=survival&difficulty=${difficulty}&score=${totalScore}&photoCount=${photoCount}`,
-      "GET"
-    )
+    fetchApi(`/relative-leaderboards?gameId=${gameId}`, "GET")
       .then((response) => response.json())
       .then(setLeaderboard);
-  }, [difficulty, totalScore, photoCount, user]);
+  }, [gameId]);
 
   return (
     <EndGameContent
@@ -66,15 +65,15 @@ export default function SurvivalEnd({
           ) : (
             <div className="leaderboard-container">
               <Table>
-                {leaderboard.map((player, index) => (
+                {leaderboard.map((player) => (
                   <tr
-                    key={player.playerId}
+                    key={player.rank}
                     className={
                       player.playerId === user.id ? "is-highlighted" : ""
                     }
                   >
-                    <th>{index + 1}</th>
-                    <th className="cell-name">{player.username}</th>
+                    <th>{player.rank}</th>
+                    <th className="cell-name">{player.playerName}</th>
                     <td>
                       {player.photoCount}{" "}
                       <span className="cell-score-container">

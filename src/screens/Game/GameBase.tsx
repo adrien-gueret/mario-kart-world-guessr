@@ -356,7 +356,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
                   lastScore={guessResults?.score || 0}
                   photoCount={photoCount}
                   totalScore={totalScore}
-                  difficulty={difficulty!}
+                  gameId={currentGameId!}
                   onReplay={onReplay}
                   onLeaderboardShow={() => setIsLeaderboardShown(true)}
                 />
@@ -366,8 +366,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
               return (
                 <EndGoalGame
                   photoCount={photoCount}
-                  totalScore={totalScore}
-                  difficulty={difficulty!}
+                  gameId={currentGameId!}
                   onReplay={onReplay}
                   onLeaderboardShow={() => setIsLeaderboardShown(true)}
                 />
@@ -377,8 +376,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
               return (
                 <EndDailyGame
                   gameHistory={gameHistory}
-                  /* TODO: handle nextDailyDate */
-                  nextDailyDate={null}
+                  gameId={currentGameId!}
                   onLeaderboardShow={() => setIsLeaderboardShown(true)}
                 />
               );

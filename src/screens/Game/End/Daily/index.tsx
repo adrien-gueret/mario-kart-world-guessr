@@ -4,7 +4,7 @@ import { useCurrentUser } from "@/auth/CurrentUserProvider";
 
 import { useTranslations } from "@/i18n";
 
-import type { GameHistory } from "@/types/game";
+import type { GameHistory, RelativeLeaderbordsResponse } from "@/types/game";
 
 import Button from "@/components/Button";
 import Loader from "@/components/Loader";
@@ -17,7 +17,7 @@ import EndGameContent from "../EndGameContent";
 
 type Props = {
   gameHistory: GameHistory;
-  nextDailyDate: string | null;
+  gameId: number;
   onLeaderboardShow: () => void;
 };
 
@@ -27,18 +27,23 @@ function numberToEmoji(value: number): string {
 
 export default function DailyEnd({
   gameHistory,
-  nextDailyDate,
+  gameId,
   onLeaderboardShow,
 }: Props) {
   const { translate } = useTranslations();
   const [hasCopySuccess, setHasCopySuccess] = useState(false);
+  const [nextDailyDateTimestamp, setNextDailyDateTimestamp] = useState<
+    number | null
+  >(null);
   const [timeRemaining, setTimeRemaining] = useState<{
     hours: number;
     minutes: number;
     seconds: number;
   } | null>(null);
 
-  const [leaderboard, setLeaderboard] = useState<Array<any>>([]);
+  const [leaderboard, setLeaderboard] = useState<RelativeLeaderbordsResponse>(
+    []
+  );
   const { user } = useCurrentUser();
   const hasBeenInit = useRef(false);
 
@@ -57,15 +62,20 @@ export default function DailyEnd({
   }, [hasCopySuccess]);
 
   useEffect(() => {
-    if (!nextDailyDate) {
+    if (nextDailyDateTimestamp === null) {
+      fetchApi(`/next-daily`, "GET")
+        .then((response) => response.json())
+        .then(({ nextDailyDate }: { nextDailyDate: string }) =>
+          setNextDailyDateTimestamp(new Date(nextDailyDate).getTime())
+        );
+
       return;
     }
     let clock: NodeJS.Timeout;
 
     const calculateTimeRemaining = () => {
       const now = new Date().getTime();
-      const nextDate = new Date(nextDailyDate).getTime();
-      const difference = nextDate - now;
+      const difference = nextDailyDateTimestamp - now;
 
       if (difference <= 0) {
         setTimeRemaining({
@@ -93,7 +103,7 @@ export default function DailyEnd({
     clock = setInterval(calculateTimeRemaining, 1000);
 
     return () => clearInterval(clock);
-  }, [nextDailyDate]);
+  }, [nextDailyDateTimestamp]);
 
   const totalScore = gameHistory.reduce((acc, score) => acc + score, 0);
 
@@ -104,10 +114,10 @@ export default function DailyEnd({
 
     hasBeenInit.current = true;
 
-    fetchApi(`/leaderboards2?mode=daily&score=${totalScore}`, "GET")
+    fetchApi(`/relative-leaderboards?gameId=${gameId}`, "GET")
       .then((response) => response.json())
       .then(setLeaderboard);
-  }, [totalScore, user]);
+  }, [gameId]);
 
   const canShare = Boolean(navigator.share);
 
@@ -214,15 +224,15 @@ export default function DailyEnd({
             ) : (
               <div className="leaderboard-container">
                 <Table>
-                  {leaderboard.map((player, index) => (
+                  {leaderboard.map((player) => (
                     <tr
-                      key={player.playerId}
+                      key={player.rank}
                       className={
                         player.playerId === user.id ? "is-highlighted" : ""
                       }
                     >
-                      <th>{index + 1}</th>
-                      <th className="cell-name">{player.username}</th>
+                      <th>{player.rank}</th>
+                      <th className="cell-name">{player.playerName}</th>
                       <td>{player.score}</td>
                     </tr>
                   ))}
