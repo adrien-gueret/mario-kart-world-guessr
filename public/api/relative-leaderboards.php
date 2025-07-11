@@ -89,7 +89,7 @@ try {
             LEFT JOIN `mario-kart-world-users` u ON l.player_id = u.id
             WHERE (l.daily_id IS NULL OR l.daily_id = (
                 SELECT id FROM `mario-kart-world-dailies` WHERE daily_date = :startedAt
-            )) AND l.player_id != :playerId
+            )) AND l.player_id != :playerId AND u.email IS NOT NULL
             
             UNION ALL
 
@@ -150,7 +150,7 @@ try {
             FROM `mario-kart-world-leaderboard-goal-survival` l
             LEFT JOIN `mario-kart-world-users` u ON l.player_id = u.id
             WHERE l.difficulty = :difficulty and l.mode = :mode
-            AND l.player_id != :playerId
+            AND l.player_id != :playerId AND u.email IS NOT NULL
             
             UNION ALL
 

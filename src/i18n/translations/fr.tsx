@@ -65,12 +65,16 @@ const fr: Texts = {
   ),
   "difficulty.survival.mirror": (
     <ul>
+      <li>Bientôt disponible !</li>
+    </ul>
+  ) /*(
+    <ul>
       <li>Comme le 150cc mais...</li>
       <li>
         <b>Les photos et la carte sont inversées !</b>
       </li>
     </ul>
-  ),
+  )*/,
   "difficulty.survival.50cc.short": (
     <>
       La partie continue tant que vous marquez <b>2500 points</b>.
@@ -120,12 +124,16 @@ const fr: Texts = {
   ),
   "difficulty.goal.mirror": (
     <ul>
+      <li>Bientôt disponible !</li>
+    </ul>
+  ) /* (
+    <ul>
       <li>Comme le 150cc mais...</li>
       <li>
         <b>Les photos et la carte sont inversées !</b>
       </li>
     </ul>
-  ),
+  )*/,
   "difficulty.goal.50cc.short": (
     <>
       Les photos <b>les plus faciles</b> et la meilleure tolérance sur le calcul

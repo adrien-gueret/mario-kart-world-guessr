@@ -15,7 +15,7 @@ type Props = {
   difficultiesLabels: Record<Difficulty, ReactNode>;
 };
 
-const DIFFICULTIES: Difficulty[] = ["50cc", "100cc", "150cc"];
+const DIFFICULTIES: Difficulty[] = ["50cc", "100cc", "150cc", "mirror"];
 
 export default function DifficultySelector({
   modeTitle,
@@ -37,8 +37,11 @@ export default function DifficultySelector({
         {DIFFICULTIES.map((difficulty) => (
           <button
             key={difficulty}
+            tabIndex={difficulty === "mirror" ? -1 : 0}
             onClick={() => onSelect(difficulty)}
-            className={`difficulty-option difficulty-${difficulty}`}
+            className={`difficulty-option difficulty-${difficulty} ${
+              difficulty === "mirror" ? "disabled" : ""
+            }`}
           >
             <div className="difficulty-option__icon">
               <picture />
