@@ -17,6 +17,7 @@ export type AddGuessResponse = {
   gameData: {
     totalScore: number;
     isFinished: boolean;
+    newRecord: boolean | null;
     history: GameHistory;
     nextPhotoId: string | null;
   };
@@ -28,3 +29,13 @@ export type StartGameResponse = {
   totalScore: number;
   currentPhotoId: string | null;
 };
+
+type LeaderboardRank = {
+  playerId: number;
+  playerName: string;
+  score: number;
+  photoCount?: number;
+  rank: number;
+};
+
+export type RelativeLeaderbordsResponse = LeaderboardRank[];
