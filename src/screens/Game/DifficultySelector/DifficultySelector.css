@@ -26,6 +26,12 @@
   cursor: pointer;
 }
 
+.difficulty-option.disabled {
+  opacity: 0.8;
+  filter: grayscale(1);
+  pointer-events: none;
+}
+
 .difficulty-option:focus-visible,
 .difficulty-option:hover {
   transform: scale(1.05) rotate(-1.05deg);
@@ -92,6 +98,7 @@
   flex-grow: 1;
   display: flex;
   align-items: center;
+  justify-content: center;
   background-image: url(./backgrounds/dialog.jpg);
   box-sizing: border-box;
   width: 100%;

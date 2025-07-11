@@ -69,12 +69,16 @@ const en: Texts = {
   ),
   "difficulty.survival.mirror": (
     <ul>
+      <li>Soon!</li>
+    </ul>
+  ) /* (
+    <ul>
       <li>Same as 150cc but...</li>
       <li>
         <b>Photos and map are mirrored!</b>
       </li>
     </ul>
-  ),
+  )*/,
   "difficulty.survival.50cc.short": (
     <>
       Game continues as long as you score <b>2500 points</b>.
@@ -124,12 +128,16 @@ const en: Texts = {
   ),
   "difficulty.goal.mirror": (
     <ul>
+      <li>Soon!</li>
+    </ul>
+  ) /* (
+    <ul>
       <li>Same as 150cc but...</li>
       <li>
         <b>Photos and map are mirrored!</b>
       </li>
     </ul>
-  ),
+  )*/,
   "difficulty.goal.50cc.short": (
     <>
       The <b>easiest</b> photos and the most lenient scoring system.
