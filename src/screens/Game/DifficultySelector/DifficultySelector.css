@@ -78,6 +78,63 @@
   border: 3px solid #213547;
 }
 
+.difficulty-option__icon__images {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.difficulty-option__icon .cup {
+  width: 80px;
+  height: 104px;
+  background-image: url(./ui/cups.png);
+  transform: scale(0.7) rotate(10deg);
+  transition: transform 0.15s cubic-bezier(0.4, 1.6, 0.55, 1);
+  position: absolute;
+  right: 8px;
+  overflow: visible;
+}
+
+.difficulty-option__icon .cup.silver {
+  background-position: -80px 0;
+}
+
+.difficulty-option__icon .cup.gold {
+  background-position: -160px 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.difficulty-option:focus-visible .difficulty-option__icon .cup,
+.difficulty-option:hover .difficulty-option__icon .cup {
+  transform: scale(0.7) rotate(5deg);
+}
+
+.difficulty-option__icon .cup.gold::after {
+  content: "";
+  position: relative;
+  top: 28px;
+  display: block;
+  width: 72px;
+  height: 32px;
+  background-image: url(./ui/stars-rank.png);
+}
+
+.difficulty-option__icon .cup.gold.rank-1::after {
+  background-position: -72px 0;
+}
+
+.difficulty-option__icon .cup.gold.rank-2::after {
+  background-position: -144px 0;
+}
+
+.difficulty-option__icon .cup.gold.rank-3::after {
+  background-position: -216px 0;
+}
+
 .difficulty-option__title {
   font-size: 1.5rem;
   font-weight: 900;
