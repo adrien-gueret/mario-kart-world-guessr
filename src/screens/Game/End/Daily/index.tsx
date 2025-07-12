@@ -7,6 +7,7 @@ import { useTranslations } from "@/i18n";
 import type { GameHistory, RelativeLeaderbordsResponse } from "@/types/game";
 
 import Button from "@/components/Button";
+import LeaderboardRow from "@/components/LeaderboardRow";
 import Loader from "@/components/Loader";
 import Table from "@/components/Table";
 
@@ -30,7 +31,7 @@ export default function DailyEnd({
   gameId,
   onLeaderboardShow,
 }: Props) {
-  const { translate } = useTranslations();
+  const { translate, currentLocale } = useTranslations();
   const [hasCopySuccess, setHasCopySuccess] = useState(false);
   const [nextDailyDateTimestamp, setNextDailyDateTimestamp] = useState<
     number | null
@@ -114,10 +115,15 @@ export default function DailyEnd({
 
     hasBeenInit.current = true;
 
-    fetchApi(`/relative-leaderboards?gameId=${gameId}`, "GET")
+    fetchApi(
+      `/relative-leaderboards2?gameId=${gameId}`,
+      "GET",
+      void 0,
+      currentLocale
+    )
       .then((response) => response.json())
       .then(setLeaderboard);
-  }, [gameId]);
+  }, [gameId, currentLocale]);
 
   const canShare = Boolean(navigator.share);
 
@@ -225,16 +231,18 @@ export default function DailyEnd({
               <div className="leaderboard-container">
                 <Table>
                   {leaderboard.map((player) => (
-                    <tr
+                    <LeaderboardRow
                       key={player.rank}
-                      className={
-                        player.playerId === user.id ? "is-highlighted" : ""
+                      rank={player.rank}
+                      username={player.playerName}
+                      marioCharacter={
+                        user.id === player.playerId
+                          ? void 0
+                          : player.marioCharacter ?? void 0
                       }
-                    >
-                      <th>{player.rank}</th>
-                      <th className="cell-name">{player.playerName}</th>
-                      <td>{player.score}</td>
-                    </tr>
+                      score={player.score}
+                      isHighlighted={user.id === player.playerId}
+                    />
                   ))}
                 </Table>
               </div>

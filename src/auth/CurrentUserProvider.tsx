@@ -10,6 +10,8 @@ import {
 
 import { googleLogout } from "@react-oauth/google";
 
+import { useTranslations } from "@/i18n";
+
 import { storeKey } from "@/services/store";
 
 import type { User } from "@/types/user";
@@ -38,6 +40,7 @@ const CurrentUserContext = createContext<CurrentUserContextType>({
 } as CurrentUserContextType);
 
 export function CurrentUserProvider({ children }: { children: ReactNode }) {
+  const { currentLocale } = useTranslations();
   const [isLoading, setIsLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const hasBeenMounted = useRef(false);
@@ -66,7 +69,7 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
 
     setIsLoading(true);
 
-    fetchApi("/me", "GET")
+    fetchApi("/me", "GET", void 0, currentLocale)
       .then((response) => response.json())
       .then((user) => {
         setCurrentUser(user);

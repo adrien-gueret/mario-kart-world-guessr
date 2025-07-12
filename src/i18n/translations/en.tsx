@@ -187,6 +187,8 @@ const en: Texts = {
   "rules.mode.daily.title": "Daily Photos Mode",
   "rules.mode.daily.description":
     "Get the best possible score on five daily photos!",
+  "leaderboard.tab.bots": "Mario & Co",
+  "leaderboard.tab.allPlayers": "All Players",
   "endGame.title": "Game over!",
   "endGame.title.leaderboard": "Leaderboard",
   "endGame.titleScreen.label": "Home",

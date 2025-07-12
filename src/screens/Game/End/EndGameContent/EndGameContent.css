@@ -6,14 +6,3 @@
   flex-wrap: wrap;
   gap: 16px;
 }
-
-.leaderboard-container {
-  width: 50vw;
-  min-width: 350px;
-  max-width: 480px;
-  margin: 12px auto;
-}
-
-.leaderboard-container .cell-name {
-  margin-right: auto;
-}

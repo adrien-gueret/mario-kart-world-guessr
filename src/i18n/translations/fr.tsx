@@ -187,6 +187,8 @@ const fr: Texts = {
   "rules.mode.daily.title": "Mode Photos du jour",
   "rules.mode.daily.description":
     "Faite le meilleur score possible sur cinq photos du jour !",
+  "leaderboard.tab.bots": "Mario & Co",
+  "leaderboard.tab.allPlayers": "Tous les joueurs",
   "endGame.title": "Partie terminée !",
   "endGame.title.leaderboard": "Classement",
   "endGame.titleScreen.label": "Accueil",

@@ -8,7 +8,7 @@ allowMethod('GET');
 
 if (empty($currentUser)) {
     try {
-        $newAnonymousUserName = $headers['Accept-Language'] === 'fr' ? 'Vous !' : 'You!';
+        $newAnonymousUserName = $headers['accept-language'] === 'fr' ? 'Vous !' : 'You!';
         $stmt = $pdo->prepare("INSERT INTO `mario-kart-world-users` (username) VALUES (:username)");
         $stmt->bindParam(':username', $newAnonymousUserName, PDO::PARAM_STR);
 
