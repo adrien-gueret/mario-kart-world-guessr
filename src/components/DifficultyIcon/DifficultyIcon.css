@@ -1,0 +1,27 @@
+.difficulty-icon {
+  display: inline-block;
+  width: 90px;
+  height: 90px;
+  background-repeat: no-repeat;
+  background-image: url(./ui/difficulty.png);
+  background-position: var(--bx, 0);
+  overflow: hidden;
+  border-radius: 35%;
+  border: 3px solid #213547;
+}
+
+.difficulty-icon.difficulty-50cc {
+  --bx: 0;
+}
+
+.difficulty-icon.difficulty-100cc {
+  --bx: -90px;
+}
+
+.difficulty-icon.difficulty-150cc {
+  --bx: -180px;
+}
+
+.difficulty-icon.difficulty-mirror {
+  --bx: -270px;
+}

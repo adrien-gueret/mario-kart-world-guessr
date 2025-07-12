@@ -1,0 +1,38 @@
+.cup {
+  width: 80px;
+  height: 104px;
+  background-image: url(./ui/cups.png);
+  overflow: visible;
+}
+
+.cup.silver {
+  background-position: -80px 0;
+}
+
+.cup.gold {
+  background-position: -160px 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.cup.gold::after {
+  content: "";
+  position: relative;
+  top: 28px;
+  display: block;
+  width: 72px;
+  height: 32px;
+  background-image: url(./ui/stars-rank.png);
+}
+
+.cup.gold.rank-1::after {
+  background-position: -72px 0;
+}
+
+.cup.gold.rank-2::after {
+  background-position: -144px 0;
+}
+
+.cup.gold.rank-3::after {
+  background-position: -216px 0;
+}

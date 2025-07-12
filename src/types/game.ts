@@ -17,7 +17,8 @@ export type AddGuessResponse = {
   gameData: {
     totalScore: number;
     isFinished: boolean;
-    newRecord: boolean | null;
+    isNewRecord: boolean | null;
+    unlockedDifficulty: Difficulty | null;
     history: GameHistory;
     nextPhotoId: string | null;
   };
