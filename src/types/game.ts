@@ -39,3 +39,7 @@ type LeaderboardRank = {
 };
 
 export type RelativeLeaderbordsResponse = LeaderboardRank[];
+
+export type Cup = "none" | "bronze" | "silver" | "gold";
+
+export type StarRank = "rank-0" | "rank-1" | "rank-2" | "rank-3";

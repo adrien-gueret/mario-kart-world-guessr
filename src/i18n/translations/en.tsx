@@ -31,6 +31,28 @@ const en: Texts = {
   "difficulty.100cc.title": "100cc",
   "difficulty.150cc.title": "150cc",
   "difficulty.mirror.title": "Mirror",
+  "difficulty.100cc.locked": (
+    <ul>
+      <li>
+        Get <strong>any</strong> cup in <strong>50cc</strong> to unlock 100cc!
+      </li>
+    </ul>
+  ),
+  "difficulty.150cc.locked": (
+    <ul>
+      <li>
+        Get <strong>any</strong> cup in <strong>100cc</strong> to unlock 150cc!
+      </li>
+    </ul>
+  ),
+  "difficulty.mirror.locked": (
+    <ul>
+      <li>
+        Get a <strong>gold</strong> cup in <strong>50cc</strong>,{" "}
+        <strong>100cc</strong> and <strong>150cc</strong> to unlock mirror mode!
+      </li>
+    </ul>
+  ),
   "difficulty.survival.50cc": (
     <ul>
       <li>
@@ -69,16 +91,12 @@ const en: Texts = {
   ),
   "difficulty.survival.mirror": (
     <ul>
-      <li>Soon!</li>
-    </ul>
-  ) /* (
-    <ul>
       <li>Same as 150cc but...</li>
       <li>
         <b>Photos and map are mirrored!</b>
       </li>
     </ul>
-  )*/,
+  ),
   "difficulty.survival.50cc.short": (
     <>
       Game continues as long as you score <b>2500 points</b>.
@@ -128,16 +146,12 @@ const en: Texts = {
   ),
   "difficulty.goal.mirror": (
     <ul>
-      <li>Soon!</li>
-    </ul>
-  ) /* (
-    <ul>
       <li>Same as 150cc but...</li>
       <li>
         <b>Photos and map are mirrored!</b>
       </li>
     </ul>
-  )*/,
+  ),
   "difficulty.goal.50cc.short": (
     <>
       The <b>easiest</b> photos and the most lenient scoring system.
