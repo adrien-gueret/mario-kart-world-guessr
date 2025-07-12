@@ -150,7 +150,7 @@ try {
     $totalScore = array_sum($game["history"]);
 
     $isFinished = false;
-    $newRecord = false;
+    $isNewRecord = false;
 
     switch($mode) {
         case 'daily':
@@ -229,7 +229,7 @@ try {
                     WHERE player_id = :playerId AND difficulty = :difficulty AND mode = :mode
                 ");
 
-                $newRecord = true;
+                $isNewRecord = true;
             }
 
             if (!empty($leaderboardStmt)) {
@@ -277,7 +277,7 @@ try {
         "gameData" => [
             "totalScore" => $totalScore,
             "isFinished" => $isFinished || empty($nextPhotoId),
-            "newRecord" => $isFinished ? $newRecord : null,
+            "isNewRecord" => $isFinished ? $isNewRecord : null,
             "history" => $game['history'],
             "nextPhotoId" => $nextPhotoId,
         ],

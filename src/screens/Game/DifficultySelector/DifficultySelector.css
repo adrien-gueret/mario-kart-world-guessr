@@ -66,18 +66,6 @@
   border-color: #a500a5;
 }
 
-.difficulty-option__icon picture {
-  display: inline-block;
-  width: 90px;
-  height: 90px;
-  background-repeat: no-repeat;
-  background-image: url(./ui/difficulty.png);
-  background-position: var(--bx, 0);
-  overflow: hidden;
-  border-radius: 35%;
-  border: 3px solid #213547;
-}
-
 .difficulty-option__icon__images {
   display: flex;
   flex-direction: row;
@@ -87,52 +75,15 @@
 }
 
 .difficulty-option__icon .cup {
-  width: 80px;
-  height: 104px;
-  background-image: url(./ui/cups.png);
   transform: scale(0.7) rotate(10deg);
   transition: transform 0.15s cubic-bezier(0.4, 1.6, 0.55, 1);
   position: absolute;
   right: 8px;
-  overflow: visible;
-}
-
-.difficulty-option__icon .cup.silver {
-  background-position: -80px 0;
-}
-
-.difficulty-option__icon .cup.gold {
-  background-position: -160px 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
 }
 
 .difficulty-option:focus-visible .difficulty-option__icon .cup,
 .difficulty-option:hover .difficulty-option__icon .cup {
   transform: scale(0.7) rotate(5deg);
-}
-
-.difficulty-option__icon .cup.gold::after {
-  content: "";
-  position: relative;
-  top: 28px;
-  display: block;
-  width: 72px;
-  height: 32px;
-  background-image: url(./ui/stars-rank.png);
-}
-
-.difficulty-option__icon .cup.gold.rank-1::after {
-  background-position: -72px 0;
-}
-
-.difficulty-option__icon .cup.gold.rank-2::after {
-  background-position: -144px 0;
-}
-
-.difficulty-option__icon .cup.gold.rank-3::after {
-  background-position: -216px 0;
 }
 
 .difficulty-option__title {
@@ -179,20 +130,4 @@
   border-bottom: 2px solid rgba(33, 53, 71, 0.43);
   width: 50%;
   margin: 8px auto;
-}
-
-.difficulty-option.difficulty-50cc {
-  --bx: 0;
-}
-
-.difficulty-option.difficulty-100cc {
-  --bx: -90px;
-}
-
-.difficulty-option.difficulty-150cc {
-  --bx: -180px;
-}
-
-.difficulty-option.difficulty-mirror {
-  --bx: -270px;
 }

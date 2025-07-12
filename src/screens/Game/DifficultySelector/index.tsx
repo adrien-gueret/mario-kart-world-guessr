@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, type ReactNode } from "react";
 
+import CupIcon from "@/components/Cup";
+import DifficultyIcon from "@/components/DifficultyIcon";
 import Text from "@/components/Text";
 
 import { useTranslations } from "@/i18n";
@@ -103,7 +105,7 @@ export default function DifficultySelector({ mode, onSelect }: Props) {
         {difficulties.map(({ difficulty, isUnlocked }) => {
           const cup = difficultiesCups?.[difficulty].cup || "none";
           const starRank =
-            cup === "gold" ? difficultiesCups?.[difficulty].starRank : "";
+            cup === "gold" ? difficultiesCups?.[difficulty].starRank : void 0;
 
           return (
             <button
@@ -116,13 +118,9 @@ export default function DifficultySelector({ mode, onSelect }: Props) {
             >
               <div className="difficulty-option__icon">
                 <div className="difficulty-option__icon__images">
-                  <picture />
+                  <DifficultyIcon difficulty={difficulty} />
 
-                  {cup !== "none" && (
-                    <div
-                      className={`cup ${difficultiesCups?.[difficulty].cup} ${starRank}`}
-                    />
-                  )}
+                  {cup !== "none" && <CupIcon cup={cup} starRank={starRank} />}
                 </div>
                 <div className="difficulty-option__title">
                   {translate(`difficulty.${difficulty}.title`)}
