@@ -1,5 +1,7 @@
 import type { Coordinates } from "./location";
 
+import type { MarioCharacter } from "./characters";
+
 export type GameMode = "survival" | "goal" | "daily";
 
 export type GameHistory = number[];
@@ -18,7 +20,6 @@ export type AddGuessResponse = {
     totalScore: number;
     isFinished: boolean;
     isNewRecord: boolean | null;
-    unlockedDifficulty: Difficulty | null;
     history: GameHistory;
     nextPhotoId: string | null;
   };
@@ -34,6 +35,7 @@ export type StartGameResponse = {
 type LeaderboardRank = {
   playerId: number;
   playerName: string;
+  marioCharacter: MarioCharacter | null;
   score: number;
   photoCount?: number;
   rank: number;

@@ -19,10 +19,6 @@
   margin: 8px 4px;
 }
 
-.table tr.is-highlighted {
-  border-color: #929200;
-}
-
 .table th,
 .table td {
   vertical-align: middle;
@@ -35,19 +31,11 @@
   color: #bdbdbd;
 }
 
-.table tr.is-highlighted th {
-  color: #929200;
-}
-
 .table td {
   text-align: right;
   font-family: "DigitalDisplay", Courier, monospace;
   color: #fff;
   font-size: 2.5rem;
-}
-
-.table tr.is-highlighted td {
-  color: #aaaa00;
 }
 
 @media screen and (max-width: 760px) {

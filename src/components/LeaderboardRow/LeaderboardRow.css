@@ -1,0 +1,48 @@
+.leaderboard-row.is-highlighted {
+  border-color: #929200;
+}
+
+.leaderboard-row.is-highlighted th {
+  color: #929200;
+}
+
+.leaderboard-row.is-highlighted td {
+  color: #aaaa00;
+}
+
+.leaderboard-cell-name {
+  margin-right: auto;
+}
+
+.leaderboard-cell-name.leaderboard-cell-character::before {
+  content: "";
+  display: inline-block;
+  width: 42px;
+  height: 42px;
+  margin-right: 4px;
+  margin-left: -6px;
+  background-size: contain;
+  vertical-align: text-bottom;
+}
+
+.leaderboard-cell-character.mario::before {
+  background-image: url("./ui/icon-mario.png");
+}
+
+.leaderboard-cell-character.luigi::before {
+  background-image: url("./ui/icon-luigi.png");
+}
+
+.leaderboard-cell-character.peach::before {
+  background-image: url("./ui/icon-peach.png");
+}
+
+.leaderboard-cell-character.bowser::before {
+  background-image: url("./ui/icon-bowser.png");
+}
+
+.leaderboard-cell-secondary-score-container {
+  font-size: 1rem;
+  vertical-align: middle;
+  margin-left: 16px;
+}

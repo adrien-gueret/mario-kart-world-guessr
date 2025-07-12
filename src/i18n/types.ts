@@ -53,6 +53,8 @@ export type Texts = {
   "rules.mode.goal.description": string;
   "rules.mode.daily.title": string;
   "rules.mode.daily.description": string;
+  "leaderboard.tab.bots": string;
+  "leaderboard.tab.allPlayers": string;
   "endGame.title": string;
   "endGame.title.leaderboard": string;
   "endGame.titleScreen.label": string;

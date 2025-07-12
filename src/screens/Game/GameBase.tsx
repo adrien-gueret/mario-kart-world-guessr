@@ -45,6 +45,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
   const [currentPhotoId, setCurrentPhotoId] = useState<string | null>(null);
   const [nextPhotoId, setNextPhotoId] = useState<string | null>(null);
   const [photoCount, setPhotoCount] = useState(0);
+  const historyLength = useRef(0);
   const [totalScore, setTotalScore] = useState(0);
   const [gameHistory, setGameHistory] = useState<GameHistory>([]);
 
@@ -67,6 +68,8 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     distance: number;
     score: number;
   } | null>(null);
+
+  const isGuessing = useRef(false);
 
   const { isAnonymous } = useCurrentUser();
 
@@ -99,8 +102,9 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
 
       setCurrentGameId(game.id);
       setCurrentPhotoId(game.currentPhotoId);
-      setPhotoCount(game.history.length);
       setTotalScore(game.totalScore);
+      setPhotoCount(game.history.length + 1);
+      historyLength.current = game.history.length;
 
       const isFinished = game.currentPhotoId === null;
 
@@ -118,6 +122,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
 
   const renderNextPhoto = useCallback(async () => {
     setCurrentPhotoId(nextPhotoId);
+    setPhotoCount(historyLength.current + 1);
     setNextPhotoId(null);
     setUserGuess(null);
     setGuessResults(null);
@@ -131,7 +136,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
   }, [nextPhotoId]);
 
   const handleConfirmGuess = async () => {
-    if (!userGuess || !currentPhotoId) {
+    if (!userGuess || !currentPhotoId || isGuessing.current) {
       return;
     }
 
@@ -159,7 +164,11 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
 
     formData.append("gameId", `${currentGameId}`);
 
+    isGuessing.current = true;
+
     const response = await fetchApi("/add-guess", "POST", formData);
+
+    isGuessing.current = false;
 
     if (!response.ok) {
       throw new Error();
@@ -192,7 +201,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     setGuessResults({ distance, score: newScore });
 
     setNextPhotoId(addGuessResponse.gameData.nextPhotoId);
-    setPhotoCount(addGuessResponse.gameData.history.length);
+    historyLength.current = addGuessResponse.gameData.history.length;
     setTotalScore(addGuessResponse.gameData.totalScore);
 
     setIsGameEnded(addGuessResponse.gameData.isFinished);
@@ -315,7 +324,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
 
       <GlobalScore
         score={totalScore}
-        photoIndex={photoCount + 1}
+        photoIndex={photoCount}
         maxPhotos={mode === "daily" ? 5 : 0}
       />
 
