@@ -9,6 +9,7 @@ import LanguageSelector from "@/i18n/LanguageSelector";
 
 import { useScreen } from "@/screens/ScreensProvider";
 import NewVersionModal from "@/versions/NewVersionModal";
+import currentVersion from "@/versions/currentVersion";
 
 function App() {
   const { currentScreenName, setCurrentScreenName, CurrentScreen } =
@@ -49,6 +50,9 @@ function App() {
         <Credits />
       </div>
       <NewVersionModal />
+      <p>
+        <b>{currentVersion}</b>
+      </p>
     </div>
   );
 }
