@@ -15,7 +15,8 @@ import Login from "./Login";
 import Photos from "./Photos";
 import Title from "./Title";
 import Upload from "./Upload";
-import PrivacyPolicies from './PrivacyPolicies';
+import PrivacyPolicies from "./PrivacyPolicies";
+import TermsServices from "./TermsServices";
 
 export type ScreenName =
   | "Title"
@@ -25,7 +26,8 @@ export type ScreenName =
   | "Upload"
   | "Photos"
   | "Login"
-  | "PrivacyPolicies";
+  | "PrivacyPolicies"
+  | "TermsServices";
 type ScreenHashtag = `#/${Lowercase<ScreenName>}`;
 
 const screenHashtagsToScreenNames: Record<ScreenHashtag, ScreenName> = {
@@ -37,6 +39,7 @@ const screenHashtagsToScreenNames: Record<ScreenHashtag, ScreenName> = {
   "#/photos": "Photos",
   "#/login": "Login",
   "#/privacypolicies": "PrivacyPolicies",
+  "#/termsservices": "TermsServices",
 };
 
 type ScreenContextType = {
@@ -86,6 +89,7 @@ export function ScreensProvider({ children }: { children: ReactNode }) {
     Photos,
     Login,
     PrivacyPolicies,
+    TermsServices,
   };
 
   const handleHashChange = () => {

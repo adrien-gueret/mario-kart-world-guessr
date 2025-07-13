@@ -151,10 +151,23 @@ export default function Leaderboard({ gameId }: Props) {
         </div>
       </div>
 
-      {activeTab === "bots" && cup !== "none" && (
+      {activeTab === "bots" && (
         <div className="leaderboard-cup-container">
-          <h3 className="leaderboard-congrats">Congratulations!</h3>
-          <Cup cup={cup} starRank={starRank} />
+          {cup === "none" ? (
+            <>
+              <h3 className="leaderboard-results-title">
+                {translate("leaderboard.tooBad")}
+              </h3>
+              <img src="./ui/too_bad.png" alt="" />
+            </>
+          ) : (
+            <>
+              <h3 className="leaderboard-results-title">
+                {translate("leaderboard.congrats")}
+              </h3>
+              <Cup cup={cup} starRank={starRank} />
+            </>
+          )}
         </div>
       )}
     </div>

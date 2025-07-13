@@ -189,6 +189,8 @@ const fr: Texts = {
     "Faite le meilleur score possible sur cinq photos du jour !",
   "leaderboard.tab.bots": "Mario & Co",
   "leaderboard.tab.allPlayers": "Tous les joueurs",
+  "leaderboard.congrats": "Félicitations !",
+  "leaderboard.tooBad": "Dommage...",
   "endGame.title": "Partie terminée !",
   "endGame.title.leaderboard": "Classement",
   "endGame.titleScreen.label": "Accueil",

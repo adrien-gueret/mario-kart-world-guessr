@@ -27,6 +27,7 @@ ___database.php
 ___middleware.php
 ___create_jwt.php
 auth-google.php
+auth-discord.php
 upload-photo.php
 webhook.php
 *.env

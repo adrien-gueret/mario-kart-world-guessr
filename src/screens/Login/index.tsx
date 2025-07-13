@@ -1,5 +1,6 @@
 import Text from "@/components/Text";
 import GoogleLoginButton from "@/auth/GoogleLoginButton";
+import DiscordLoginButton from "@/auth/DiscordLoginButton";
 import { useCurrentUser } from "@/auth/CurrentUserProvider";
 
 import { useTranslations } from "@/i18n";
@@ -18,12 +19,15 @@ function Login() {
 
       <Text component="p">Blablabla</Text>
 
-      {!isAnonymous ? (
+      {false ? (
         <>
           <p>{translate("upload.step3.login.info")(user.email)}</p>
         </>
       ) : (
-        <GoogleLoginButton />
+        <>
+          <GoogleLoginButton />
+          <DiscordLoginButton />
+        </>
       )}
     </div>
   );

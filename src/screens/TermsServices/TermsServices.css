@@ -1,13 +1,13 @@
-.privacy-policies {
+.terms-services {
   max-width: 768px;
   margin: auto;
 }
 
-.privacy-policies ul {
+.terms-services ul {
   list-style: none;
   text-align: left;
 }
 
-.privacy-policies li {
+.terms-services li {
   display: block;
 }
