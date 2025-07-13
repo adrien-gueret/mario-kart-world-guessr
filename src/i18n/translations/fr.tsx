@@ -1,3 +1,4 @@
+import type { Version } from "@/versions/types";
 import type { Texts } from "../types";
 
 const fr: Texts = {
@@ -313,6 +314,7 @@ const fr: Texts = {
   ),
   "login.discord.label": "Se connecter avec Discord",
   "logout.label": "Se déconnecter",
+  "new-version.title": (version: Version) => `Nouvelle version : ${version}`,
 };
 
 export default fr;

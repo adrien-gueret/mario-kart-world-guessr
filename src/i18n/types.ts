@@ -1,3 +1,4 @@
+import type { Version } from "@/versions/types";
 import type { ReactNode } from "react";
 
 export type Locale = "fr" | "en";
@@ -113,6 +114,7 @@ export type Texts = {
   "login.screen.description": ReactNode;
   "login.discord.label": string;
   "logout.label": string;
+  "new-version.title": (version: Version) => string;
 };
 
 export type TranslationKey = keyof Texts;

@@ -11,6 +11,10 @@
   display: block;
 }
 
+li.text {
+  display: list-item;
+}
+
 @media screen and (max-width: 420px) {
   .text {
     font-size: 0.8rem;
