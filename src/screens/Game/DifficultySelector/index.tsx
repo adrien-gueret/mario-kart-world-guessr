@@ -46,6 +46,10 @@ export default function DifficultySelector({ mode, onSelect }: Props) {
         return false;
       }
 
+      if (difficultiesCups[difficulty]?.cup !== "none") {
+        return true;
+      }
+
       if (difficulty === "mirror") {
         return (
           difficultiesCups["50cc"].cup === "gold" &&

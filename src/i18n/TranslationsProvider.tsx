@@ -5,13 +5,12 @@ import fr from "./translations/fr";
 
 import type { TranslationsContextType, Locale, Translations } from "./types";
 
-import LanguageSelector from "./LanguageSelector";
-
 const translations: Translations = { fr, en } as const;
 
 const TranslationsContext = createContext<TranslationsContextType>({
   currentLocale: "fr",
   translate: () => "",
+  setCurrentLocale: () => {},
 } as TranslationsContextType);
 
 const setDocumentLanguage = (locale: Locale) => {
@@ -35,16 +34,15 @@ export function TranslationsProvider({ children }: { children: ReactNode }) {
     return translations[currentLocale][key];
   };
 
-  return (
-    <TranslationsContext value={{ currentLocale, translate }}>
-      <LanguageSelector
-        value={currentLocale}
-        onChange={(newLocale) => {
-          setCurrentLocale(newLocale);
-          setDocumentLanguage(newLocale);
-        }}
-      />
+  const setLocale = (locale: Locale) => {
+    setCurrentLocale(locale);
+    setDocumentLanguage(locale);
+  };
 
+  return (
+    <TranslationsContext
+      value={{ currentLocale, translate, setCurrentLocale: setLocale }}
+    >
       {children}
     </TranslationsContext>
   );

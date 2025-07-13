@@ -78,20 +78,57 @@ h3 {
   text-align: center;
 }
 
-.App {
+.app-container {
   display: flex;
   flex-direction: column;
   gap: 64px;
 }
 
-.app-home-button {
-  position: absolute;
-  top: 80px;
-  right: 16px;
+.app-Title .app-home-button {
+  display: none;
 }
 
-.App.App-Title .app-home-button {
-  display: none;
+.app-header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.app-header > button {
+  margin: 0 !important;
+}
+
+.app-header .user-connection {
+  margin-right: 24px;
+  background-image: url(./backgrounds/dialog.jpg);
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-self: center;
+  gap: 8px;
+  border: 1px solid #213547;
+}
+
+.user-connection b {
+  font-weight: bolder;
+}
+
+.user-connection a,
+.user-connection a:visited {
+  color: inherit;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.user-connection a:hover,
+.user-connection a:focus-visible {
+  text-decoration: underline;
 }
 
 @media screen and (max-width: 420px) {

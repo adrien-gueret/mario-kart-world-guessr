@@ -4,12 +4,14 @@ import { useCurrentUser } from "@/auth/CurrentUserProvider";
 
 import { useTranslations } from "@/i18n";
 
+import Button from "@/components/Button";
 import Cup from "@/components/Cup";
 import LeaderboardRow from "@/components/LeaderboardRow";
 import Loader from "@/components/Loader";
 import Table from "@/components/Table";
 
 import fetchApi from "@/services/api";
+import { useScreen } from "@/screens";
 
 import type {
   RelativeLeaderbordsResponse,
@@ -26,7 +28,8 @@ type Props = {
 export default function Leaderboard({ gameId }: Props) {
   const hasBeenInit = useRef(false);
 
-  const { user } = useCurrentUser();
+  const { user, isAnonymous } = useCurrentUser();
+  const { setCurrentScreenName } = useScreen();
   const { translate, currentLocale } = useTranslations();
 
   const [activeTab, setActiveTab] = useState<"all" | "bots">("bots");
@@ -46,7 +49,7 @@ export default function Leaderboard({ gameId }: Props) {
     hasBeenInit.current = true;
 
     fetchApi(
-      `/relative-leaderboards2?gameId=${gameId}&only-bots=1`,
+      `/relative-leaderboards?gameId=${gameId}&only-bots=1`,
       "GET",
       void 0,
       currentLocale
@@ -55,7 +58,7 @@ export default function Leaderboard({ gameId }: Props) {
       .then(setBotLeaderboard);
 
     fetchApi(
-      `/relative-leaderboards2?gameId=${gameId}`,
+      `/relative-leaderboards?gameId=${gameId}`,
       "GET",
       void 0,
       currentLocale
@@ -151,9 +154,9 @@ export default function Leaderboard({ gameId }: Props) {
         </div>
       </div>
 
-      {activeTab === "bots" && (
-        <div className="leaderboard-cup-container">
-          {cup === "none" ? (
+      <div className="leaderboard-cup-container">
+        {activeTab === "bots" ? (
+          cup === "none" ? (
             <>
               <h3 className="leaderboard-results-title">
                 {translate("leaderboard.tooBad")}
@@ -167,9 +170,25 @@ export default function Leaderboard({ gameId }: Props) {
               </h3>
               <Cup cup={cup} starRank={starRank} />
             </>
-          )}
-        </div>
-      )}
+          )
+        ) : (
+          <>
+            {isAnonymous && (
+              <>
+                <p style={{ maxWidth: 200, textAlign: "center" }}>
+                  {translate("leaderboard.needs.login")}
+                </p>
+                <Button
+                  variant="secondary"
+                  onClick={() => setCurrentScreenName("Login")}
+                >
+                  {translate("login.screen.title")}
+                </Button>
+              </>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }

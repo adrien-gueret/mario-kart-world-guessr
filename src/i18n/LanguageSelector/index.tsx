@@ -1,8 +1,6 @@
+import Button from "@/components/Button";
+
 import type { Locale } from "../types";
-
-import Button from "../../components/Button";
-
-import "./LanguageSelector.css";
 
 type Props = {
   value: Locale;

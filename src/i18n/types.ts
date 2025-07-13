@@ -57,6 +57,7 @@ export type Texts = {
   "leaderboard.tab.allPlayers": string;
   "leaderboard.congrats": string;
   "leaderboard.tooBad": string;
+  "leaderboard.needs.login": string;
   "endGame.title": string;
   "endGame.title.leaderboard": string;
   "endGame.titleScreen.label": string;
@@ -121,4 +122,5 @@ export type Translations = Record<Locale, Texts>;
 export type TranslationsContextType = {
   currentLocale: Locale;
   translate: <T extends TranslationKey>(key: T) => Texts[T];
+  setCurrentLocale: (locale: Locale) => void;
 };

@@ -6,7 +6,6 @@ require_once __DIR__ . '/___coordinates.php';
 
 allowMethod('GET');
 
-
 if (!isset($_GET['gameId'])) {
     http_response_code(400);
     die('{"error":true,"message":"Missing game id"}');
@@ -78,19 +77,21 @@ try {
     $totalScore = array_sum($history);
     $photoCount = count($history);
 
+    $anonymousUserName = $headers['accept-language'] === 'fr' ? 'Anonyme' : 'Anonymous';
+
     if($game['mode'] === 'daily') {
         $stmt = $pdo->prepare("WITH
         all_players AS (
             SELECT
                 l.player_id,
                 l.score,
-                u.username,
+                IF(u.email IS NULL, '$anonymousUserName', u.username) AS username,
                 u.mario_character
             FROM `mario-kart-world-leaderboard-daily` l
             LEFT JOIN `mario-kart-world-users` u ON l.player_id = u.id
             WHERE (l.daily_id IS NULL OR l.daily_id = (
                 SELECT id FROM `mario-kart-world-dailies` WHERE daily_date = :startedAt
-            )) AND l.player_id != :playerId AND l.player_id != 1 AND u.email IS NOT NULL
+            )) AND l.player_id != :playerId AND l.player_id != 1
             
             UNION ALL
 
@@ -142,6 +143,7 @@ try {
         $startedAtDate = (new DateTime($game['started_at']))->format('Y-m-d');
         $stmt->bindValue(':startedAt', $startedAtDate, PDO::PARAM_STR);
     } else {
+        $shouldShowOnlyBots = isset($_GET['only-bots']);
         $photoCountOrderType = $game['mode'] === 'survival' ? 'DESC' : 'ASC';
        
         $stmt = $pdo->prepare("WITH
@@ -151,12 +153,13 @@ try {
                 l.score,
                 l.photo_count,
                 l.performed_at,
-                u.username,
+                IF(u.email IS NULL, '$anonymousUserName', u.username) AS username,
                 u.mario_character
             FROM `mario-kart-world-leaderboard-goal-survival` l
             LEFT JOIN `mario-kart-world-users` u ON l.player_id = u.id
             WHERE l.difficulty = :difficulty and l.mode = :mode
-            AND l.player_id != :playerId AND u.email IS NOT NULL
+            AND l.player_id != :playerId
+            ".($shouldShowOnlyBots ? "AND l.player_id IN (3,4,5,6)" : "")."
             
             UNION ALL
 
