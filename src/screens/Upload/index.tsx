@@ -139,7 +139,7 @@ function Upload() {
 
             {/*user ? (
               <>
-                <p>{translate("upload.step3.login.info")(user.email)}</p>
+                <p>{translate("upload.step3.login.info")(user.username, user.email)}</p>
 
                 <label>
                   <input
@@ -175,7 +175,7 @@ function Upload() {
                 </div>
 
                 <Button variant="secondary" onClick={logout}>
-                  {translate("upload.step3.logout.label")}
+                  {translate("logout.label")}
                 </Button>
               </>
             ) : (

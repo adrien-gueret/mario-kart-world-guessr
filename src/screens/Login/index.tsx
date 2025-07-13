@@ -5,9 +5,8 @@ import { useCurrentUser } from "@/auth/CurrentUserProvider";
 
 import { useTranslations } from "@/i18n";
 
-import fetchApi from "@/services/api";
-
 import "./Login.css";
+import Button from "@/components/Button";
 
 function Login() {
   const { logout, user, isAnonymous } = useCurrentUser();
@@ -15,20 +14,35 @@ function Login() {
 
   return (
     <div className="login-screen">
-      <h2>Se connecter</h2>
+      <h2>
+        {isAnonymous
+          ? translate("login.screen.title")
+          : translate("logout.label")}
+      </h2>
 
-      <Text component="p">Blablabla</Text>
+      <div className="login-content">
+        {isAnonymous ? (
+          <>
+            <Text component="p">{translate("login.screen.description")}</Text>
+            <div className="login-buttons">
+              <GoogleLoginButton />
+              <DiscordLoginButton />
+            </div>
+          </>
+        ) : (
+          <>
+            <Text component="p">
+              {translate("upload.step3.login.info")(user.username, user.email)}
+            </Text>
 
-      {false ? (
-        <>
-          <p>{translate("upload.step3.login.info")(user.email)}</p>
-        </>
-      ) : (
-        <>
-          <GoogleLoginButton />
-          <DiscordLoginButton />
-        </>
-      )}
+            <div>
+              <Button variant="secondary" onClick={logout}>
+                {translate("logout.label")}
+              </Button>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }

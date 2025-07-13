@@ -257,17 +257,16 @@ const fr: Texts = {
       vous connecter.
     </>
   ),
-  "upload.step3.login.info": (userEmail: string) => (
+  "upload.step3.login.info": (username: string, userEmail: string) => (
     <>
-      Vous êtes actuellement connecté via <b>Google</b> avec votre email{" "}
-      <b>{userEmail}</b> (
+      Vous êtes actuellement connecté en tant que <b>{username}</b> avec votre
+      email <b>{userEmail}</b> (
       <i>
         cet email ne sera <b>pas</b> publique
       </i>
       ).
     </>
   ),
-  "upload.step3.logout.label": "Se déconnecter",
   "upload.step3.or": "ou",
   "upload.step3.authorName.label": (userName: string) => (
     <>
@@ -303,6 +302,15 @@ const fr: Texts = {
     </>
   ),
   "photo.details.title": "Détails de la photo",
+  "login.screen.title": "Se connecter",
+  "login.screen.description": (
+    <>
+      Choisissez le service que vous préférez pour vous connecter à{" "}
+      <b>Mario Kart World Guessr</b>.
+    </>
+  ),
+  "login.discord.label": "Se connecter avec Discord",
+  "logout.label": "Se déconnecter",
 };
 
 export default fr;
