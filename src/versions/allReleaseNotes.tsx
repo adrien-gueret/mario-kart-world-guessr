@@ -17,8 +17,7 @@ const releaseNotes: ReleaseNotes = [
             <b>Discord</b> pour apparaitre dans ce classement.
             <br />
             <i>
-              Votre progression depuis le 11 Juillet devrait être sauvegardée,
-              si tout se passe bien !
+              Vous connecter vous permettra de sauvegarder votre progression !
             </i>
           </Text>
           <Text component="li">
@@ -41,10 +40,7 @@ const releaseNotes: ReleaseNotes = [
             You can now sign in via <b>Google</b> or <b>Discord</b> to appear in
             this leaderboard.
             <br />
-            <i>
-              Your progress since July 11th should be saved, if everything goes
-              well!
-            </i>
+            <i>Signing in will allow you to save your progress!</i>
           </Text>
           <Text component="li">
             The different difficulty modes must now be unlocked by winning cups.
