@@ -55,6 +55,8 @@ export type Texts = {
   "rules.mode.daily.description": string;
   "leaderboard.tab.bots": string;
   "leaderboard.tab.allPlayers": string;
+  "leaderboard.congrats": string;
+  "leaderboard.tooBad": string;
   "endGame.title": string;
   "endGame.title.leaderboard": string;
   "endGame.titleScreen.label": string;

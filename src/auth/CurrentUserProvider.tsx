@@ -67,18 +67,49 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
 
     hasBeenMounted.current = true;
 
-    setIsLoading(true);
+    function fetchMe() {
+      setIsLoading(true);
 
-    fetchApi("/me", "GET", void 0, currentLocale)
-      .then((response) => response.json())
-      .then((user) => {
-        setCurrentUser(user);
-        storeConnectedUser(user);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [currentUser, logout]);
+      fetchApi("/me", "GET", void 0, currentLocale)
+        .then((response) => response.json())
+        .then((user) => {
+          setCurrentUser(user);
+          storeConnectedUser(user);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+
+    function fetchDiscord(discordCode: string) {
+      setIsLoading(true);
+
+      const formData = new FormData();
+      formData.append("token", discordCode);
+
+      fetchApi("/auth-discord", "POST", formData)
+        .then((response) => response.json())
+        .then((user) => {
+          delete user.isNewUser;
+          setCurrentUser(user);
+          storeConnectedUser(user);
+        })
+        .catch(fetchMe)
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+
+    const searchParams = new URLSearchParams(window.location.search);
+    const authCode = searchParams.get("code");
+    const state = searchParams.get("state");
+
+    if (authCode && state === "from-discord") {
+      fetchDiscord(authCode);
+    } else {
+      fetchMe();
+    }
+  }, [currentUser, currentLocale]);
 
   return isLoading || !currentUser ? (
     <Loader />

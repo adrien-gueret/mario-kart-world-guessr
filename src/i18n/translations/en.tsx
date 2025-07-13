@@ -189,6 +189,8 @@ const en: Texts = {
     "Get the best possible score on five daily photos!",
   "leaderboard.tab.bots": "Mario & Co",
   "leaderboard.tab.allPlayers": "All Players",
+  "leaderboard.congrats": "Congratulations!",
+  "leaderboard.tooBad": "Too bad...",
   "endGame.title": "Game over!",
   "endGame.title.leaderboard": "Leaderboard",
   "endGame.titleScreen.label": "Home",
