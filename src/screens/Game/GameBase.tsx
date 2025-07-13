@@ -140,16 +140,6 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
       return;
     }
 
-    if (import.meta.env.DEV && isAnonymous) {
-      if (
-        !confirm(
-          "You are in development mode without being connected! Do you want to continue?"
-        )
-      ) {
-        throw new Error("Guess canceled.");
-      }
-    }
-
     const formData = new FormData();
     formData.append("photoId", currentPhotoId);
     formData.append(

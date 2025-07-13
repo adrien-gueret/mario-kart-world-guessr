@@ -55,7 +55,7 @@ export default function Pin({
       style={{
         left: `${domX}px`,
         top: `${domY}px`,
-        zIndex: domY,
+        zIndex: Math.max(1, domY),
       }}
     >
       <img src={`./ui/icon-${variant}.png`} alt="" />

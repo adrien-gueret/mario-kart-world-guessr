@@ -88,7 +88,12 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
       formData.append("token", discordCode);
 
       fetchApi("/auth-discord", "POST", formData)
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to authenticate with Discord");
+          }
+          return response.json();
+        })
         .then((user) => {
           delete user.isNewUser;
           setCurrentUser(user);
@@ -96,6 +101,11 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
         })
         .catch(fetchMe)
         .finally(() => {
+          window.history.replaceState(
+            {},
+            document.title,
+            window.location.pathname
+          );
           setIsLoading(false);
         });
     }
