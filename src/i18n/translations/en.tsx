@@ -1,3 +1,4 @@
+import type { Version } from "@/versions/types";
 import type { Texts } from "../types";
 
 const kilometersToMiles = (km: number): string => {
@@ -307,6 +308,7 @@ const en: Texts = {
   ),
   "login.discord.label": "Log in with Discord",
   "logout.label": "Log out",
+  "new-version.title": (version: Version) => `New version: ${version}`,
 };
 
 export default en;

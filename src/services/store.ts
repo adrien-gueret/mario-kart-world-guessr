@@ -1,14 +1,19 @@
+import type { Version } from "@/versions//types";
+
 import type { User } from "@/types/user";
 
 const STORAGE_KEY = "mario-kart-world-guessr-store";
 
 type Store = {
   currentUser: User | null;
+  lastSeenVersion: Version | null;
+  daily?: any;
 };
 
 function getDefaultStore(): Store {
   return {
     currentUser: null,
+    lastSeenVersion: null,
   };
 }
 
@@ -39,4 +44,12 @@ export function getKey<K extends keyof Store>(key: K): Store[K] {
   const store = getStore();
 
   return store[key];
+}
+
+export function removeKey<K extends keyof Store>(key: K): void {
+  const store = getStore();
+
+  delete store[key];
+
+  putStore(store);
 }
