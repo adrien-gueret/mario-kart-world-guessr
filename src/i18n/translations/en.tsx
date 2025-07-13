@@ -191,6 +191,7 @@ const en: Texts = {
   "leaderboard.tab.allPlayers": "All Players",
   "leaderboard.congrats": "Congratulations!",
   "leaderboard.tooBad": "Too bad...",
+  "leaderboard.needs.login": "To display your name in the leaderboard, log in!",
   "endGame.title": "Game over!",
   "endGame.title.leaderboard": "Leaderboard",
   "endGame.titleScreen.label": "Home",

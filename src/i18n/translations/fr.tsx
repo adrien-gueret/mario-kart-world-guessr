@@ -191,6 +191,8 @@ const fr: Texts = {
   "leaderboard.tab.allPlayers": "Tous les joueurs",
   "leaderboard.congrats": "Félicitations !",
   "leaderboard.tooBad": "Dommage...",
+  "leaderboard.needs.login":
+    "Pour afficher votre nom dans le classement, connectez-vous !",
   "endGame.title": "Partie terminée !",
   "endGame.title.leaderboard": "Classement",
   "endGame.titleScreen.label": "Accueil",

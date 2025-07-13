@@ -116,7 +116,7 @@ export default function DailyEnd({
     hasBeenInit.current = true;
 
     fetchApi(
-      `/relative-leaderboards2?gameId=${gameId}`,
+      `/relative-leaderboards?gameId=${gameId}`,
       "GET",
       void 0,
       currentLocale
