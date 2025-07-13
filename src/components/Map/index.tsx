@@ -114,6 +114,17 @@ export default function Map({
 
         <MapContext value={{ ratio, isMirrored }}>{children}</MapContext>
       </div>
+
+      {canShowCourses && (
+        <div className="map-show-courses-container">
+          <Checkbox
+            name="map-show-courses"
+            label={translate("upload.step2.help.label")}
+            checked={shouldShowCourses}
+            onChange={setShouldShowCourses}
+          />
+        </div>
+      )}
     </>
   );
 }
