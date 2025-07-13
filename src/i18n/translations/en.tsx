@@ -254,9 +254,9 @@ const en: Texts = {
       in.
     </>
   ),
-  "upload.step3.login.info": (userEmail: string) => (
+  "upload.step3.login.info": (username, userEmail: string) => (
     <>
-      You are currently logged in via <b>Google</b> with your email{" "}
+      You are currently logged a <b>{username}</b> with your email{" "}
       <b>{userEmail}</b> (
       <i>
         this email will <b>not</b> be public
@@ -264,7 +264,6 @@ const en: Texts = {
       ).
     </>
   ),
-  "upload.step3.logout.label": "Log out",
   "upload.step3.or": "or",
   "upload.step3.authorName.label": (userName: string) => (
     <>
@@ -299,6 +298,14 @@ const en: Texts = {
     </>
   ),
   "photo.details.title": "Photo details",
+  "login.screen.title": "Log in",
+  "login.screen.description": (
+    <>
+      Choose the service you prefer to log in to <b>Mario Kart World Guessr</b>.
+    </>
+  ),
+  "login.discord.label": "Log in with Discord",
+  "logout.label": "Log out",
 };
 
 export default en;

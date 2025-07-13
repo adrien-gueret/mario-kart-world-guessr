@@ -89,8 +89,7 @@ export type Texts = {
   "upload.step2.help.label": string;
   "upload.step3.title": string;
   "upload.step3.info": ReactNode;
-  "upload.step3.login.info": (userEmail: string) => ReactNode;
-  "upload.step3.logout.label": string;
+  "upload.step3.login.info": (username: string, userEmail: string) => ReactNode;
   "upload.step3.or": string;
   "upload.step3.authorName.label": (userName: string) => ReactNode;
   "upload.step3.authorName.anonymous": string;
@@ -109,6 +108,10 @@ export type Texts = {
   "photos.title": string;
   "photos.description": ReactNode;
   "photo.details.title": string;
+  "login.screen.title": string;
+  "login.screen.description": ReactNode;
+  "login.discord.label": string;
+  "logout.label": string;
 };
 
 export type TranslationKey = keyof Texts;
