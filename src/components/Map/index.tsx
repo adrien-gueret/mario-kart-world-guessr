@@ -47,7 +47,7 @@ export default function Map({
   const imgRef = useRef<HTMLImageElement>(null);
 
   const [ratio, setRatio] = useState(1);
-  const [shouldShowCourses, setShouldShowCourses] = useState(false);
+  const [shouldShowCourses, setShouldShowCourses] = useState(canShowCourses);
   const handleMapClick = (event: MouseEvent<HTMLImageElement>) => {
     const coordinates = getCoordinatesFromImage(event.currentTarget, {
       x: event.clientX,
