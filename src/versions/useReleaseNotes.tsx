@@ -18,12 +18,6 @@ export default function useReleaseNotes() {
     (releaseNote) => releaseNote.version === lastSeenVersion
   );
 
-  console.log({
-    hasUsedOldVersionOfGame,
-    lastSeenVersion,
-    indexOfLastSeenVersion,
-  });
-
   const shouldShowReleaseNotes =
     hasUsedOldVersionOfGame ||
     (lastSeenVersion && indexOfLastSeenVersion !== 0);

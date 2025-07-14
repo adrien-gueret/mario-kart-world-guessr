@@ -91,7 +91,7 @@ try {
             LEFT JOIN `mario-kart-world-users` u ON l.player_id = u.id
             WHERE (l.daily_id IS NULL OR l.daily_id = (
                 SELECT id FROM `mario-kart-world-dailies` WHERE daily_date = :startedAt
-            )) AND l.player_id != :playerId AND l.player_id != 1
+            )) AND l.player_id != :playerId
             
             UNION ALL
 
