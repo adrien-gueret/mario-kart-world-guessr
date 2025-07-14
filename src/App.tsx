@@ -22,19 +22,24 @@ function App() {
   return (
     <div className={`app-${currentScreenName}`}>
       <header className="app-header">
-        <div className="user-connection">
-          {isAnonymous ? (
-            <a href="#/login">{translate("login.screen.title")}</a>
-          ) : (
-            <>
-              <b>{user.username}</b>
-              &bull;
-              <a href="#" onClick={logout}>
-                {translate("logout.label")}
-              </a>
-            </>
-          )}
-        </div>
+        {isAnonymous ? (
+          <Button
+            className="app-login-button"
+            onClick={() => setCurrentScreenName("Login")}
+            variant="primary"
+          >
+            {translate("login.screen.title")}
+          </Button>
+        ) : (
+          <div className="user-connection">
+            <b>{user.username}</b>
+            &bull;
+            <a href="#" onClick={logout}>
+              {translate("logout.label")}
+            </a>
+          </div>
+        )}
+
         <LanguageSelector value={currentLocale} onChange={setCurrentLocale} />
         <Button
           className="app-home-button"

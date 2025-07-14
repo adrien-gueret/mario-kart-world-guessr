@@ -88,6 +88,10 @@ h3 {
   display: none;
 }
 
+.app-Login .app-login-button {
+  display: none;
+}
+
 .app-header {
   display: flex;
   flex-direction: row;
