@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 
+import { getKey, storeKey } from "@/services/store";
+
 import en from "./translations/en";
 import fr from "./translations/fr";
 
@@ -19,6 +21,13 @@ const setDocumentLanguage = (locale: Locale) => {
 
 export function TranslationsProvider({ children }: { children: ReactNode }) {
   const [currentLocale, setCurrentLocale] = useState<Locale>(() => {
+    const storedLocale = getKey("locale");
+
+    if (storedLocale) {
+      setDocumentLanguage(storedLocale);
+      return storedLocale;
+    }
+
     const userLang = navigator.language || navigator.languages[0];
 
     if (userLang.startsWith("fr")) {
@@ -35,6 +44,7 @@ export function TranslationsProvider({ children }: { children: ReactNode }) {
   };
 
   const setLocale = (locale: Locale) => {
+    storeKey("locale", locale);
     setCurrentLocale(locale);
     setDocumentLanguage(locale);
   };
