@@ -15,3 +15,7 @@
 .terms-services li {
   display: block;
 }
+
+.terms-services-back-button {
+  margin-top: 48px;
+}

@@ -47,9 +47,10 @@ const fr: Texts = {
   "difficulty.mirror.locked": (
     <ul>
       <li>
-        Obtenez une coupe d'<strong>or</strong> en <strong>50cc</strong>,{" "}
-        <strong>100cc</strong> et <strong>150cc</strong> pour débloquer le mode
-        miroir !
+        Obtenez la coupe d'<strong>or</strong> en <strong>50cc</strong>, au
+        moins la coupe d'<strong>argent</strong> en <strong>100cc</strong> et{" "}
+        <strong>n'importe quelle</strong> coupe en <strong>150cc</strong> pour
+        débloquer le mode miroir !
       </li>
     </ul>
   ),
@@ -317,6 +318,7 @@ const fr: Texts = {
   "new-version.title": (version: Version) => `Nouvelle version : ${version}`,
   "privacy-policies.title": "Règles de Confidentialité",
   "terms-services.title": "Conditions Générales d'Utilisation",
+  "see-release-notes.label": "Voir toutes les notes de version",
 };
 
 export default fr;

@@ -117,6 +117,7 @@ export type Texts = {
   "new-version.title": (version: Version) => string;
   "privacy-policies.title": string;
   "terms-services.title": string;
+  "see-release-notes.label": string;
 };
 
 export type TranslationKey = keyof Texts;

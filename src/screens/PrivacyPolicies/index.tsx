@@ -1,12 +1,16 @@
 import { useTranslations } from "@/i18n";
 
+import Button from "@/components/Button";
 import Surface from "@/components/Surface";
 import Text from "@/components/Text";
+
+import { useScreen } from "@/screens/ScreensProvider";
 
 import "./PrivacyPolicies.css";
 
 function PrivacyPolicies() {
-  const { currentLocale } = useTranslations();
+  const { currentLocale, translate } = useTranslations();
+  const { setCurrentScreenName } = useScreen();
 
   return (
     <div className="privacy-policies">
@@ -292,6 +296,12 @@ function PrivacyPolicies() {
           </Surface>
         </>
       )}
+
+      <div className="privacy-policies-back-button">
+        <Button onClick={() => setCurrentScreenName("Title")}>
+          {translate("home.button")}
+        </Button>
+      </div>
     </div>
   );
 }

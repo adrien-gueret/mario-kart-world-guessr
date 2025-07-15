@@ -20,10 +20,10 @@ const DIFFICULTY_TO_TOLERANCE_FOR_MAX_SCORE = [
 ];
 
 const DIFFICULTY_TO_THRESHOLD = [
-    '50cc'   => 6,
-    '100cc'  => 8,
-    '150cc'  => 10,
-    'mirror' => 10,
+    '50cc'   => 6.5,
+    '100cc'  => 7.5,
+    '150cc'  => 8.5,
+    'mirror' => 8.5,
 ];
 
 function getDistMax(): float {

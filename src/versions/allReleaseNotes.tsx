@@ -4,6 +4,37 @@ import type { ReleaseNotes } from "./types";
 
 const releaseNotes: ReleaseNotes = [
   {
+    version: "v2.0.1",
+    notes: {
+      fr: (
+        <ul>
+          <Text component="li">Abaissement général de la difficulté.</Text>
+          <Text component="li">
+            Le jeu est un peu plus généreux en points, notamment dans la
+            difficulté <b>150cc</b>.
+          </Text>
+          <Text component="li">
+            Les conditions pour débloquer la difficulté "Miroir" sont moins
+            exigeantes : le but est que plus de monde puisse en profiter&nbsp;!
+          </Text>
+        </ul>
+      ),
+      en: (
+        <ul>
+          <Text component="li">General difficulty reduction.</Text>
+          <Text component="li">
+            The game is slightly more generous with points, especially in{" "}
+            <b>150cc</b> difficulty.
+          </Text>
+          <Text component="li">
+            The conditions to unlock "Mirror" difficulty are less demanding: the
+            goal is for more people to enjoy it!
+          </Text>
+        </ul>
+      ),
+    },
+  },
+  {
     version: "v2.0.0",
     notes: {
       fr: (

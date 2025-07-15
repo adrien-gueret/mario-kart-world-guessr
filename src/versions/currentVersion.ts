@@ -1,5 +1,3 @@
-import type { Version } from "./types";
+import allReleaseNotes from "./allReleaseNotes";
 
-const currentVersion: Version = "v2.0.0" as const;
-
-export default currentVersion;
+export default allReleaseNotes[0].version;

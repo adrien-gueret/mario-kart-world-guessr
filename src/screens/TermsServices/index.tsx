@@ -1,12 +1,16 @@
 import { useTranslations } from "@/i18n";
 
+import Button from "@/components/Button";
 import Surface from "@/components/Surface";
 import Text from "@/components/Text";
+
+import { useScreen } from "@/screens/ScreensProvider";
 
 import "./TermsServices.css";
 
 function TermsServices() {
-  const { currentLocale } = useTranslations();
+  const { currentLocale, translate } = useTranslations();
+  const { setCurrentScreenName } = useScreen();
 
   return (
     <div className="terms-services">
@@ -215,6 +219,12 @@ function TermsServices() {
           </Surface>
         </>
       )}
+
+      <div className="terms-services-back-button">
+        <Button onClick={() => setCurrentScreenName("Title")}>
+          {translate("home.button")}
+        </Button>
+      </div>
     </div>
   );
 }

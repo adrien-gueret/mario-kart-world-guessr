@@ -9,11 +9,15 @@ import currentVersion from "./currentVersion";
 import useReleaseNotes from "./useReleaseNotes";
 
 import "./NewVersionModal.css";
+import { useScreen } from "@/screens";
 
 export default function NewVersionModal() {
   const { translate } = useTranslations();
 
   const releaseNotes = useReleaseNotes();
+
+  const { currentScreenName, setCurrentScreenName } = useScreen();
+
   const [isOpen, setIsOpen] = useState(Boolean(releaseNotes));
 
   return (
@@ -26,7 +30,19 @@ export default function NewVersionModal() {
       <div className="new-version-modal-content">
         <div>{releaseNotes}</div>
 
-        <div style={{ textAlign: "center" }}>
+        <div className="new-version-modal-actions">
+          {currentScreenName !== "ReleaseNotes" && (
+            <Button
+              variant="secondary"
+              onClick={() => {
+                setIsOpen(false);
+                setCurrentScreenName("ReleaseNotes");
+              }}
+            >
+              {translate("see-release-notes.label")}
+            </Button>
+          )}
+
           <Button onClick={() => setIsOpen(false)}>
             {translate("close.label")}
           </Button>

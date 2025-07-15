@@ -1,12 +1,16 @@
 import { useTranslations } from "@/i18n";
 import allReleaseNotes from "@/versions/allReleaseNotes";
 
+import Button from "@/components/Button";
 import Surface from "@/components/Surface";
+
+import { useScreen } from "@/screens/ScreensProvider";
 
 import "./ReleaseNotes.css";
 
 export default function ReleaseNotes() {
-  const { currentLocale } = useTranslations();
+  const { currentLocale, translate } = useTranslations();
+  const { setCurrentScreenName } = useScreen();
 
   return (
     <div className="release-notes">
@@ -18,6 +22,10 @@ export default function ReleaseNotes() {
           <Surface>{releaseNote.notes[currentLocale]}</Surface>
         </div>
       ))}
+
+      <Button onClick={() => setCurrentScreenName("Title")}>
+        {translate("home.button")}
+      </Button>
     </div>
   );
 }
