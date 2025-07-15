@@ -55,7 +55,7 @@ function App() {
         <Credits />
       </div>
       <NewVersionModal />
-      <p>
+      <footer style={{ marginTop: "48px" }}>
         <a
           className="basic-link"
           href={
@@ -88,7 +88,7 @@ function App() {
             <b>{translate("terms-services.title")}</b>
           </a>
         </aside>
-      </p>
+      </footer>
     </div>
   );
 }

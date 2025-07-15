@@ -11,123 +11,18 @@
   margin-top: 16px;
 }
 
-.difficulty-option {
+.difficulty-selector .card {
   width: 290px;
-  color: #fff;
-  border-radius: 24px;
-  box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.15);
-  border: 3px solid #213547;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 16px;
-  padding: 0;
-  transition: transform 0.15s cubic-bezier(0.4, 1.6, 0.55, 1), box-shadow 0.15s;
-  cursor: pointer;
 }
 
-.difficulty-option.disabled {
-  opacity: 0.8;
-  filter: grayscale(1);
-  pointer-events: none;
-}
-
-.difficulty-option:focus-visible,
-.difficulty-option:hover {
-  transform: scale(1.05) rotate(-1.05deg);
-  z-index: 2;
-}
-
-.difficulty-option__icon {
-  border: 5px solid #0f5397;
-  background: #1366b7;
-  background-image: url(./backgrounds/dirt.webp);
-  border-bottom: 0;
-  width: 100%;
-  display: block;
-  padding: 12px 0px 0px 0px;
-  border-radius: 21px 21px 0 0;
-  box-sizing: border-box;
-}
-
-.difficulty-50cc .difficulty-option__icon {
-  border-color: #41df41;
-}
-
-.difficulty-100cc .difficulty-option__icon {
-  border-color: #ffa500;
-}
-
-.difficulty-150cc .difficulty-option__icon {
-  border-color: #f65353;
-}
-
-.difficulty-mirror .difficulty-option__icon {
-  border-color: #a500a5;
-}
-
-.difficulty-option__icon__images {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.difficulty-option__icon .cup {
+.difficulty-selector .cup {
   transform: scale(0.7) rotate(10deg);
   transition: transform 0.15s cubic-bezier(0.4, 1.6, 0.55, 1);
   position: absolute;
   right: 8px;
 }
 
-.difficulty-option:focus-visible .difficulty-option__icon .cup,
-.difficulty-option:hover .difficulty-option__icon .cup {
+.difficulty-selector .card:focus-visible .cup,
+.difficulty-selector .card:hover .cup {
   transform: scale(0.7) rotate(5deg);
-}
-
-.difficulty-option__title {
-  font-size: 1.5rem;
-  font-weight: 900;
-  margin: 8px 0 8px 0;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  text-shadow: 0 2px 4px #213547;
-}
-
-.difficulty-option__desc {
-  padding: 0 16px 16px 16px;
-  font-size: 1.02rem;
-  line-height: 1.4;
-  text-align: center;
-  background: white;
-  border: 5px solid gold;
-  border-radius: 0 0 21px 21px;
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-image: url(./backgrounds/dialog.jpg);
-  box-sizing: border-box;
-  width: 100%;
-}
-
-.difficulty-option__desc ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.difficulty-option__desc li {
-  font-size: 1.02rem;
-  color: #213547;
-  margin: 6px 0;
-  text-align: center;
-}
-
-.difficulty-option__desc li:not(:first-child)::before {
-  content: "";
-  display: block;
-  border-bottom: 2px solid rgba(33, 53, 71, 0.43);
-  width: 50%;
-  margin: 8px auto;
 }

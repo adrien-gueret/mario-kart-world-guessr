@@ -1,6 +1,6 @@
-import Button from "../../components/Button";
-import Text from "../../components/Text";
-import { useTranslations } from "../../i18n";
+import Card from "@/components/Card";
+import ModeIcon from "@/components/ModeIcon";
+import { useTranslations } from "@/i18n";
 
 import { useScreen } from "../ScreensProvider";
 
@@ -16,22 +16,31 @@ function Title() {
 
       <menu className="title-menu">
         <li>
-          <Button onClick={() => setCurrentScreenName("SurvivalGame")}>
-            {translate("mode.survival.label")}
-          </Button>
-          <Text>{translate("mode.survival.description")}</Text>
+          <Card
+            icon={<ModeIcon mode="survival" />}
+            onClick={() => setCurrentScreenName("SurvivalGame")}
+            title={translate("mode.survival.label")}
+            content={translate("mode.survival.description")}
+            borderColor="#fb501e"
+          />
         </li>
         <li>
-          <Button onClick={() => setCurrentScreenName("GoalGame")}>
-            {translate("mode.goal.label")}
-          </Button>
-          <Text>{translate("mode.goal.description")}</Text>
+          <Card
+            icon={<ModeIcon mode="goal" />}
+            onClick={() => setCurrentScreenName("GoalGame")}
+            title={translate("mode.goal.label")}
+            content={translate("mode.goal.description")}
+            borderColor="#599be5"
+          />
         </li>
         <li>
-          <Button onClick={() => setCurrentScreenName("DailyGame")}>
-            {translate("mode.daily.label")}
-          </Button>
-          <Text>{translate("mode.daily.description")}</Text>
+          <Card
+            icon={<ModeIcon mode="daily" />}
+            onClick={() => setCurrentScreenName("DailyGame")}
+            title={translate("mode.daily.label")}
+            content={translate("mode.daily.description")}
+            borderColor="#00951f"
+          />
         </li>
       </menu>
     </div>
