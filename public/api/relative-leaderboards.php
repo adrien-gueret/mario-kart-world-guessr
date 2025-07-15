@@ -69,7 +69,7 @@ try {
             ['x' => $guess['actual_x'], 'y' => $guess['actual_y']]
         );
 
-        $score = getScoreFromDistanceInKilometers($distanceInKm, empty($_POST['difficulty']) ? '150cc' : $_POST['difficulty']);
+        $score = getScoreFromDistanceInKilometers($distanceInKm, $game['difficulty'] ?: '150cc');
 
         return $score;
     }, $game['guesses']);
