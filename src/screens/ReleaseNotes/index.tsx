@@ -1,6 +1,7 @@
-import { Fragment } from "react";
 import { useTranslations } from "@/i18n";
 import allReleaseNotes from "@/versions/allReleaseNotes";
+
+import Surface from "@/components/Surface";
 
 import "./ReleaseNotes.css";
 
@@ -9,14 +10,13 @@ export default function ReleaseNotes() {
 
   return (
     <div className="release-notes">
+      <h2>Notes de versions</h2>
       {allReleaseNotes.map((releaseNote) => (
-        <Fragment key={releaseNote.version}>
-          <h2>{releaseNote.version}</h2>
+        <div className="release-note" key={releaseNote.version}>
+          <h3>{releaseNote.version}</h3>
 
-          <div className="release-notes-content">
-            {releaseNote.notes[currentLocale]}
-          </div>
-        </Fragment>
+          <Surface>{releaseNote.notes[currentLocale]}</Surface>
+        </div>
       ))}
     </div>
   );

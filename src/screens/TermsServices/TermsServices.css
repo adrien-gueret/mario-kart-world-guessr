@@ -3,6 +3,10 @@
   margin: auto;
 }
 
+.terms-services h3 {
+  margin-top: 48px;
+}
+
 .terms-services ul {
   list-style: none;
   text-align: left;
