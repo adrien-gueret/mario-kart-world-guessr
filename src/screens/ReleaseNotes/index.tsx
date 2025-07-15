@@ -12,7 +12,10 @@ export default function ReleaseNotes() {
       {allReleaseNotes.map((releaseNote) => (
         <Fragment key={releaseNote.version}>
           <h2>{releaseNote.version}</h2>
-          {releaseNote.notes[currentLocale]}
+
+          <div className="release-notes-content">
+            {releaseNote.notes[currentLocale]}
+          </div>
         </Fragment>
       ))}
     </div>
