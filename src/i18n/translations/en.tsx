@@ -309,6 +309,8 @@ const en: Texts = {
   "login.discord.label": "Log in with Discord",
   "logout.label": "Log out",
   "new-version.title": (version: Version) => `New version: ${version}`,
+  "privacy-policies.title": "Privacy Policies",
+  "terms-services.title": "Terms of Service",
 };
 
 export default en;

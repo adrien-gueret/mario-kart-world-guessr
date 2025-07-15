@@ -104,9 +104,11 @@ export function ScreensProvider({ children }: { children: ReactNode }) {
         setCurrentScreenName(newScreenName);
         removeTitleTagFromHash(newScreenName);
 
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
+        window.requestAnimationFrame(() => {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
         });
       });
     });

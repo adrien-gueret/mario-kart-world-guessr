@@ -115,6 +115,8 @@ export type Texts = {
   "login.discord.label": string;
   "logout.label": string;
   "new-version.title": (version: Version) => string;
+  "privacy-policies.title": string;
+  "terms-services.title": string;
 };
 
 export type TranslationKey = keyof Texts;
