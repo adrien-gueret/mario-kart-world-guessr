@@ -1,3 +1,16 @@
 .new-version-modal-content ul li {
   margin: 8px 0;
 }
+
+.new-version-modal-actions {
+  display: flex;
+  gap: 16px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.new-version-modal-actions .game-button {
+  margin: 0;
+}

@@ -15,3 +15,7 @@
 .privacy-policies li {
   display: block;
 }
+
+.privacy-policies-back-button {
+  margin-top: 48px;
+}

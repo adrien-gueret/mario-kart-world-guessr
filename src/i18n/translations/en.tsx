@@ -49,8 +49,10 @@ const en: Texts = {
   "difficulty.mirror.locked": (
     <ul>
       <li>
-        Get a <strong>gold</strong> cup in <strong>50cc</strong>,{" "}
-        <strong>100cc</strong> and <strong>150cc</strong> to unlock mirror mode!
+        Get the <strong>gold</strong> cup in <strong>50cc</strong>, at least the{" "}
+        <strong>silver</strong> cup in <strong>100cc</strong> and{" "}
+        <strong>any</strong> cup in <strong>150cc</strong> to unlock mirror
+        mode!
       </li>
     </ul>
   ),
@@ -311,6 +313,7 @@ const en: Texts = {
   "new-version.title": (version: Version) => `New version: ${version}`,
   "privacy-policies.title": "Privacy Policies",
   "terms-services.title": "Terms of Service",
+  "see-release-notes.label": "See all release notes",
 };
 
 export default en;
