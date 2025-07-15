@@ -56,7 +56,14 @@ function App() {
       </div>
       <NewVersionModal />
       <p>
-        <b>{currentVersion}</b>
+        <a
+          className="basic-link"
+          href={
+            currentScreenName === "ReleaseNotes" ? undefined : "#/releasenotes"
+          }
+        >
+          <b>{currentVersion}</b>
+        </a>
       </p>
     </div>
   );

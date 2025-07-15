@@ -17,16 +17,18 @@ const releaseNotes: ReleaseNotes = [
             <b>Discord</b> pour apparaitre dans ce classement.
             <br />
             <i>
-              Vous connecter vous permettra de sauvegarder votre progression !
+              Vous connecter vous permettra de sauvegarder votre
+              progression&nbsp;!
             </i>
           </Text>
           <Text component="li">
             Les différents modes de difficulté doivent désormais être débloqués
-            en gagnant des coupes. Battez les scores de Mario, Luigi et Peach !
+            en gagnant des coupes. Battez les scores de Mario, Luigi et
+            Peach&nbsp;!
           </Text>
           <Text component="li">
             La difficulté <b>Miroir</b> est maintenant disponible... si vous
-            parvenez à la débloquer !
+            parvenez à la débloquer&nbsp;!
           </Text>
         </ul>
       ),

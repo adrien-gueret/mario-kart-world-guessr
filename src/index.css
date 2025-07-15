@@ -135,6 +135,22 @@ h3 {
   text-decoration: underline;
 }
 
+.basic-link,
+.basic-link:visited {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.basic-link:hover,
+.basic-link:focus-visible {
+  text-decoration: none;
+}
+
+.basic-link:not([href]) {
+  text-decoration: none;
+  pointer-events: none;
+}
+
 @media screen and (max-width: 420px) {
   #root {
     padding: 4px;
