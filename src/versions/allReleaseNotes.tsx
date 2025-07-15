@@ -57,6 +57,28 @@ const releaseNotes: ReleaseNotes = [
     },
   },
   {
+    version: "v1.1.0",
+    notes: {
+      fr: (
+        <ul>
+          <Text component="li">
+            Les modes <b>Survie</b> et <b>Objectif : 50.000</b> ont désormais
+            trois niveaux de difficulté : <b>50cc</b>, <b>100cc</b> et{" "}
+            <b>150cc</b> !
+          </Text>
+        </ul>
+      ),
+      en: (
+        <ul>
+          <Text component="li">
+            <b>Survival</b> and <b>Goal: 50,000</b> modes now have three
+            difficulty levels: <b>50cc</b>, <b>100cc</b> and <b>150cc</b>!
+          </Text>
+        </ul>
+      ),
+    },
+  },
+  {
     version: "v1.0.0",
     notes: {
       fr: (

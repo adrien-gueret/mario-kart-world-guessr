@@ -151,6 +151,17 @@ h3 {
   pointer-events: none;
 }
 
+.legal-links {
+  display: flex;
+  flex-direction: row;
+  margin-top: 8px;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 0.8em;
+}
+
 @media screen and (max-width: 420px) {
   #root {
     padding: 4px;

@@ -64,6 +64,30 @@ function App() {
         >
           <b>{currentVersion}</b>
         </a>
+        <br />
+
+        <aside className="legal-links">
+          <a
+            className="basic-link"
+            href={
+              currentScreenName === "PrivacyPolicies"
+                ? undefined
+                : "#/privacypolicies"
+            }
+          >
+            <b>{translate("privacy-policies.title")}</b>
+          </a>
+          <a
+            className="basic-link"
+            href={
+              currentScreenName === "TermsServices"
+                ? undefined
+                : "#/termsservices"
+            }
+          >
+            <b>{translate("terms-services.title")}</b>
+          </a>
+        </aside>
       </p>
     </div>
   );
