@@ -75,13 +75,18 @@ try {
         $game['guesses'] = [];
     }
 
+    $difficulty = $game['difficulty'];
+    if (!in_array($difficulty, ['50cc', '100cc', '150cc', 'mirror'])) {
+        $difficulty = '150cc';
+    }
+
     $game['history'] = array_map(function($guess) {
         $distanceInKm = distanceBetweenCoordinatesInKilometers(
             ['x' => $guess['guess_x'], 'y' => $guess['guess_y']],
             ['x' => $guess['actual_x'], 'y' => $guess['actual_y']]
         );
 
-        $score = getScoreFromDistanceInKilometers($distanceInKm, empty($_POST['difficulty']) ? '150cc' : $_POST['difficulty']);
+        $score = getScoreFromDistanceInKilometers($distanceInKm, $difficulty);
 
         return $score;
     }, $game['guesses']);
@@ -89,11 +94,6 @@ try {
     unset($game['guesses']);
 
     $insertSuggestionStmt->bindParam(':gameId', $_POST['gameId'], PDO::PARAM_INT);
-
-    $difficulty = $game['difficulty'];
-    if (!in_array($difficulty, ['50cc', '100cc', '150cc', 'mirror'])) {
-        $difficulty = '150cc';
-    }
 
     $mode = $game['mode'];
     if (!in_array($mode, ['goal', 'daily', 'survival'])) {
