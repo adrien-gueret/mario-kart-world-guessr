@@ -1,0 +1,12 @@
+.release-notes {
+  max-width: 768px;
+  margin: auto;
+}
+
+.release-notes ul {
+  text-align: left;
+}
+
+.release-notes ul li {
+  margin: 8px 0;
+}
