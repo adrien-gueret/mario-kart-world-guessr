@@ -56,5 +56,28 @@ const releaseNotes: ReleaseNotes = [
       ),
     },
   },
+  {
+    version: "v1.0.0",
+    notes: {
+      fr: (
+        <ul>
+          <Text component="li">Le jeu est lancé !</Text>
+          <Text component="li">
+            Trois modes de jeu sont disponibles : <b>Survie</b>,{" "}
+            <b>Objectif : 50.000</b> et <b>Photos du jour</b>.
+          </Text>
+        </ul>
+      ),
+      en: (
+        <ul>
+          <Text component="li">The game is launched!</Text>
+          <Text component="li">
+            Three game modes are available: <b>Survival</b>, <b>Goal: 50,000</b>{" "}
+            and <b>Daily Photos</b>.
+          </Text>
+        </ul>
+      ),
+    },
+  },
 ];
 export default releaseNotes;

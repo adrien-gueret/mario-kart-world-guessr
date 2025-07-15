@@ -3,18 +3,12 @@
   margin: auto;
 }
 
-.release-notes-content {
-  background-image: url(./backgrounds/dialog.jpg);
-  padding: 8px 16px;
-  margin: 0;
-  transform: skewX(-10deg);
-  border: 1px solid #213547;
-  border-radius: 27px;
+.release-note {
+  margin: 16px 0 48px 0;
 }
 
 .release-notes ul {
   text-align: left;
-  transform: skewX(10deg);
 }
 
 .release-notes ul li {

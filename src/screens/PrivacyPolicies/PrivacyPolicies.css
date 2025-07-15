@@ -3,6 +3,10 @@
   margin: auto;
 }
 
+.privacy-policies h3 {
+  margin-top: 48px;
+}
+
 .privacy-policies ul {
   list-style: none;
   text-align: left;
