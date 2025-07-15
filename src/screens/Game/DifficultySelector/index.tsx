@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, type ReactNode } from "react";
 
+import Card from "@/components/Card";
 import CupIcon from "@/components/Cup";
 import DifficultyIcon from "@/components/DifficultyIcon";
 import Text from "@/components/Text";
@@ -18,6 +19,13 @@ type Props = {
 };
 
 const ALL_DIFFICULTIES: Difficulty[] = ["50cc", "100cc", "150cc", "mirror"];
+
+const difficultyToColor: Record<Difficulty, string> = {
+  "50cc": "#41df41",
+  "100cc": "#ffa500",
+  "150cc": "#f65353",
+  mirror: "#a500a5",
+};
 
 export default function DifficultySelector({ mode, onSelect }: Props) {
   const areCupInitialized = useRef(false);
@@ -112,33 +120,23 @@ export default function DifficultySelector({ mode, onSelect }: Props) {
             cup === "gold" ? difficultiesCups?.[difficulty].starRank : void 0;
 
           return (
-            <button
+            <Card
               key={difficulty}
-              tabIndex={isUnlocked ? 0 : -1}
               onClick={isUnlocked ? () => onSelect(difficulty) : void 0}
-              className={`difficulty-option difficulty-${difficulty} ${
-                isUnlocked ? "" : "disabled"
-              }`}
-            >
-              <div className="difficulty-option__icon">
-                <div className="difficulty-option__icon__images">
+              icon={
+                <>
                   <DifficultyIcon difficulty={difficulty} />
-
                   {cup !== "none" && <CupIcon cup={cup} starRank={starRank} />}
-                </div>
-                <div className="difficulty-option__title">
-                  {translate(`difficulty.${difficulty}.title`)}
-                </div>
-              </div>
-
-              <div className="difficulty-option__desc">
-                <Text>
-                  {isUnlocked
-                    ? difficultiesLabels[difficulty]
-                    : difficultiesLockedLabels[difficulty]}
-                </Text>
-              </div>
-            </button>
+                </>
+              }
+              borderColor={difficultyToColor[difficulty]}
+              title={translate(`difficulty.${difficulty}.title`)}
+              content={
+                isUnlocked
+                  ? difficultiesLabels[difficulty]
+                  : difficultiesLockedLabels[difficulty]
+              }
+            />
           );
         })}
       </div>
