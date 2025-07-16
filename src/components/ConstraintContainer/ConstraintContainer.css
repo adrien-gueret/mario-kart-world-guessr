@@ -1,0 +1,16 @@
+.constraint-container {
+  max-width: 768px;
+  margin: auto;
+}
+
+.constraint-container h3 {
+  margin-top: 48px;
+}
+
+.constraint-container ul {
+  text-align: left;
+}
+
+.constraint-container .back-button {
+  margin-top: 48px;
+}

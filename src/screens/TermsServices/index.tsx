@@ -1,19 +1,18 @@
 import { useTranslations } from "@/i18n";
 
 import Button from "@/components/Button";
+import ConstraintContainer from "@/components/ConstraintContainer";
 import Surface from "@/components/Surface";
 import Text from "@/components/Text";
 
 import { useScreen } from "@/screens/ScreensProvider";
-
-import "./TermsServices.css";
 
 function TermsServices() {
   const { currentLocale, translate } = useTranslations();
   const { setCurrentScreenName } = useScreen();
 
   return (
-    <div className="terms-services">
+    <ConstraintContainer>
       {currentLocale === "fr" ? (
         <>
           <h2>Conditions Générales d'Utilisation</h2>
@@ -220,12 +219,12 @@ function TermsServices() {
         </>
       )}
 
-      <div className="terms-services-back-button">
+      <div className="back-button">
         <Button onClick={() => setCurrentScreenName("Title")}>
           {translate("home.button")}
         </Button>
       </div>
-    </div>
+    </ConstraintContainer>
   );
 }
 

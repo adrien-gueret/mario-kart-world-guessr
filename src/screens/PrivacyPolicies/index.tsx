@@ -1,19 +1,18 @@
 import { useTranslations } from "@/i18n";
 
 import Button from "@/components/Button";
+import ConstraintContainer from "@/components/ConstraintContainer";
 import Surface from "@/components/Surface";
 import Text from "@/components/Text";
 
 import { useScreen } from "@/screens/ScreensProvider";
-
-import "./PrivacyPolicies.css";
 
 function PrivacyPolicies() {
   const { currentLocale, translate } = useTranslations();
   const { setCurrentScreenName } = useScreen();
 
   return (
-    <div className="privacy-policies">
+    <ConstraintContainer>
       {currentLocale === "fr" ? (
         <>
           <h2>Règles de Confidentialité</h2>
@@ -297,12 +296,12 @@ function PrivacyPolicies() {
         </>
       )}
 
-      <div className="privacy-policies-back-button">
+      <div className="back-button">
         <Button onClick={() => setCurrentScreenName("Title")}>
           {translate("home.button")}
         </Button>
       </div>
-    </div>
+    </ConstraintContainer>
   );
 }
 
