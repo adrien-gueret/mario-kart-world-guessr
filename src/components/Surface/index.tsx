@@ -4,11 +4,12 @@ import "./Surface.css";
 
 type Props = {
   children: ReactNode;
+  disableSkew?: boolean;
 };
 
-export default function Surface({ children }: Props) {
+export default function Surface({ children, disableSkew }: Props) {
   return (
-    <div className="surface">
+    <div className={`surface ${disableSkew ? "disable-skew" : ""}`}>
       <div className="surface-content">{children}</div>
     </div>
   );

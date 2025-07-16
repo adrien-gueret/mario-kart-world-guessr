@@ -118,6 +118,13 @@ export type Texts = {
   "privacy-policies.title": string;
   "terms-services.title": string;
   "see-release-notes.label": string;
+  "release-notes.title": string;
+  "form.submit": string;
+  "account.title": string;
+  "account.username.label": string;
+  "account.username.helper": string;
+  "account.locale.label": string;
+  "account.locale.helper": string;
 };
 
 export type TranslationKey = keyof Texts;

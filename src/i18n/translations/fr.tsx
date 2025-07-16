@@ -319,6 +319,15 @@ const fr: Texts = {
   "privacy-policies.title": "Règles de Confidentialité",
   "terms-services.title": "Conditions Générales d'Utilisation",
   "see-release-notes.label": "Voir toutes les notes de version",
+  "release-notes.title": "Notes de version",
+  "form.submit": "Envoyer",
+  "account.title": "Mon compte",
+  "account.username.label": "Pseudo",
+  "account.username.helper":
+    "Vous pouvez changer votre pseudo. Il est affiché aux autres joueurs dans les classements.",
+  "account.locale.label": "Langue",
+  "account.locale.helper":
+    "Langue utilisée pour l'affichage des textes du jeu.",
 };
 
 export default fr;
