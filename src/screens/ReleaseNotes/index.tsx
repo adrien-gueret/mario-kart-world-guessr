@@ -13,7 +13,7 @@ export default function ReleaseNotes() {
 
   return (
     <ConstraintContainer>
-      <h2>Notes de versions</h2>
+      <h2>{translate("release-notes.title")}</h2>
       {allReleaseNotes.map((releaseNote) => (
         <div className="release-note" key={releaseNote.version}>
           <h3>{releaseNote.version}</h3>

@@ -7,6 +7,10 @@
   border-radius: 27px;
 }
 
-.surface-content {
+.surface.disable-skew {
+  transform: none;
+}
+
+.surface:not(.disable-skew) .surface-content {
   transform: skewX(10deg);
 }

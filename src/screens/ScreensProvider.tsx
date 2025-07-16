@@ -10,6 +10,7 @@ import {
 
 import { flushSync } from "react-dom";
 
+import Account from "./Account";
 import { SurvivalGame, GoalGame, DailyGame } from "./Game";
 import Login from "./Login";
 import Photos from "./Photos";
@@ -29,7 +30,8 @@ export type ScreenName =
   | "Login"
   | "PrivacyPolicies"
   | "TermsServices"
-  | "ReleaseNotes";
+  | "ReleaseNotes"
+  | "Account";
 type ScreenHashtag = `#/${Lowercase<ScreenName>}`;
 
 const screenHashtagsToScreenNames: Record<ScreenHashtag, ScreenName> = {
@@ -43,6 +45,7 @@ const screenHashtagsToScreenNames: Record<ScreenHashtag, ScreenName> = {
   "#/privacypolicies": "PrivacyPolicies",
   "#/termsservices": "TermsServices",
   "#/releasenotes": "ReleaseNotes",
+  "#/account": "Account",
 };
 
 type ScreenContextType = {
@@ -94,6 +97,7 @@ export function ScreensProvider({ children }: { children: ReactNode }) {
     PrivacyPolicies,
     TermsServices,
     ReleaseNotes,
+    Account,
   };
 
   const handleHashChange = () => {

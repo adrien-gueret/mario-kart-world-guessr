@@ -5,7 +5,6 @@ import Logo from "@/components/Logo";
 import Credits from "@/components/Credits";
 
 import { useTranslations } from "@/i18n";
-import LanguageSelector from "@/i18n/LanguageSelector";
 
 import { useScreen } from "@/screens/ScreensProvider";
 import NewVersionModal from "@/versions/NewVersionModal";
@@ -17,7 +16,7 @@ function App() {
 
   const { isAnonymous, user, logout } = useCurrentUser();
 
-  const { translate, currentLocale, setCurrentLocale } = useTranslations();
+  const { translate } = useTranslations();
 
   return (
     <div className={`app-${currentScreenName}`}>
@@ -40,7 +39,6 @@ function App() {
           </div>
         )}
 
-        <LanguageSelector value={currentLocale} onChange={setCurrentLocale} />
         <Button
           className="app-home-button"
           onClick={() => setCurrentScreenName("Title")}

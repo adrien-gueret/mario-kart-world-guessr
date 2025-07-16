@@ -22,7 +22,7 @@ export default function GoogleLoginButton() {
         delete user.isNewUser;
 
         setCurrentUser(user);
-        setCurrentScreenName("Title");
+        setCurrentScreenName("Account");
       }}
       onError={() => {
         console.log("Login Failed");

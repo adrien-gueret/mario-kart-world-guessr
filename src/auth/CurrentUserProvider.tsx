@@ -17,6 +17,7 @@ import { storeKey } from "@/services/store";
 import type { User } from "@/types/user";
 import fetchApi from "@/services/api";
 import Loader from "@/components/Loader";
+import { useScreen, type ScreenName } from "@/screens";
 
 type CurrentUserContextType = {
   user: User;
@@ -33,6 +34,8 @@ const CurrentUserContext = createContext<CurrentUserContextType>({
     accessToken: "",
     refreshToken: "",
     expiredAt: "",
+    marioCharacter: null,
+    locale: null,
   },
   isAnonymous: true,
   setCurrentUser: () => {},
@@ -40,9 +43,10 @@ const CurrentUserContext = createContext<CurrentUserContextType>({
 } as CurrentUserContextType);
 
 export function CurrentUserProvider({ children }: { children: ReactNode }) {
-  const { currentLocale } = useTranslations();
+  const { currentLocale, setCurrentLocale } = useTranslations();
   const [isLoading, setIsLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const { setCurrentScreenName } = useScreen();
   const hasBeenMounted = useRef(false);
 
   const logout = useCallback(() => {
@@ -67,7 +71,15 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
 
     hasBeenMounted.current = true;
 
-    function fetchMe() {
+    function redirectTo(target: Extract<ScreenName, "Account" | "Login">) {
+      window.history.replaceState({}, document.title, window.location.pathname);
+      setIsLoading(false);
+      setCurrentScreenName(target);
+    }
+
+    function fetchMe(
+      redirectScreeName?: Extract<ScreenName, "Account" | "Login">
+    ) {
       setIsLoading(true);
 
       fetchApi("/me", "GET", void 0, currentLocale)
@@ -75,9 +87,14 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
         .then((user) => {
           setCurrentUser(user);
           storeConnectedUser(user);
+          setCurrentLocale(user.locale ?? currentLocale);
         })
         .finally(() => {
           setIsLoading(false);
+
+          if (redirectScreeName) {
+            redirectTo(redirectScreeName);
+          }
         });
     }
 
@@ -101,12 +118,7 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
         })
         .catch(fetchMe)
         .finally(() => {
-          window.history.replaceState(
-            {},
-            document.title,
-            window.location.pathname
-          );
-          setIsLoading(false);
+          redirectTo("Account");
         });
     }
 
@@ -114,8 +126,12 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
     const authCode = searchParams.get("code");
     const state = searchParams.get("state");
 
-    if (authCode && state === "from-discord") {
-      fetchDiscord(authCode);
+    if (state === "from-discord") {
+      if (authCode) {
+        fetchDiscord(authCode);
+      } else {
+        fetchMe("Login");
+      }
     } else {
       fetchMe();
     }

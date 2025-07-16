@@ -1,0 +1,38 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.form .row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+  text-align: left;
+}
+
+.form label {
+  font-weight: bold;
+  font-size: 1.2rem;
+  display: block;
+  width: 100%;
+}
+
+.form label[for] {
+  cursor: pointer;
+}
+
+.form input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  font-size: 1.2rem;
+}
+
+.form .helper {
+  position: relative;
+  bottom: 8px;
+}

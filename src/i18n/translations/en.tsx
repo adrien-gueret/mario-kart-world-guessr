@@ -314,6 +314,14 @@ const en: Texts = {
   "privacy-policies.title": "Privacy Policies",
   "terms-services.title": "Terms of Service",
   "see-release-notes.label": "See all release notes",
+  "release-notes.title": "Release notes",
+  "form.submit": "Submit",
+  "account.title": "My account",
+  "account.username.label": "Username",
+  "account.username.helper":
+    "Your can change your username. It's displayed to other players in leaderboards.",
+  "account.locale.label": "Langue",
+  "account.locale.helper": "Language used for displaying game texts.",
 };
 
 export default en;

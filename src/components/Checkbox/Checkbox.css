@@ -23,6 +23,10 @@
   align-items: center;
 }
 
+.checkbox-label__real_checkbox[type="radio"] + .checkbox-label__checkbox {
+  border-radius: 50%;
+}
+
 .checkbox-label__real_checkbox:checked + .checkbox-label__checkbox:before {
   content: "";
   width: 16px;
@@ -30,6 +34,11 @@
   background-color: red;
   display: block;
   border-radius: 4px;
+}
+
+.checkbox-label__real_checkbox[type="radio"]
+  + .checkbox-label__checkbox:before {
+  border-radius: 50%;
 }
 
 .checkbox-label:hover .checkbox-label__checkbox,

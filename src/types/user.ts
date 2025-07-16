@@ -5,4 +5,6 @@ export type User = {
   accessToken: string;
   refreshToken: string;
   expiredAt: string;
+  marioCharacter: "mario" | "luigi" | "peach" | "bowser" | null;
+  locale: "fr" | "en" | null;
 };
