@@ -118,13 +118,20 @@ export function ScreensProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  const goToScreen = useCallback((screenName: ScreenName) => {
-    if (removeTitleTagFromHash(screenName)) {
-      handleHashChange();
-    } else {
-      window.location.hash = `/${screenName.toLowerCase()}`;
-    }
-  }, []);
+  const goToScreen = useCallback(
+    (screenName: ScreenName, onSuccess: () => void) => {
+      if (removeTitleTagFromHash(screenName)) {
+        handleHashChange();
+      } else {
+        window.location.hash = `/${screenName.toLowerCase()}`;
+      }
+
+      if (onSuccess) {
+        window.setTimeout(onSuccess, 500);
+      }
+    },
+    []
+  );
 
   useEffect(() => {
     window.addEventListener("hashchange", handleHashChange);
