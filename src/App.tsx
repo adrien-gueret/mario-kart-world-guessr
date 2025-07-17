@@ -31,6 +31,13 @@ function App() {
           </Button>
         ) : (
           <div className="user-connection">
+            {user.marioCharacter && (
+              <img
+                style={{ width: "32px", verticalAlign: "text-bottom" }}
+                src={`./ui/pins/icon-${user.marioCharacter}.png`}
+                alt=""
+              />
+            )}
             <b>{user.username}</b>
             &bull;
             <a href="#" onClick={logout}>
