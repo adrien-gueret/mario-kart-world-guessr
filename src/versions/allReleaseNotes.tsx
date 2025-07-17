@@ -4,6 +4,55 @@ import type { ReleaseNotes } from "./types";
 
 const releaseNotes: ReleaseNotes = [
   {
+    version: "v2.1.0",
+    notes: {
+      fr: (
+        <ul>
+          <Text component="li">Ajout d'une page "Mon compte" !</Text>
+          <Text component="li">
+            Elle est accessible juste après la connection, ou en cliquant sur
+            votre pseudo en haut de la page.
+          </Text>
+          <Text component="li">
+            Les utilisateurs connectés peuvent désormais modifier leur
+            pseudonyme.
+          </Text>
+          <Text component="li">
+            La modification de la langue du jeu se fait désormais depuis cette
+            page.
+          </Text>
+          <Text component="li">
+            Ils peuvent également choisir entre Mario, Luigi, Peach ou Bowser
+            pour les représenter.
+            <br />
+            <em>(d'autres personnages arriveront peut-être prochainement !)</em>
+          </Text>
+        </ul>
+      ),
+      en: (
+        <ul>
+          <Text component="li">Added "My Account" page!</Text>
+          <Text component="li">
+            It is accessible right after logging in, or by clicking on your
+            username at the top of the page.
+          </Text>
+          <Text component="li">
+            Logged-in users can now change their username.
+          </Text>
+          <Text component="li">
+            Game language settings can now be changed from this page.
+          </Text>
+          <Text component="li">
+            They can also choose between Mario, Luigi, Peach or Bowser to
+            represent them.
+            <br />
+            <em>(more characters might be coming soon!)</em>
+          </Text>
+        </ul>
+      ),
+    },
+  },
+  {
     version: "v2.0.1",
     notes: {
       fr: (

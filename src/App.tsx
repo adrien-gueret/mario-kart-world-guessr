@@ -38,7 +38,9 @@ function App() {
                 alt=""
               />
             )}
-            <b>{user.username}</b>
+            <a href="#/account">
+              <b>{user.username}</b>
+            </a>
             &bull;
             <a href="#" onClick={logout}>
               {translate("logout.label")}
