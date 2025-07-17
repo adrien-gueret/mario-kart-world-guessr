@@ -1,10 +1,16 @@
 .text {
   font-size: 1.2rem;
+  color: #213547;
   text-shadow: 1px 1px 0px #ffffff;
   font-weight: bold;
   display: inline-block;
   margin: 0;
   padding: 0;
+}
+
+.text.reverse-colors {
+  color: #ffffff;
+  text-shadow: 1px 1px 0px #213547;
 }
 
 .text.block {

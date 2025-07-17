@@ -1,0 +1,30 @@
+.snackbar {
+    position: fixed;
+    left: 8px;
+    right: 8px;
+    bottom: 16px;
+    z-index: 999; 
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 16px 0;
+    box-sizing: border-box;
+    pointer-events: none;
+    text-align: center;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 0;
+    transform: scale(0) translateY(100%);
+}
+
+.snackbar-success {
+    background-image: url('./backgrounds/notification_success.webp');
+}
+
+.snackbar-error {
+    background-image: url('./backgrounds/notification_error.webp');
+}
+
+.snack-bar-open {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}

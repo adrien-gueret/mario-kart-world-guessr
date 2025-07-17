@@ -24,6 +24,7 @@ type Props = {
 
 async function onSubmit(
   event: React.FormEvent<HTMLFormElement>,
+  method: FetchMethod,
   onSuccess: Required<Props>["onSuccess"],
   onError: Required<Props>["onError"]
 ) {
@@ -36,12 +37,10 @@ async function onSubmit(
     return;
   }
 
-  console.log(formData);
-
   try {
     const response = await fetchApi(
       action,
-      form.method as FetchMethod,
+      method,
       formData
     );
 
@@ -77,7 +76,7 @@ export default function Form({
         return;
       }
       setIsProcessing(true);
-      await onSubmit(event, onSuccess, onError);
+      await onSubmit(event, method, onSuccess, onError);
       setIsProcessing(false);
     },
     [isProcessing, onSuccess, onError]
@@ -86,7 +85,7 @@ export default function Form({
   return (
     <form
       className="form"
-      method={method}
+      method={method === "GET" ? "GET" : "POST"}
       action={action}
       onSubmit={handleSubmit}
     >

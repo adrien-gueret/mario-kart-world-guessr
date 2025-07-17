@@ -24,21 +24,6 @@
   margin: auto;
 }
 
-.copy-success {
-  color: green;
-  font-size: 1rem;
-  position: absolute;
-  left: 0;
-  right: 0;
-  text-align: center;
-  padding: 4px;
-  background: rgba(255, 255, 255, 0.8);
-  z-index: 200;
-  pointer-events: none;
-  opacity: 0;
-  animation: copyFade 0.3s ease-in-out forwards;
-}
-
 .counter-container {
   display: flex;
   flex-direction: row;

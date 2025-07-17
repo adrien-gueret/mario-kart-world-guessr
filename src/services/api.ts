@@ -34,7 +34,7 @@ function getHeaders({
 
 export default async function fetchApi(
   path: `/${string}`,
-  method: "GET" | "POST" = "GET",
+  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" = "GET",
   body?: FormData,
   acceptLanguage?: "fr" | "en"
 ): Promise<Response> {
