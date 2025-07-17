@@ -19,7 +19,7 @@ import fetchApi from "@/services/api";
 import "./Upload.css";
 
 function Upload() {
-  const { isAnonymous } = useCurrentUser();
+  const { isAnonymous, user } = useCurrentUser();
 
   const [locationCoordinates, setLocationCoordinates] =
     useState<Coordinates | null>(null);
@@ -115,7 +115,7 @@ function Upload() {
               <Pin
                 x={locationCoordinates.x}
                 y={locationCoordinates.y}
-                variant="mario"
+                variant={user.marioCharacter}
                 onlyHead
               />
             )}

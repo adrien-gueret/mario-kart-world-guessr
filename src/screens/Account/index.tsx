@@ -14,6 +14,8 @@ import Surface from "@/components/Surface";
 import { useScreen } from "@/screens/ScreensProvider";
 import type { User } from "@/types/user";
 
+import CharacterSelect from "./CharacterSelect";
+
 export default function Account() {
   const { currentLocale, translate, setCurrentLocale } = useTranslations();
   const [showEditAccountSuccess, setShowEditAccountSuccess] = useState(false);
@@ -93,6 +95,18 @@ export default function Account() {
               isRadio
             />
             <span className="helper">{translate("account.locale.helper")}</span>
+          </div>
+
+          <div className="row">
+            <label htmlFor="mario-character">
+              {translate("account.marioCharacter.label")}
+            </label>
+
+            <CharacterSelect defaultValue={user.marioCharacter} />
+
+            <span className="helper">
+              {translate("account.marioCharacter.helper")}
+            </span>
           </div>
         </Form>
       </Surface>

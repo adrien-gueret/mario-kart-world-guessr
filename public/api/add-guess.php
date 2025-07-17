@@ -252,7 +252,7 @@ try {
         $nextPhotoId = $nextPhoto['id'];
 
         if (empty($nextPhotoId)) {
-            $updateGameStmt->bindParam(':photoId', null, PDO::PARAM_NULL);
+            $updateGameStmt->bindValue(':photoId', null, PDO::PARAM_NULL);
         } else {
             $updateGameStmt->bindParam(':photoId', $nextPhotoId, PDO::PARAM_STR);
         }

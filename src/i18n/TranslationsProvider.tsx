@@ -40,7 +40,7 @@ export function TranslationsProvider({ children }: { children: ReactNode }) {
   });
 
   const translate: TranslationsContextType["translate"] = (key) => {
-    return translations[currentLocale][key];
+    return translations[currentLocale][key] ?? key;
   };
 
   const setLocale = (locale: Locale) => {

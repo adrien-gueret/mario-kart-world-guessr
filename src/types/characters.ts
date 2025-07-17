@@ -1,1 +1,1 @@
-export type MarioCharacter = "mario" | "luigi" | "peach" | "bower";
+export type MarioCharacter = "mario" | "luigi" | "peach" | "bowser";

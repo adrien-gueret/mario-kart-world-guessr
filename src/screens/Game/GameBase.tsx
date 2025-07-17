@@ -71,7 +71,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
 
   const isGuessing = useRef(false);
 
-  const { isAnonymous } = useCurrentUser();
+  const { user } = useCurrentUser();
 
   const { translate } = useTranslations();
 
@@ -287,7 +287,11 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
                         <Pin
                           x={currentLocationPlayersCoordinates.x}
                           y={currentLocationPlayersCoordinates.y}
-                          variant="luigi"
+                          variant={
+                            user.marioCharacter === "luigi"
+                              ? "mario"
+                              : user.marioCharacter
+                          }
                         />
                       )}
 
@@ -305,7 +309,11 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
                     </>
                   )}
 
-                <Pin x={userGuess.x} y={userGuess.y} variant="mario" />
+                <Pin
+                  x={userGuess.x}
+                  y={userGuess.y}
+                  variant={user.marioCharacter}
+                />
               </>
             )}
           </Map>

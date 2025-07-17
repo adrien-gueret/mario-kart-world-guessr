@@ -31,11 +31,31 @@ if (strlen($username) < 2 || strlen($username) > 100) {
 
 $locale = $_PUT['locale'] === 'fr' || $_PUT['locale'] === 'en' ? $_PUT['locale'] : 'en';
 
+$possibleCharacters = ['none', 'mario', 'luigi', 'peach', 'bowser'];
+
+if (!isset($_PUT['mario-character']) || !in_array($_PUT['mario-character'], $possibleCharacters)) {
+    http_response_code(400);
+    echo json_encode([
+        'error' => true,
+        'message' => $headers['accept-language'] === 'fr'
+            ? 'Personnage invalide.'
+            : 'Invalid character.'
+    ]);
+    die;
+}
+
 try {
-   $stmt = $pdo->prepare("UPDATE `mario-kart-world-users` SET username = :username, locale = :locale WHERE id = :id");
+   $stmt = $pdo->prepare("UPDATE `mario-kart-world-users` SET username = :username, locale = :locale, mario_character = :marioCharacter WHERE id = :id");
    $stmt->bindParam(':username', $username, PDO::PARAM_STR);
    $stmt->bindParam(':locale', $locale, PDO::PARAM_STR);
    $stmt->bindParam(':id', $currentUser['id'], PDO::PARAM_INT);
+
+   if ($_PUT['mario-character'] === 'none') {
+        $stmt->bindValue(':marioCharacter', null, PDO::PARAM_NULL);
+   } else {
+        $stmt->bindParam(':marioCharacter', $_PUT['mario-character'], PDO::PARAM_STR);
+   }
+
    $stmt->execute();
 
     $stmt = $pdo->prepare("SELECT u.id, u.email, u.username, u.mario_character as marioCharacter,

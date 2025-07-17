@@ -4,7 +4,7 @@
   top: 0;
   width: 64px;
   height: 64px;
-  background-image: url("./ui/pin-red.png");
+  background-image: url("./ui/pins/pin-red.png");
   background-size: contain;
   background-repeat: no-repeat;
   filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.5));
@@ -17,12 +17,24 @@
   z-index: 3000 !important;
 }
 
+.game-map-pin.variant-mario {
+  background-image: url("./ui/pins/pin-red.png");
+}
+
 .game-map-pin.variant-luigi {
-  background-image: url("./ui/pin-green.png");
+  background-image: url("./ui/pins/pin-green.png");
+}
+
+.game-map-pin.variant-peach {
+  background-image: url("./ui/pins/pin-pink.png");
+}
+
+.game-map-pin.variant-bowser {
+  background-image: url("./ui/pins/pin-orange.png");
 }
 
 .game-map-pin.variant-star {
-  background-image: url("./ui/pin-yellow.png");
+  background-image: url("./ui/pins/pin-yellow.png");
 }
 
 .game-map-pin > img {
