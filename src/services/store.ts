@@ -1,5 +1,4 @@
 import type { Version } from "@/versions/types";
-import type { Locale } from "@/i18n/types";
 import type { User } from "@/types/user";
 
 const STORAGE_KEY = "mario-kart-world-guessr-store";
@@ -7,14 +6,12 @@ const STORAGE_KEY = "mario-kart-world-guessr-store";
 type Store = {
   currentUser: User | null;
   lastSeenVersion: Version | null;
-  locale: Locale | null;
   daily?: any;
 };
 
 function getDefaultStore(): Store {
   return {
     currentUser: null,
-    locale: null,
     lastSeenVersion: null,
   };
 }

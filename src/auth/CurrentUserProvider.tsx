@@ -82,7 +82,7 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
     ) {
       setIsLoading(true);
 
-      fetchApi("/me", "GET", void 0, currentLocale)
+      fetchApi("/me", "GET")
         .then((response) => response.json())
         .then((user) => {
           setCurrentUser(user);

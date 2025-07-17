@@ -18,11 +18,12 @@ type Props = {
   submitLabel?: string;
   method?: FetchMethod;
   children: ReactNode;
-  onSuccess?: (response: Response) => void;
-  onError?: (error: Response | Error) => void;
+  onSubmit?: () => void;
+  onSuccess?: (response: any) => void;
+  onError?: (error: { message: string }) => void;
 };
 
-async function onSubmit(
+async function submitFormAndCallAPI(
   event: React.FormEvent<HTMLFormElement>,
   method: FetchMethod,
   onSuccess: Required<Props>["onSuccess"],
@@ -38,19 +39,16 @@ async function onSubmit(
   }
 
   try {
-    const response = await fetchApi(
-      action,
-      method,
-      formData
-    );
+    const response = await fetchApi(action, method, formData);
 
-    if (!response.ok) {
-      onError(response);
+    const responseJson = await response.json();
+
+    if (response.ok) {
+      onSuccess(responseJson);
+    } else {
+      onError(responseJson);
     }
-
-    onSuccess(response);
   } catch (error: any) {
-    console.error("Error submitting form:", error);
     onError(error);
   }
 }
@@ -60,6 +58,7 @@ export default function Form({
   children,
   submitLabel,
   method = "POST",
+  onSubmit = () => {},
   onSuccess = () => {},
   onError = (error) => {
     console.error("Form submission error:", error);
@@ -75,8 +74,10 @@ export default function Form({
       if (isProcessing) {
         return;
       }
+
+      onSubmit();
       setIsProcessing(true);
-      await onSubmit(event, method, onSuccess, onError);
+      await submitFormAndCallAPI(event, method, onSuccess, onError);
       setIsProcessing(false);
     },
     [isProcessing, onSuccess, onError]

@@ -322,6 +322,7 @@ const en: Texts = {
     "Your can change your username. It's displayed to other players in leaderboards.",
   "account.locale.label": "Langue",
   "account.locale.helper": "Language used for displaying game texts.",
+  "account.save.success": "Changes saved successfully",
 };
 
 export default en;

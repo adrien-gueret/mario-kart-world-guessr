@@ -125,6 +125,7 @@ export type Texts = {
   "account.username.helper": string;
   "account.locale.label": string;
   "account.locale.helper": string;
+  "account.save.success": string;
 };
 
 export type TranslationKey = keyof Texts;

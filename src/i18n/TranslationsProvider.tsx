@@ -21,7 +21,7 @@ const setDocumentLanguage = (locale: Locale) => {
 
 export function TranslationsProvider({ children }: { children: ReactNode }) {
   const [currentLocale, setCurrentLocale] = useState<Locale>(() => {
-    const storedLocale = getKey("locale");
+    const storedLocale = getKey("currentUser")?.locale;
 
     if (storedLocale) {
       setDocumentLanguage(storedLocale);
@@ -44,9 +44,14 @@ export function TranslationsProvider({ children }: { children: ReactNode }) {
   };
 
   const setLocale = (locale: Locale) => {
-    storeKey("locale", locale);
     setCurrentLocale(locale);
     setDocumentLanguage(locale);
+
+    const currentUser = getKey("currentUser");
+
+    if (currentUser) {
+      storeKey("currentUser", { ...currentUser, locale });
+    }
   };
 
   return (

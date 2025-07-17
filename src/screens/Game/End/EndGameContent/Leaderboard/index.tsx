@@ -48,21 +48,11 @@ export default function Leaderboard({ gameId }: Props) {
 
     hasBeenInit.current = true;
 
-    fetchApi(
-      `/relative-leaderboards?gameId=${gameId}&only-bots=1`,
-      "GET",
-      void 0,
-      currentLocale
-    )
+    fetchApi(`/relative-leaderboards?gameId=${gameId}&only-bots=1`, "GET")
       .then((response) => response.json())
       .then(setBotLeaderboard);
 
-    fetchApi(
-      `/relative-leaderboards?gameId=${gameId}`,
-      "GET",
-      void 0,
-      currentLocale
-    )
+    fetchApi(`/relative-leaderboards?gameId=${gameId}`, "GET")
       .then((response) => response.json())
       .then(setLeaderboard);
   }, [gameId, currentLocale]);
