@@ -35,10 +35,10 @@ function getHeaders({
 export default async function fetchApi(
   path: `/${string}`,
   method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" = "GET",
-  body?: FormData,
-  acceptLanguage?: "fr" | "en"
+  body?: FormData
 ): Promise<Response> {
   const currentUser = getKey("currentUser");
+  const acceptLanguage = currentUser?.locale ?? "fr";
   let headers = getHeaders({
     accessToken: currentUser?.accessToken ?? undefined,
     acceptLanguage,

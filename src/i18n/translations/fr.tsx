@@ -328,6 +328,7 @@ const fr: Texts = {
   "account.locale.label": "Langue",
   "account.locale.helper":
     "Langue utilisée pour l'affichage des textes du jeu.",
+  "account.save.success": "Modifications enregistrées avec succès",
 };
 
 export default fr;

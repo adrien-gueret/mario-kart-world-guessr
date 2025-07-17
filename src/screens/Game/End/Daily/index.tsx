@@ -102,12 +102,7 @@ export default function DailyEnd({
 
     hasBeenInit.current = true;
 
-    fetchApi(
-      `/relative-leaderboards?gameId=${gameId}`,
-      "GET",
-      void 0,
-      currentLocale
-    )
+    fetchApi(`/relative-leaderboards?gameId=${gameId}`, "GET")
       .then((response) => response.json())
       .then(setLeaderboard);
   }, [gameId, currentLocale]);
@@ -182,7 +177,7 @@ export default function DailyEnd({
                 <Snackbar
                   type="success"
                   isOpen={hasCopySuccess}
-                  onClose={() =>{
+                  onClose={() => {
                     setHasCopySuccess(false);
                   }}
                 >
