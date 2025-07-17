@@ -14,12 +14,12 @@ const releaseNotes: ReleaseNotes = [
             votre pseudo en haut de la page.
           </Text>
           <Text component="li">
-            Les utilisateurs connectés peuvent désormais modifier leur
-            pseudonyme.
-          </Text>
-          <Text component="li">
             La modification de la langue du jeu se fait désormais depuis cette
             page.
+          </Text>
+          <Text component="li">
+            Les utilisateurs connectés peuvent désormais modifier leur
+            pseudonyme.
           </Text>
           <Text component="li">
             Ils peuvent également choisir entre Mario, Luigi, Peach ou Bowser
@@ -37,10 +37,10 @@ const releaseNotes: ReleaseNotes = [
             username at the top of the page.
           </Text>
           <Text component="li">
-            Logged-in users can now change their username.
+            Game language settings can now be changed from this page.
           </Text>
           <Text component="li">
-            Game language settings can now be changed from this page.
+            Logged-in users can now change their username.
           </Text>
           <Text component="li">
             They can also choose between Mario, Luigi, Peach or Bowser to
