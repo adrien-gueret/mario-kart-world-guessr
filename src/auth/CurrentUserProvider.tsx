@@ -46,7 +46,7 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
   const { currentLocale, setCurrentLocale } = useTranslations();
   const [isLoading, setIsLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const { setCurrentScreenName } = useScreen();
+  const { currentScreenName, setCurrentScreenName } = useScreen();
   const hasBeenMounted = useRef(false);
 
   const logout = useCallback(() => {
@@ -73,8 +73,9 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
 
     function redirectTo(target: Extract<ScreenName, "Account" | "Login">) {
       window.history.replaceState({}, document.title, window.location.pathname);
-      setIsLoading(false);
-      setCurrentScreenName(target);
+      setCurrentScreenName(target, () => {
+        setIsLoading(false);
+      });
     }
 
     function fetchMe(
@@ -90,10 +91,10 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
           setCurrentLocale(user.locale ?? currentLocale);
         })
         .finally(() => {
-          setIsLoading(false);
-
           if (redirectScreeName) {
             redirectTo(redirectScreeName);
+          } else {
+            setIsLoading(false);
           }
         });
     }
