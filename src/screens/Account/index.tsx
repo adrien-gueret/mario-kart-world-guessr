@@ -21,7 +21,7 @@ export default function Account() {
     if (isAnonymous) {
       setCurrentScreenName("Login");
     }
-  }, [isAnonymous]);
+  }, [isAnonymous,setCurrentScreenName]);
 
   if (isAnonymous) {
     return null;
@@ -32,7 +32,7 @@ export default function Account() {
       <h2>{translate("account.title")}</h2>
 
       <Surface disableSkew>
-        <Form method="POST" action="/update-user">
+        <Form method="PUT" action="/update-user">
           <div className="row">
             <label htmlFor="form-username">
               {translate("account.username.label")}

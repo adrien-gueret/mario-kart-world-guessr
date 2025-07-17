@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { useCurrentUser } from "@/auth/CurrentUserProvider";
 
@@ -9,6 +9,7 @@ import type { GameHistory, RelativeLeaderbordsResponse } from "@/types/game";
 import Button from "@/components/Button";
 import LeaderboardRow from "@/components/LeaderboardRow";
 import Loader from "@/components/Loader";
+import Snackbar from "@/components/Snackbar";
 import Table from "@/components/Table";
 
 import fetchApi from "@/services/api";
@@ -47,20 +48,6 @@ export default function DailyEnd({
   );
   const { user } = useCurrentUser();
   const hasBeenInit = useRef(false);
-
-  useLayoutEffect(() => {
-    if (!hasCopySuccess) {
-      return;
-    }
-
-    const clock = setTimeout(() => {
-      setHasCopySuccess(false);
-    }, 3000);
-
-    return () => {
-      clearTimeout(clock);
-    };
-  }, [hasCopySuccess]);
 
   useEffect(() => {
     if (nextDailyDateTimestamp === null) {
@@ -191,11 +178,16 @@ export default function DailyEnd({
                 <Button onClick={copy} variant="secondary">
                   {translate("share.copy.button.label")}
                 </Button>
-                {hasCopySuccess && (
-                  <div className="copy-success">
-                    {translate("share.copy.success")}
-                  </div>
-                )}
+
+                <Snackbar
+                  type="success"
+                  isOpen={hasCopySuccess}
+                  onClose={() =>{
+                    setHasCopySuccess(false);
+                  }}
+                >
+                  {translate("share.copy.success")}
+                </Snackbar>
               </div>
 
               {canShare && (
