@@ -1,0 +1,57 @@
+.character-select {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 8px;
+  padding: 32px 0;
+}
+
+.character-option {
+  width: 128px;
+  height: 128px;
+  background-color: rgba(125, 125, 125, 0.4);
+  border-radius: 35%;
+  position: relative;
+}
+
+.character-option-container input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.character-option-container
+  input:focus-visible
+  + .character-option
+  .character-selector,
+.character-option:hover .character-selector {
+  display: block;
+  position: absolute;
+  left: -16px;
+  top: -12px;
+  width: 150px;
+  height: 150px;
+  background-image: url(./ui/characters/selector.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  animation: 0.4s ease-in-out infinite alternate-reverse characterSelector;
+  pointer-events: none;
+}
+
+.character-option-container input:checked + .character-option {
+  background-color: rgba(0, 225, 255, 0.4);
+}
+
+@keyframes characterSelector {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.1);
+  }
+}

@@ -127,6 +127,8 @@ export type Texts = {
   "account.locale.helper": string;
   "account.save.success": string;
   "play.label": string;
+  "account.marioCharacter.label": string;
+  "account.marioCharacter.helper": string;
 };
 
 export type TranslationKey = keyof Texts;
@@ -135,6 +137,6 @@ export type Translations = Record<Locale, Texts>;
 
 export type TranslationsContextType = {
   currentLocale: Locale;
-  translate: <T extends TranslationKey>(key: T) => Texts[T];
+  translate: <T extends TranslationKey>(key: T) => Texts[T] | string;
   setCurrentLocale: (locale: Locale) => void;
 };

@@ -1,3 +1,5 @@
+import type { MarioCharacter } from "@/types/characters";
+
 export type User = {
   id: number;
   username: string;
@@ -5,6 +7,6 @@ export type User = {
   accessToken: string;
   refreshToken: string;
   expiredAt: string;
-  marioCharacter: "mario" | "luigi" | "peach" | "bowser" | null;
+  marioCharacter: MarioCharacter | null;
   locale: "fr" | "en" | null;
 };

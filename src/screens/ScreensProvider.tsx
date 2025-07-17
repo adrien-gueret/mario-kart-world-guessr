@@ -51,7 +51,10 @@ const screenHashtagsToScreenNames: Record<ScreenHashtag, ScreenName> = {
 type ScreenContextType = {
   currentScreenName: ScreenName;
   CurrentScreen: ElementType;
-  setCurrentScreenName: (screenName: ScreenName) => void;
+  setCurrentScreenName: (
+    screenName: ScreenName,
+    onSuccess?: () => void
+  ) => void;
 };
 
 const ScreenContext = createContext<ScreenContextType>({
@@ -119,7 +122,7 @@ export function ScreensProvider({ children }: { children: ReactNode }) {
   };
 
   const goToScreen = useCallback(
-    (screenName: ScreenName, onSuccess: () => void) => {
+    (screenName: ScreenName, onSuccess?: () => void) => {
       if (removeTitleTagFromHash(screenName)) {
         handleHashChange();
       } else {

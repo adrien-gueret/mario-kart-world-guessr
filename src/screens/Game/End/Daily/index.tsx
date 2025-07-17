@@ -222,11 +222,7 @@ export default function DailyEnd({
                       key={player.rank}
                       rank={player.rank}
                       username={player.playerName}
-                      marioCharacter={
-                        user.id === player.playerId
-                          ? void 0
-                          : player.marioCharacter ?? void 0
-                      }
+                      marioCharacter={player.marioCharacter ?? void 0}
                       score={player.score}
                       isHighlighted={user.id === player.playerId}
                     />

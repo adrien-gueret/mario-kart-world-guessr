@@ -2,11 +2,12 @@ import { useContext } from "react";
 
 import { MapContext } from "@/components/Map";
 import type { Coordinates } from "@/types/location";
+import type { MarioCharacter } from "@/types/characters";
 
 import "./Pin.css";
 
 type Props = Coordinates & {
-  variant?: "mario" | "luigi" | "star";
+  variant?: MarioCharacter | "star" | null;
   onlyHead?: boolean;
 };
 
@@ -29,12 +30,7 @@ function targetCoordinatesToOnlyHeadPinDomCoordinates(
   };
 }
 
-export default function Pin({
-  x,
-  y,
-  variant = "mario",
-  onlyHead = false,
-}: Props) {
+export default function Pin({ x, y, variant, onlyHead = false }: Props) {
   const { ratio } = useContext(MapContext);
   const { x: domX, y: domY } = onlyHead
     ? targetCoordinatesToOnlyHeadPinDomCoordinates({
@@ -49,7 +45,7 @@ export default function Pin({
   return (
     <div
       key={`${domX}-${domY}`}
-      className={`game-map-pin variant-${variant} ${
+      className={`game-map-pin variant-${variant ?? "mario"} ${
         onlyHead ? "only-head" : ""
       }`}
       style={{
@@ -58,7 +54,7 @@ export default function Pin({
         zIndex: Math.max(1, domY),
       }}
     >
-      <img src={`./ui/icon-${variant}.png`} alt="" />
+      {variant && <img src={`./ui/pins/icon-${variant}.png`} alt="" />}
     </div>
   );
 }

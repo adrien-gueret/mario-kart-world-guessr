@@ -320,10 +320,13 @@ const en: Texts = {
   "account.username.label": "Username",
   "account.username.helper":
     "Your can change your username. It's displayed to other players in leaderboards.",
-  "account.locale.label": "Langue",
+  "account.locale.label": "Language",
   "account.locale.helper": "Language used for displaying game texts.",
   "account.save.success": "Changes saved successfully",
   "play.label": "Play",
+  "account.marioCharacter.label": "Select your favorite character",
+  "account.marioCharacter.helper":
+    "It will appear in the pins you place on the map and next to your username in leaderboards.",
 };
 
 export default en;

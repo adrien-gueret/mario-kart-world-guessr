@@ -330,6 +330,9 @@ const fr: Texts = {
     "Langue utilisée pour l'affichage des textes du jeu.",
   "account.save.success": "Modifications enregistrées avec succès",
   "play.label": "Jouer",
+  "account.marioCharacter.label": "Sélectionnez votre personnage favori",
+  "account.marioCharacter.helper":
+    "Il apparaitra dans les pins que vous placez sur la carte et à côté de votre pseudo dans les classements.",
 };
 
 export default fr;
