@@ -86,7 +86,7 @@ try {
             ['x' => $guess['actual_x'], 'y' => $guess['actual_y']]
         );
 
-        $score = getScoreFromDistanceInKilometers($distanceInKm, $difficulty);
+        $score = getScoreFromDistanceInKilometers($distanceInKm, $difficulty ?: '150cc');
 
         return $score;
     }, $game['guesses']);
@@ -101,6 +101,7 @@ try {
         die('{"error":true,"message":"Invalid game mode."}');
     }
    
+
     $insertSuggestionStmt->execute();
     $lastInsertId = $pdo->lastInsertId();
 

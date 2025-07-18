@@ -31,13 +31,14 @@
 .character-option:hover .character-selector {
   display: block;
   position: absolute;
-  left: -16px;
-  top: -12px;
+  left: -14px;
+  top: -14px;
   width: 150px;
   height: 150px;
   background-image: url(./ui/characters/selector.svg);
   background-repeat: no-repeat;
   background-size: contain;
+  background-position: center;
   animation: 0.4s ease-in-out infinite alternate-reverse characterSelector;
   pointer-events: none;
 }

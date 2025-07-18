@@ -6,6 +6,10 @@
   color: #929200;
 }
 
+.leaderboard-row th.leaderboard-cell-rank {
+  padding-right: 0;
+}
+
 .leaderboard-row.is-highlighted td {
   color: #aaaa00;
 }
@@ -26,19 +30,19 @@
 }
 
 .leaderboard-cell-character.mario::before {
-  background-image: url("./ui/pins/icon-mario.png");
+  background-image: url("./ui/characters/mario.png");
 }
 
 .leaderboard-cell-character.luigi::before {
-  background-image: url("./ui/pins/icon-luigi.png");
+  background-image: url("./ui/characters/luigi.png");
 }
 
 .leaderboard-cell-character.peach::before {
-  background-image: url("./ui/pins/icon-peach.png");
+  background-image: url("./ui/characters/peach.png");
 }
 
 .leaderboard-cell-character.bowser::before {
-  background-image: url("./ui/pins/icon-bowser.png");
+  background-image: url("./ui/characters/bowser.png");
 }
 
 .leaderboard-cell-secondary-score-container {
