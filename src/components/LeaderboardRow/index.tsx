@@ -19,7 +19,7 @@ export default function LeaderboardRow({
 }: Props) {
   return (
     <tr className={`leaderboard-row ${isHighlighted ? "is-highlighted" : ""}`}>
-      <th>{rank}</th>
+      <th className="leaderboard-cell-rank">{rank}</th>
       <th
         className={`leaderboard-cell-name ${
           marioCharacter ? `leaderboard-cell-character ${marioCharacter}` : ""

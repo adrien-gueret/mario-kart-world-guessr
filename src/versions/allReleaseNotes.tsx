@@ -4,6 +4,32 @@ import type { ReleaseNotes } from "./types";
 
 const releaseNotes: ReleaseNotes = [
   {
+    version: "v2.1.1",
+    notes: {
+      fr: (
+        <Text component="p">
+          Oups, la version précédente <b>v2.1.0</b> a cassé le mode "Photos du
+          jour" !<br />
+          Le jeu se bloquait et il n'était plus possible de jouer à partir de la
+          deuxième photo...
+          <br />
+          <b>Ce problème est désormais corrigé, désolé pour le dérangement !</b>
+        </Text>
+      ),
+      en: (
+        <Text component="p">
+          Oops, the previous version <b>v2.1.0</b> broke the "Daily Photos"
+          mode!
+          <br />
+          The game would freeze and it was no longer possible to play from the
+          second photo...
+          <br />
+          <b>This issue is now fixed, sorry for the inconvenience!</b>
+        </Text>
+      ),
+    },
+  },
+  {
     version: "v2.1.0",
     notes: {
       fr: (
