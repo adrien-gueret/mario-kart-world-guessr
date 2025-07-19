@@ -26,6 +26,8 @@ import type { Difficulty, GameMode } from "@/types/game";
 
 import { useTranslations } from "@/i18n";
 
+import { useScreen } from "../ScreensProvider";
+
 import EndDailyGame from "./End/Daily";
 import EndGoalGame from "./End/Goal";
 import EndSurvivalGame from "./End/Survival";
@@ -44,10 +46,12 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
   const [currentGameId, setCurrentGameId] = useState<number | null>(null);
   const [currentPhotoId, setCurrentPhotoId] = useState<string | null>(null);
   const [nextPhotoId, setNextPhotoId] = useState<string | null>(null);
+  const [hasRequestedGiveUp, setHasRequestedGiveUp] = useState(false);
   const [photoCount, setPhotoCount] = useState(0);
   const historyLength = useRef(0);
   const [totalScore, setTotalScore] = useState(0);
   const [gameHistory, setGameHistory] = useState<GameHistory>([]);
+  const { setCurrentScreenName } = useScreen();
 
   const [currentLocationCoordinates, setCurrentLocationCoordinates] =
     useState<Coordinates | null>(null);
@@ -199,6 +203,17 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     if (addGuessResponse.gameData.isFinished) {
       setGameHistory(addGuessResponse.gameData.history);
     }
+  };
+
+  const giveUp = async () => {
+    const formData = new FormData();
+    formData.append("gameId", `${currentGameId}`);
+
+    try {
+      await fetchApi("/give-up", "PUT", formData);
+    } catch (error) {}
+
+    setCurrentScreenName("Title");
   };
 
   const gameModeToRules: Record<
@@ -390,6 +405,35 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
           }
         })()}
       </Modal>
+
+      {mode === "goal" && (
+        <>
+          <Modal
+            title={translate("giveUp.title")}
+            isOpen={hasRequestedGiveUp}
+            noDelay
+          >
+            <div className="give-up-modal-container">
+              {translate("giveUp.description")}
+
+              <div className="give-up-modal-buttons">
+                <Button onClick={giveUp} variant="secondary">
+                  {translate("giveUp.confirm.accept")}
+                </Button>
+                <Button onClick={() => setHasRequestedGiveUp(false)}>
+                  {translate("giveUp.confirm.cancel")}
+                </Button>
+              </div>
+            </div>
+          </Modal>
+          <Button
+            onClick={() => setHasRequestedGiveUp(true)}
+            variant="secondary"
+          >
+            {translate("giveUp.label")}
+          </Button>
+        </>
+      )}
     </div>
   );
 }

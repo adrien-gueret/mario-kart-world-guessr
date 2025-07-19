@@ -129,6 +129,11 @@ export type Texts = {
   "play.label": string;
   "account.marioCharacter.label": string;
   "account.marioCharacter.helper": string;
+  "giveUp.label": string;
+  "giveUp.title": string;
+  "giveUp.description": string;
+  "giveUp.confirm.cancel": string;
+  "giveUp.confirm.accept": string;
 };
 
 export type TranslationKey = keyof Texts;

@@ -333,6 +333,12 @@ const fr: Texts = {
   "account.marioCharacter.label": "Sélectionnez votre personnage favori",
   "account.marioCharacter.helper":
     "Il apparaitra dans les pins que vous placez sur la carte et à côté de votre pseudo dans les classements.",
+  "giveUp.label": "Abandonner",
+  "giveUp.title": "Abandonner la partie ?",
+  "giveUp.description":
+    "Êtes-vous sûr de vouloir abandonner la partie en cours ? Votre score ne sera pas enregistré dans le classement.",
+  "giveUp.confirm.cancel": "Non, continuer le jeu",
+  "giveUp.confirm.accept": "Oui, arrêter",
 };
 
 export default fr;

@@ -8,12 +8,14 @@ export default function GoalGame() {
   const { playIndex, replay, difficulty, setDifficulty } = useInitGame();
 
   return difficulty ? (
-    <GameBase
-      key={playIndex}
-      onReplay={replay}
-      mode="goal"
-      difficulty={difficulty}
-    />
+    <>
+      <GameBase
+        key={playIndex}
+        onReplay={replay}
+        mode="goal"
+        difficulty={difficulty}
+      />
+    </>
   ) : (
     <DifficultySelector mode="goal" onSelect={setDifficulty} />
   );

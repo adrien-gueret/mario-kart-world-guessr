@@ -327,6 +327,12 @@ const en: Texts = {
   "account.marioCharacter.label": "Select your favorite character",
   "account.marioCharacter.helper":
     "It will appear in the pins you place on the map and next to your username in leaderboards.",
+  "giveUp.label": "Give up",
+  "giveUp.title": "Give up the game?",
+  "giveUp.description":
+    "Are you sure you want to give up the current game? Your score will not be recorded in the leaderboard.",
+  "giveUp.confirm.cancel": "No, continue the game",
+  "giveUp.confirm.accept": "Yes, stop",
 };
 
 export default en;
