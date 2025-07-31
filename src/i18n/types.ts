@@ -137,6 +137,10 @@ export type Texts = {
   "home.menu.play.title": string;
   "home.menu.account.title": string;
   "home.menu.leaderboards.title": string;
+  "leaderboards.description": string;
+  "leaderboards.mode": string;
+  "leaderboards.difficulty": string;
+  "leaderboards.hide-anonymous": string;
 };
 
 export type TranslationKey = keyof Texts;

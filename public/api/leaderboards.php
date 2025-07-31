@@ -26,12 +26,13 @@ try {
     
     $stmt = $pdo->prepare(
         "SELECT
-            l.player_id,
+            l.player_id playerId,
             l.score,
-            l.photo_count,
+            l.photo_count photoCount,
             l.performed_at,
-            IF(u.email IS NULL, '$anonymousUserName', u.username) AS username,
-            u.mario_character,
+            IF(u.email IS NULL, '$anonymousUserName', u.username) AS playerName,
+            IF(u.email IS NULL, 1, 0) AS isAnonymous,
+            u.mario_character marioCharacter,
             ROW_NUMBER() OVER (
                 ORDER BY photo_count $photoCountOrderType, score DESC, performed_at DESC
             ) AS rank

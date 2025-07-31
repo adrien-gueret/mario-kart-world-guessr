@@ -13,6 +13,7 @@ import { flushSync } from "react-dom";
 import Account from "./Account";
 import { SurvivalGame, GoalGame, DailyGame } from "./Game";
 import Home from "./Home";
+import Leaderboards from "./Leaderboards";
 import Login from "./Login";
 import Photos from "./Photos";
 import Play from "./Play";
@@ -95,6 +96,7 @@ export function ScreensProvider({ children }: { children: ReactNode }) {
   const ScreenNameToScreen: Record<ScreenName, ElementType> = {
     Home,
     Play,
+    Leaderboards,
     SurvivalGame,
     GoalGame,
     DailyGame,

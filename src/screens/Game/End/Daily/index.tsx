@@ -4,7 +4,7 @@ import { useCurrentUser } from "@/auth/CurrentUserProvider";
 
 import { useTranslations } from "@/i18n";
 
-import type { GameHistory, RelativeLeaderbordsResponse } from "@/types/game";
+import type { GameHistory, LeaderboardsResponse } from "@/types/game";
 
 import Button from "@/components/Button";
 import LeaderboardRow from "@/components/LeaderboardRow";
@@ -43,9 +43,7 @@ export default function DailyEnd({
     seconds: number;
   } | null>(null);
 
-  const [leaderboard, setLeaderboard] = useState<RelativeLeaderbordsResponse>(
-    []
-  );
+  const [leaderboard, setLeaderboard] = useState<LeaderboardsResponse>([]);
   const { user } = useCurrentUser();
   const hasBeenInit = useRef(false);
 

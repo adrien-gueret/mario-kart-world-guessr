@@ -86,6 +86,7 @@ try {
                 l.player_id,
                 l.score,
                 IF(u.email IS NULL, '$anonymousUserName', u.username) AS username,
+                IF(u.email IS NULL, 1, 0) AS isAnonymous,
                 u.mario_character
             FROM `mario-kart-world-leaderboard-daily` l
             LEFT JOIN `mario-kart-world-users` u ON l.player_id = u.id
@@ -154,6 +155,7 @@ try {
                 l.photo_count,
                 l.performed_at,
                 IF(u.email IS NULL, '$anonymousUserName', u.username) AS username,
+                IF(u.email IS NULL, 1, 0) AS isAnonymous,
                 u.mario_character
             FROM `mario-kart-world-leaderboard-goal-survival` l
             LEFT JOIN `mario-kart-world-users` u ON l.player_id = u.id
@@ -203,6 +205,7 @@ try {
             score,
             photo_count as photoCount,
             username as playerName,
+            isAnonymous,
             mario_character as marioCharacter,
             ranked.rank
         FROM ranked, window_bounds

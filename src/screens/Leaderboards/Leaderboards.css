@@ -1,0 +1,25 @@
+.leaderboards-table {
+  max-width: 768px;
+  margin: 16px auto;
+}
+
+.checkbox-large {
+  background-color: #f8f8f8;
+  background-image: url(./backgrounds/dialog.jpg);
+  padding: 8px 16px;
+  margin: 8px;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-self: center;
+  border-radius: 27px;
+  border: 1px solid #213547;
+}
+
+.leaderboards-label-with-icon {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-self: center;
+  gap: 8px;
+}
