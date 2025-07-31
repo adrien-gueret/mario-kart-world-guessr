@@ -1,5 +1,7 @@
 import { useTranslations } from "@/i18n";
 
+import type { Difficulty } from "@/types/game";
+
 import EndGameContent from "../EndGameContent";
 
 import Leaderboard from "../EndGameContent/Leaderboard";
@@ -9,6 +11,7 @@ type Props = {
   photoCount: number;
   totalScore: number;
   gameId: number;
+  difficulty: Difficulty;
   onReplay: () => void;
   onLeaderboardShow: () => void;
 };
@@ -18,6 +21,7 @@ export default function SurvivalEnd({
   photoCount,
   totalScore,
   gameId,
+  difficulty,
   onReplay,
   onLeaderboardShow,
 }: Props) {
@@ -30,7 +34,9 @@ export default function SurvivalEnd({
         photoCount,
         totalScore
       )}
-      secondStepContent={<Leaderboard gameId={gameId} />}
+      secondStepContent={
+        <Leaderboard gameId={gameId} mode="survival" difficulty={difficulty} />
+      }
       onReplay={onReplay}
       onLeaderboardShow={onLeaderboardShow}
     />

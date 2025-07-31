@@ -21,9 +21,15 @@ import { useScreen } from "../ScreensProvider";
 import "./Leaderboards.css";
 
 function Leaderboards() {
+  const { setCurrentScreenName, state } = useScreen();
+
   const [leaderboard, setLeaderboard] = useState<LeaderboardsResponse>([]);
-  const [gameMode, setGameMode] = useState<GameMode>("survival");
-  const [gameDifficulty, setGameDifficulty] = useState<Difficulty>("50cc");
+  const [gameMode, setGameMode] = useState<GameMode>(
+    () => state.gameMode || "survival"
+  );
+  const [gameDifficulty, setGameDifficulty] = useState<Difficulty>(
+    () => state.gameDifficulty || "50cc"
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [shouldHideAnonymous, setShouldHideAnonymous] = useState(false);
   const [currentUserLeaderboardData, setCurrentUserLeaderboardData] = useState<{
@@ -32,7 +38,7 @@ function Leaderboards() {
   } | null>(null);
 
   const { user: currentUser, isAnonymous } = useCurrentUser();
-  const { setCurrentScreenName } = useScreen();
+
   const { translate } = useTranslations();
 
   useEffect(() => {

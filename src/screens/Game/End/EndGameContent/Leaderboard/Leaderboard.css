@@ -65,3 +65,9 @@
 .leaderboard-results-title {
   margin: 0;
 }
+
+.leaderboard-actions {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}

@@ -229,6 +229,7 @@ const en: Texts = {
     "You have finished locating all 5 photos of the day!",
   "endGame.daily.next": "Next daily photos in: ",
   "endGame.next-button.label": "Next",
+  "endGame.see-leaderboards": "See whole leaderboard",
   "share.text.title": "Mario Kart World Guessr - Daily Photos",
   "share.copy.button.label": "Copy",
   "share.copy.success": "Copied to clipboard",

@@ -231,6 +231,7 @@ const fr: Texts = {
     "Vous avez fini de localiser les 5 photos du jour !",
   "endGame.daily.next": "Prochaines photos du jour dans : ",
   "endGame.next-button.label": "Suivant",
+  "endGame.see-leaderboards": "Voir tout le classement",
   "share.text.title": "Mario Kart World Guessr - Photos du jour",
   "share.copy.button.label": "Copier",
   "share.copy.success": "Copié dans le presse-papiers",
