@@ -26,8 +26,12 @@ function Leaderboards() {
   const [gameDifficulty, setGameDifficulty] = useState<Difficulty>("50cc");
   const [isLoading, setIsLoading] = useState(false);
   const [shouldHideAnonymous, setShouldHideAnonymous] = useState(false);
+  const [currentUserLeaderboardData, setCurrentUserLeaderboardData] = useState<{
+    rank: number;
+    photoCount: number;
+  } | null>(null);
 
-  const { user, isAnonymous } = useCurrentUser();
+  const { user: currentUser, isAnonymous } = useCurrentUser();
   const { setCurrentScreenName } = useScreen();
   const { translate } = useTranslations();
 
@@ -39,9 +43,22 @@ function Leaderboards() {
       "GET"
     )
       .then((response) => response.json())
-      .then(setLeaderboard)
+      .then((leaderboard: LeaderboardsResponse) => {
+        const currentUserRow = leaderboard.find(
+          ({ playerId }) => playerId === currentUser.id
+        );
+        setLeaderboard(leaderboard);
+        setCurrentUserLeaderboardData(
+          currentUserRow
+            ? {
+                rank: currentUserRow.rank ?? 0,
+                photoCount: currentUserRow.photoCount ?? 0,
+              }
+            : null
+        );
+      })
       .finally(() => setIsLoading(false));
-  }, [gameMode, gameDifficulty]);
+  }, [gameMode, gameDifficulty, currentUser.id]);
 
   return (
     <div className="leaderboards-screen">
@@ -87,35 +104,55 @@ function Leaderboards() {
         )
       )}
 
-      <div style={{ marginTop: "64px" }}>
-        <Checkbox
-          name="hide-anonymous"
-          label={translate("leaderboards.hide-anonymous")}
-          checked={shouldHideAnonymous}
-          onChange={(checked) => setShouldHideAnonymous(checked)}
-        />
-      </div>
-
       {isLoading && leaderboard.length === 0 ? (
         <Loader />
       ) : (
-        <div className="leaderboards-table">
-          <Table>
-            {(shouldHideAnonymous
-              ? leaderboard.filter((player) => !player.isAnonymous)
-              : leaderboard
-            ).map((player) => (
-              <LeaderboardRow
-                key={player.rank}
-                rank={player.rank}
-                username={player.playerName}
-                marioCharacter={player.marioCharacter ?? void 0}
-                score={player.photoCount!}
-                secondaryScore={player.score}
-                isHighlighted={!isAnonymous && user.id === player.playerId}
-              />
-            ))}
-          </Table>
+        <div style={{ marginTop: "64px" }}>
+          <Text>
+            {isAnonymous
+              ? translate("leaderboards.not-logged-in")
+              : currentUserLeaderboardData
+              ? translate("leaderboards.currentUserScore")(
+                  gameMode,
+                  gameDifficulty,
+                  currentUserLeaderboardData.photoCount,
+                  currentUserLeaderboardData.rank
+                )
+              : translate("leaderboards.not-played-yet")(
+                  gameMode,
+                  gameDifficulty
+                )}
+          </Text>
+
+          <div style={{ marginTop: "32px" }}>
+            <Checkbox
+              name="hide-anonymous"
+              label={translate("leaderboards.hide-anonymous")}
+              checked={shouldHideAnonymous}
+              onChange={(checked) => setShouldHideAnonymous(checked)}
+            />
+          </div>
+
+          <div className="leaderboards-table">
+            <Table>
+              {(shouldHideAnonymous
+                ? leaderboard.filter((player) => !player.isAnonymous)
+                : leaderboard
+              ).map((player) => (
+                <LeaderboardRow
+                  key={player.rank}
+                  rank={player.rank}
+                  username={player.playerName}
+                  marioCharacter={player.marioCharacter ?? void 0}
+                  score={player.photoCount!}
+                  secondaryScore={player.score}
+                  isHighlighted={
+                    !isAnonymous && currentUser.id === player.playerId
+                  }
+                />
+              ))}
+            </Table>
+          </div>
         </div>
       )}
     </div>

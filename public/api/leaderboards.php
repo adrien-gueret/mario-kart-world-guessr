@@ -38,7 +38,7 @@ try {
             ) AS rank
         FROM `mario-kart-world-leaderboard-goal-survival` l
         LEFT JOIN `mario-kart-world-users` u ON l.player_id = u.id
-        WHERE l.difficulty = :difficulty and l.mode = :mode
+        WHERE l.difficulty = :difficulty and l.mode = :mode AND l.player_id NOT IN (3,4,5,6)
     ");
 
     $stmt->bindParam(':difficulty', $_GET['difficulty'], PDO::PARAM_STR);

@@ -1,3 +1,5 @@
+import Anchor from "@/components/Anchor";
+import type { GameMode, Difficulty } from "@/types/game";
 import type { Version } from "@/versions/types";
 import type { Texts } from "../types";
 
@@ -347,6 +349,43 @@ const fr: Texts = {
   "leaderboards.mode": "Sélectionnez un mode de jeu",
   "leaderboards.difficulty": "Sélectionnez une difficulté",
   "leaderboards.hide-anonymous": "Masquer les joueurs anonymes",
+  "leaderboards.not-logged-in": (
+    <>
+      Vous n'êtes pas connecté. <a href="#/login">Connectez-vous</a> pour voir
+      votre score dans le classement.
+    </>
+  ),
+  "leaderboards.currentUserScore": (
+    gameMode: GameMode,
+    gameDifficulty: Difficulty,
+    photoCount: number,
+    rank: number
+  ) => (
+    <>
+      Avec votre score de <b>{photoCount}</b> photo{photoCount > 1 ? "s" : ""},
+      vous êtes à la{" "}
+      {rank === 1 ? (
+        <>
+          <b>première</b> place
+        </>
+      ) : (
+        <>
+          place <Anchor href={`#leaderboard-row-${rank}`}>#{rank}</Anchor>
+        </>
+      )}{" "}
+      du mode <i>{fr[`mode.${gameMode}.label`]}</i> en{" "}
+      <b>{fr[`difficulty.${gameDifficulty}.title`]} !</b>
+    </>
+  ),
+  "leaderboards.not-played-yet": (
+    gameMode: GameMode,
+    gameDifficulty: Difficulty
+  ) => (
+    <>
+      Vous n'avez pas encore joué au mode <i>{fr[`mode.${gameMode}.label`]}</i>{" "}
+      en <b>{fr[`difficulty.${gameDifficulty}.title`]}.</b>
+    </>
+  ),
 };
 
 export default fr;

@@ -1,0 +1,10 @@
+.anchor,
+.anchor:visited {
+  color: #213547;
+  text-decoration: underline;
+  font-weight: bolder;
+}
+
+.anchor:hover {
+  text-decoration: none;
+}
