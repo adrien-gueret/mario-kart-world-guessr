@@ -1,3 +1,5 @@
+import Anchor from "@/components/Anchor";
+import type { GameMode, Difficulty } from "@/types/game";
 import type { Version } from "@/versions/types";
 import type { Texts } from "../types";
 
@@ -341,6 +343,43 @@ const en: Texts = {
   "leaderboards.mode": "Select a game mode",
   "leaderboards.difficulty": "Select a difficulty",
   "leaderboards.hide-anonymous": "Hide anonymous players",
+  "leaderboards.not-logged-in": (
+    <>
+      You are not logged in. <a href="#/login">Log in</a> to see your score in
+      the leaderboard.
+    </>
+  ),
+  "leaderboards.currentUserScore": (
+    gameMode: GameMode,
+    gameDifficulty: Difficulty,
+    photoCount: number,
+    rank: number
+  ) => (
+    <>
+      With your score of <b>{photoCount}</b> photo{photoCount > 1 ? "s" : ""},
+      you are in{" "}
+      {rank === 1 ? (
+        <>
+          <b>first</b> place
+        </>
+      ) : (
+        <>
+          <Anchor href={`#leaderboard-row-${rank}`}>#{rank}</Anchor> place
+        </>
+      )}{" "}
+      in the <i>{en[`mode.${gameMode}.label`]}</i> mode at{" "}
+      <b>{en[`difficulty.${gameDifficulty}.title`]}!</b>
+    </>
+  ),
+  "leaderboards.not-played-yet": (
+    gameMode: GameMode,
+    gameDifficulty: Difficulty
+  ) => (
+    <>
+      You haven't played the <i>{en[`mode.${gameMode}.label`]}</i> mode at{" "}
+      <b>{en[`difficulty.${gameDifficulty}.title`]}</b> yet.
+    </>
+  ),
 };
 
 export default en;

@@ -18,7 +18,10 @@ export default function LeaderboardRow({
   isHighlighted,
 }: Props) {
   return (
-    <tr className={`leaderboard-row ${isHighlighted ? "is-highlighted" : ""}`}>
+    <tr
+      id={`leaderboard-row-${rank}`}
+      className={`leaderboard-row ${isHighlighted ? "is-highlighted" : ""}`}
+    >
       <th className="leaderboard-cell-rank">{rank}</th>
       <th
         className={`leaderboard-cell-name ${

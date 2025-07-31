@@ -1,3 +1,4 @@
+import type { GameMode, Difficulty } from "@/types/game";
 import type { Version } from "@/versions/types";
 import type { ReactNode } from "react";
 
@@ -141,6 +142,17 @@ export type Texts = {
   "leaderboards.mode": string;
   "leaderboards.difficulty": string;
   "leaderboards.hide-anonymous": string;
+  "leaderboards.not-logged-in": ReactNode;
+  "leaderboards.currentUserScore": (
+    gameMode: GameMode,
+    gameDifficulty: Difficulty,
+    photoCount: number,
+    rank: number
+  ) => ReactNode;
+  "leaderboards.not-played-yet": (
+    gameMode: GameMode,
+    gameDifficulty: Difficulty
+  ) => ReactNode;
 };
 
 export type TranslationKey = keyof Texts;
@@ -149,6 +161,6 @@ export type Translations = Record<Locale, Texts>;
 
 export type TranslationsContextType = {
   currentLocale: Locale;
-  translate: <T extends TranslationKey>(key: T) => Texts[T] | string;
+  translate: <T extends TranslationKey>(key: T) => Texts[T];
   setCurrentLocale: (locale: Locale) => void;
 };
