@@ -220,7 +220,7 @@ function TermsServices() {
       )}
 
       <div className="back-button">
-        <Button onClick={() => setCurrentScreenName("Title")}>
+        <Button onClick={() => setCurrentScreenName("Home")}>
           {translate("home.button")}
         </Button>
       </div>

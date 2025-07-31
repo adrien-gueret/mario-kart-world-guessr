@@ -7,7 +7,7 @@ allowMethod('GET');
 try {
     $stmt = $pdo->prepare("SELECT id as photoName, x, y
         FROM `mario-kart-world-photos`
-        WHERE validated_at IS NOT NULL"
+        WHERE validated_at IS NOT NULL AND validated_at <= NOW() - INTERVAL 5 MINUTE"
     );
 
     $stmt->execute();

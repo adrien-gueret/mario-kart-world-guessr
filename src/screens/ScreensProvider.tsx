@@ -12,16 +12,19 @@ import { flushSync } from "react-dom";
 
 import Account from "./Account";
 import { SurvivalGame, GoalGame, DailyGame } from "./Game";
+import Home from "./Home";
 import Login from "./Login";
 import Photos from "./Photos";
-import Title from "./Title";
+import Play from "./Play";
 import Upload from "./Upload";
 import PrivacyPolicies from "./PrivacyPolicies";
 import ReleaseNotes from "./ReleaseNotes";
 import TermsServices from "./TermsServices";
 
 export type ScreenName =
-  | "Title"
+  | "Home"
+  | "Play"
+  | "Leaderboards"
   | "SurvivalGame"
   | "GoalGame"
   | "DailyGame"
@@ -35,7 +38,9 @@ export type ScreenName =
 type ScreenHashtag = `#/${Lowercase<ScreenName>}`;
 
 const screenHashtagsToScreenNames: Record<ScreenHashtag, ScreenName> = {
-  "#/title": "Title",
+  "#/home": "Home",
+  "#/play": "Play",
+  "#/leaderboards": "Leaderboards",
   "#/survivalgame": "SurvivalGame",
   "#/goalgame": "GoalGame",
   "#/dailygame": "DailyGame",
@@ -58,7 +63,7 @@ type ScreenContextType = {
 };
 
 const ScreenContext = createContext<ScreenContextType>({
-  currentScreenName: "Title",
+  currentScreenName: "Home",
   CurrentScreen: () => null,
   setCurrentScreenName: () => "",
 } as ScreenContextType);
@@ -66,15 +71,13 @@ const ScreenContext = createContext<ScreenContextType>({
 const getScreenNameFromHash = (): ScreenName => {
   const newHash = window.location.hash as ScreenHashtag;
 
-  const newScreenName = newHash
-    ? screenHashtagsToScreenNames[newHash]
-    : "Title";
+  const newScreenName = newHash ? screenHashtagsToScreenNames[newHash] : "Home";
 
-  return newScreenName ?? "Title";
+  return newScreenName ?? "Home";
 };
 
-const removeTitleTagFromHash = (currentScreenName: ScreenName): boolean => {
-  if (currentScreenName !== "Title") {
+const removeHomeTagFromHash = (currentScreenName: ScreenName): boolean => {
+  if (currentScreenName !== "Home") {
     return false;
   }
 
@@ -86,11 +89,12 @@ const removeTitleTagFromHash = (currentScreenName: ScreenName): boolean => {
 
 export function ScreensProvider({ children }: { children: ReactNode }) {
   const [currentScreenName, setCurrentScreenName] = useState<ScreenName>(
-    () => getScreenNameFromHash() ?? "Title"
+    () => getScreenNameFromHash() ?? "Home"
   );
 
   const ScreenNameToScreen: Record<ScreenName, ElementType> = {
-    Title,
+    Home,
+    Play,
     SurvivalGame,
     GoalGame,
     DailyGame,
@@ -109,7 +113,7 @@ export function ScreensProvider({ children }: { children: ReactNode }) {
     document.startViewTransition(() => {
       flushSync(() => {
         setCurrentScreenName(newScreenName);
-        removeTitleTagFromHash(newScreenName);
+        removeHomeTagFromHash(newScreenName);
 
         window.requestAnimationFrame(() => {
           window.scrollTo({
@@ -123,7 +127,7 @@ export function ScreensProvider({ children }: { children: ReactNode }) {
 
   const goToScreen = useCallback(
     (screenName: ScreenName, onSuccess?: () => void) => {
-      if (removeTitleTagFromHash(screenName)) {
+      if (removeHomeTagFromHash(screenName)) {
         handleHashChange();
       } else {
         window.location.hash = `/${screenName.toLowerCase()}`;

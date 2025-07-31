@@ -7,7 +7,7 @@ import "./Card.css";
 type Props = {
   icon: ReactNode;
   title: string;
-  content: ReactNode;
+  content?: ReactNode;
   borderColor?: string;
   onClick?: () => void;
 };
@@ -27,16 +27,20 @@ export default function Card({
     <button
       tabIndex={isClickable ? 0 : -1}
       onClick={onClick}
-      className={`card ${isClickable ? "" : "disabled"}`}
+      className={`card ${isClickable ? "" : "disabled"} ${
+        Boolean(content) ? "" : "no-content"
+      }`}
     >
       <div className="card__icon" style={iconStyle}>
         <div className="card__icon__images">{icon}</div>
         <div className="card__title">{title}</div>
       </div>
 
-      <div className="card__desc">
-        <Text>{content}</Text>
-      </div>
+      {content && (
+        <div className="card__desc">
+          <Text>{content}</Text>
+        </div>
+      )}
     </button>
   );
 }

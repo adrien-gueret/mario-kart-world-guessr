@@ -84,10 +84,11 @@ h3 {
   gap: 64px;
 }
 
-.app-Title .app-home-button {
+.app-Home .app-home-button {
   display: none;
 }
 
+.app-Home .app-login-button,
 .app-Login .app-login-button {
   display: none;
 }

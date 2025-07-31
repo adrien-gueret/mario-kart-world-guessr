@@ -50,7 +50,7 @@ function App() {
 
         <Button
           className="app-home-button"
-          onClick={() => setCurrentScreenName("Title")}
+          onClick={() => setCurrentScreenName("Home")}
           variant="secondary"
         >
           {translate("home.button")}

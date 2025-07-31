@@ -333,6 +333,9 @@ const en: Texts = {
     "Are you sure you want to give up the current game? Your score will not be recorded in the leaderboard.",
   "giveUp.confirm.cancel": "No, continue the game",
   "giveUp.confirm.accept": "Yes, stop",
+  "home.menu.play.title": "Play",
+  "home.menu.account.title": "My Account",
+  "home.menu.leaderboards.title": "Leaderboards",
 };
 
 export default en;

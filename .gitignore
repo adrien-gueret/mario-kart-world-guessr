@@ -24,11 +24,11 @@ dist-ssr
 *.sw?
 
 ___database.php
+___github.php
 ___middleware.php
 ___create_jwt.php
 auth-google.php
 auth-discord.php
-upload-photo.php
 webhook.php
 *.env
 .prettierignore
