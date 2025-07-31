@@ -4,17 +4,17 @@ import { useTranslations } from "@/i18n";
 
 import { useScreen } from "../ScreensProvider";
 
-import "./Title.css";
+import "./Play.css";
 
-function Title() {
+function Play() {
   const { setCurrentScreenName } = useScreen();
   const { translate } = useTranslations();
 
   return (
-    <div className="title-screen">
+    <div className="play-screen">
       <h2>{translate("mode.select")}</h2>
 
-      <menu className="title-menu">
+      <menu className="play-menu">
         <li>
           <Card
             icon={<ModeIcon mode="survival" />}
@@ -47,4 +47,4 @@ function Title() {
   );
 }
 
-export default Title;
+export default Play;

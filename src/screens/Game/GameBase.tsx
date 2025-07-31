@@ -213,7 +213,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
       await fetchApi("/give-up", "PUT", formData);
     } catch (error) {}
 
-    setCurrentScreenName("Title");
+    setCurrentScreenName("Home");
   };
 
   const gameModeToRules: Record<

@@ -134,6 +134,9 @@ export type Texts = {
   "giveUp.description": string;
   "giveUp.confirm.cancel": string;
   "giveUp.confirm.accept": string;
+  "home.menu.play.title": string;
+  "home.menu.account.title": string;
+  "home.menu.leaderboards.title": string;
 };
 
 export type TranslationKey = keyof Texts;

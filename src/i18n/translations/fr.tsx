@@ -339,6 +339,9 @@ const fr: Texts = {
     "Êtes-vous sûr de vouloir abandonner la partie en cours ? Votre score ne sera pas enregistré dans le classement.",
   "giveUp.confirm.cancel": "Non, continuer le jeu",
   "giveUp.confirm.accept": "Oui, arrêter",
+  "home.menu.play.title": "Jouer",
+  "home.menu.account.title": "Mon compte",
+  "home.menu.leaderboards.title": "Classements",
 };
 
 export default fr;

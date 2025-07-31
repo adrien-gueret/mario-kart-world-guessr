@@ -37,6 +37,12 @@
   box-sizing: border-box;
 }
 
+.card.no-content .card__icon {
+  border-radius: 21px;
+  padding: 12px;
+  border: 5px solid;
+}
+
 .card__icon__images {
   display: flex;
   flex-direction: row;

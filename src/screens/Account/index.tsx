@@ -112,7 +112,7 @@ export default function Account() {
       </Surface>
 
       <div className="back-button">
-        <Button onClick={() => setCurrentScreenName("Title")}>
+        <Button onClick={() => setCurrentScreenName("Play")}>
           {translate("play.label")}
         </Button>
       </div>

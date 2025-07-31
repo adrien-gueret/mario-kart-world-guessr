@@ -41,7 +41,7 @@ export default function EndGameContent({
           </Button>
         ) : (
           <>
-            <Button onClick={() => setCurrentScreenName("Title")}>
+            <Button onClick={() => setCurrentScreenName("Home")}>
               {translate("endGame.titleScreen.label")}
             </Button>
             {onReplay && (
