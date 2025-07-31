@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import Text from "../Text";
 
 import "./Checkbox.css";
@@ -5,7 +7,7 @@ import "./Checkbox.css";
 type Props = {
   id?: string;
   name: string;
-  label: string;
+  label: ReactNode;
   checked: boolean;
   isRadio?: boolean;
   value?: string;

@@ -14,7 +14,7 @@ import fetchApi from "@/services/api";
 import { useScreen } from "@/screens";
 
 import type {
-  RelativeLeaderbordsResponse,
+  LeaderboardsResponse,
   Cup as CupType,
   StarRank,
 } from "@/types/game";
@@ -30,16 +30,15 @@ export default function Leaderboard({ gameId }: Props) {
 
   const { user, isAnonymous } = useCurrentUser();
   const { setCurrentScreenName } = useScreen();
-  const { translate, currentLocale } = useTranslations();
+  const { translate } = useTranslations();
 
   const [activeTab, setActiveTab] = useState<"all" | "bots">("bots");
 
-  const [botLeaderboard, setBotLeaderboard] =
-    useState<RelativeLeaderbordsResponse>([]);
-
-  const [leaderboard, setLeaderboard] = useState<RelativeLeaderbordsResponse>(
+  const [botLeaderboard, setBotLeaderboard] = useState<LeaderboardsResponse>(
     []
   );
+
+  const [leaderboard, setLeaderboard] = useState<LeaderboardsResponse>([]);
 
   useEffect(() => {
     if (hasBeenInit.current) {
@@ -55,7 +54,7 @@ export default function Leaderboard({ gameId }: Props) {
     fetchApi(`/relative-leaderboards?gameId=${gameId}`, "GET")
       .then((response) => response.json())
       .then(setLeaderboard);
-  }, [gameId, currentLocale]);
+  }, [gameId]);
 
   const areBothLeaderboardsIdentical =
     JSON.stringify(botLeaderboard) === JSON.stringify(leaderboard);
@@ -125,21 +124,19 @@ export default function Leaderboard({ gameId }: Props) {
           {leaderboardToShow.length === 0 ? (
             <Loader />
           ) : (
-            <>
-              <Table>
-                {leaderboardToShow.map((player) => (
-                  <LeaderboardRow
-                    key={player.rank}
-                    rank={player.rank}
-                    username={player.playerName}
-                    marioCharacter={player.marioCharacter ?? void 0}
-                    score={player.photoCount!}
-                    secondaryScore={player.score}
-                    isHighlighted={user.id === player.playerId}
-                  />
-                ))}
-              </Table>
-            </>
+            <Table>
+              {leaderboardToShow.map((player) => (
+                <LeaderboardRow
+                  key={player.rank}
+                  rank={player.rank}
+                  username={player.playerName}
+                  marioCharacter={player.marioCharacter ?? void 0}
+                  score={player.photoCount!}
+                  secondaryScore={player.score}
+                  isHighlighted={user.id === player.playerId}
+                />
+              ))}
+            </Table>
           )}
         </div>
       </div>

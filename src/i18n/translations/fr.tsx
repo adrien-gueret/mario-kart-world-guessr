@@ -342,6 +342,11 @@ const fr: Texts = {
   "home.menu.play.title": "Jouer",
   "home.menu.account.title": "Mon compte",
   "home.menu.leaderboards.title": "Classements",
+  "leaderboards.description":
+    "Consultez les classements des joueurs pour tous les modes et difficultés ! Arriverez-vous à être parmi les meilleurs ?",
+  "leaderboards.mode": "Sélectionnez un mode de jeu",
+  "leaderboards.difficulty": "Sélectionnez une difficulté",
+  "leaderboards.hide-anonymous": "Masquer les joueurs anonymes",
 };
 
 export default fr;

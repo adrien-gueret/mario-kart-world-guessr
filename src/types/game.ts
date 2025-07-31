@@ -39,9 +39,10 @@ type LeaderboardRank = {
   score: number;
   photoCount?: number;
   rank: number;
+  isAnonymous: 1 | 0;
 };
 
-export type RelativeLeaderbordsResponse = LeaderboardRank[];
+export type LeaderboardsResponse = LeaderboardRank[];
 
 export type Cup = "none" | "bronze" | "silver" | "gold";
 
