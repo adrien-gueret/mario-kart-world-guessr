@@ -19,6 +19,7 @@ import type { LeaderboardsResponse, GameMode, Difficulty } from "@/types/game";
 import { useScreen } from "../ScreensProvider";
 
 import "./Leaderboards.css";
+import Button from "@/components/Button";
 
 function Leaderboards() {
   const { setCurrentScreenName, state } = useScreen();
@@ -161,6 +162,10 @@ function Leaderboards() {
           </div>
         </div>
       )}
+
+      <Button variant="primary" onClick={() => setCurrentScreenName("Home")}>
+        {translate("home.button")}
+      </Button>
     </div>
   );
 }

@@ -4,6 +4,46 @@ import type { ReleaseNotes } from "./types";
 
 const releaseNotes: ReleaseNotes = [
   {
+    version: "v2.2.0",
+    notes: {
+      fr: (
+        <ul>
+          <Text component="li">Arrivée des classements généraux&nbsp;!</Text>
+          <Text component="li">
+            Vous pouvez désormais voir qui sont les meilleurs joueurs pour
+            chaque mode de jeu et chaque difficulté.
+            <br />
+            Parviendrez-vous à atteindre le haut du classement&nbsp;?
+          </Text>
+          <Text component="li">
+            <em>
+              Notez que le mode <b>Survie</b> va connaitre des ajustements dans
+              une prochaine mise à jour et son classement sera ré-initialisé en
+              conséquences.
+            </em>
+          </Text>
+        </ul>
+      ),
+      en: (
+        <ul>
+          <Text component="li">General leaderboards are here!</Text>
+          <Text component="li">
+            You can now see who the best players are for each game mode and
+            difficulty.
+            <br />
+            Will you manage to reach the top of the leaderboard?
+          </Text>
+          <Text component="li">
+            <em>
+              Note that the <b>Survival</b> mode will undergo adjustments in an
+              upcoming update and its leaderboard will be reset accordingly.
+            </em>
+          </Text>
+        </ul>
+      ),
+    },
+  },
+  {
     version: "v2.1.1",
     notes: {
       fr: (
