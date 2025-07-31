@@ -54,12 +54,18 @@ const screenHashtagsToScreenNames: Record<ScreenHashtag, ScreenName> = {
   "#/account": "Account",
 };
 
+type ScreenState = Record<string, any>;
+
 type ScreenContextType = {
   currentScreenName: ScreenName;
   CurrentScreen: ElementType;
+  state: ScreenState;
   setCurrentScreenName: (
     screenName: ScreenName,
-    onSuccess?: () => void
+    options?: {
+      onSuccess?: () => void;
+      state?: ScreenState;
+    }
   ) => void;
 };
 
@@ -67,6 +73,7 @@ const ScreenContext = createContext<ScreenContextType>({
   currentScreenName: "Home",
   CurrentScreen: () => null,
   setCurrentScreenName: () => "",
+  state: {},
 } as ScreenContextType);
 
 const getScreenNameFromHash = (): ScreenName => {
@@ -92,6 +99,8 @@ export function ScreensProvider({ children }: { children: ReactNode }) {
   const [currentScreenName, setCurrentScreenName] = useState<ScreenName>(
     () => getScreenNameFromHash() ?? "Home"
   );
+
+  const [screenState, setScreenState] = useState<Record<string, any>>({});
 
   const ScreenNameToScreen: Record<ScreenName, ElementType> = {
     Home,
@@ -128,12 +137,20 @@ export function ScreensProvider({ children }: { children: ReactNode }) {
   };
 
   const goToScreen = useCallback(
-    (screenName: ScreenName, onSuccess?: () => void) => {
+    (
+      screenName: ScreenName,
+      {
+        onSuccess,
+        state = {},
+      }: { onSuccess?: () => void; state?: ScreenState } = {}
+    ) => {
       if (removeHomeTagFromHash(screenName)) {
         handleHashChange();
       } else {
         window.location.hash = `/${screenName.toLowerCase()}`;
       }
+
+      setScreenState(state);
 
       if (onSuccess) {
         window.setTimeout(onSuccess, 500);
@@ -155,6 +172,7 @@ export function ScreensProvider({ children }: { children: ReactNode }) {
       value={{
         currentScreenName,
         CurrentScreen: ScreenNameToScreen[currentScreenName],
+        state: screenState,
         setCurrentScreenName: goToScreen,
       }}
     >

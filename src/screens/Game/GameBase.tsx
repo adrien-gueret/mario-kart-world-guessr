@@ -379,6 +379,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
                   photoCount={photoCount}
                   totalScore={totalScore}
                   gameId={currentGameId!}
+                  difficulty={difficulty!}
                   onReplay={onReplay}
                   onLeaderboardShow={() => setIsLeaderboardShown(true)}
                 />
@@ -389,6 +390,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
                 <EndGoalGame
                   photoCount={photoCount}
                   gameId={currentGameId!}
+                  difficulty={difficulty!}
                   onReplay={onReplay}
                   onLeaderboardShow={() => setIsLeaderboardShown(true)}
                 />

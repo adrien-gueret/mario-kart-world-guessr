@@ -73,8 +73,10 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
 
     function redirectTo(target: Extract<ScreenName, "Account" | "Login">) {
       window.history.replaceState({}, document.title, window.location.pathname);
-      setCurrentScreenName(target, () => {
-        setIsLoading(false);
+      setCurrentScreenName(target, {
+        onSuccess: () => {
+          setIsLoading(false);
+        },
       });
     }
 

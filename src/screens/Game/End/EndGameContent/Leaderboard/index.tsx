@@ -14,6 +14,8 @@ import fetchApi from "@/services/api";
 import { useScreen } from "@/screens";
 
 import type {
+  GameMode,
+  Difficulty,
   LeaderboardsResponse,
   Cup as CupType,
   StarRank,
@@ -23,9 +25,11 @@ import "./Leaderboard.css";
 
 type Props = {
   gameId: number;
+  mode: GameMode;
+  difficulty: Difficulty;
 };
 
-export default function Leaderboard({ gameId }: Props) {
+export default function Leaderboard({ gameId, mode, difficulty }: Props) {
   const hasBeenInit = useRef(false);
 
   const { user, isAnonymous } = useCurrentUser();
@@ -95,87 +99,107 @@ export default function Leaderboard({ gameId }: Props) {
   })();
 
   return (
-    <div className="leaderboard">
-      <div>
-        {!areBothLeaderboardsIdentical && (
-          <nav className="leaderboard-tabs">
-            <button
-              className={`leaderboard-tab ${
-                activeTab === "bots" ? "is-active" : ""
-              }`}
-              tabIndex={activeTab === "bots" ? -1 : 0}
-              onClick={() => setActiveTab("bots")}
-            >
-              {translate("leaderboard.tab.bots")}
-            </button>
-            <button
-              className={`leaderboard-tab ${
-                activeTab === "all" ? "is-active" : ""
-              }`}
-              tabIndex={activeTab === "all" ? -1 : 0}
-              onClick={() => setActiveTab("all")}
-            >
-              {translate("leaderboard.tab.allPlayers")}
-            </button>
-          </nav>
-        )}
+    <>
+      <div className="leaderboard">
+        <div>
+          {!areBothLeaderboardsIdentical && (
+            <nav className="leaderboard-tabs">
+              <button
+                className={`leaderboard-tab ${
+                  activeTab === "bots" ? "is-active" : ""
+                }`}
+                tabIndex={activeTab === "bots" ? -1 : 0}
+                onClick={() => setActiveTab("bots")}
+              >
+                {translate("leaderboard.tab.bots")}
+              </button>
+              <button
+                className={`leaderboard-tab ${
+                  activeTab === "all" ? "is-active" : ""
+                }`}
+                tabIndex={activeTab === "all" ? -1 : 0}
+                onClick={() => setActiveTab("all")}
+              >
+                {translate("leaderboard.tab.allPlayers")}
+              </button>
+            </nav>
+          )}
 
-        <div className="leaderboard-inner-container">
-          {leaderboardToShow.length === 0 ? (
-            <Loader />
+          <div className="leaderboard-inner-container">
+            {leaderboardToShow.length === 0 ? (
+              <Loader />
+            ) : (
+              <Table>
+                {leaderboardToShow.map((player) => (
+                  <LeaderboardRow
+                    key={player.rank}
+                    rank={player.rank}
+                    username={player.playerName}
+                    marioCharacter={player.marioCharacter ?? void 0}
+                    score={player.photoCount!}
+                    secondaryScore={player.score}
+                    isHighlighted={user.id === player.playerId}
+                  />
+                ))}
+              </Table>
+            )}
+          </div>
+        </div>
+
+        <div className="leaderboard-cup-container">
+          {activeTab === "bots" ? (
+            cup === "none" ? (
+              <>
+                <h3 className="leaderboard-results-title">
+                  {translate("leaderboard.tooBad")}
+                </h3>
+                <img src="./ui/too_bad.png" alt="" />
+              </>
+            ) : (
+              <>
+                <h3 className="leaderboard-results-title">
+                  {translate("leaderboard.congrats")}
+                </h3>
+                <Cup cup={cup} starRank={starRank} />
+              </>
+            )
           ) : (
-            <Table>
-              {leaderboardToShow.map((player) => (
-                <LeaderboardRow
-                  key={player.rank}
-                  rank={player.rank}
-                  username={player.playerName}
-                  marioCharacter={player.marioCharacter ?? void 0}
-                  score={player.photoCount!}
-                  secondaryScore={player.score}
-                  isHighlighted={user.id === player.playerId}
-                />
-              ))}
-            </Table>
+            <>
+              {isAnonymous && (
+                <>
+                  <p style={{ maxWidth: 200, textAlign: "center" }}>
+                    {translate("leaderboard.needs.login")}
+                  </p>
+                  <Button
+                    variant="secondary"
+                    onClick={() => setCurrentScreenName("Login")}
+                  >
+                    {translate("login.screen.title")}
+                  </Button>
+                </>
+              )}
+            </>
           )}
         </div>
       </div>
 
-      <div className="leaderboard-cup-container">
-        {activeTab === "bots" ? (
-          cup === "none" ? (
-            <>
-              <h3 className="leaderboard-results-title">
-                {translate("leaderboard.tooBad")}
-              </h3>
-              <img src="./ui/too_bad.png" alt="" />
-            </>
-          ) : (
-            <>
-              <h3 className="leaderboard-results-title">
-                {translate("leaderboard.congrats")}
-              </h3>
-              <Cup cup={cup} starRank={starRank} />
-            </>
-          )
-        ) : (
-          <>
-            {isAnonymous && (
-              <>
-                <p style={{ maxWidth: 200, textAlign: "center" }}>
-                  {translate("leaderboard.needs.login")}
-                </p>
-                <Button
-                  variant="secondary"
-                  onClick={() => setCurrentScreenName("Login")}
-                >
-                  {translate("login.screen.title")}
-                </Button>
-              </>
-            )}
-          </>
-        )}
-      </div>
-    </div>
+      {activeTab === "all" && (
+        <div className="leaderboard-actions">
+          <Button
+            variant="secondary"
+            onClick={() =>
+              setCurrentScreenName("Leaderboards", {
+                state: {
+                  gameMode: mode,
+                  gameDifficulty: difficulty,
+                },
+              })
+            }
+          >
+            {translate("endGame.see-leaderboards")}
+          </Button>
+        </div>
+      )}
+    </>
   );
 }

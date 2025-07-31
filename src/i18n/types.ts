@@ -73,6 +73,7 @@ export type Texts = {
   "endGame.daily.description": string;
   "endGame.daily.next": string;
   "endGame.next-button.label": string;
+  "endGame.see-leaderboards": string;
   "share.text.title": string;
   "share.copy.button.label": string;
   "share.copy.success": string;
