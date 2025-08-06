@@ -163,6 +163,12 @@ h3 {
   font-size: 0.8em;
 }
 
+img {
+  user-drag: none;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
 @media screen and (max-width: 420px) {
   #root {
     padding: 4px;

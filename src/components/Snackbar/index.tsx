@@ -5,10 +5,10 @@ import Text from "@/components/Text";
 import "./Snackbar.css";
 
 type Props = {
-  type?: "success" | "error";
+  type?: "success" | "error" | "info";
   children: ReactNode;
   isOpen: boolean;
-  onClose: () => void;
+  onClose?: () => void;
 };
 
 export default function Snackbar({
@@ -18,7 +18,7 @@ export default function Snackbar({
   onClose,
 }: Props) {
   useLayoutEffect(() => {
-    if (!isOpen) {
+    if (!isOpen || !onClose) {
       return;
     }
 
@@ -27,7 +27,7 @@ export default function Snackbar({
     return () => {
       clearTimeout(clock);
     };
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   return (
     <div

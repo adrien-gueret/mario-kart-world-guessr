@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
+import Snackbar from "@/components/Snackbar";
+import { useTranslations } from "@/i18n";
+import type { Locale } from "@/i18n/types";
 import type { MarioCharacter } from "@/types/characters";
 import fetchApi from "@/services/api";
 
@@ -30,8 +33,15 @@ type Props = {
 export default function CharacterSelect({ defaultValue }: Props) {
   const hasCalledApi = useRef(false);
   const [charactersUnlockedData, setCharactersUnlockedData] = useState<
-    MarioCharacter[]
+    Array<{
+      id: MarioCharacter;
+      unlockClue: Record<Locale, string>;
+      isUnlocked: boolean;
+    }>
   >([]);
+  const { currentLocale } = useTranslations();
+  const [isInfoOpen, setIsInfoOpen] = useState(false);
+  const [infoMessage, setInfoMessage] = useState("");
 
   useEffect(() => {
     if (hasCalledApi.current) {
@@ -46,46 +56,65 @@ export default function CharacterSelect({ defaultValue }: Props) {
   }, []);
 
   return (
-    <div className="character-select">
-      {characters.map((character, index) => {
-        const characterId = character ?? "none";
+    <>
+      <div className="character-select">
+        {characters.map((character) => {
+          const characterId = character ?? "none";
 
-        const isUnlocked =
-          characterId === "none" ||
-          alwaysUnlockedCharacters.includes(characterId) ||
-          charactersUnlockedData.includes(characterId);
+          const characterUnlockedData = charactersUnlockedData.find(
+            ({ id }) => id === characterId
+          );
 
-        const id = `character-${isUnlocked ? characterId : "locked-" + index}`;
+          const isUnlocked =
+            characterId === "none" ||
+            alwaysUnlockedCharacters.includes(characterId) ||
+            characterUnlockedData?.isUnlocked;
 
-        return (
-          <div
-            key={characterId}
-            className={`character-option-container ${
-              isUnlocked ? "" : "locked"
-            }`}
-          >
-            <input
-              type="radio"
-              name="mario-character"
-              id={id}
-              defaultChecked={defaultValue === character}
-              value={characterId}
-              disabled={!isUnlocked}
-            />
-            <div className="character-option">
-              <div className="character-selector" />
-              <label htmlFor={id}>
-                <img
-                  src={`./ui/characters/${
-                    isUnlocked ? characterId : "locked"
-                  }.png`}
-                  alt={isUnlocked ? characterId : "locked"}
-                />
-              </label>
+          const domId = `character-${characterId}`;
+
+          const onMouseEnter = isUnlocked
+            ? void 0
+            : () => {
+                setInfoMessage(
+                  characterUnlockedData?.unlockClue[currentLocale] ?? ""
+                );
+                setIsInfoOpen(true);
+              };
+          const onMouseLeave = isUnlocked ? void 0 : () => setIsInfoOpen(false);
+
+          return (
+            <div
+              key={characterId}
+              className={`character-option-container ${
+                isUnlocked ? "" : "locked"
+              }`}
+              onMouseEnter={onMouseEnter}
+              onMouseLeave={onMouseLeave}
+            >
+              <input
+                type="radio"
+                name="mario-character"
+                id={domId}
+                defaultChecked={defaultValue === character}
+                value={characterId}
+                disabled={!isUnlocked}
+              />
+              <div className="character-option">
+                <div className="character-selector" />
+                <label htmlFor={domId}>
+                  <img
+                    src={`./ui/characters/${characterId}.png`}
+                    alt={characterId}
+                  />
+                </label>
+              </div>
             </div>
-          </div>
-        );
-      })}
-    </div>
+          );
+        })}
+      </div>
+      <Snackbar type="info" isOpen={isInfoOpen}>
+        {infoMessage}
+      </Snackbar>
+    </>
   );
 }
