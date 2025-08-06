@@ -24,11 +24,18 @@
   height: 0;
 }
 
-.character-option-container
+.character-option-container.locked {
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.character-option-container:not(.locked)
   input:focus-visible
   + .character-option
   .character-selector,
-.character-option:hover .character-selector {
+.character-option-container:not(.locked)
+  .character-option:hover
+  .character-selector {
   display: block;
   position: absolute;
   left: -14px;
@@ -43,7 +50,7 @@
   pointer-events: none;
 }
 
-.character-option-container input:checked + .character-option {
+.character-option-container:not(.locked) input:checked + .character-option {
   background-color: rgba(0, 225, 255, 0.4);
 }
 

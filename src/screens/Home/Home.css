@@ -40,5 +40,6 @@
 
   .home-menu .home-item__play {
     order: 0;
+    transform: scale(1);
   }
 }
