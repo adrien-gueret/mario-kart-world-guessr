@@ -72,11 +72,25 @@ export default async function fetchApi(
     }
   }
 
-  return fetch(`${ROOT_URL}${path}`, {
+  const response = await fetch(`${ROOT_URL}${path}`, {
     method,
     body,
     headers,
     credentials: "include",
     mode: "cors",
   });
+
+  response.headers
+    .get("Mario-Kart-World-Unlock-Achievements")
+    ?.split(",")
+    .forEach((achievement) => {
+      const achievementEvent = new CustomEvent("achievementUnlocked", {
+        detail: {
+          achievementId: achievement,
+        },
+      });
+      window.dispatchEvent(achievementEvent);
+    });
+
+  return response;
 }

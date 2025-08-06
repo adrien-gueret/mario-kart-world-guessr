@@ -45,6 +45,8 @@ try {
         ];    
     }
   
+    header('Mario-Kart-World-Unlock-Achievements: Test,Test2');
+
     echo json_encode($characters);
     
 } catch (PDOException $e) {

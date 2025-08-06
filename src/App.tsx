@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import { useCurrentUser } from "@/auth/CurrentUserProvider";
 
 import Button from "@/components/Button";
@@ -10,6 +12,12 @@ import { useScreen } from "@/screens/ScreensProvider";
 import NewVersionModal from "@/versions/NewVersionModal";
 import currentVersion from "@/versions/currentVersion";
 
+declare global {
+  interface WindowEventMap {
+    achievementUnlocked: CustomEvent<{ achievementId: string }>;
+  }
+}
+
 function App() {
   const { currentScreenName, setCurrentScreenName, CurrentScreen } =
     useScreen();
@@ -17,6 +25,20 @@ function App() {
   const { isAnonymous, user, logout } = useCurrentUser();
 
   const { translate } = useTranslations();
+
+  useEffect(() => {
+    const onAchievementUnlocked = (
+      event: CustomEvent<{ achievementId: string }>
+    ) => {
+      console.log("Achievement unlocked:", event.detail);
+    };
+
+    window.addEventListener("achievementUnlocked", onAchievementUnlocked);
+
+    return () => {
+      window.removeEventListener("achievementUnlocked", onAchievementUnlocked);
+    };
+  }, []);
 
   return (
     <div className={`app-${currentScreenName}`}>
