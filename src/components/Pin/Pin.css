@@ -21,7 +21,8 @@
   background-image: url("./ui/pins/pin-red.png");
 }
 
-.game-map-pin.variant-luigi {
+.game-map-pin.variant-luigi,
+.game-map-pin.variant-green_yoshi {
   background-image: url("./ui/pins/pin-green.png");
 }
 
@@ -29,10 +30,12 @@
   background-image: url("./ui/pins/pin-pink.png");
 }
 
-.game-map-pin.variant-bowser {
+.game-map-pin.variant-bowser,
+.game-map-pin.variant-daisy {
   background-image: url("./ui/pins/pin-orange.png");
 }
 
+.game-map-pin.variant-wario,
 .game-map-pin.variant-star {
   background-image: url("./ui/pins/pin-yellow.png");
 }

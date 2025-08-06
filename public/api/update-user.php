@@ -31,7 +31,7 @@ if (strlen($username) < 2 || strlen($username) > 100) {
 
 $locale = $_PUT['locale'] === 'fr' || $_PUT['locale'] === 'en' ? $_PUT['locale'] : 'en';
 
-$possibleCharacters = ['none', 'mario', 'luigi', 'peach', 'bowser'];
+$possibleCharacters = ['none', 'mario', 'luigi', 'peach', 'bowser', 'daisy', 'green_yoshi', 'wario'];
 
 if (!isset($_PUT['mario-character']) || !in_array($_PUT['mario-character'], $possibleCharacters)) {
     http_response_code(400);

@@ -45,6 +45,18 @@
   background-image: url("./ui/characters/bowser.png");
 }
 
+.leaderboard-cell-character.daisy::before {
+  background-image: url("./ui/characters/daisy.png");
+}
+
+.leaderboard-cell-character.wario::before {
+  background-image: url("./ui/characters/wario.png");
+}
+
+.leaderboard-cell-character.green_yoshi::before {
+  background-image: url("./ui/characters/green_yoshi.png");
+}
+
 .leaderboard-cell-secondary-score-container {
   font-size: 1rem;
   vertical-align: middle;
