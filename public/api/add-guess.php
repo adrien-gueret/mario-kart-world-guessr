@@ -241,6 +241,8 @@ try {
                 $leaderboardStmt->bindParam(':score', $totalScore, PDO::PARAM_INT);
 
                 $leaderboardStmt->execute();
+
+                // TODO: Check if the user has unlocked an achievement for this game
             }
         }
     } else {
