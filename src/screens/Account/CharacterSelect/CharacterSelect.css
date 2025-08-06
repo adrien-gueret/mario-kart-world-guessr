@@ -24,9 +24,9 @@
   height: 0;
 }
 
-.character-option-container.locked {
-  opacity: 0.9;
-  pointer-events: none;
+.character-option-container.locked label {
+  cursor: not-allowed !important;
+  filter: brightness(0);
 }
 
 .character-option-container:not(.locked)
