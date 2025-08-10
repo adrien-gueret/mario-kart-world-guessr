@@ -108,6 +108,21 @@ try {
     $selectPhotoStmt = $pdo->prepare(
         "SELECT DISTINCT
             p.id as photoId, p.x, p.y,
+            COUNT(s.photo_id) as guess_count
+        FROM `mario-kart-world-photos` p
+        LEFT JOIN `mario-kart-world-suggestions` s 
+            ON p.id = s.photo_id
+        LEFT JOIN `mario-kart-world-games` g 
+            ON s.game_id = g.id
+        WHERE p.id = :id 
+        AND p.validated_at IS NOT NULL
+        AND (g.player_id IS NULL OR g.player_id != 1)
+    ");
+
+    /*
+     $selectPhotoStmt = $pdo->prepare(
+        "SELECT DISTINCT
+            p.id as photoId, p.x, p.y,
             md.guess_median_x, md.guess_median_y,
             COUNT(s.photo_id) as guess_count
         FROM `mario-kart-world-photos` p
@@ -128,7 +143,7 @@ try {
         WHERE p.id = :id 
         AND p.validated_at IS NOT NULL
         AND (g.player_id IS NULL OR g.player_id != 1)
-    ");
+    ");*/
     $selectPhotoStmt->bindParam(':id', $photoId, PDO::PARAM_STR);
     $selectPhotoStmt->execute();
     
@@ -241,8 +256,6 @@ try {
                 $leaderboardStmt->bindParam(':score', $totalScore, PDO::PARAM_INT);
 
                 $leaderboardStmt->execute();
-
-                // TODO: Check if the user has unlocked an achievement for this game
             }
         }
     } else {
@@ -269,10 +282,12 @@ try {
             "y" => $photo['y'],
         ],
         "playersMedianCoordinates" => [
-            "x" => $photo['guess_median_x'],
-            "y" => $photo['guess_median_y'],
+            "x" => 0,
+            "y" => 0,
+            //"x" => $photo['guess_median_x'],
+            //"y" => $photo['guess_median_y'],
         ],
-        "playersGuessCount" => $photo['guess_count'],
+        "playersGuessCount" => 0, //$photo['guess_count'],
         "currentPlayerGuess" => [
             "distanceInKm" => $distanceInKm,
             "newScore" => $newScore,
