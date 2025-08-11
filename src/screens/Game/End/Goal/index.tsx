@@ -3,12 +3,15 @@ import { useTranslations } from "@/i18n";
 import type { Difficulty } from "@/types/game";
 
 import EndGameContent from "../EndGameContent";
-import Leaderboard from "../EndGameContent/Leaderboard";
+import Leaderboard, {
+  type Props as LeaderboardProps,
+} from "../EndGameContent/Leaderboard";
 
 type Props = {
   photoCount: number;
   gameId: number;
   difficulty: Difficulty;
+  cupData: LeaderboardProps["cupData"];
   onReplay: () => void;
   onLeaderboardShow: () => void;
 };
@@ -19,6 +22,7 @@ export default function GoalEnd({
   difficulty,
   onReplay,
   onLeaderboardShow,
+  cupData,
 }: Props) {
   const { translate } = useTranslations();
 
@@ -26,7 +30,12 @@ export default function GoalEnd({
     <EndGameContent
       firstStepContent={translate("endGame.goal.description")(photoCount)}
       secondStepContent={
-        <Leaderboard gameId={gameId} mode="goal" difficulty={difficulty} />
+        <Leaderboard
+          gameId={gameId}
+          mode="goal"
+          difficulty={difficulty}
+          cupData={cupData}
+        />
       }
       onReplay={onReplay}
       onLeaderboardShow={onLeaderboardShow}

@@ -50,6 +50,9 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
   const [photoCount, setPhotoCount] = useState(0);
   const historyLength = useRef(0);
   const [totalScore, setTotalScore] = useState(0);
+  const [cupData, setCupData] = useState<
+    AddGuessResponse["gameData"]["cupData"] | null
+  >(null);
   const [gameHistory, setGameHistory] = useState<GameHistory>([]);
   const { setCurrentScreenName } = useScreen();
 
@@ -199,6 +202,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     setTotalScore(addGuessResponse.gameData.totalScore);
 
     setIsGameEnded(addGuessResponse.gameData.isFinished);
+    setCupData(addGuessResponse.gameData.cupData);
 
     if (addGuessResponse.gameData.isFinished) {
       setGameHistory(addGuessResponse.gameData.history);
@@ -382,6 +386,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
                   difficulty={difficulty!}
                   onReplay={onReplay}
                   onLeaderboardShow={() => setIsLeaderboardShown(true)}
+                  cupData={cupData!}
                 />
               );
 
@@ -393,6 +398,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
                   difficulty={difficulty!}
                   onReplay={onReplay}
                   onLeaderboardShow={() => setIsLeaderboardShown(true)}
+                  cupData={cupData!}
                 />
               );
 

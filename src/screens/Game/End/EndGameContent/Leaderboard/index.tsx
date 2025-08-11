@@ -23,13 +23,22 @@ import type {
 
 import "./Leaderboard.css";
 
-type Props = {
+export type Props = {
   gameId: number;
   mode: GameMode;
   difficulty: Difficulty;
+  cupData: {
+    cup: CupType;
+    starRank?: StarRank | null;
+  };
 };
 
-export default function Leaderboard({ gameId, mode, difficulty }: Props) {
+export default function Leaderboard({
+  gameId,
+  mode,
+  difficulty,
+  cupData,
+}: Props) {
   const hasBeenInit = useRef(false);
 
   const { user, isAnonymous } = useCurrentUser();
@@ -68,35 +77,6 @@ export default function Leaderboard({ gameId, mode, difficulty }: Props) {
     : activeTab === "all"
     ? leaderboard
     : botLeaderboard;
-
-  const currentPlayerData = botLeaderboard.find(
-    ({ playerId }) => user.id === playerId
-  );
-  const playerRank = currentPlayerData?.rank ?? 0;
-  const playerAverageScore =
-    (currentPlayerData?.score ?? 0) / (currentPlayerData?.photoCount ?? 1);
-
-  const cup: CupType =
-    (["none", "gold", "silver", "bronze"] as const)[playerRank] ?? "none";
-  const starRank: StarRank | undefined = (() => {
-    if (cup !== "gold") {
-      return void 0;
-    }
-
-    switch (true) {
-      case playerAverageScore >= 4250:
-        return "rank-3";
-
-      case playerAverageScore >= 4000:
-        return "rank-2";
-
-      case playerAverageScore >= 3750:
-        return "rank-1";
-
-      default:
-        return "rank-0";
-    }
-  })();
 
   return (
     <>
@@ -148,7 +128,7 @@ export default function Leaderboard({ gameId, mode, difficulty }: Props) {
 
         <div className="leaderboard-cup-container">
           {activeTab === "bots" ? (
-            cup === "none" ? (
+            cupData.cup === "none" ? (
               <>
                 <h3 className="leaderboard-results-title">
                   {translate("leaderboard.tooBad")}
@@ -160,7 +140,7 @@ export default function Leaderboard({ gameId, mode, difficulty }: Props) {
                 <h3 className="leaderboard-results-title">
                   {translate("leaderboard.congrats")}
                 </h3>
-                <Cup cup={cup} starRank={starRank} />
+                <Cup cup={cupData.cup} starRank={cupData.starRank} />
               </>
             )
           ) : (

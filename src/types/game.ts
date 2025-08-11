@@ -8,6 +8,10 @@ export type GameHistory = number[];
 
 export type Difficulty = "50cc" | "100cc" | "150cc" | "mirror";
 
+export type Cup = "none" | "bronze" | "silver" | "gold";
+
+export type StarRank = "rank-0" | "rank-1" | "rank-2" | "rank-3";
+
 export type AddGuessResponse = {
   actualCoordinates: Coordinates;
   playersMedianCoordinates: Coordinates;
@@ -19,7 +23,10 @@ export type AddGuessResponse = {
   gameData: {
     totalScore: number;
     isFinished: boolean;
-    isNewRecord: boolean | null;
+    cupData: {
+      cup: Cup;
+      starRank?: StarRank | null;
+    } | null;
     history: GameHistory;
     nextPhotoId: string | null;
   };
@@ -43,7 +50,3 @@ type LeaderboardRank = {
 };
 
 export type LeaderboardsResponse = LeaderboardRank[];
-
-export type Cup = "none" | "bronze" | "silver" | "gold";
-
-export type StarRank = "rank-0" | "rank-1" | "rank-2" | "rank-3";

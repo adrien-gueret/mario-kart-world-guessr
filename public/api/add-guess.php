@@ -4,6 +4,8 @@ require_once __DIR__ . '/___middleware.php';
 
 require_once __DIR__ . '/___coordinates.php';
 
+require_once __DIR__ . '/___achievements.php';
+
 require_once __DIR__ . '/___photos.php';
 
 allowMethod('POST');
@@ -101,7 +103,6 @@ try {
         die('{"error":true,"message":"Invalid game mode."}');
     }
    
-
     $insertSuggestionStmt->execute();
     $lastInsertId = $pdo->lastInsertId();
 
@@ -162,11 +163,14 @@ try {
     $newScore = getScoreFromDistanceInKilometers($distanceInKm, $difficulty);
     $game['history'] = array_merge($game['history'], [$newScore]);
 
+    if ($newScore >= 5000) {
+        unlockAchievement($pdo, $currentUser['id'], '5000_points');
+    }
+
     $photoCount = count($game['history']);
     $totalScore = array_sum($game["history"]);
 
     $isFinished = false;
-    $isNewRecord = false;
 
     switch($mode) {
         case 'daily':
@@ -187,6 +191,7 @@ try {
     }
 
     $nextPhotoId = null;
+    $cupData = null;
 
     if ($isFinished) {
         $updateGameStmt = $pdo->prepare(
@@ -217,6 +222,94 @@ try {
 
             $leaderboardStmt->execute();
         } else {
+            // Check achievements
+            $photoCountOrderType = $mode === 'survival' ? 'DESC' : 'ASC';
+
+            $stmt = $pdo->prepare(
+                "WITH
+                all_players AS (
+                    SELECT
+                        u.id,
+                        l.score,
+                        l.photo_count,
+                        l.performed_at,
+                        (l.score / l.photo_count) as average_score
+                    FROM `mario-kart-world-leaderboard-goal-survival` l
+                    LEFT JOIN `mario-kart-world-users` u ON l.player_id = u.id
+                    WHERE l.difficulty = :difficulty and l.mode = :mode
+                    AND l.player_id IN (3,4,5,6)
+                    
+                    UNION ALL
+
+                    SELECT
+                        :playerId as player_id,
+                        CAST(:score AS UNSIGNED) AS score,
+                        CAST(:photoCount AS UNSIGNED) AS photo_count,
+                        NOW() AS performed_at,
+                        CAST(:score AS UNSIGNED) / CAST(:photoCount AS UNSIGNED) AS average_score
+                ),
+                ranked AS (
+                    SELECT                
+                        id,
+                        score,
+                        photo_count,
+                        performed_at,
+                        average_score,
+                        ROW_NUMBER() OVER (
+                            ORDER BY photo_count $photoCountOrderType, score DESC, performed_at DESC
+                        ) AS player_rank
+                    FROM all_players
+                    )
+                SELECT
+                    CASE
+                        WHEN player_rank = 1 THEN 'gold'
+                        WHEN player_rank = 2 THEN 'silver'
+                        WHEN player_rank = 3 THEN 'bronze'
+                        ELSE 'none'
+                    END AS cup,
+                    IF(player_rank = 1, (
+                        CASE
+                            WHEN average_score >= 4250 THEN 'rank-3'
+                            WHEN average_score >= 4000 THEN 'rank-2'
+                            WHEN average_score >= 3750 THEN 'rank-1'
+                            ELSE 'rank-0'
+                        END                   
+                    ), NULL) starRank
+                FROM ranked
+                WHERE id = :playerId");
+
+            $stmt->bindValue(':difficulty', $difficulty, PDO::PARAM_STR);
+            $stmt->bindValue(':mode', $mode, PDO::PARAM_STR);
+            $stmt->bindValue(':playerId', $currentUser['id'], PDO::PARAM_INT);
+            $stmt->bindValue(':score', $totalScore, PDO::PARAM_INT);
+            $stmt->bindValue(':photoCount', $photoCount, PDO::PARAM_INT);
+
+            $stmt->execute();
+            
+            $cupData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($cupData["cup"] === 'gold') {
+                unlockAchievement($pdo, $currentUser['id'], implode('_', ['gold', $difficulty, $mode]));
+            }
+
+            if ($cupData["cup"] !== 'none') {
+                $cupStmt =$pdo->prepare(
+                    "INSERT INTO `mario-kart-world-cups` (player_id, difficulty, mode, cup, star_rank)
+                    VALUES (:playerId, :difficulty, :mode, :cup, :starRank)
+                    ON DUPLICATE KEY UPDATE
+                    cup = IF(VALUES(cup) > cup, VALUES(cup), cup),
+                    star_rank = IF(star_rank IS NULL OR VALUES(star_rank) > star_rank, VALUES(star_rank), star_rank)
+                ");
+
+                $cupStmt->bindParam(':playerId', $currentUser['id'], PDO::PARAM_INT);
+                $cupStmt->bindParam(':difficulty', $difficulty, PDO::PARAM_STR);
+                $cupStmt->bindParam(':mode', $mode, PDO::PARAM_STR);
+                $cupStmt->bindParam(':cup', $cupData["cup"], PDO::PARAM_STR);
+                $cupStmt->bindParam(':starRank', $cupData["starRank"], PDO::PARAM_STR);
+                $cupStmt->execute();
+            }
+
+            // Then update leaderboards
             $whatToSelect = $mode === 'goal' ? 'MIN(photo_count)' : 'MAX(photo_count)';
 
             $selectLeaderBoardStmt = $pdo->prepare(
@@ -244,8 +337,6 @@ try {
                     "UPDATE `mario-kart-world-leaderboard-goal-survival` SET photo_count = :photoCount, score = :score, performed_at = NOW()
                     WHERE player_id = :playerId AND difficulty = :difficulty AND mode = :mode
                 ");
-
-                $isNewRecord = true;
             }
 
             if (!empty($leaderboardStmt)) {
@@ -295,7 +386,7 @@ try {
         "gameData" => [
             "totalScore" => $totalScore,
             "isFinished" => $isFinished || empty($nextPhotoId),
-            "isNewRecord" => $isFinished ? $isNewRecord : null,
+            "cupData" => $cupData,
             "history" => $game['history'],
             "nextPhotoId" => $nextPhotoId,
         ],

@@ -4,7 +4,7 @@ import "./Cup.css";
 
 type Props = {
   cup: Cup;
-  starRank?: StarRank;
+  starRank?: StarRank | null;
 };
 
 export default function Cup({ cup, starRank }: Props) {

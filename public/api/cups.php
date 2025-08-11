@@ -22,38 +22,9 @@ if (!isset($mode) || !in_array($mode, $possibleModes)) {
 
 try {
     $stmt = $pdo->prepare(
-        "SELECT 
-           t.difficulty,
-            CASE
-                WHEN t.rank = 1 THEN 'gold'
-                WHEN t.rank = 2 THEN 'silver'
-                WHEN t.rank = 3 THEN 'bronze'
-                ELSE 'none'
-            END AS cup,
-            IF(t.rank = 1, (
-            	CASE
-            		WHEN t.averageScore >= 4250 THEN 'rank-3'
-            		WHEN t.averageScore >= 4000 THEN 'rank-2'
-            		WHEN t.averageScore >= 3750 THEN 'rank-1'
-            		ELSE 'rank-0'
-            	END
-            	
-            ), NULL) starRank
-        FROM (
-            SELECT 
-                l.player_id,
-                l.difficulty,
-                (l.score / l.photo_count) as averageScore,
-                ROW_NUMBER() OVER (
-                    PARTITION BY difficulty
-                    ORDER BY photo_count ".($mode === "goal" ? "ASC" : "DESC").", score DESC, performed_at DESC
-                ) AS rank
-            FROM `mario-kart-world-leaderboard-goal-survival` l
-            WHERE l.player_id IN (3,4,5,6,:playerId)
-            AND mode = :mode
-        ) t
-        WHERE t.player_id = :playerId");
-
+        "SELECT cup, difficulty, star_rank AS starRank
+        FROM `mario-kart-world-cups`
+        WHERE player_id = :playerId AND mode = :mode");
         
     $stmt->bindValue(':playerId', $currentUser['id'], PDO::PARAM_INT);
     $stmt->bindValue(':mode', $mode, PDO::PARAM_STR);

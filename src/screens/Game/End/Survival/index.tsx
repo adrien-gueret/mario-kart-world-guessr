@@ -4,7 +4,9 @@ import type { Difficulty } from "@/types/game";
 
 import EndGameContent from "../EndGameContent";
 
-import Leaderboard from "../EndGameContent/Leaderboard";
+import Leaderboard, {
+  type Props as LeaderboardProps,
+} from "../EndGameContent/Leaderboard";
 
 type Props = {
   lastScore: number;
@@ -14,6 +16,7 @@ type Props = {
   difficulty: Difficulty;
   onReplay: () => void;
   onLeaderboardShow: () => void;
+  cupData: LeaderboardProps["cupData"];
 };
 
 export default function SurvivalEnd({
@@ -24,6 +27,7 @@ export default function SurvivalEnd({
   difficulty,
   onReplay,
   onLeaderboardShow,
+  cupData,
 }: Props) {
   const { translate } = useTranslations();
 
@@ -35,7 +39,12 @@ export default function SurvivalEnd({
         totalScore
       )}
       secondStepContent={
-        <Leaderboard gameId={gameId} mode="survival" difficulty={difficulty} />
+        <Leaderboard
+          gameId={gameId}
+          mode="survival"
+          difficulty={difficulty}
+          cupData={cupData}
+        />
       }
       onReplay={onReplay}
       onLeaderboardShow={onLeaderboardShow}
