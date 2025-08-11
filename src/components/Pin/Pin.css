@@ -17,7 +17,10 @@
   z-index: 3000 !important;
 }
 
-.game-map-pin.variant-mario {
+.game-map-pin.variant-mario,
+.game-map-pin.variant-toad,
+.game-map-pin.variant-shyguy,
+.game-map-pin.variant-pauline {
   background-image: url("./ui/pins/pin-red.png");
 }
 
@@ -26,12 +29,18 @@
   background-image: url("./ui/pins/pin-green.png");
 }
 
+.game-map-pin.variant-king_boo,
+.game-map-pin.variant-rosalina {
+  background-image: url("./ui/pins/pin-blue.png");
+}
+
 .game-map-pin.variant-peach {
   background-image: url("./ui/pins/pin-pink.png");
 }
 
 .game-map-pin.variant-bowser,
-.game-map-pin.variant-daisy {
+.game-map-pin.variant-daisy,
+.game-map-pin.variant-dk {
   background-image: url("./ui/pins/pin-orange.png");
 }
 

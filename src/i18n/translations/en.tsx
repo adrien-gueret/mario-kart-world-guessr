@@ -381,6 +381,47 @@ const en: Texts = {
       <b>{en[`difficulty.${gameDifficulty}.title`]}</b> yet.
     </>
   ),
+  //////
+  "gold_50cc_survival.description":
+    "You won the Gold Cup in Survival mode at 50cc!",
+  "gold_50cc_survival.unlockedItem": "Daisy is unlocked!",
+  "daisy.unlockClue": "Obtain the Gold Cup in Survival mode at 50cc.",
+
+  "gold_100cc_survival.description":
+    "You won the Gold Cup in Survival mode at 100cc!",
+  "gold_100cc_survival.unlockedItem": "Yoshi is unlocked!",
+  "green_yoshi.unlockClue": "Obtain the Gold Cup in Survival mode at 100cc.",
+
+  "gold_150cc_survival.description":
+    "You won the Gold Cup in Survival mode at 150cc!",
+  "gold_150cc_survival.unlockedItem": "Wario is unlocked!",
+  "wario.unlockClue": "Obtain the Gold Cup in Survival mode at 150cc.",
+
+  "gold_mirror_survival.description":
+    "You won the Gold Cup in Mirror Survival mode!",
+  "gold_mirror_survival.unlockedItem": "Rosalina is unlocked!",
+  "rosalina.unlockClue": "Obtain the Gold Cup in Mirror Survival mode.",
+
+  "gold_50cc_goal.description": "You won the Gold Cup in Goal mode at 50cc!",
+  "gold_50cc_goal.unlockedItem": "Donkey Kong is unlocked!",
+  "dk.unlockClue": "Obtain the Gold Cup in Goal mode at 50cc.",
+
+  "gold_100cc_goal.description": "You won the Gold Cup in Goal mode at 100cc!",
+  "gold_100cc_goal.unlockedItem": "Toad is unlocked!",
+  "toad.unlockClue": "Obtain the Gold Cup in Goal mode at 100cc.",
+
+  "gold_150cc_goal.description": "You won the Gold Cup in Goal mode at 150cc!",
+  "gold_150cc_goal.unlockedItem": "King Boo is unlocked!",
+  "king_boo.unlockClue": "Obtain the Gold Cup in Goal mode at 150cc.",
+
+  "gold_mirror_goal.description": "You won the Gold Cup in Mirror Goal mode!",
+  "gold_mirror_goal.unlockedItem": "Pauline is unlocked!",
+  "pauline.unlockClue": "Obtain the Gold Cup in Mirror Goal mode.",
+
+  "5000_points.description":
+    "You placed a photo exactly at the right location!",
+  "5000_points.unlockedItem": "Shy Guy is unlocked!",
+  "shyguy.unlockClue": "Place a photo exactly at the right location.",
 };
 
 export default en;

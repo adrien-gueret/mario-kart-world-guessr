@@ -20,5 +20,8 @@ function unlockAchievement($pdo, $userId, $achievementId) {
         VALUES (:userId, :achievementId)");
     $stmt->execute(['userId' => $userId, 'achievementId' => $achievementId]);
 
+    header('Access-Control-Expose-Headers: Mario-Kart-World-Unlock-Achievement');
+    header('Mario-Kart-World-Unlock-Achievement: '.$achievementId, false);
+
     return true;
 }

@@ -57,6 +57,30 @@
   background-image: url("./ui/characters/green_yoshi.png");
 }
 
+.leaderboard-cell-character.dk::before {
+  background-image: url("./ui/characters/dk.png");
+}
+
+.leaderboard-cell-character.toad::before {
+  background-image: url("./ui/characters/toad.png");
+}
+
+.leaderboard-cell-character.king_boo::before {
+  background-image: url("./ui/characters/king_boo.png");
+}
+
+.leaderboard-cell-character.rosalina::before {
+  background-image: url("./ui/characters/rosalina.png");
+}
+
+.leaderboard-cell-character.pauline::before {
+  background-image: url("./ui/characters/pauline.png");
+}
+
+.leaderboard-cell-character.shyguy::before {
+  background-image: url("./ui/characters/shyguy.png");
+}
+
 .leaderboard-cell-secondary-score-container {
   font-size: 1rem;
   vertical-align: middle;

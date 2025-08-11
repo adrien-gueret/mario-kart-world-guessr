@@ -387,6 +387,50 @@ const fr: Texts = {
       en <b>{fr[`difficulty.${gameDifficulty}.title`]}.</b>
     </>
   ),
+  //////
+  "gold_50cc_survival.description":
+    "Vous avez gagné la coupe d'or du mode Survie en 50cc !",
+  "gold_50cc_survival.unlockedItem": "Daisy est débloquée !",
+  "daisy.unlockClue": "Obtenez la coupe d'or du mode Survie en 50cc.",
+
+  "gold_100cc_survival.description":
+    "Vous avez gagné la coupe d'or du mode Survie en 100cc !",
+  "gold_100cc_survival.unlockedItem": "Yoshi est débloqué !",
+  "green_yoshi.unlockClue": "Obtenez la coupe d'or du mode Survie en 100cc.",
+
+  "gold_150cc_survival.description":
+    "Vous avez gagné la coupe d'or du mode Survie en 150cc !",
+  "gold_150cc_survival.unlockedItem": "Wario est débloqué !",
+  "wario.unlockClue": "Obtenez la coupe d'or du mode Survie en 150cc.",
+
+  "gold_mirror_survival.description":
+    "Vous avez gagné la coupe d'or du mode Survie en Miroir !",
+  "gold_mirror_survival.unlockedItem": "Harmonie est débloquée !",
+  "rosalina.unlockClue": "Obtenez la coupe d'or du mode Survie en Miroir.",
+
+  "gold_50cc_goal.description":
+    "Vous avez gagné la coupe d'or du mode Objectif en 50cc !",
+  "gold_50cc_goal.unlockedItem": "Donkey Kong est débloqué !",
+  "dk.unlockClue": "Obtenez la coupe d'or du mode Objectif en 50cc.",
+
+  "gold_100cc_goal.description":
+    "Vous avez gagné la coupe d'or du mode Objectif en 100cc !",
+  "gold_100cc_goal.unlockedItem": "Toad est débloqué !",
+  "toad.unlockClue": "Obtenez la coupe d'or du mode Objectif en 100cc.",
+
+  "gold_150cc_goal.description":
+    "Vous avez gagné la coupe d'or du mode Objectif en 150cc !",
+  "gold_150cc_goal.unlockedItem": "Le Roi Boo est débloqué !",
+  "king_boo.unlockClue": "Obtenez la coupe d'or du mode Objectif en 150cc.",
+
+  "gold_mirror_goal.description":
+    "Vous avez gagné la coupe d'or du mode Objectif en Miroir !",
+  "gold_mirror_goal.unlockedItem": "Pauline est débloquée !",
+  "pauline.unlockClue": "Obtenez la coupe d'or du mode Objectif en Miroir.",
+
+  "5000_points.description": "Vous avez placé une photo pile au bon endroit !",
+  "5000_points.unlockedItem": "Maskass est débloqué !",
+  "shyguy.unlockClue": "Placez une photo pile au bon endroit.",
 };
 
 export default fr;

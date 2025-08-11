@@ -81,12 +81,12 @@ export default async function fetchApi(
   });
 
   response.headers
-    .get("Mario-Kart-World-Unlock-Achievements")
+    .get("Mario-Kart-World-Unlock-Achievement")
     ?.split(",")
     .forEach((achievement) => {
       const achievementEvent = new CustomEvent("achievementUnlocked", {
         detail: {
-          achievementId: achievement,
+          achievementId: achievement.trim(),
         },
       });
       window.dispatchEvent(achievementEvent);
