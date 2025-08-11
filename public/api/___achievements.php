@@ -11,7 +11,9 @@ function hasUnlockedAchievement($pdo, $userId, $achievementId) {
 }
 
 function unlockAchievement($pdo, $userId, $achievementId) {
-    if (hasUnlockedAchievement($pdo, $userId, $achievementId)) {
+    global $isConnected;
+    
+    if (!$isConnected || hasUnlockedAchievement($pdo, $userId, $achievementId)) {
         return false;
     }
 
