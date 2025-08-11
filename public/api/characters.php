@@ -4,6 +4,8 @@ require_once __DIR__ . '/___middleware.php';
 
 require_once __DIR__ . '/___coordinates.php';
 
+require_once __DIR__ . '/___achievements.php';
+
 allowMethod('GET');
 
 if (empty($currentUser)) {
@@ -14,7 +16,7 @@ if (empty($currentUser)) {
 
 try {
     $stmt = $pdo->prepare(
-        "SELECT c.id, a.clue_fr, a.clue_en,
+        "SELECT c.id,
         CASE
             WHEN c.id_achievement IS NULL THEN TRUE
             WHEN ua.id_achievement IS NOT NULL THEN TRUE
@@ -24,6 +26,7 @@ try {
         LEFT JOIN `mario-kart-world-users-unlocked-achievements` ua
         ON c.id_achievement = ua.id_achievement AND ua.id_user = :userId
         LEFT JOIN `mario-kart-world-achievements` a ON a.id = c.id_achievement
+        ORDER BY c.position
       ");
         
     $stmt->bindValue(':userId', $currentUser['id'], PDO::PARAM_INT);
@@ -37,15 +40,9 @@ try {
     foreach($fetchedCharacters as $fetchedCharacter) {
         $characters[] = [
             'id' => $fetchedCharacter['id'],
-            'unlockClue' => [
-                'fr' => $fetchedCharacter['clue_fr'],
-                'en' => $fetchedCharacter['clue_en'],
-            ],
             'isUnlocked' => $fetchedCharacter['is_unlocked'] === 1,
         ];    
     }
-  
-    header('Mario-Kart-World-Unlock-Achievements: Test,Test2');
 
     echo json_encode($characters);
     

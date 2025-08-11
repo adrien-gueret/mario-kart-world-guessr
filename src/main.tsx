@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
+import { AchievementsProvider } from "./achievements/AchievementsProvider.tsx";
 import { CurrentUserProvider } from "./auth/CurrentUserProvider";
 import { TranslationsProvider } from "./i18n";
 import { ScreensProvider } from "./screens";
@@ -27,7 +28,9 @@ createRoot(document.getElementById("root")!).render(
       <TranslationsProvider>
         <GoogleOAuthProvider clientId="1063543539522-m89mibo9kp0esu299c8jgj2bali17ltl.apps.googleusercontent.com">
           <CurrentUserProvider>
-            <App />
+            <AchievementsProvider>
+              <App />
+            </AchievementsProvider>
           </CurrentUserProvider>
         </GoogleOAuthProvider>
       </TranslationsProvider>

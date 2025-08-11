@@ -1,4 +1,6 @@
+import type { LockedCharacter } from "@/types/characters";
 import type { GameMode, Difficulty } from "@/types/game";
+import type { Achievement } from "@/types/achievements";
 import type { Version } from "@/versions/types";
 import type { ReactNode } from "react";
 
@@ -154,6 +156,12 @@ export type Texts = {
     gameMode: GameMode,
     gameDifficulty: Difficulty
   ) => ReactNode;
+} & {
+  [K in Achievement as `${K}.unlockedItem`]: string;
+} & {
+  [K in Achievement as `${K}.description`]: string;
+} & {
+  [K in LockedCharacter as `${K}.unlockClue`]: string;
 };
 
 export type TranslationKey = keyof Texts;

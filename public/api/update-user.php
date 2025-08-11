@@ -31,7 +31,21 @@ if (strlen($username) < 2 || strlen($username) > 100) {
 
 $locale = $_PUT['locale'] === 'fr' || $_PUT['locale'] === 'en' ? $_PUT['locale'] : 'en';
 
-$possibleCharacters = ['none', 'mario', 'luigi', 'peach', 'bowser', 'daisy', 'green_yoshi', 'wario'];
+$stmt = $pdo->prepare(
+    "SELECT c.id
+    FROM `mario-kart-world-characters` c
+    LEFT JOIN `mario-kart-world-users-unlocked-achievements` ua
+    ON c.id_achievement = ua.id_achievement AND ua.id_user = :userId
+    LEFT JOIN `mario-kart-world-achievements` a ON a.id = c.id_achievement
+    WHERE c.id_achievement IS NULL OR ua.id_achievement IS NOT NULL
+");
+    
+$stmt->bindValue(':userId', $currentUser['id'], PDO::PARAM_INT);
+
+$stmt->execute();
+
+$possibleCharacters = $stmt->fetchAll(PDO::FETCH_COLUMN);
+array_unshift($possibleCharacters, 'none');
 
 if (!isset($_PUT['mario-character']) || !in_array($_PUT['mario-character'], $possibleCharacters)) {
     http_response_code(400);
