@@ -4,6 +4,67 @@ import type { ReleaseNotes } from "./types";
 
 const releaseNotes: ReleaseNotes = [
   {
+    version: "v3.0.0",
+    notes: {
+      fr: (
+        <ul>
+          <Text component="li">
+            Les succès sont là&nbsp;!
+            <br />
+            Neuf succès sont désormais disponibles{" "}
+            <b>pour les joueurs connectés</b> : huit se débloquent en gagnant
+            des coupes en or et un autre en atteignant un score de 5000 points
+            en une seule photo.
+            <br />
+            <em>
+              Si vous aviez déjà des coupes en or avant cette mise à jour, les
+              succès correspondants devraient être déjà débloqués&nbsp;!
+            </em>
+          </Text>
+          <Text component="li">
+            Les scores des bots ont été mis à jour pour faciliter un peu le
+            déblocage des coupes.
+          </Text>
+          <Text component="li">
+            <b>Mario Kart World Guessr</b> a plus de joueurs que prévu&nbsp;!
+            Merci à vous &lt;3
+            <br />
+            Mais ceci a causé un problème de performances sur certaines
+            fonctionnalités du site, notamment sur le calcul des médiannes des
+            propositions des joueurs, qui a été temporairement désactivé.
+          </Text>
+        </ul>
+      ),
+      en: (
+        <ul>
+          <Text component="li">
+            Achievements are here!
+            <br />
+            Nine achievements are now available <b>for logged players</b>: eight
+            are unlockable by winning gold cups and another by reaching a score
+            of 5000 points with a single photo.
+            <br />
+            <em>
+              If you already had gold cups before this update, the corresponding
+              achievements should already be unlocked!
+            </em>
+          </Text>
+          <Text component="li">
+            Bot scores have been updated to make unlocking cups a bit easier.
+          </Text>
+          <Text component="li">
+            <b>Mario Kart World Guessr</b> has more players than expected! Thank
+            you &lt;3
+            <br />
+            But this has caused performance issues on some site features,
+            particularly on calculating player guess medians, which has been
+            temporarily disabled.
+          </Text>
+        </ul>
+      ),
+    },
+  },
+  {
     version: "v2.2.0",
     notes: {
       fr: (
