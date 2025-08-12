@@ -240,7 +240,7 @@ const en: Texts = {
   "game.globalScore.showOtherPlayers":
     "Show the median location of all players",
   "home.button": "Home",
-  "upload.title": "Suggest a photo",
+  "upload.title": "Submit a photo",
   "upload.description": "Send a photo to enrich the game!",
   "upload.step1.title": "1. Select your photo",
   "upload.step1.info1": (
@@ -254,34 +254,8 @@ const en: Texts = {
   "upload.step2.info":
     "Click on the map to indicate the location of your photo. Be as precise as possible!",
   "upload.step2.help.label": "Show tracks and roads",
-  "upload.step3.title": "3. Optional: log in",
-  "upload.step3.info": (
-    <>
-      This step is <b>optional</b>; you can publish your photo without logging
-      in.
-    </>
-  ),
-  "upload.step3.login.info": (username, userEmail: string) => (
-    <>
-      You are currently logged a <b>{username}</b> with your email{" "}
-      <b>{userEmail}</b> (
-      <i>
-        this email will <b>not</b> be public
-      </i>
-      ).
-    </>
-  ),
-  "upload.step3.or": "or",
-  "upload.step3.authorName.label": (userName: string) => (
-    <>
-      Display <b>{userName}</b>
-    </>
-  ),
-  "upload.step3.authorName.anonymous": "Do not display my name",
-  "upload.step3.shouldBeNotified.label":
-    "Notify me by email when my photo is validated",
-  "upload.step4.title": "4. Confirm your submission",
-  "upload.step4.info":
+  "upload.step3.title": "3. Confirm your submission",
+  "upload.step3.info":
     "By sending your photo, you agree that it will be used in the game.",
   "upload.form.submit.label": "Send",
   "upload.loading.title": "Sending...",
@@ -298,6 +272,9 @@ const en: Texts = {
   "upload.success.title": "Photo sent!",
   "upload.success.info":
     "It will be visible after validation. Thank you for your contribution!",
+  "uploader.preview.remove": "Remove photo",
+  "uploader.explanation":
+    "Click on the cloud or drag and drop a photo to upload it.",
   "photos.title": "All photos",
   "photos.description": (
     <>

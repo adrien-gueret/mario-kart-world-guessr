@@ -257,34 +257,8 @@ const fr: Texts = {
   "upload.step2.info":
     "Cliquez sur la carte pour indiquer l'emplacement de votre photo. Soyez le plus précis possible !",
   "upload.step2.help.label": "Afficher les circuits et les routes",
-  "upload.step3.title": "3. Optionnel : connectez-vous",
-  "upload.step3.info": (
-    <>
-      Cette étape est <b>facultative</b> ; vous pouvez publier votre photo sans
-      vous connecter.
-    </>
-  ),
-  "upload.step3.login.info": (username: string, userEmail: string) => (
-    <>
-      Vous êtes actuellement connecté en tant que <b>{username}</b> avec votre
-      email <b>{userEmail}</b> (
-      <i>
-        cet email ne sera <b>pas</b> publique
-      </i>
-      ).
-    </>
-  ),
-  "upload.step3.or": "ou",
-  "upload.step3.authorName.label": (userName: string) => (
-    <>
-      Afficher <b>{userName}</b>
-    </>
-  ),
-  "upload.step3.authorName.anonymous": "Ne pas afficher mon nom",
-  "upload.step3.shouldBeNotified.label":
-    "Me notifier par email de la validation de ma photo",
-  "upload.step4.title": "4. Confirmez votre envoi",
-  "upload.step4.info":
+  "upload.step3.title": "3. Confirmez votre envoi",
+  "upload.step3.info":
     "En envoyant votre photo, vous acceptez que celle-ci soit utilisée dans le jeu.",
   "upload.form.submit.label": "Envoyer",
   "upload.loading.title": "Envoi en cours...",
@@ -302,6 +276,9 @@ const fr: Texts = {
   "upload.success.title": "Photo envoyée !",
   "upload.success.info":
     "Elle sera visible après une validation. Merci de votre contribution !",
+  "uploader.preview.remove": "Supprimer la photo",
+  "uploader.explanation":
+    "Cliquez sur le nuage ou glissez/déposez une photo pour la télécharger.",
   "photos.title": "Toutes les photos",
   "photos.description": (
     <>
