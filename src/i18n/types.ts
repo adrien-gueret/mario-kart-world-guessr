@@ -106,6 +106,7 @@ export type Texts = {
   "upload.success.info": string;
   "uploader.preview.remove": string;
   "uploader.explanation": string;
+  "need.help": string;
   "photos.title": string;
   "photos.description": ReactNode;
   "photo.details.title": string;

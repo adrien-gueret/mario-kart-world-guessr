@@ -275,6 +275,7 @@ const en: Texts = {
   "uploader.preview.remove": "Remove photo",
   "uploader.explanation":
     "Click on the cloud or drag and drop a photo to upload it.",
+  "need.help": "Need help?",
   "photos.title": "All photos",
   "photos.description": (
     <>

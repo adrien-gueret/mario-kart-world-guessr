@@ -9,9 +9,11 @@ import "./Uploader.css";
 export default function Uploader({
   name,
   required = false,
+  children,
 }: {
   name: string;
   required?: boolean;
+  children?: React.ReactNode;
 }) {
   const { translate } = useTranslations();
 
@@ -113,7 +115,7 @@ export default function Uploader({
         <label>
           <img
             className="uploader-cloud"
-            src="./ui/upload_cloud.png"
+            src="./ui/upload/upload_cloud.png"
             draggable={false}
             alt=""
           />
@@ -166,6 +168,8 @@ export default function Uploader({
             <p>{translate("uploader.explanation")}</p>
           )}
         </div>
+
+        {children && <div className="uploader-children">{children}</div>}
       </div>
     </Surface>
   );

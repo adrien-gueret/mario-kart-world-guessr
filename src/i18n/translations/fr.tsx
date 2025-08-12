@@ -279,6 +279,7 @@ const fr: Texts = {
   "uploader.preview.remove": "Supprimer la photo",
   "uploader.explanation":
     "Cliquez sur le nuage ou glissez/déposez une photo pour la télécharger.",
+  "need.help": "Besoin d'aide ?",
   "photos.title": "Toutes les photos",
   "photos.description": (
     <>
