@@ -5,18 +5,20 @@ import Loader from "@/components/Loader";
 import Modal from "@/components/Modal";
 import Map from "@/components/Map";
 import Pin from "@/components/Pin";
+import Surface from "@/components/Surface";
 import Text from "@/components/Text";
 import UploadCoordinates from "@/components/UploadCoordinates";
 
 import { useCurrentUser } from "@/auth/CurrentUserProvider";
 
+import fetchApi from "@/services/api";
 import useRequireAuth from "@/services/useRequiredAuth";
+
+import { useScreen } from "@/screens/ScreensProvider";
 
 import { type Coordinates } from "@/types/location";
 
 import { useTranslations } from "@/i18n";
-
-import fetchApi from "@/services/api";
 
 import Uploader from "./Uploader";
 
@@ -24,6 +26,7 @@ import "./Upload.css";
 
 function Upload() {
   const { user } = useCurrentUser();
+  const { setCurrentScreenName } = useScreen();
 
   const [locationCoordinates, setLocationCoordinates] =
     useState<Coordinates | null>(null);
@@ -83,19 +86,34 @@ function Upload() {
     <div className="upload-screen">
       <h2>{translate("upload.title")}</h2>
 
-      <Text component="p">{translate("upload.description")}</Text>
-
       <form name="upload-form" className="upload-form" onSubmit={onSubmit}>
+        <Text component="p">{translate("upload.description")}</Text>
+
+        <div className="upload-helper-container">
+          <Surface>
+            <div className="upload-helper">
+              <img src="./ui/upload/need-help.png" draggable={false} alt="" />
+              <Button
+                onClick={() => setCurrentScreenName("UploadHelp")}
+                variant="secondary"
+              >
+                {translate("need.help")}
+              </Button>
+            </div>
+          </Surface>
+        </div>
+
         <fieldset>
           <h3>{translate("upload.step1.title")}</h3>
           <Text component="p">{translate("upload.step1.info1")}</Text>
-          <p>
-            <i>{translate("upload.step1.info2")}</i>
-          </p>
 
-          <br />
-
-          <Uploader name="photo" required />
+          <div style={{ marginTop: "24px" }}>
+            <Uploader name="photo" required>
+              <p>
+                <i>{translate("upload.step1.info2")}</i>
+              </p>
+            </Uploader>
+          </div>
         </fieldset>
 
         <fieldset>

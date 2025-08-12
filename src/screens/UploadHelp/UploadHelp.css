@@ -1,0 +1,31 @@
+.upload-help p {
+  text-align: left;
+}
+
+.upload-help figure {
+  display: block;
+  margin: 24px;
+}
+
+.upload-help figure img {
+  max-width: 650px;
+  border: 2px solid #213547;
+  border-radius: 4px;
+}
+
+.upload-help figure img.mobile {
+  max-height: 450px;
+}
+
+.upload-help .back-button {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.upload-help .back-button .game-button {
+  margin: 0;
+}

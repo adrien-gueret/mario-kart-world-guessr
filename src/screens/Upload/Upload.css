@@ -4,6 +4,22 @@
   align-items: center;
   justify-content: center;
   gap: 24px;
+  margin-top: 24px;
+}
+
+.upload-helper-container {
+  position: sticky;
+  z-index: 3000;
+  top: 8px;
+}
+
+.upload-helper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .upload-form fieldset {

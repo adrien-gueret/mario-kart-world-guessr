@@ -18,6 +18,7 @@ import Login from "./Login";
 import Photos from "./Photos";
 import Play from "./Play";
 import Upload from "./Upload";
+import UploadHelp from "./UploadHelp";
 import PrivacyPolicies from "./PrivacyPolicies";
 import ReleaseNotes from "./ReleaseNotes";
 import TermsServices from "./TermsServices";
@@ -30,6 +31,7 @@ export type ScreenName =
   | "GoalGame"
   | "DailyGame"
   | "Upload"
+  | "UploadHelp"
   | "Photos"
   | "Login"
   | "PrivacyPolicies"
@@ -46,6 +48,7 @@ const screenHashtagsToScreenNames: Record<ScreenHashtag, ScreenName> = {
   "#/goalgame": "GoalGame",
   "#/dailygame": "DailyGame",
   "#/upload": "Upload",
+  "#/uploadhelp": "UploadHelp",
   "#/photos": "Photos",
   "#/login": "Login",
   "#/privacypolicies": "PrivacyPolicies",
@@ -110,6 +113,7 @@ export function ScreensProvider({ children }: { children: ReactNode }) {
     GoalGame,
     DailyGame,
     Upload,
+    UploadHelp,
     Photos,
     Login,
     PrivacyPolicies,
