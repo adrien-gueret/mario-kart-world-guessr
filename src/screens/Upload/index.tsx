@@ -18,6 +18,8 @@ import { useTranslations } from "@/i18n";
 
 import fetchApi from "@/services/api";
 
+import Uploader from "./Uploader";
+
 import "./Upload.css";
 
 function Upload() {
@@ -41,16 +43,6 @@ function Upload() {
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
-    if (import.meta.env.DEV && isAnonymous) {
-      if (
-        !confirm(
-          "You are in development mode without being connected! Do you want to continue?"
-        )
-      ) {
-        throw new Error("Upload canceled.");
-      }
-    }
 
     setIsLoading(true);
 
@@ -103,7 +95,7 @@ function Upload() {
 
           <br />
 
-          <input type="file" name="photo" accept=".jpg" required />
+          <Uploader name="photo" required />
         </fieldset>
 
         <fieldset>
@@ -140,63 +132,8 @@ function Upload() {
         <fieldset>
           <h3>{translate("upload.step3.title")}</h3>
 
-          <Text component="p">{translate("upload.step3.info")}</Text>
-
-          <div className="author-info">
-            <p>{translate("mode.daily.description")}</p>
-
-            {/*user ? (
-              <>
-                <p>{translate("upload.step3.login.info")(user.username, user.email)}</p>
-
-                <label>
-                  <input
-                    type="radio"
-                    name="authorName"
-                    value={user.givenName}
-                    defaultChecked
-                  />
-                  {translate("upload.step3.authorName.label")(user.givenName)}
-                </label>
-
-                <label>
-                  <input type="radio" name="authorName" value={user.fullName} />
-                  {translate("upload.step3.authorName.label")(user.fullName)}
-                </label>
-
-                <label>
-                  <input type="radio" name="authorName" value={user.fullName} />
-                  {translate("upload.step3.authorName.anonymous")}
-                </label>
-
-                <label>
-                  <input
-                    type="checkbox"
-                    name="shouldBeNotified"
-                    defaultChecked
-                  />
-                  {translate("upload.step3.shouldBeNotified.label")}
-                </label>
-
-                <div className="divider">
-                  <span>{translate("upload.step3.or")}</span>
-                </div>
-
-                <Button variant="secondary" onClick={logout}>
-                  {translate("logout.label")}
-                </Button>
-              </>
-            ) : (
-              <GoogleLoginButton />
-            )*/}
-          </div>
-        </fieldset>
-
-        <fieldset>
-          <h3>{translate("upload.step4.title")}</h3>
-
           <p>
-            <Text>{translate("upload.step4.info")}</Text>
+            <Text>{translate("upload.step3.info")}</Text>
           </p>
 
           <Button
@@ -240,7 +177,11 @@ function Upload() {
         <Loader />
       </Modal>
 
-      <Modal title={translate("upload.success.title")} isOpen={isSuccess}>
+      <Modal
+        title={translate("upload.success.title")}
+        isOpen={isSuccess}
+        noDelay
+      >
         <p>
           <Text>{translate("upload.success.info")}</Text>
         </p>
@@ -249,6 +190,7 @@ function Upload() {
             onClick={() => {
               setIsSuccess(false);
               setLocationCoordinates(null);
+              window.scrollTo({ top: 0, behavior: "smooth" });
             }}
           >
             OK

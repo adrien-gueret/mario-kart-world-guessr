@@ -37,7 +37,8 @@ function Home() {
             borderColor="#fb501e"
           />
         </li>
-        <li className="home-item__breakline" aria-hidden="true"></li>
+        {/*
+         <li className="home-item__breakline" aria-hidden="true"></li>
         <li className="home-item__upload">
           <Card
             icon={<HomeIcon icon="Upload" />}
@@ -46,6 +47,7 @@ function Home() {
             borderColor="#9e9e9eff"
           />
         </li>
+         */}
       </menu>
     </div>
   );
