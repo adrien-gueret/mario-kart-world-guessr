@@ -345,6 +345,7 @@ const fr: Texts = {
   "home.menu.play.title": "Jouer",
   "home.menu.account.title": "Mon compte",
   "home.menu.leaderboards.title": "Classements",
+  "home.menu.upload.title": "Proposer une photo",
   "leaderboards.description":
     "Consultez les classements des joueurs pour tous les modes et difficultés ! Arriverez-vous à être parmi les meilleurs ?",
   "leaderboards.mode": "Sélectionnez un mode de jeu",

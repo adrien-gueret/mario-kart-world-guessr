@@ -21,3 +21,7 @@
 .home-icon.Account {
   --bx: -360px;
 }
+
+.home-icon.Upload {
+  --bx: -540px;
+}

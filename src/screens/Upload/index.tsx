@@ -10,6 +10,8 @@ import UploadCoordinates from "@/components/UploadCoordinates";
 
 import { useCurrentUser } from "@/auth/CurrentUserProvider";
 
+import useRequireAuth from "@/services/useRequiredAuth";
+
 import { type Coordinates } from "@/types/location";
 
 import { useTranslations } from "@/i18n";
@@ -19,7 +21,7 @@ import fetchApi from "@/services/api";
 import "./Upload.css";
 
 function Upload() {
-  const { isAnonymous, user } = useCurrentUser();
+  const { user } = useCurrentUser();
 
   const [locationCoordinates, setLocationCoordinates] =
     useState<Coordinates | null>(null);
@@ -30,6 +32,12 @@ function Upload() {
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   const { translate } = useTranslations();
+
+  const isAnonymous = useRequireAuth();
+
+  if (isAnonymous) {
+    return null;
+  }
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();

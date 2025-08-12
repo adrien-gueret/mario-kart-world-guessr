@@ -141,6 +141,7 @@ export type Texts = {
   "home.menu.play.title": string;
   "home.menu.account.title": string;
   "home.menu.leaderboards.title": string;
+  "home.menu.upload.title": string;
   "leaderboards.description": string;
   "leaderboards.mode": string;
   "leaderboards.difficulty": string;

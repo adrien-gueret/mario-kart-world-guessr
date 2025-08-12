@@ -1,3 +1,5 @@
+import { type ScreenName } from "@/screens";
+
 import { useTranslations } from "@/i18n";
 
 import "./DiscordLoginButton.css";
@@ -5,9 +7,13 @@ import "./DiscordLoginButton.css";
 const DISCORD_APP_ID = "1393924724299530331";
 const redirectUri = `${window.location.origin}${window.location.pathname}`;
 
-export default function DiscordLoginButton() {
+export default function DiscordLoginButton({
+  targetScreenName = "Account",
+}: {
+  targetScreenName?: ScreenName;
+}) {
   const { translate } = useTranslations();
-  const discordLoginURL = `https://discord.com/oauth2/authorize?client_id=${DISCORD_APP_ID}&response_type=code&redirect_uri=${redirectUri}&scope=email+identify&state=from-discord`;
+  const discordLoginURL = `https://discord.com/oauth2/authorize?client_id=${DISCORD_APP_ID}&response_type=code&redirect_uri=${redirectUri}&scope=email+identify&state=from-discord_${targetScreenName}`;
 
   return (
     <a href={discordLoginURL} className="discord-button">

@@ -2,13 +2,10 @@ import { GoogleLogin } from "@react-oauth/google";
 
 import fetchApi from "@/services/api";
 
-import { useScreen } from "@/screens";
-
 import { useCurrentUser } from "./CurrentUserProvider";
 
 export default function GoogleLoginButton() {
   const { setCurrentUser } = useCurrentUser();
-  const { setCurrentScreenName } = useScreen();
 
   return (
     <GoogleLogin
@@ -22,7 +19,6 @@ export default function GoogleLoginButton() {
         delete user.isNewUser;
 
         setCurrentUser(user);
-        setCurrentScreenName("Account");
       }}
       onError={() => {
         console.log("Login Failed");

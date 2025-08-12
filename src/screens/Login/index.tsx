@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import Text from "@/components/Text";
 import GoogleLoginButton from "@/auth/GoogleLoginButton";
@@ -14,11 +14,17 @@ import "./Login.css";
 function Login() {
   const { isAnonymous } = useCurrentUser();
   const { translate } = useTranslations();
-  const { setCurrentScreenName } = useScreen();
+  const { setCurrentScreenName, state } = useScreen();
+
+  const targetScreenNameRef = useRef(state.targetScreenName || "Account");
 
   useEffect(() => {
     if (!isAnonymous) {
-      setCurrentScreenName("Account");
+      console.log(
+        "Already logged in, redirecting to",
+        targetScreenNameRef.current
+      );
+      setCurrentScreenName(targetScreenNameRef.current ?? "Account");
     }
   }, [isAnonymous]);
 
@@ -34,7 +40,7 @@ function Login() {
         <Text component="p">{translate("login.screen.description")}</Text>
         <div className="login-buttons">
           <GoogleLoginButton />
-          <DiscordLoginButton />
+          <DiscordLoginButton targetScreenName={targetScreenNameRef.current} />
         </div>
       </div>
     </div>
