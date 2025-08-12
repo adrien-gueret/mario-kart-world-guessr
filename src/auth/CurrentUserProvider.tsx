@@ -46,7 +46,7 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
   const { currentLocale, setCurrentLocale } = useTranslations();
   const [isLoading, setIsLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const { currentScreenName, setCurrentScreenName } = useScreen();
+  const { setCurrentScreenName } = useScreen();
   const hasBeenMounted = useRef(false);
 
   const logout = useCallback(() => {
@@ -71,7 +71,7 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
 
     hasBeenMounted.current = true;
 
-    function redirectTo(target: Extract<ScreenName, "Account" | "Login">) {
+    function redirectTo(target: ScreenName) {
       window.history.replaceState({}, document.title, window.location.pathname);
       setCurrentScreenName(target, {
         onSuccess: () => {
@@ -80,9 +80,7 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
       });
     }
 
-    function fetchMe(
-      redirectScreeName?: Extract<ScreenName, "Account" | "Login">
-    ) {
+    function fetchMe(redirectScreeName?: ScreenName) {
       setIsLoading(true);
 
       fetchApi("/me", "GET")
@@ -101,7 +99,7 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
         });
     }
 
-    function fetchDiscord(discordCode: string) {
+    function fetchDiscord(discordCode: string, targetScreenName: ScreenName) {
       setIsLoading(true);
 
       const formData = new FormData();
@@ -121,7 +119,7 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
         })
         .catch(fetchMe)
         .finally(() => {
-          redirectTo("Account");
+          redirectTo(targetScreenName);
         });
     }
 
@@ -129,9 +127,10 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
     const authCode = searchParams.get("code");
     const state = searchParams.get("state");
 
-    if (state === "from-discord") {
+    if (state?.startsWith("from-discord")) {
       if (authCode) {
-        fetchDiscord(authCode);
+        const [, targetScreenName = "Account"] = state.split("_");
+        fetchDiscord(authCode, targetScreenName as ScreenName);
       } else {
         fetchMe("Login");
       }

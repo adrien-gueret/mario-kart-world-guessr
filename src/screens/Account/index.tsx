@@ -12,6 +12,7 @@ import Snackbar from "@/components/Snackbar";
 import Surface from "@/components/Surface";
 
 import { useScreen } from "@/screens/ScreensProvider";
+import useRequiredAuth from "@/services/useRequiredAuth";
 import type { User } from "@/types/user";
 
 import CharacterSelect from "./CharacterSelect";
@@ -22,13 +23,9 @@ export default function Account() {
   const [showEditAccountError, setShowEditAccountError] = useState(false);
   const [editAccountErrorMessage, setEditAccountErrorMessage] = useState("");
   const { setCurrentScreenName } = useScreen();
-  const { user, isAnonymous, setCurrentUser } = useCurrentUser();
+  const { user, setCurrentUser } = useCurrentUser();
 
-  useEffect(() => {
-    if (isAnonymous) {
-      setCurrentScreenName("Login");
-    }
-  }, [isAnonymous, setCurrentScreenName]);
+  const isAnonymous = useRequiredAuth();
 
   if (isAnonymous) {
     return null;

@@ -339,6 +339,7 @@ const en: Texts = {
   "home.menu.play.title": "Play",
   "home.menu.account.title": "My Account",
   "home.menu.leaderboards.title": "Leaderboards",
+  "home.menu.upload.title": "Upload a photo",
   "leaderboards.description":
     "Check out the player leaderboards for all modes and difficulties! Will you make it to the top?",
   "leaderboards.mode": "Select a game mode",
