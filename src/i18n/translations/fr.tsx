@@ -287,6 +287,7 @@ const fr: Texts = {
     </>
   ),
   "photo.details.title": "Détails de la photo",
+  "photo.by": "Photo par",
   "login.screen.title": "Se connecter",
   "login.screen.description": (
     <>
