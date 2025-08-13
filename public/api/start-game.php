@@ -35,6 +35,9 @@ try {
         "SELECT
             g.id AS id,
             g.current_photo_id as currentPhotoId,
+            photoAuthor.author_id as authorId,
+            u.username as authorName,
+            u.mario_character as authorCharacter,
             COALESCE(
                 JSON_ARRAYAGG(
                     CASE
@@ -52,6 +55,8 @@ try {
         FROM `mario-kart-world-games` g
         LEFT JOIN `mario-kart-world-suggestions` s ON s.game_id = g.id
         LEFT JOIN `mario-kart-world-photos` p ON s.photo_id = p.id
+        LEFT JOIN `mario-kart-world-photos` photoAuthor ON g.current_photo_id = photoAuthor.id
+        LEFT JOIN `mario-kart-world-users` u ON photoAuthor.author_id = u.id
         WHERE
             g.player_id = :player_id
             AND g.mode = :mode
@@ -83,7 +88,7 @@ try {
             $game['guesses'] = [];
         }
 
-        $game['history'] = array_map(function($guess) {
+        $history = array_map(function($guess) use ($game) {
             $distanceInKm = distanceBetweenCoordinatesInKilometers(
                 ['x' => $guess['guess_x'], 'y' => $guess['guess_y']],
                 ['x' => $guess['actual_x'], 'y' => $guess['actual_y']]
@@ -94,11 +99,21 @@ try {
             return $score;
         }, $game['guesses']);
 
-        unset($game['guesses']);
+        $totalScore = array_sum($history);
 
-        $game["totalScore"] = array_sum($game["history"]);
-
-        echo json_encode($game);
+        echo json_encode([
+            'id' => $game['id'],
+            'history' => $history,
+            'totalScore' => $totalScore,
+            'currentPhoto' => empty($game['currentPhotoId']) ? null : [
+                'id' => $game['currentPhotoId'],
+                'author' => [
+                    'id' => $game['authorId'] ?? null,
+                    'name' => $game['authorName'] ?? null,
+                    'character' => $game['authorCharacter'] ?? null,
+                ],
+            ],
+        ]);
         exit;
     }
 
@@ -112,7 +127,11 @@ try {
     );
     $createGameStmt->bindParam(':player_id', $currentUser['id'], PDO::PARAM_INT);
     $createGameStmt->bindParam(':mode', $_POST['mode'], PDO::PARAM_STR);
-    $createGameStmt->bindParam(':difficulty', $_POST['difficulty'], PDO::PARAM_STR);
+    if ($isDailyMode) {
+        $createGameStmt->bindValue(':difficulty', null, PDO::PARAM_NULL);
+    } else {
+        $createGameStmt->bindParam(':difficulty', $_POST['difficulty'], PDO::PARAM_STR);
+    }
     $createGameStmt->bindParam(':currentPhotoId', $firstPhoto['id'], PDO::PARAM_STR);
     $createGameStmt->execute();
     $gameId = $pdo->lastInsertId();
@@ -122,7 +141,14 @@ try {
         'id' => intval($gameId),
         'history' => [],
         'totalScore' => 0,
-        'currentPhotoId' => $firstPhoto['id'],
+        'currentPhoto' => empty($firstPhoto) ? null : [
+            'id' => $firstPhoto['id'],
+            'author' => [
+                'id' => $firstPhoto['authorId'] ?? null,
+                'name' => $firstPhoto['authorName'] ?? null,
+                'character' => $firstPhoto['authorCharacter'] ?? null,
+            ],
+        ],
     ]);
 } catch (PDOException $e) {
     http_response_code(500);

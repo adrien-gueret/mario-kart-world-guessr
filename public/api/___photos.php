@@ -19,6 +19,9 @@ function getRandomPhoto($pdo, $difficulty, $currentUserId) {
 
     $sql = "SELECT
                 p.id,
+                p.author_id as authorId,
+                u.username as authorName,
+                u.mario_character as authorCharacter,
                 COUNT(s.photo_id) as viewCount,
                 IFNULL(user_sugg.userViewCount, 0) as userViewCount
             FROM `mario-kart-world-photos` p
@@ -26,6 +29,8 @@ function getRandomPhoto($pdo, $difficulty, $currentUserId) {
                 ON p.id = s.photo_id
             LEFT JOIN `mario-kart-world-games` g
                 ON s.game_id = g.id
+            LEFT JOIN `mario-kart-world-users` u
+                ON p.author_id = u.id
             LEFT JOIN (
                 SELECT
                     s.photo_id,
@@ -53,8 +58,13 @@ function getRandomPhoto($pdo, $difficulty, $currentUserId) {
 function getDailyPhoto($pdo, $gameId = null) {
     if ($gameId === null) {
         $stmt = $pdo->prepare(
-            "SELECT photo_1_id as id
-            FROM `mario-kart-world-dailies`
+            "SELECT d.photo_1_id as id,
+                p.author_id as authorId,
+                u.username as authorName,
+                u.mario_character as authorCharacter
+            FROM `mario-kart-world-dailies` d
+            LEFT JOIN `mario-kart-world-photos` p ON d.photo_1_id = p.id
+            LEFT JOIN `mario-kart-world-users` u ON p.author_id = u.id
             WHERE daily_date = CURDATE()"
         );
 
@@ -88,12 +98,17 @@ function getDailyPhoto($pdo, $gameId = null) {
     }
 
     $index = min((int)$game['suggestions_count'], 4) + 1;
-    $col = "photo_{$index}_id";
+    $col = "d.photo_{$index}_id";
 
     $stmt = $pdo->prepare(
-        "SELECT $col as id
-        FROM `mario-kart-world-dailies`
-        WHERE daily_date = :dailyDate"
+        "SELECT $col as id,
+            p.author_id as authorId,
+            u.username as authorName,
+            u.mario_character as authorCharacter
+        FROM `mario-kart-world-dailies` d
+        LEFT JOIN `mario-kart-world-photos` p ON $col = p.id
+        LEFT JOIN `mario-kart-world-users` u ON p.author_id = u.id
+        WHERE d.daily_date = :dailyDate"
     );
     $date = (new DateTime($game['started_at']))->format('Y-m-d');
     $stmt->bindParam(':dailyDate', $date, PDO::PARAM_STR);
