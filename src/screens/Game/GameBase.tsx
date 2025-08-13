@@ -108,12 +108,12 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
       const game = (await response.json()) as StartGameResponse;
 
       setCurrentGameId(game.id);
-      setCurrentPhotoId(game.currentPhotoId);
+      setCurrentPhotoId(game.currentPhoto?.id || null);
       setTotalScore(game.totalScore);
       setPhotoCount(game.history.length + 1);
       historyLength.current = game.history.length;
 
-      const isFinished = game.currentPhotoId === null;
+      const isFinished = game.currentPhoto?.id === null;
 
       if (isFinished) {
         setIsGameEnded(true);
@@ -197,7 +197,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
 
     setGuessResults({ distance, score: newScore });
 
-    setNextPhotoId(addGuessResponse.gameData.nextPhotoId);
+    setNextPhotoId(addGuessResponse.gameData.nextPhoto?.id ?? null);
     historyLength.current = addGuessResponse.gameData.history.length;
     setTotalScore(addGuessResponse.gameData.totalScore);
 

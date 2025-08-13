@@ -190,7 +190,7 @@ try {
         break;
     }
 
-    $nextPhotoId = null;
+    $nextPhoto = null;
     $cupData = null;
 
     if ($isFinished) {
@@ -388,7 +388,14 @@ try {
             "isFinished" => $isFinished || empty($nextPhotoId),
             "cupData" => $cupData,
             "history" => $game['history'],
-            "nextPhotoId" => $nextPhotoId,
+            "nextPhoto" => empty($nextPhotoId) ? null : [
+                'id' => $nextPhotoId,
+                'author' => [
+                    'id' => $nextPhoto['authorId'] ?? null,
+                    'name' => $nextPhoto['authorName'] ?? null,
+                    'character' => $nextPhoto['authorCharacter'] ?? null,
+                ],
+            ],
         ],
     ]);
 } catch (PDOException $e) {

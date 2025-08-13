@@ -12,6 +12,15 @@ export type Cup = "none" | "bronze" | "silver" | "gold";
 
 export type StarRank = "rank-0" | "rank-1" | "rank-2" | "rank-3";
 
+type GamePhoto = {
+  id: string;
+  author: {
+    id: number;
+    name: string;
+    character: MarioCharacter | null;
+  };
+};
+
 export type AddGuessResponse = {
   actualCoordinates: Coordinates;
   playersMedianCoordinates: Coordinates;
@@ -28,7 +37,7 @@ export type AddGuessResponse = {
       starRank?: StarRank | null;
     } | null;
     history: GameHistory;
-    nextPhotoId: string | null;
+    nextPhoto: GamePhoto | null;
   };
 };
 
@@ -36,7 +45,7 @@ export type StartGameResponse = {
   id: number;
   history: GameHistory;
   totalScore: number;
-  currentPhotoId: string | null;
+  currentPhoto: GamePhoto | null;
 };
 
 type LeaderboardRank = {
