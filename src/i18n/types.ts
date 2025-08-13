@@ -110,6 +110,7 @@ export type Texts = {
   "photos.title": string;
   "photos.description": ReactNode;
   "photo.details.title": string;
+  "photo.by": string;
   "login.screen.title": string;
   "login.screen.description": ReactNode;
   "login.discord.label": string;

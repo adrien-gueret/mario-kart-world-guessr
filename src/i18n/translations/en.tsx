@@ -283,6 +283,7 @@ const en: Texts = {
     </>
   ),
   "photo.details.title": "Photo details",
+  "photo.by": "Photo by",
   "login.screen.title": "Log in",
   "login.screen.description": (
     <>

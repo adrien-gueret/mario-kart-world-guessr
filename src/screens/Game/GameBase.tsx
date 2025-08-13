@@ -22,6 +22,7 @@ import Text from "@/components/Text";
 
 import fetchApi from "@/services/api";
 
+import type { MarioCharacter } from "@/types/characters";
 import type { Difficulty, GameMode } from "@/types/game";
 
 import { useTranslations } from "@/i18n";
@@ -46,6 +47,16 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
   const [currentGameId, setCurrentGameId] = useState<number | null>(null);
   const [currentPhotoId, setCurrentPhotoId] = useState<string | null>(null);
   const [nextPhotoId, setNextPhotoId] = useState<string | null>(null);
+  const [currentPhotoAuthor, setCurrentPhotoAuthor] = useState<{
+    id: number;
+    name: string;
+    character: MarioCharacter | null;
+  } | null>(null);
+  const [nextPhotoAuthor, setNextPhotoAuthor] = useState<{
+    id: number;
+    name: string;
+    character: MarioCharacter | null;
+  } | null>(null);
   const [hasRequestedGiveUp, setHasRequestedGiveUp] = useState(false);
   const [photoCount, setPhotoCount] = useState(0);
   const historyLength = useRef(0);
@@ -109,6 +120,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
 
       setCurrentGameId(game.id);
       setCurrentPhotoId(game.currentPhoto?.id || null);
+      setCurrentPhotoAuthor(game.currentPhoto?.author || null);
       setTotalScore(game.totalScore);
       setPhotoCount(game.history.length + 1);
       historyLength.current = game.history.length;
@@ -129,8 +141,10 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
 
   const renderNextPhoto = useCallback(async () => {
     setCurrentPhotoId(nextPhotoId);
+    setCurrentPhotoAuthor(nextPhotoAuthor);
     setPhotoCount(historyLength.current + 1);
     setNextPhotoId(null);
+    setNextPhotoAuthor(null);
     setUserGuess(null);
     setGuessResults(null);
 
@@ -140,7 +154,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
         block: "start",
       });
     }
-  }, [nextPhotoId]);
+  }, [nextPhotoId, nextPhotoAuthor]);
 
   const handleConfirmGuess = async () => {
     if (!userGuess || !currentPhotoId || isGuessing.current) {
@@ -198,6 +212,11 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     setGuessResults({ distance, score: newScore });
 
     setNextPhotoId(addGuessResponse.gameData.nextPhoto?.id ?? null);
+    setNextPhotoAuthor(
+      addGuessResponse.gameData.nextPhoto
+        ? addGuessResponse.gameData.nextPhoto.author
+        : null
+    );
     historyLength.current = addGuessResponse.gameData.history.length;
     setTotalScore(addGuessResponse.gameData.totalScore);
 
@@ -268,6 +287,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
           <Photo
             photoName={!currentPhotoId ? "" : currentPhotoId}
             isMirrored={difficulty === "mirror"}
+            author={currentPhotoAuthor}
           />
         </div>
 

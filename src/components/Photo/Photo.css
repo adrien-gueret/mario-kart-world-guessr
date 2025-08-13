@@ -6,3 +6,17 @@
 .game-photo.mirrored {
   transform: scaleX(-1);
 }
+
+.game-photo-author {
+  margin: 0;
+  text-align: right;
+  display: inline-flex;
+  flex-direction: row;
+  gap: 2px;
+  justify-content: center;
+  align-items: center;
+  color: #213547;
+  padding: 2px 4px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+}
