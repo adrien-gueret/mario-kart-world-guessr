@@ -125,7 +125,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
       setPhotoCount(game.history.length + 1);
       historyLength.current = game.history.length;
 
-      const isFinished = game.currentPhoto?.id === null;
+      const isFinished = !Boolean(game.currentPhoto?.id);
 
       if (isFinished) {
         setIsGameEnded(true);
