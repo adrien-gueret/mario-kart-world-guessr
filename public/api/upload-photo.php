@@ -6,6 +6,50 @@ require_once __DIR__ . '/___github.php';
 
 allowMethod('POST');
 
+function getUuidVersion($uuid) {
+  if (!preg_match(
+      '/^[0-9a-f]{8}-[0-9a-f]{4}-([1-5])[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i',
+      $uuid,
+      $matches
+  )) {
+      return null;
+  }
+
+  return $matches[1];
+}
+
+function uuidv4() {
+  $bytes = secure_random_bytes(16);
+  $bytes[6] = chr((ord($bytes[6]) & 0x0f) | 0x40);
+  $bytes[8] = chr((ord($bytes[8]) & 0x3f) | 0x80);
+
+  $hex = bin2hex($bytes);
+  
+  return sprintf(
+    '%s-%s-%s-%s-%s',
+    substr($hex, 0, 8),
+    substr($hex, 8, 4),
+    substr($hex, 12, 4),
+    substr($hex, 16, 4),
+    substr($hex, 20, 12)
+  );
+}
+
+function secure_random_bytes(int $len): string {
+  if (function_exists('random_bytes')) {
+    return random_bytes($len);
+  }
+  if (function_exists('openssl_random_pseudo_bytes')) {
+    $strong = false;
+    $bytes = openssl_random_pseudo_bytes($len, $strong);
+    if ($bytes !== false && $strong === true) {
+      return $bytes;
+    }
+  }
+
+  throw new RuntimeException("Aucune source d'aléa cryptographique disponible");
+}
+
 $photo = $_FILES['photo'];
 $x = intval($_POST['x']);
 $y = intval($_POST['y']);
@@ -17,17 +61,16 @@ $mimeType = finfo_file($finfo, $photo['tmp_name']);
 finfo_close($finfo);
 [$width, $height] = getimagesize($photo['tmp_name']);
 
-$doesNameMatch = preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $originalName);
 $isJpgExtension = $extension === 'jpg';
 $isJpgMimeType = $mimeType === 'image/jpeg';
 $isSizeValid = $width === 1600 && $height === 900;
 
-if (!$doesNameMatch || !$isJpgExtension || !$isJpgMimeType  || !$isSizeValid) {
+if (!$isJpgExtension || !$isJpgMimeType  || !$isSizeValid) {
     http_response_code(400);
     die('{"error":true,"message":"Please provide a photo sent from \"Nintendo Switch 2\" sharing system."}');
 }
 
-$photoName = $originalName;
+$photoName = getUuidVersion($originalName) === null ? uuidv4() : $originalName;
 $photoFileName = "$photoName.jpg";
 $branchName = "add-photo-" . time();
 
