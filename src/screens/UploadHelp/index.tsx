@@ -234,14 +234,6 @@ function UploadHelp() {
                 </b>
                 . Ceci permet d'assurer une cohérence de qualité, de taille et
                 de poids entre toutes les photos du jeu.
-                <br />
-                De plus,{" "}
-                <b>
-                  ne renommez pas la photo reçue depuis votre console avant de
-                  l'envoyer via le formulaire
-                </b>
-                . Le système se base entre autre sur le nom des photos pour
-                s'assurer de leur provenance.
               </Text>
             </Surface>
 
@@ -489,14 +481,6 @@ function UploadHelp() {
                 <b>only photos shared through this system will be accepted</b>.
                 This ensures consistency in quality, size, and file weight
                 across all game photos.
-                <br />
-                Additionally,{" "}
-                <b>
-                  don't rename the photo received from your console before
-                  submitting it via the form
-                </b>
-                . The system relies partly on photo names to ensure their
-                origin.
               </Text>
             </Surface>
 
