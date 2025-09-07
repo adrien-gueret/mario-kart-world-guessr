@@ -30,8 +30,7 @@
 }
 
 .game-map-pin.variant-king_boo,
-.game-map-pin.variant-rosalina,
-.game-map-pin.variant-lakitu {
+.game-map-pin.variant-rosalina {
   background-image: url("./ui/pins/pin-blue.png");
 }
 
@@ -41,7 +40,8 @@
 
 .game-map-pin.variant-bowser,
 .game-map-pin.variant-daisy,
-.game-map-pin.variant-dk {
+.game-map-pin.variant-dk,
+.game-map-pin.variant-lakitu {
   background-image: url("./ui/pins/pin-orange.png");
 }
 
