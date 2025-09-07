@@ -4,6 +4,50 @@ import type { ReleaseNotes } from "./types";
 
 const releaseNotes: ReleaseNotes = [
   {
+    version: "v3.1.0",
+    notes: {
+      fr: (
+        <ul>
+          <Text component="li">
+            Appel à tous les photographes&nbsp;!
+            <br />
+            <b>Mario Kart World Guessr</b> a pour le moment <b>258</b> photos.
+            C'est beaucoup, mais certainement pas assez pour les joueurs les
+            plus chevronnés...
+            <br />
+            Les utilisateurs connectés peuvent désormais proposer leurs propres
+            photos&nbsp;:&nbsp;n'hésitez pas à contribuer au projet&nbsp;! Le
+            formulaire est accessible depuis la page d'accueil.
+          </Text>
+          <Text component="li">
+            Un nouveau succès a également fait son apparition, associé à son
+            propre personnage&nbsp;:&nbsp;rendez-vous sur la page de votre
+            compte pour découvrir commment le débloquer&nbsp;!
+          </Text>
+        </ul>
+      ),
+      en: (
+        <ul>
+          <Text component="li">
+            Calling all photographers!
+            <br />
+            <b>Mario Kart World Guessr</b> currently has <b>258</b> photos.
+            That's a lot, but certainly not enough for the most seasoned
+            players...
+            <br />
+            Logged-in users can now submit their own photos — feel free to
+            contribute to the project! The submission form is available from the
+            home page.
+          </Text>
+          <Text component="li">
+            A new achievement has also been added, with its own character: visit
+            your account page to find out how to unlock it!
+          </Text>
+        </ul>
+      ),
+    },
+  },
+  {
     version: "v3.0.0",
     notes: {
       fr: (
