@@ -61,7 +61,7 @@ const en: Texts = {
   "difficulty.survival.50cc": (
     <ul>
       <li>
-        Game continues as long as you score <b>2500 points</b>
+        Game continues as long as you score <b>3000 points</b>
       </li>
       <li>
         The <b>easiest</b> photos
@@ -104,7 +104,7 @@ const en: Texts = {
   ),
   "difficulty.survival.50cc.short": (
     <>
-      Game continues as long as you score <b>2500 points</b>.
+      Game continues as long as you score <b>3000 points</b>.
     </>
   ),
   "difficulty.survival.100cc.short": (
@@ -402,6 +402,11 @@ const en: Texts = {
     "You placed a photo exactly at the right location!",
   "5000_points.unlockedItem": "Shy Guy is unlocked!",
   "shyguy.unlockClue": "Place a photo exactly at the right location.",
+
+  "4000_three_in_a_row.description":
+    "You scored at least 4000 points three times in a row!",
+  "4000_three_in_a_row.unlockedItem": "Lakitu is unlocked!",
+  "lakitu.unlockClue": "Score at least 4000 points three times in a row.",
 };
 
 export default en;

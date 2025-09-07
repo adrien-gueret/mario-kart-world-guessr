@@ -170,6 +170,17 @@ try {
     $photoCount = count($game['history']);
     $totalScore = array_sum($game["history"]);
 
+    if ($photoCount >= 3) {
+        $lastThreeScores = array_slice($game['history'], -3);
+        $areLastThreeScoresHigh = count(array_filter($lastThreeScores, function($score) {
+            return $score >= 4000;
+        })) === 3;
+
+        if ($areLastThreeScoresHigh) {
+            unlockAchievement($pdo, $currentUser['id'], '4000_three_in_a_row');
+        }
+    }
+
     $isFinished = false;
 
     switch($mode) {
@@ -179,7 +190,7 @@ try {
 
         case 'survival':
             $isFinished =
-                ($difficulty === "50cc" && $newScore < 2500) ||
+                ($difficulty === "50cc" && $newScore < 3000) ||
                 ($difficulty === "100cc" && $newScore < 3000) ||
                 ($difficulty === "150cc" && $newScore < 3500) ||
                 ($difficulty === "mirror" && $newScore < 3500);
