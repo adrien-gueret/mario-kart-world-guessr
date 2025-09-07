@@ -59,7 +59,7 @@ const fr: Texts = {
   "difficulty.survival.50cc": (
     <ul>
       <li>
-        La partie continue tant que vous marquez <b>2500 points</b>
+        La partie continue tant que vous marquez <b>3000 points</b>
       </li>
       <li>
         Les photos <b>les plus faciles</b>
@@ -102,7 +102,7 @@ const fr: Texts = {
   ),
   "difficulty.survival.50cc.short": (
     <>
-      La partie continue tant que vous marquez <b>2500 points</b>.
+      La partie continue tant que vous marquez <b>3000 points</b>.
     </>
   ),
   "difficulty.survival.100cc.short": (
@@ -411,6 +411,11 @@ const fr: Texts = {
   "5000_points.description": "Vous avez placé une photo pile au bon endroit !",
   "5000_points.unlockedItem": "Maskass est débloqué !",
   "shyguy.unlockClue": "Placez une photo pile au bon endroit.",
+
+  "4000_three_in_a_row.description":
+    "Vous avez fait au moins 4000 points trois fois de suite !",
+  "4000_three_in_a_row.unlockedItem": "Lakitu est débloqué !",
+  "lakitu.unlockClue": "Faire au moins 4000 points trois fois de suite.",
 };
 
 export default fr;

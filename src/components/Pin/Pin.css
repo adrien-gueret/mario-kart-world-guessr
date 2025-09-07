@@ -30,7 +30,8 @@
 }
 
 .game-map-pin.variant-king_boo,
-.game-map-pin.variant-rosalina {
+.game-map-pin.variant-rosalina,
+.game-map-pin.variant-lakitu {
   background-image: url("./ui/pins/pin-blue.png");
 }
 
