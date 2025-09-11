@@ -22,7 +22,7 @@ const releaseNotes: ReleaseNotes = [
           <Text component="li">
             Un nouveau succès a également fait son apparition, associé à son
             propre personnage&nbsp;:&nbsp;rendez-vous sur la page de votre
-            compte pour découvrir commment le débloquer&nbsp;!
+            compte pour découvrir comment le débloquer&nbsp;!
           </Text>
         </ul>
       ),
