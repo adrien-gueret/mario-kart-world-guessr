@@ -63,7 +63,7 @@ finfo_close($finfo);
 
 $isJpgExtension = $extension === 'jpg';
 $isJpgMimeType = $mimeType === 'image/jpeg';
-$isSizeValid = $width === 1600 && $height === 900;
+$isSizeValid = ($width === 1600 && $height === 900) || ($width === 1920 && $height === 1080);
 
 if (!$isJpgExtension || !$isJpgMimeType  || !$isSizeValid) {
     http_response_code(400);
