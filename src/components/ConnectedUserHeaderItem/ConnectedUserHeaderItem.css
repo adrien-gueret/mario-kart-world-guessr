@@ -1,0 +1,59 @@
+.connected-user-header-item {
+  margin-right: 24px;
+  background-image: url(./backgrounds/dialog.jpg);
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-self: center;
+  gap: 4px;
+  border: 1px solid #213547;
+}
+
+.connected-user-header-item b {
+  font-weight: bolder;
+}
+
+.connected-user-header-item img {
+  margin-right: -4px;
+}
+
+.connected-user-header-item a,
+.connected-user-header-item a:visited {
+  color: inherit;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.connected-user-header-item a:hover,
+.connected-user-header-item a:focus-visible {
+  text-decoration: underline;
+}
+
+.connected-user-header-item .notification-badge {
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+  background-image: url(./ui/bell.png);
+  background-size: contain;
+  position: relative;
+}
+
+.connected-user-header-item .notification-badge b {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  font-size: 14px;
+  padding: 2px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background-color: red;
+  color: white;
+  position: absolute;
+  right: -12px;
+  top: 0;
+}

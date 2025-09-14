@@ -63,18 +63,23 @@ finfo_close($finfo);
 
 $isJpgExtension = $extension === 'jpg';
 $isJpgMimeType = $mimeType === 'image/jpeg';
-$isSizeValid = ($width === 1600 && $height === 900) || ($width === 1920 && $height === 1080);
+
+$isSizeValid = true;
 
 if (!$isJpgExtension || !$isJpgMimeType  || !$isSizeValid) {
     http_response_code(400);
-    die('{"error":true,"message":"Please provide a photo sent from \"Nintendo Switch 2\" sharing system."}');
+    die(json_encode([
+        'error' => true,
+        'message' => $headers['accept-language'] === 'fr'
+            ? 'Votre photo semble invalide. Veuillez fournir une photo envoyée depuis le système de partage de votre "Nintendo Switch 2".'
+            : 'Your photo seems invalid. Please provide a photo sent from "Nintendo Switch 2" sharing system.'
+    ]));
 }
 
-$photoName = getUuidVersion($originalName) === null ? uuidv4() : $originalName;
-$photoFileName = "$photoName.jpg";
 $branchName = "add-photo-" . time();
 
 $refData = githubApi("GET", "/repos/$owner/$repo/git/ref/heads/$baseBranch", $githubToken);
+
 $baseSha = $refData['object']['sha'];
 
 githubApi("POST", "/repos/$owner/$repo/git/refs", $githubToken, [
@@ -84,24 +89,51 @@ githubApi("POST", "/repos/$owner/$repo/git/refs", $githubToken, [
 
 $authorName = empty($currentUser['username']) ? "Anonymous" : $currentUser['username'];
 $authorEmail =  empty($currentUser['email']) ? "anoynmous@mariouniversalis.fr" : $currentUser['email'];
+$authorLocale = empty($currentUser['locale']) ? "en" : $currentUser['locale'];
 
 $photoContent = base64_encode(file_get_contents($photo['tmp_name']));
-githubApi("PUT", "/repos/$owner/$repo/contents/public/photos/$photoFileName", $githubToken, [
-  "message" => "Add photo $photoName",
-  "content" => $photoContent,
-  "branch" => $branchName,
-  "author" => [
-    "name" => $authorName,
-    "email" => $authorEmail
-  ],
-]);
+
+$uploadOK = false;
+$triesCount = 0;
+
+while(!$uploadOK && $triesCount < 5) {
+  try {
+    $photoName = ($triesCount > 0 || getUuidVersion($originalName) === null) ? uuidv4() : $originalName;
+    $photoFileName = "$photoName.jpg";
+
+    githubApi("PUT", "/repos/$owner/$repo/contents/public/photos/$photoFileName", $githubToken, [
+      "message" => "Add photo $photoName",
+      "content" => $photoContent,
+      "branch" => $branchName,
+      "author" => [
+        "name" => $authorName,
+        "email" => $authorEmail
+      ],
+    ]);
+
+    $uploadOK = true;
+  } catch (Exception $e) {
+    $triesCount++;
+
+    if ($triesCount >= 5) {
+      http_response_code(500);
+       die(json_encode([
+        'error' => true,
+        'message' => $headers['accept-language'] === 'fr'
+            ? 'Impossible de sauvegarder votre photo : veuillez réessayer plus tard.'
+            : 'Unable to save your photo: please try again later.'
+    ]));
+    }
+  } 
+}
+
 
 
 $pr = githubApi("POST", "/repos/$owner/$repo/pulls", $githubToken, [
   "title" => "Ajout photo",
   "head" => $branchName,
   "base" => $baseBranch,
-  "body" => "Ajout d'une nouvelle photo à x: $x, y: $y"
+  "body" => "$authorName ($authorLocale) veut ajouter une nouvelle photo en ($x, $y)"
 ]);
 
 // Ajouter la photo dans la table `mario-kart-world-photos`

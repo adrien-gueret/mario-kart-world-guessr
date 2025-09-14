@@ -1,8 +1,9 @@
 import { useCurrentUser } from "@/auth/CurrentUserProvider";
 
 import Button from "@/components/Button";
-import Logo from "@/components/Logo";
+import ConnectedUserHeaderItem from "@/components/ConnectedUserHeaderItem";
 import Credits from "@/components/Credits";
+import Logo from "@/components/Logo";
 
 import { useTranslations } from "@/i18n";
 
@@ -14,7 +15,7 @@ function App() {
   const { currentScreenName, setCurrentScreenName, CurrentScreen } =
     useScreen();
 
-  const { isAnonymous, user, logout } = useCurrentUser();
+  const { isAnonymous } = useCurrentUser();
 
   const { translate } = useTranslations();
 
@@ -30,22 +31,7 @@ function App() {
             {translate("login.screen.title")}
           </Button>
         ) : (
-          <div className="user-connection">
-            {user.marioCharacter && (
-              <img
-                style={{ width: "32px", verticalAlign: "text-bottom" }}
-                src={`./ui/pins/icon-${user.marioCharacter}.png`}
-                alt=""
-              />
-            )}
-            <a href="#/account">
-              <b>{user.username}</b>
-            </a>
-            &bull;
-            <a href="#" onClick={logout}>
-              {translate("logout.label")}
-            </a>
-          </div>
+          <ConnectedUserHeaderItem />
         )}
 
         <Button

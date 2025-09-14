@@ -12,7 +12,7 @@ import UploadCoordinates from "@/components/UploadCoordinates";
 import { useCurrentUser } from "@/auth/CurrentUserProvider";
 
 import fetchApi from "@/services/api";
-import useRequireAuth from "@/services/useRequiredAuth";
+import useRequiredAuth from "@/services/useRequiredAuth";
 
 import { useScreen } from "@/screens/ScreensProvider";
 
@@ -38,7 +38,7 @@ function Upload() {
 
   const { translate } = useTranslations();
 
-  const isAnonymous = useRequireAuth();
+  const isAnonymous = useRequiredAuth();
 
   if (isAnonymous) {
     return null;
