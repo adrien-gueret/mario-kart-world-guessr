@@ -154,6 +154,7 @@ export type Texts = {
     gameMode: GameMode,
     gameDifficulty: Difficulty
   ) => ReactNode;
+  "notifications.title": string;
 } & {
   [K in Achievement as `${K}.unlockedItem`]: string;
 } & {

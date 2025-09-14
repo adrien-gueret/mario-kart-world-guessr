@@ -361,6 +361,7 @@ const en: Texts = {
       <b>{en[`difficulty.${gameDifficulty}.title`]}</b> yet.
     </>
   ),
+  "notifications.title": "Notifications",
   //////
   "gold_50cc_survival.description":
     "You won the Gold Cup in Survival mode at 50cc!",
