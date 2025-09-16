@@ -9,6 +9,7 @@ import Cup from "@/components/Cup";
 import LeaderboardRow from "@/components/LeaderboardRow";
 import Loader from "@/components/Loader";
 import Table from "@/components/Table";
+import Tabs from "@/components/Tabs";
 
 import fetchApi from "@/services/api";
 import { useScreen } from "@/screens";
@@ -83,26 +84,23 @@ export default function Leaderboard({
       <div className="leaderboard">
         <div>
           {!areBothLeaderboardsIdentical && (
-            <nav className="leaderboard-tabs">
-              <button
-                className={`leaderboard-tab ${
-                  activeTab === "bots" ? "is-active" : ""
-                }`}
-                tabIndex={activeTab === "bots" ? -1 : 0}
-                onClick={() => setActiveTab("bots")}
-              >
-                {translate("leaderboard.tab.bots")}
-              </button>
-              <button
-                className={`leaderboard-tab ${
-                  activeTab === "all" ? "is-active" : ""
-                }`}
-                tabIndex={activeTab === "all" ? -1 : 0}
-                onClick={() => setActiveTab("all")}
-              >
-                {translate("leaderboard.tab.allPlayers")}
-              </button>
-            </nav>
+            <div className="leaderboard-tabs">
+              <Tabs
+                activeTab={activeTab}
+                tabs={[
+                  {
+                    children: translate("leaderboard.tab.bots"),
+                    value: "bots",
+                  },
+                  {
+                    children: translate("leaderboard.tab.allPlayers"),
+                    value: "all",
+                  },
+                ]}
+                onTabChange={setActiveTab}
+                variant="table"
+              />
+            </div>
           )}
 
           <div className="leaderboard-inner-container">

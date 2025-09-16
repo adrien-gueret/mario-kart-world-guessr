@@ -30,7 +30,7 @@ export default function ConnectedUserHeaderItem() {
       {notificationCount > 0 && (
         <a
           className="notification-badge"
-          href="#/notifications"
+          href="#/account/notifications"
           title={translate("notifications.title")}
         >
           <b>{Math.min(notificationCount, 99)}</b>

@@ -192,7 +192,7 @@ const en: Texts = {
   "rules.mode.daily.title": "Daily Photos Mode",
   "rules.mode.daily.description":
     "Get the best possible score on five daily photos!",
-  "leaderboard.tab.bots": "Mario & Co",
+  "leaderboard.tab.bots": "Mario & Co (bots)",
   "leaderboard.tab.allPlayers": "All Players",
   "leaderboard.congrats": "Congratulations!",
   "leaderboard.tooBad": "Too bad...",
@@ -309,6 +309,9 @@ const en: Texts = {
   "account.marioCharacter.label": "Select your favorite character",
   "account.marioCharacter.helper":
     "It will appear in the pins you place on the map and next to your username in leaderboards.",
+  "account.tab.preferences": "Preferences",
+  "account.tab.notifications": "Notifications",
+  "account.tab.photos": "My photos",
   "giveUp.label": "Give up",
   "giveUp.title": "Give up the game?",
   "giveUp.description":

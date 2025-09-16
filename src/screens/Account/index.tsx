@@ -1,29 +1,23 @@
-import { useEffect, useState } from "react";
-
-import { useTranslations } from "@/i18n";
-
-import { useCurrentUser } from "@/auth/CurrentUserProvider";
-
 import Button from "@/components/Button";
-import Checkbox from "@/components/Checkbox";
-import Form from "@/components/Form";
+
 import ConstraintContainer from "@/components/ConstraintContainer";
-import Snackbar from "@/components/Snackbar";
-import Surface from "@/components/Surface";
-
-import { useScreen } from "@/screens/ScreensProvider";
+import Tabs from "@/components/Tabs";
+import { useTranslations } from "@/i18n";
+import { useScreen, type ScreenName } from "@/screens/ScreensProvider";
 import useRequiredAuth from "@/services/useRequiredAuth";
-import type { User } from "@/types/user";
 
-import CharacterSelect from "./CharacterSelect";
+import Preferences from "./Preferences";
 
-export default function Account() {
-  const { currentLocale, translate, setCurrentLocale } = useTranslations();
-  const [showEditAccountSuccess, setShowEditAccountSuccess] = useState(false);
-  const [showEditAccountError, setShowEditAccountError] = useState(false);
-  const [editAccountErrorMessage, setEditAccountErrorMessage] = useState("");
+type Props = {
+  activeTab?: Extract<
+    ScreenName,
+    "Account/Preferences" | "Account/Notifications" | "Account/Photos"
+  >;
+};
+
+export default function Account({ activeTab = "Account/Preferences" }: Props) {
   const { setCurrentScreenName } = useScreen();
-  const { user, setCurrentUser } = useCurrentUser();
+  const { translate } = useTranslations();
 
   const isAnonymous = useRequiredAuth();
 
@@ -31,103 +25,71 @@ export default function Account() {
     return null;
   }
 
+  const tabToContent: Record<
+    NonNullable<Props["activeTab"]>,
+    React.ReactNode
+  > = {
+    "Account/Photos": <div>Soon</div>,
+    "Account/Preferences": <Preferences />,
+    "Account/Notifications": <div>Soon</div>,
+  };
+
   return (
-    <ConstraintContainer>
+    <div>
       <h2>{translate("account.title")}</h2>
 
-      <Surface disableSkew>
-        <Form
-          method="PUT"
-          action="/update-user"
-          onSubmit={() => {
-            setShowEditAccountSuccess(false);
-            setShowEditAccountError(false);
-          }}
-          onSuccess={(response: { user: User }) => {
-            setShowEditAccountSuccess(true);
-            setCurrentUser(response.user);
-          }}
-          onError={(error) => {
-            setEditAccountErrorMessage(error.message ?? "An error occurred");
-            setShowEditAccountError(true);
-          }}
-        >
-          <div className="row">
-            <label htmlFor="form-username">
-              {translate("account.username.label")}
-            </label>
-
-            <input
-              type="text"
-              name="username"
-              id="form-username"
-              defaultValue={user.username}
-              required
-            />
-
-            <span className="helper">
-              {translate("account.username.helper")}
-            </span>
-          </div>
-
-          <div className="row">
-            <label htmlFor="locale-fr">
-              {translate("account.locale.label")}
-            </label>
-            <Checkbox
-              id="locale-fr"
-              name="locale"
-              label="Français"
-              value="fr"
-              checked={currentLocale === "fr"}
-              onChange={() => setCurrentLocale("fr")}
-              isRadio
-            />
-            <Checkbox
-              name="locale"
-              label="English"
-              value="en"
-              checked={currentLocale === "en"}
-              onChange={() => setCurrentLocale("en")}
-              isRadio
-            />
-            <span className="helper">{translate("account.locale.helper")}</span>
-          </div>
-
-          <div className="row">
-            <label htmlFor="mario-character">
-              {translate("account.marioCharacter.label")}
-            </label>
-
-            <CharacterSelect defaultValue={user.marioCharacter} />
-
-            <span className="helper">
-              {translate("account.marioCharacter.helper")}
-            </span>
-          </div>
-        </Form>
-      </Surface>
-
-      <div className="back-button">
-        <Button onClick={() => setCurrentScreenName("Play")}>
-          {translate("play.label")}
-        </Button>
+      <div style={{ margin: "24px 0" }}>
+        <Tabs
+          activeTab={activeTab}
+          tabs={[
+            {
+              children: (
+                <div>
+                  <img src="./ui/preferences.avif" alt="" />{" "}
+                  {translate("account.tab.preferences")}
+                </div>
+              ),
+              value: "Account/Preferences",
+              href: "#/account/preferences",
+            },
+            {
+              children: (
+                <div>
+                  <img src="./ui/my-photos.avif" alt="" />{" "}
+                  {translate("account.tab.photos")}
+                </div>
+              ),
+              value: "Account/Photos",
+              href: "#/account/photos",
+            },
+            {
+              children: (
+                <div>
+                  <img src="./ui/notifications.avif" alt="" />{" "}
+                  {translate("account.tab.notifications")}
+                </div>
+              ),
+              value: "Account/Notifications",
+              href: "#/account/notifications",
+            },
+          ]}
+          tabComponent="a"
+          variant="chips"
+        />
       </div>
 
-      <Snackbar
-        isOpen={showEditAccountSuccess}
-        onClose={() => setShowEditAccountSuccess(false)}
-      >
-        {translate("account.save.success")}
-      </Snackbar>
+      <ConstraintContainer>
+        {tabToContent[activeTab]}
 
-      <Snackbar
-        isOpen={showEditAccountError}
-        onClose={() => setShowEditAccountError(false)}
-        type="error"
-      >
-        {editAccountErrorMessage}
-      </Snackbar>
-    </ConstraintContainer>
+        <div className="back-button">
+          <Button
+            variant="secondary"
+            onClick={() => setCurrentScreenName("Play")}
+          >
+            {translate("play.label")}
+          </Button>
+        </div>
+      </ConstraintContainer>
+    </div>
   );
 }

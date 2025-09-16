@@ -92,7 +92,7 @@ export default function Form({
     >
       {children}
 
-      <Button variant="secondary" type="submit">
+      <Button variant="primary" type="submit">
         {submitLabel ?? translate("form.submit")}
       </Button>
     </form>
