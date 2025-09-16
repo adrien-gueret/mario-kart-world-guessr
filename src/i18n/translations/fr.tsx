@@ -191,7 +191,7 @@ const fr: Texts = {
   "rules.mode.daily.title": "Mode Photos du jour",
   "rules.mode.daily.description":
     "Faite le meilleur score possible sur cinq photos du jour !",
-  "leaderboard.tab.bots": "Mario & Co",
+  "leaderboard.tab.bots": "Mario & Co (bots)",
   "leaderboard.tab.allPlayers": "Tous les joueurs",
   "leaderboard.congrats": "Félicitations !",
   "leaderboard.tooBad": "Dommage...",
@@ -315,6 +315,9 @@ const fr: Texts = {
   "account.marioCharacter.label": "Sélectionnez votre personnage favori",
   "account.marioCharacter.helper":
     "Il apparaitra dans les pins que vous placez sur la carte et à côté de votre pseudo dans les classements.",
+  "account.tab.preferences": "Préférences",
+  "account.tab.notifications": "Notifications",
+  "account.tab.photos": "Mes photos",
   "giveUp.label": "Abandonner",
   "giveUp.title": "Abandonner la partie ?",
   "giveUp.description":

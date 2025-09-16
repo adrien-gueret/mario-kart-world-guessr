@@ -11,50 +11,59 @@ import {
 import { flushSync } from "react-dom";
 
 import Account from "./Account";
+import AccountNotifications from "./Account/Notifications/screen";
+import AccountPhotos from "./Account/Photos/screen";
+import AccountPreferences from "./Account/Preferences/screen";
 import { SurvivalGame, GoalGame, DailyGame } from "./Game";
 import Home from "./Home";
 import Leaderboards from "./Leaderboards";
 import Login from "./Login";
 import Photos from "./Photos";
 import Play from "./Play";
+import PrivacyPolicies from "./PrivacyPolicies";
 import Upload from "./Upload";
 import UploadHelp from "./UploadHelp";
-import PrivacyPolicies from "./PrivacyPolicies";
 import ReleaseNotes from "./ReleaseNotes";
 import TermsServices from "./TermsServices";
 
 export type ScreenName =
-  | "Home"
-  | "Play"
-  | "Leaderboards"
-  | "SurvivalGame"
-  | "GoalGame"
+  | "Account"
+  | "Account/Notifications"
+  | "Account/Photos"
+  | "Account/Preferences"
   | "DailyGame"
-  | "Upload"
-  | "UploadHelp"
-  | "Photos"
+  | "GoalGame"
+  | "Home"
+  | "Leaderboards"
   | "Login"
+  | "Photos"
+  | "Play"
   | "PrivacyPolicies"
-  | "TermsServices"
   | "ReleaseNotes"
-  | "Account";
+  | "SurvivalGame"
+  | "TermsServices"
+  | "Upload"
+  | "UploadHelp";
 type ScreenHashtag = `#/${Lowercase<ScreenName>}`;
 
 const screenHashtagsToScreenNames: Record<ScreenHashtag, ScreenName> = {
-  "#/home": "Home",
-  "#/play": "Play",
-  "#/leaderboards": "Leaderboards",
-  "#/survivalgame": "SurvivalGame",
-  "#/goalgame": "GoalGame",
+  "#/account": "Account",
+  "#/account/notifications": "Account/Notifications",
+  "#/account/photos": "Account/Photos",
+  "#/account/preferences": "Account/Preferences",
   "#/dailygame": "DailyGame",
+  "#/goalgame": "GoalGame",
+  "#/home": "Home",
+  "#/leaderboards": "Leaderboards",
+  "#/login": "Login",
+  "#/photos": "Photos",
+  "#/play": "Play",
+  "#/privacypolicies": "PrivacyPolicies",
+  "#/releasenotes": "ReleaseNotes",
+  "#/survivalgame": "SurvivalGame",
+  "#/termsservices": "TermsServices",
   "#/upload": "Upload",
   "#/uploadhelp": "UploadHelp",
-  "#/photos": "Photos",
-  "#/login": "Login",
-  "#/privacypolicies": "PrivacyPolicies",
-  "#/termsservices": "TermsServices",
-  "#/releasenotes": "ReleaseNotes",
-  "#/account": "Account",
 };
 
 type ScreenState = Record<string, any>;
@@ -106,20 +115,23 @@ export function ScreensProvider({ children }: { children: ReactNode }) {
   const [screenState, setScreenState] = useState<Record<string, any>>({});
 
   const ScreenNameToScreen: Record<ScreenName, ElementType> = {
-    Home,
-    Play,
-    Leaderboards,
-    SurvivalGame,
-    GoalGame,
+    Account,
+    "Account/Notifications": AccountNotifications,
+    "Account/Photos": AccountPhotos,
+    "Account/Preferences": AccountPreferences,
     DailyGame,
+    GoalGame,
+    Home,
+    Leaderboards,
+    Login,
+    Photos,
+    Play,
+    PrivacyPolicies,
+    ReleaseNotes,
+    SurvivalGame,
+    TermsServices,
     Upload,
     UploadHelp,
-    Photos,
-    Login,
-    PrivacyPolicies,
-    TermsServices,
-    ReleaseNotes,
-    Account,
   };
 
   const handleHashChange = () => {

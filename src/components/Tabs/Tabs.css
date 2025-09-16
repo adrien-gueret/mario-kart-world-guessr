@@ -1,0 +1,111 @@
+.tabs {
+  list-style: none;
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.tab {
+  z-index: 0;
+}
+
+.tab.is-active {
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* TABLE variant */
+.tabs.table {
+  margin: 0 auto -15px auto;
+  padding: 0 0 0 16px;
+}
+
+.tabs.table .tab {
+  background-color: rgba(0, 0, 0, 0.95);
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 16px;
+  border: 2px solid #bdbdbd;
+  border-bottom-color: transparent;
+  border-radius: 5px 5px 0 0;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 1.25rem;
+}
+
+.tabs.table .tab:hover,
+.tabs.table .tab:focus-visible {
+  box-shadow: 1px 1px 0 1.5px white, -1px -1px 0 1.5px white;
+  bottom: 1px;
+}
+
+/* CHIPS variant */
+.tabs.chips {
+  gap: 24px;
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.tabs.chips .tab {
+  color: #000;
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 1.25rem;
+  transform: skewX(-20deg);
+  filter: drop-shadow(5px 5px 0 #000);
+  border: 4px solid #000;
+  background-color: #fff;
+  background-image: url(./backgrounds/dirt.webp);
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: bold;
+}
+
+.tabs.chips .tab > div {
+  display: inline-block;
+  transform: skewX(20deg);
+  padding-left: 90px;
+}
+
+.tabs.chips .tab > div img {
+  position: absolute;
+  left: -8px;
+  bottom: -12px;
+  width: 80px;
+  pointer-events: none;
+  transform-origin: right bottom;
+  transition: transform 0.5s
+    linear(
+      0,
+      0.009,
+      0.035 2.1%,
+      0.141 4.4%,
+      0.723 12.9%,
+      0.938,
+      1.077 20.4%,
+      1.121,
+      1.149 24.3%,
+      1.163 27%,
+      1.154,
+      1.129 32.8%,
+      1.017 43.1%,
+      0.991,
+      0.977 51%,
+      0.975 57.1%,
+      1.003 76.9%,
+      1
+    );
+}
+
+.tabs.chips .tab.is-active {
+  background-color: #f8b801;
+}
+
+.tabs.chips .tab:hover > div img,
+.tabs.chips .tab:focus-visible > div img {
+  transform: scale(1.1);
+}

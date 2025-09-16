@@ -127,6 +127,9 @@ export type Texts = {
   "account.locale.label": string;
   "account.locale.helper": string;
   "account.save.success": string;
+  "account.tab.preferences": string;
+  "account.tab.notifications": string;
+  "account.tab.photos": string;
   "play.label": string;
   "account.marioCharacter.label": string;
   "account.marioCharacter.helper": string;
