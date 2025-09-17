@@ -10,6 +10,14 @@ import {
 import { useCurrentUser } from "@/auth/CurrentUserProvider";
 import fetchApi from "@/services/api";
 
+// TODO: provide real notifications and not only the count
+type Notification = {
+  id: number;
+  createdAt: string;
+  isRead: boolean;
+  type: string; // TODO
+};
+
 type NotificationsContextType = {
   unreadNotificationCount: number;
   readOneNotification: () => void;
