@@ -3,10 +3,12 @@ import Button from "@/components/Button";
 import ConstraintContainer from "@/components/ConstraintContainer";
 import Tabs from "@/components/Tabs";
 import { useTranslations } from "@/i18n";
+import { useNotifications } from "@/notifications/NotificationsProvider";
 import { useScreen, type ScreenName } from "@/screens/ScreensProvider";
 import useRequiredAuth from "@/services/useRequiredAuth";
 
 import Preferences from "./Preferences";
+
 
 type Props = {
   activeTab?: Extract<
@@ -18,6 +20,7 @@ type Props = {
 export default function Account({ activeTab = "Account/Preferences" }: Props) {
   const { setCurrentScreenName } = useScreen();
   const { translate } = useTranslations();
+  const { unreadNotificationCount } = useNotifications();
 
   const isAnonymous = useRequiredAuth();
 
@@ -66,7 +69,7 @@ export default function Account({ activeTab = "Account/Preferences" }: Props) {
               children: (
                 <div>
                   <img src="./ui/notifications.avif" alt="" />{" "}
-                  {translate("account.tab.notifications")}
+                  {translate("account.tab.notifications")}{unreadNotificationCount > 0 && ` (${unreadNotificationCount})`}
                 </div>
               ),
               value: "Account/Notifications",
