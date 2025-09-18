@@ -1,6 +1,6 @@
 import { getKey, storeKey } from "./store";
 
-const ROOT_URL = "https://www.mariouniversalis.fr/mario-kart-world-guessr/api";
+const ROOT_URL = import.meta.env.VITE_API_ROOT_URL;
 
 function getHeaders({
   accessToken,

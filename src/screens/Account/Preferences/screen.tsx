@@ -1,5 +1,5 @@
 import Account from "..";
 
-export default function Preferences() {
+export default function ScreenPreferences() {
   return <Account activeTab="Account/Preferences" />;
 }

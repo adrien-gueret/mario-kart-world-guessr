@@ -32,8 +32,24 @@
   filter: hue-rotate(195deg);
 }
 
-.game-button.secondary img {
+.game-button.tertiary {
+  font-size: 0.9rem;
+  transform: skewX(-5deg);
+  filter: hue-rotate(90deg);
+}
+
+.game-button.game-button.tertiary:hover {
+  animation: 0.3s ease-out small-bounce;
+}
+
+.game-button.secondary img,
+.game-button.tertiary img {
   display: none;
+}
+
+.game-button[disabled] {
+  pointer-events: none;
+  filter: grayscale(100%);
 }
 
 @keyframes bounce {
@@ -43,5 +59,15 @@
 
   100% {
     transform: skewX(-10deg) scale(1);
+  }
+}
+
+@keyframes small-bounce {
+  0% {
+    transform: skewX(-5deg) scale(1.05);
+  }
+
+  100% {
+    transform: skewX(-5deg) scale(1);
   }
 }

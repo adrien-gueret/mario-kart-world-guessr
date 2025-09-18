@@ -7,8 +7,8 @@ import { useNotifications } from "@/notifications/NotificationsProvider";
 import { useScreen, type ScreenName } from "@/screens/ScreensProvider";
 import useRequiredAuth from "@/services/useRequiredAuth";
 
+import Notifications from "./Notifications";
 import Preferences from "./Preferences";
-
 
 type Props = {
   activeTab?: Extract<
@@ -34,7 +34,7 @@ export default function Account({ activeTab = "Account/Preferences" }: Props) {
   > = {
     "Account/Photos": <div>Soon</div>,
     "Account/Preferences": <Preferences />,
-    "Account/Notifications": <div>Soon</div>,
+    "Account/Notifications": <Notifications />,
   };
 
   return (
@@ -69,7 +69,9 @@ export default function Account({ activeTab = "Account/Preferences" }: Props) {
               children: (
                 <div>
                   <img src="./ui/notifications.avif" alt="" />{" "}
-                  {translate("account.tab.notifications")}{unreadNotificationCount > 0 && ` (${unreadNotificationCount})`}
+                  {translate("account.tab.notifications")}
+                  {unreadNotificationCount > 0 &&
+                    ` (${unreadNotificationCount})`}
                 </div>
               ),
               value: "Account/Notifications",

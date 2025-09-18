@@ -4,7 +4,7 @@ import arrowUrl from "./arrow.svg";
 import "./Button.css";
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary";
 };
 
 export default function Button({

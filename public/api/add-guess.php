@@ -191,7 +191,7 @@ try {
         case 'survival':
             $isFinished =
                 ($difficulty === "50cc" && $newScore < 3000) ||
-                ($difficulty === "100cc" && $newScore < 3000) ||
+                ($difficulty === "100cc" && $newScore < 3250) ||
                 ($difficulty === "150cc" && $newScore < 3500) ||
                 ($difficulty === "mirror" && $newScore < 3500);
         break;

@@ -66,7 +66,7 @@ if ($event['pull_request']['merged'] === true) {
         "INSERT INTO `mario-kart-world-notifications` (id_user, notification_type, specific_data)
         VALUES (:id_user, 'photo_refused', :specific_data)");
     $insertStmt->bindParam(':id_user', $photo['author_id'], PDO::PARAM_INT);
-    $insertStmt->bindParam(':specific_data', json_encode(['photo_id' => $photo['id']]), PDO::PARAM_STR);
+    $insertStmt->bindParam(':specific_data', json_encode(['photo_id' => $photo['id'], 'reason' => $refusedReason]), PDO::PARAM_STR);
     $insertStmt->execute();
 
     http_response_code(200);

@@ -1,5 +1,5 @@
 import Account from "..";
 
-export default function Notifications() {
+export default function ScreenNotifications() {
   return <Account activeTab="Account/Notifications" />;
 }

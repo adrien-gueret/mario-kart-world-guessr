@@ -157,7 +157,14 @@ export type Texts = {
     gameMode: GameMode,
     gameDifficulty: Difficulty
   ) => ReactNode;
+  "notifications.none": string;
   "notifications.title": string;
+  "notifications.photo_validated.title": string;
+  "notifications.photo_validated.description": string;
+  "notifications.photo_refused.title": string;
+  "notifications.photo_refused.description": (reason: string) => ReactNode;
+  "notifications.deleting": string;
+  "notification.delete": string;
 } & {
   [K in Achievement as `${K}.unlockedItem`]: string;
 } & {
