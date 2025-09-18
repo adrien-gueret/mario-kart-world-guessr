@@ -2,9 +2,7 @@
 
 require_once __DIR__ . '/___middleware.php';
 
-require_once __DIR__ . '/___achievements.php';
-
-allowMethod('GET');
+$_DELETE = allowMethod('DELETE');
 
 if (empty($currentUser)) {
     http_response_code(401);
@@ -14,13 +12,22 @@ if (empty($currentUser)) {
 
 try {
     $stmt = $pdo->prepare(
-        "SELECT
-            n.id, n.notification_type as `type`, n.specific_data as specificData,
-            n.created_at as createdAt
-        FROM `mario-kart-world-notifications` n
-        WHERE n.id_user = :userId
-        ORDER BY n.created_at DESC
-      ");
+        "DELETE FROM `mario-kart-world-notifications` n
+        WHERE n.id_user = :userId AND n.id = :notificationId");
+        
+    $stmt->bindValue(':userId', $currentUser['id'], PDO::PARAM_INT);
+    $stmt->bindValue(':notificationId', $_DELETE['notificationId'], PDO::PARAM_INT);
+
+    $stmt->execute();
+
+    $stmt = $pdo->prepare(
+    "SELECT
+        n.id, n.notification_type as `type`, n.specific_data as specificData,
+        n.created_at as createdAt
+    FROM `mario-kart-world-notifications` n
+    WHERE n.id_user = :userId
+    ORDER BY n.created_at DESC
+    ");
         
     $stmt->bindValue(':userId', $currentUser['id'], PDO::PARAM_INT);
 

@@ -10,52 +10,70 @@ import {
 import { useCurrentUser } from "@/auth/CurrentUserProvider";
 import fetchApi from "@/services/api";
 
-// TODO: provide real notifications and not only the count
-type Notification = {
-  id: number;
-  createdAt: string;
-  isRead: boolean;
-  type: string; // TODO
-};
+import type { Notification } from "./types";
 
 type NotificationsContextType = {
+  allNotifications: Notification[];
   unreadNotificationCount: number;
-  readOneNotification: () => void;
+  readNotification: (notificationId: number) => Promise<void>;
 };
 
 const NotificationsContext = createContext<NotificationsContextType>({
+  allNotifications: [],
   unreadNotificationCount: 0,
-  readOneNotification: () => {},
+  readNotification: async () => {},
 } as NotificationsContextType);
 
 export function NotificationsProvider({ children }: { children: ReactNode }) {
-  const [notificationCount, setNotificationCount] = useState(0);
+  const [allNotifications, setAllNotifications] = useState<Notification[]>([]);
+
   const { isAnonymous } = useCurrentUser();
 
-  const readOneNotification = useCallback(() => {
-    setNotificationCount((count) => Math.max(0, count - 1));
-  }, []);
+  const readNotification = useCallback(
+    async (notificationId: number) => {
+      if (isAnonymous) {
+        return;
+      }
 
-  const fetchNotificationCount = useCallback(async () => {
+      const formData = new FormData();
+      formData.append("notificationId", String(notificationId));
+      const response = await fetchApi("/notification", "DELETE", formData);
+      const newNotifications = await response.json();
+      setAllNotifications(newNotifications);
+    },
+    [isAnonymous]
+  );
+
+  const fetchNotifications = useCallback(async () => {
     if (isAnonymous) {
       return;
     }
 
     const response = await fetchApi("/notifications");
     const notifications = await response.json();
-    setNotificationCount(Math.min(99, notifications.length));
+    setAllNotifications(notifications);
   }, [isAnonymous]);
 
   useEffect(() => {
-    fetchNotificationCount();
-    const clock = window.setInterval(fetchNotificationCount, 60000);
+    fetchNotifications();
+    const clock = window.setInterval(fetchNotifications, 60000);
 
     return () => {
       window.clearInterval(clock);
     };
-  }, [fetchNotificationCount]);
+  }, [fetchNotifications]);
 
-  return <NotificationsContext value={{ unreadNotificationCount: notificationCount, readOneNotification }}>{children}</NotificationsContext>;
+  return (
+    <NotificationsContext
+      value={{
+        allNotifications,
+        unreadNotificationCount: allNotifications.length,
+        readNotification,
+      }}
+    >
+      {children}
+    </NotificationsContext>
+  );
 }
 
 export function useNotifications() {
@@ -69,5 +87,3 @@ export function useNotifications() {
 
   return context;
 }
-
-

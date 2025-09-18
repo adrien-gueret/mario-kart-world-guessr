@@ -73,7 +73,7 @@ const en: Texts = {
   "difficulty.survival.100cc": (
     <ul>
       <li>
-        Game continues as long as you score <b>3000 points</b>
+        Game continues as long as you score <b>3250 points</b>
       </li>
       <li>
         Most photos, <b>except</b> the most difficult ones
@@ -109,7 +109,7 @@ const en: Texts = {
   ),
   "difficulty.survival.100cc.short": (
     <>
-      Game continues as long as you score <b>3000 points</b>.
+      Game continues as long as you score <b>3250 points</b>.
     </>
   ),
   "difficulty.survival.150cc.short": (
@@ -221,7 +221,7 @@ const en: Texts = {
     <>
       <p>You have reached the 50,000 points goal!</p>
       <p>
-        You won at photo n°<b>{photoCount}</b>! Can you do better?
+        You won at photo #<b>{photoCount}</b>! Can you do better?
       </p>
     </>
   ),
@@ -236,7 +236,7 @@ const en: Texts = {
   "share.share.button.label": "Share",
   "credits.by": "A game by ",
   "game.globalScore": "Score: ",
-  "game.globalScore.photoIndex": "Photo n°",
+  "game.globalScore.photoIndex": "Photo #",
   "game.globalScore.showOtherPlayers":
     "Show the median location of all players",
   "home.button": "Home",
@@ -364,7 +364,30 @@ const en: Texts = {
       <b>{en[`difficulty.${gameDifficulty}.title`]}</b> yet.
     </>
   ),
+  "notifications.none":
+    "No notifications. You'll be notified here when photos you submitted are validated.",
   "notifications.title": "Notifications",
+  "notifications.photo_validated.title": "Your photo has been approved!",
+  "notifications.photo_validated.description":
+    "Your photo has been approved and will be available to all players in a few minutes. Congratulations, and thank you for your contribution!",
+  "notifications.photo_refused.title": "Your photo has been rejected.",
+  "notifications.photo_refused.description": (reason: string) => (
+    <>
+      Unfortunately, your photo has been rejected.
+      <br />
+      {reason && (
+        <>
+          Here is the reason for this rejection:
+          <br />
+          <q>{reason}</q>
+        </>
+      )}
+      <br />
+      Please feel free to submit another photo!
+    </>
+  ),
+  "notifications.deleting": "Deleting...",
+  "notification.delete": "Delete notification",
   //////
   "gold_50cc_survival.description":
     "You won the Gold Cup in Survival mode at 50cc!",

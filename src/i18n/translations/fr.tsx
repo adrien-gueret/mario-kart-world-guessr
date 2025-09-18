@@ -71,7 +71,7 @@ const fr: Texts = {
   "difficulty.survival.100cc": (
     <ul>
       <li>
-        La partie continue tant que vous marquez <b>3000 points</b>
+        La partie continue tant que vous marquez <b>3250 points</b>
       </li>
       <li>
         La plupart des photos, <b>sauf</b> les plus difficiles
@@ -107,7 +107,7 @@ const fr: Texts = {
   ),
   "difficulty.survival.100cc.short": (
     <>
-      La partie continue tant que vous marquez <b>3000 points</b>.
+      La partie continue tant que vous marquez <b>3250 points</b>.
     </>
   ),
   "difficulty.survival.150cc.short": (
@@ -370,7 +370,30 @@ const fr: Texts = {
       en <b>{fr[`difficulty.${gameDifficulty}.title`]}.</b>
     </>
   ),
+  "notifications.none":
+    "Aucune notification. Vous serez notifié ici de la validation des photos que vous proposez.",
   "notifications.title": "Notifications",
+  "notifications.photo_validated.title": "Votre photo a été validée !",
+  "notifications.photo_validated.description":
+    "Votre photo a été validée et sera disponible auprès de tous les joueurs dans quelques minutes. Bravo à vous, et merci pour votre contribution !",
+  "notifications.photo_refused.title": "Votre photo a été refusée.",
+  "notifications.photo_refused.description": (reason: string) => (
+    <>
+      Votre photo a malheureusement été refusée.
+      <br />
+      {reason && (
+        <>
+          Voici la raison de ce refus :<br />
+          <q>{reason}</q>
+        </>
+      )}
+      <br />
+      N'hésitez pas malgré tout à proposer une autre photo&nbsp;!
+    </>
+  ),
+  "notifications.deleting": "Suppression...",
+  "notification.delete": "Effacer la notification",
+
   //////
   "gold_50cc_survival.description":
     "Vous avez gagné la coupe d'or du mode Survie en 50cc !",

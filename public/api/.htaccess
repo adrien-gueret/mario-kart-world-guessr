@@ -1,5 +1,7 @@
 Options -Indexes
 RewriteEngine On
+RewriteRule "^(?:\.env|\.env\.tpl)$" - [R=404,L]
+
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME}.php -f

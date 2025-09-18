@@ -88,8 +88,9 @@
 
         switch ($method) {
             case 'PUT':
+            case 'DELETE':
                 $input = file_get_contents("php://input");
-                $_PUT = [];
+                $bodyParams = [];
             
                 $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
                 if (strpos($contentType, 'multipart/form-data') !== false) {
@@ -107,15 +108,15 @@
                                 $name = $nameMatch[1];
                                 $value = trim(substr($part, strpos($part, "\r\n\r\n") + 4));
                                 $value = rtrim($value, "\r\n");
-                                $_PUT[$name] = $value;
+                                $bodyParams[$name] = $value;
                             }
                         }
                     }
                 } else {
-                    parse_str($input, $_PUT);
+                    parse_str($input, $bodyParams);
                 }
                 
-                return $_PUT;
+                return $bodyParams;
             case 'POST':
                 return $_POST;
             case 'GET':
