@@ -18,9 +18,7 @@ export default function PhotoValidated({ notification }: Props) {
       dateTime={notification.createdAt}
       image={
         <img
-          src={`${import.meta.env.VITE_API_ROOT_URL}/photo-proxy?id=${
-            notification.specificData.photo_id
-          }`}
+          src={`https://www.mariouniversalis.fr/mario-kart-world-guessr/api/photo-proxy?id=${notification.specificData.photo_id}`}
           alt=""
         />
       }
