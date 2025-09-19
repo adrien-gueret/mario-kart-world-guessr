@@ -1,40 +1,39 @@
 import { useState, useEffect, useRef } from "react";
 
-import Button from "@/components/Button";
-import Map from "@/components/Map";
-import Photo from "@/components/Photo";
-import Loader from "@/components/Loader";
-
 import { useTranslations } from "@/i18n";
 
 import fetchApi from "@/services/api";
 
 import type { Coordinates } from "@/types/location";
-import Pin from "@/components/Pin";
+
+import Button from "../Button";
+import Map from "../Map";
+import Pin from "../Pin";
+import Loader from "../Loader";
 
 type Props = {
-  photoName: string;
+  photoId: string;
   onClose: () => void;
 };
 
-type Guess = Coordinates & { id: number };
+type Guess = Coordinates & { id: number; isAnswer: 0 | 1 };
 
-export default function PhotoDetails({ photoName, onClose }: Props) {
+export default function PhotoGuesses({ photoId, onClose }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const [guesses, setGuesses] = useState<Guess[]>([]);
   const lastPhotoFetched = useRef<string | null>(null);
   const { translate } = useTranslations();
 
   useEffect(() => {
-    if (lastPhotoFetched.current === photoName) {
+    if (lastPhotoFetched.current === photoId) {
       return;
     }
 
-    lastPhotoFetched.current = photoName;
+    lastPhotoFetched.current = photoId;
 
     setIsLoading(true);
 
-    fetchApi(`/get-guesses?id=${photoName}`)
+    fetchApi(`/get-guesses?id=${photoId}`)
       .then(async (response) => {
         const guesses = await response.json();
 
@@ -43,19 +42,23 @@ export default function PhotoDetails({ photoName, onClose }: Props) {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [photoName]);
+  }, [photoId]);
 
   return (
     <div className="photo-details">
-      <Photo photoName={photoName} />
-
       <div style={{ position: "relative", textAlign: "center" }}>
         <Map>
           {isLoading ? (
             <Loader />
           ) : (
             guesses.map((guess) => (
-              <Pin key={guess.id} x={guess.x} y={guess.y} />
+              <Pin
+                key={guess.id}
+                x={guess.x}
+                y={guess.y}
+                variant={guess.isAnswer ? "star" : null}
+                zIndex={guess.isAnswer ? 9999 : undefined}
+              />
             ))
           )}
         </Map>
