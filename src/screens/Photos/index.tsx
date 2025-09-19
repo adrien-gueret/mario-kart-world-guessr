@@ -1,12 +1,14 @@
-import { useState, useEffect, useRef, type MouseEventHandler } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import Button from "@/components/Button";
 import Loader from "@/components/Loader";
 import PhotoList from "@/components/PhotoList";
 import Text from "@/components/Text";
 
+import { useCurrentUser } from "@/auth/CurrentUserProvider";
 import { useTranslations } from "@/i18n";
 import fetchApi from "@/services/api";
+import useRequiredAuth from "@/services/useRequiredAuth";
 import type { Photo } from "@/types/photos";
 
 export default function Photos() {
@@ -18,8 +20,12 @@ export default function Photos() {
   const currentFetchingPage = useRef(0);
   const { translate } = useTranslations();
 
+  const isAnonymous = useRequiredAuth();
+  const { user } = useCurrentUser();
+  const isAdmin = !isAnonymous && user?.id === 1;
+
   useEffect(() => {
-    if (currentFetchingPage.current === currentPage) {
+    if (!isAdmin || currentFetchingPage.current === currentPage) {
       return;
     }
 
@@ -37,7 +43,11 @@ export default function Photos() {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [currentPage]);
+  }, [isAdmin, currentPage, user.id]);
+
+  if (!isAdmin) {
+    return null;
+  }
 
   return (
     <div className="photo-screen">
