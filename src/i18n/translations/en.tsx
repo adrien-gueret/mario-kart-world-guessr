@@ -8,6 +8,7 @@ const kilometersToMiles = (km: number): string => {
 };
 
 const en: Texts = {
+  "buy-me-coffee": "Buy me a coffee",
   "photo.subtitle": "Where was this photo taken?",
   "clickMap.subtitle": "Click on the map to guess!",
   "guess.label": "Guess",

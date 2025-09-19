@@ -7,6 +7,7 @@ import type { ReactNode } from "react";
 export type Locale = "fr" | "en";
 
 export type Texts = {
+  "buy-me-coffee": string;
   "photo.subtitle": string;
   "clickMap.subtitle": string;
   "guess.label": string;

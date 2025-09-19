@@ -4,6 +4,7 @@ import type { Version } from "@/versions/types";
 import type { Texts } from "../types";
 
 const fr: Texts = {
+  "buy-me-coffee": "Offrez-moi un café",
   "photo.subtitle": "Où cette photo a-t-elle été prise ?",
   "clickMap.subtitle": "Cliquez sur la carte pour deviner !",
   "guess.label": "Deviner",

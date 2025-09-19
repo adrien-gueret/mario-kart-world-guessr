@@ -4,6 +4,79 @@ import type { ReleaseNotes } from "./types";
 
 const releaseNotes: ReleaseNotes = [
   {
+    version: "v3.2.0",
+    notes: {
+      fr: (
+        <ul>
+          <Text component="li">
+            Déjà plus de trentes photos ont été proposées par les joueurs depuis
+            la dernière mise à jour, merci à tout le monde&nbsp;!
+            <br />
+            Cette nouvelle mise à jour apporte un système de notifications pour
+            permettre aux photographes de savoir quand leurs photos sont
+            validées.
+            <br />
+            Depuis la page <b>Mon compte</b>, vous pouvez également consulter
+            différentes statistiques pour chacune de vos photos : par exemple
+            combien de joueurs les ont vues, ainsi que leurs suggestions.
+          </Text>
+          <Text component="li">
+            Avec cette mise à jour apparait également un nouveau succès : vous
+            débloquerez Toadette si vous parvenez à faire publier une de vos
+            photos&nbsp;!
+          </Text>
+          <Text component="li">
+            Le saviez-vous&nbsp;? <b>Mario Kart World Guessr</b> est géré par
+            une seule personne, et cela représente beaucoup de travail&nbsp;!
+            <br />
+            Si vous appréciez le jeu et souhaitez me soutenir, vous pouvez&nbsp;
+            <a
+              href="https://buymeacoffee.com/mariouniversalis"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              m'offrir un café ↗
+            </a>
+            . Sinon, n'hésitez pas à partager le jeu autour de vous&nbsp;!
+          </Text>
+        </ul>
+      ),
+      en: (
+        <ul>
+          <Text component="li">
+            Over thirty photos have already been submitted by players since the
+            last update — thank you everyone!
+            <br />
+            This release adds a notifications system so photographers are
+            informed when their photos are validated.
+            <br />
+            From the <b>My account</b> page you can also view statistics for
+            each of your photos: for example how many players have seen them and
+            the guesses they received.
+          </Text>
+          <Text component="li">
+            This update also introduces a new achievement: you will unlock
+            Toadette if one of your photos gets published!
+          </Text>
+          <Text component="li">
+            Did you know? <b>Mario Kart World Guessr</b> is maintained by a
+            single person, and it represents a lot of work!
+            <br />
+            If you enjoy the game and would like to support me, you can
+            <a
+              href="https://buymeacoffee.com/mariouniversalis"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              buy me a coffee ↗
+            </a>
+            . Otherwise, feel free to share the game with others!
+          </Text>
+        </ul>
+      ),
+    },
+  },
+  {
     version: "v3.1.0",
     notes: {
       fr: (

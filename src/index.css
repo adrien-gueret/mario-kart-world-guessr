@@ -123,7 +123,7 @@ h3 {
   pointer-events: none;
 }
 
-.legal-links {
+.aside-links {
   display: flex;
   flex-direction: row;
   margin-top: 8px;
