@@ -86,6 +86,8 @@ function App() {
           <a
             className="basic-link"
             href="https://buymeacoffee.com/mariouniversalis"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <b>☕ {translate("buy-me-coffee")} ↗</b>
           </a>
