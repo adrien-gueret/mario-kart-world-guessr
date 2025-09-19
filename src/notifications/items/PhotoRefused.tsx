@@ -18,9 +18,7 @@ export default function PhotoRefused({ notification }: Props) {
       dateTime={notification.createdAt}
       image={
         <img
-          src={`${import.meta.env.VITE_API_ROOT_URL}/photo-proxy?pr_id=${
-            notification.specificData.pr_id
-          }`}
+          src={`https://www.mariouniversalis.fr/mario-kart-world-guessr/api/photo-proxy?pr_id=${notification.specificData.pr_id}`}
           alt=""
         />
       }
