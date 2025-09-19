@@ -13,11 +13,19 @@ try {
         exit;
     }
 
-    $stmt = $pdo->prepare("SELECT s.id, s.x, s.y
+
+    $stmt = $pdo->prepare("SELECT 0 as id, p.x, p.y, 1 as isAnswer
+                            FROM `mario-kart-world-photos` p
+                            WHERE p.id = :id
+                            AND p.validated_at IS NOT NULL
+                            UNION ALL
+                            SELECT s.id, s.x, s.y, 0 as isAnswer
                             FROM `mario-kart-world-suggestions` s
                             LEFT JOIN `mario-kart-world-games` g ON s.game_id = g.id
-                            WHERE s.photo_id = :id
-                            AND (g.player_id IS NULL OR g.player_id != 1)");
+                            LEFT JOIN `mario-kart-world-photos` p2 ON p2.id = s.photo_id
+                            WHERE p2.validated_at IS NOT NULL
+                            AND s.photo_id = :id
+                            AND (g.player_id IS NULL OR g.player_id != p2.author_id)");
     $stmt->bindParam(':id', $id, PDO::PARAM_STR);
     $stmt->execute();
     

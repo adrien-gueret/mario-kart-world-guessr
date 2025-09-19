@@ -117,7 +117,7 @@ try {
             ON s.game_id = g.id
         WHERE p.id = :id 
         AND p.validated_at IS NOT NULL
-        AND (g.player_id IS NULL OR g.player_id != 1)
+        AND (g.player_id IS NULL OR g.player_id != p.author_id)
     ");
 
     /*
@@ -139,11 +139,11 @@ try {
             FROM 
                 `mario-kart-world-suggestions` s
             LEFT JOIN `mario-kart-world-games` g ON s.game_id = g.id
-            WHERE (g.player_id IS NULL OR g.player_id != 1)
+            WHERE (g.player_id IS NULL OR g.player_id != p.author_id)
         ) md ON p.id = md.photo_id
         WHERE p.id = :id 
         AND p.validated_at IS NOT NULL
-        AND (g.player_id IS NULL OR g.player_id != 1)
+        AND (g.player_id IS NULL OR g.player_id != p.author_id)
     ");*/
     $selectPhotoStmt->bindParam(':id', $photoId, PDO::PARAM_STR);
     $selectPhotoStmt->execute();

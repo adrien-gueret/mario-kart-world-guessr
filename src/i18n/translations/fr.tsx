@@ -286,7 +286,7 @@ const fr: Texts = {
       Découvrez toutes les photos de <b>Mario Kart World Guessr</b>!
     </>
   ),
-  "photo.details.title": "Détails de la photo",
+  "photo.details.title": "Suggestions des joueurs",
   "photo.by": "Photo par",
   "login.screen.title": "Se connecter",
   "login.screen.description": (

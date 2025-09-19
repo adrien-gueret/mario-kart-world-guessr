@@ -9,6 +9,7 @@ import "./Pin.css";
 type Props = Coordinates & {
   variant?: MarioCharacter | "star" | null;
   onlyHead?: boolean;
+  zIndex?: number;
 };
 
 const FULL_PIN_SIZE = 64;
@@ -30,7 +31,13 @@ function targetCoordinatesToOnlyHeadPinDomCoordinates(
   };
 }
 
-export default function Pin({ x, y, variant, onlyHead = false }: Props) {
+export default function Pin({
+  x,
+  y,
+  variant,
+  onlyHead = false,
+  zIndex,
+}: Props) {
   const { ratio } = useContext(MapContext);
   const { x: domX, y: domY } = onlyHead
     ? targetCoordinatesToOnlyHeadPinDomCoordinates({
@@ -51,7 +58,7 @@ export default function Pin({ x, y, variant, onlyHead = false }: Props) {
       style={{
         left: `${domX}px`,
         top: `${domY}px`,
-        zIndex: Math.max(1, domY),
+        zIndex: zIndex || Math.max(1, domY),
       }}
     >
       {variant && <img src={`./ui/pins/icon-${variant}.png`} alt="" />}

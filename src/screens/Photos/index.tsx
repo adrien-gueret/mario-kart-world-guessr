@@ -2,24 +2,19 @@ import { useState, useEffect, useRef, type MouseEventHandler } from "react";
 
 import Button from "@/components/Button";
 import Loader from "@/components/Loader";
-import Modal from "@/components/Modal";
+import PhotoList from "@/components/PhotoList";
 import Text from "@/components/Text";
 
 import { useTranslations } from "@/i18n";
 import fetchApi from "@/services/api";
-
-import PhotoDetails from "./PhotoDetails";
+import type { Photo } from "@/types/photos";
 
 export default function Photos() {
   const [currentPage, setCurrentPage] = useState(1);
   const [seeFullMap, setSeeFullMap] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMorePhoto, setHasMorePhoto] = useState(false);
-  const [areDetailsOpen, setAreDetailsOpen] = useState(false);
-  const [selectedPhotoName, setSelectedPhotoName] = useState<string | null>(
-    null
-  );
-  const [photoNames, setPhotoNames] = useState<string[]>([]);
+  const [photos, setPhotos] = useState<Photo[]>([]);
   const currentFetchingPage = useRef(0);
   const { translate } = useTranslations();
 
@@ -36,36 +31,13 @@ export default function Photos() {
       .then(async (response) => {
         const newPhotos = await response.json();
 
-        setPhotoNames((prev) => [
-          ...prev,
-          ...newPhotos.data.map(
-            (photo: { photoName: string }) => photo.photoName
-          ),
-        ]);
+        setPhotos((prev) => [...prev, ...newPhotos.data]);
         setHasMorePhoto(newPhotos.pagination.has_next);
       })
       .finally(() => {
         setIsLoading(false);
       });
   }, [currentPage]);
-
-  const selectPhotoName = (photoName: string) => {
-    setSelectedPhotoName(photoName);
-    setAreDetailsOpen(true);
-  };
-
-  const getHandleClick =
-    (photoName: string): MouseEventHandler =>
-    (e) => {
-      e.preventDefault();
-      selectPhotoName(photoName);
-    };
-
-  const getHandleKeyDown = (photoName: string) => (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      selectPhotoName(photoName);
-    }
-  };
 
   return (
     <div className="photo-screen">
@@ -92,24 +64,7 @@ export default function Photos() {
 
       {seeFullMap && <div className="full-map"></div>}
 
-      {photoNames.length > 0 && (
-        <ul className="photo-list">
-          {photoNames.map((photoName) => (
-            <li key={photoName}>
-              <img
-                role="button"
-                draggable={false}
-                tabIndex={1}
-                src={`./photos/${photoName}.jpg`}
-                alt=""
-                loading="lazy"
-                onClick={getHandleClick(photoName)}
-                onKeyDown={getHandleKeyDown(photoName)}
-              />
-            </li>
-          ))}
-        </ul>
-      )}
+      {photos.length > 0 && <PhotoList photos={photos} />}
 
       {!isLoading && hasMorePhoto && (
         <Button
@@ -122,22 +77,6 @@ export default function Photos() {
       )}
 
       {isLoading && <Loader />}
-
-      <Modal
-        title={translate("photo.details.title")}
-        isOpen={areDetailsOpen}
-        disableSkew
-        noDelay
-      >
-        {selectedPhotoName && (
-          <PhotoDetails
-            photoName={selectedPhotoName}
-            onClose={() => {
-              setAreDetailsOpen(false);
-            }}
-          />
-        )}
-      </Modal>
     </div>
   );
 }

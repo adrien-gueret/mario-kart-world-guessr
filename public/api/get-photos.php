@@ -13,10 +13,13 @@ try {
     
     $offset = ($page - 1) * $limit;
     
-    $stmt = $pdo->prepare("SELECT id as photoName
-        FROM `mario-kart-world-photos`
+    $stmt = $pdo->prepare("SELECT p.id, p.difficulty, p.validated_at as validatedAt, COUNT(s.id) as suggestionCount,
+        CONCAT('https://www.mariouniversalis.fr/mario-kart-world-guessr/api/photo-proxy?pr_id=', p.github_pr_number) AS photoUrl
+        FROM `mario-kart-world-photos` p
+        LEFT JOIN `mario-kart-world-suggestions` s ON s.photo_id = p.id
         WHERE validated_at IS NOT NULL AND validated_at <= NOW() - INTERVAL 5 MINUTE
-        ORDER BY validated_at DESC, photoName
+        GROUP BY p.id
+        ORDER BY (p.validated_at IS NULL) DESC, p.validated_at DESC
         LIMIT :offset, :limit"
     );
     $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
