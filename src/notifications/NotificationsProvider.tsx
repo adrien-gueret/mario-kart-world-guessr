@@ -13,18 +13,21 @@ import fetchApi from "@/services/api";
 import type { Notification } from "./types";
 
 type NotificationsContextType = {
+  isLoading: boolean;
   allNotifications: Notification[];
   unreadNotificationCount: number;
   readNotification: (notificationId: number) => Promise<void>;
 };
 
 const NotificationsContext = createContext<NotificationsContextType>({
+  isLoading: false,
   allNotifications: [],
   unreadNotificationCount: 0,
   readNotification: async () => {},
 } as NotificationsContextType);
 
 export function NotificationsProvider({ children }: { children: ReactNode }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [allNotifications, setAllNotifications] = useState<Notification[]>([]);
 
   const { isAnonymous } = useCurrentUser();
@@ -49,9 +52,11 @@ export function NotificationsProvider({ children }: { children: ReactNode }) {
       return;
     }
 
+    setIsLoading(true);
     const response = await fetchApi("/notifications");
     const notifications = await response.json();
     setAllNotifications(notifications);
+    setIsLoading(false);
   }, [isAnonymous]);
 
   useEffect(() => {
@@ -66,6 +71,7 @@ export function NotificationsProvider({ children }: { children: ReactNode }) {
   return (
     <NotificationsContext
       value={{
+        isLoading,
         allNotifications,
         unreadNotificationCount: allNotifications.length,
         readNotification,

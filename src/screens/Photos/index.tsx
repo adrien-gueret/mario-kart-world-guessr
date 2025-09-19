@@ -10,8 +10,6 @@ import fetchApi from "@/services/api";
 
 import PhotoDetails from "./PhotoDetails";
 
-import "./Photo.css";
-
 export default function Photos() {
   const [currentPage, setCurrentPage] = useState(1);
   const [seeFullMap, setSeeFullMap] = useState(false);
@@ -102,7 +100,6 @@ export default function Photos() {
                 role="button"
                 draggable={false}
                 tabIndex={1}
-                key={photoName}
                 src={`./photos/${photoName}.jpg`}
                 alt=""
                 loading="lazy"

@@ -1,0 +1,14 @@
+.account-photos-upload-button {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.account-photos-stats {
+  border: 1px solid #222;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 16px auto;
+  background-color: #fff;
+  border-collapse: separate;
+  border-spacing: 16px 0;
+}

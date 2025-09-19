@@ -165,6 +165,16 @@ export type Texts = {
   "notifications.photo_refused.description": (reason: string) => ReactNode;
   "notifications.deleting": string;
   "notification.delete": string;
+  "photo.difficulty.easy": string;
+  "photo.difficulty.medium": string;
+  "photo.difficulty.hard": string;
+  "photo.validation.pending": string;
+  "account.photos.description": string;
+  "account.photos.stats.title": string;
+  "account.photos.stats.subtitle": string;
+  "account.photos.stats.totalLabel": string;
+  "account.photos.stats.suggestions": (count: number) => ReactNode;
+  "account.your_photos.title": string;
 } & {
   [K in Achievement as `${K}.unlockedItem`]: string;
 } & {

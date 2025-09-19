@@ -10,7 +10,7 @@ type NotificationBase<T extends NotificationType, S = null> = {
 export type NotificationPhotoRefused = NotificationBase<
   "photo_refused",
   {
-    photo_id: string;
+    pr_id: number;
     reason: string;
   }
 >;

@@ -388,6 +388,22 @@ const en: Texts = {
   ),
   "notifications.deleting": "Deleting...",
   "notification.delete": "Delete notification",
+  "photo.difficulty.easy": "Easy",
+  "photo.difficulty.medium": "Medium",
+  "photo.difficulty.hard": "Hard",
+  "photo.validation.pending": "Pending validation",
+  "account.photos.description":
+    "Here are the photos you have submitted and how players performed on them!",
+  "account.photos.stats.title": "Some data about your photos",
+  "account.photos.stats.subtitle": "Photos distribution",
+  "account.photos.stats.totalLabel": "Total",
+  "account.photos.stats.suggestions": (count: number) => (
+    <>
+      In total, your photos have been viewed <b>{count}</b> times!
+    </>
+  ),
+  "account.your_photos.title": "Your photos",
+
   //////
   "gold_50cc_survival.description":
     "You won the Gold Cup in Survival mode at 50cc!",

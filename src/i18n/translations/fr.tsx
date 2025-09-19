@@ -393,6 +393,21 @@ const fr: Texts = {
   ),
   "notifications.deleting": "Suppression...",
   "notification.delete": "Effacer la notification",
+  "photo.difficulty.easy": "Facile",
+  "photo.difficulty.medium": "Moyen",
+  "photo.difficulty.hard": "Difficile",
+  "photo.validation.pending": "En attente de validation",
+  "account.photos.description":
+    "Retrouvez ici les photos que vous avez prises et voyez comment se débrouillent les joueurs dessus !",
+  "account.photos.stats.title": "Quelques données sur vos photos",
+  "account.photos.stats.subtitle": "Répartition des photos",
+  "account.photos.stats.totalLabel": "Total",
+  "account.photos.stats.suggestions": (count: number) => (
+    <>
+      Accumulées, vos photos ont été vues <b>{count}</b> fois !
+    </>
+  ),
+  "account.your_photos.title": "Vos photos",
 
   //////
   "gold_50cc_survival.description":
