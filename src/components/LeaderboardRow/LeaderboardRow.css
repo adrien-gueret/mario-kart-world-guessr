@@ -85,6 +85,10 @@
   background-image: url("./ui/characters/lakitu.png");
 }
 
+.leaderboard-cell-character.toadette::before {
+  background-image: url("./ui/characters/toadette.png");
+}
+
 .leaderboard-cell-secondary-score-container {
   font-size: 1rem;
   vertical-align: middle;

@@ -450,6 +450,11 @@ const en: Texts = {
     "You scored at least 4000 points three times in a row!",
   "4000_three_in_a_row.unlockedItem": "Lakitu is unlocked!",
   "lakitu.unlockClue": "Score at least 4000 points three times in a row.",
+
+  "photo_validated.description":
+    "One of your submitted photos has been validated!",
+  "photo_validated.unlockedItem": "Toadette is unlocked!",
+  "toadette.unlockClue": "Have one of your submitted photos validated.",
 };
 
 export default en;

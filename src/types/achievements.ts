@@ -8,4 +8,5 @@ export type Achievement =
   | "gold_150cc_survival"
   | "gold_mirror_survival"
   | "5000_points"
-  | "4000_three_in_a_row";
+  | "4000_three_in_a_row"
+  | "photo_validated";

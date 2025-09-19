@@ -29,9 +29,13 @@ try {
     $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $serverTz = date_default_timezone_get();
-    $notifications = array_map(function ($notification) use ($serverTz) {
+    $notifications = array_map(function ($notification) use ($serverTz, $pdo, $currentUser) {
         $date = new DateTime($notification['createdAt'], new DateTimeZone('Europe/Paris'));
         $date->setTimezone(new DateTimeZone('UTC'));
+
+        if ($notification['type'] === 'photo_validated') {
+          unlockAchievement($pdo, $currentUser['id'], 'photo_validated');
+        }
 
         return [
             'id' => (int)$notification['id'],
