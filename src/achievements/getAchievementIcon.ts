@@ -14,6 +14,7 @@ export default function getAchievementIcon(
     gold_mirror_survival: "./ui/characters/rosalina.png",
     "5000_points": "./ui/characters/shyguy.png",
     "4000_three_in_a_row": "./ui/characters/lakitu.png",
+    photo_validated: "./ui/characters/toadette.png",
   };
 
   return iconMap[achievementId];

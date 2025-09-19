@@ -34,7 +34,8 @@
   background-image: url("./ui/pins/pin-blue.png");
 }
 
-.game-map-pin.variant-peach {
+.game-map-pin.variant-peach,
+.game-map-pin.variant-toadette {
   background-image: url("./ui/pins/pin-pink.png");
 }
 

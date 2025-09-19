@@ -16,7 +16,7 @@ if (empty($currentUser)) {
 
 try {
     $stmt = $pdo->prepare(
-        "SELECT c.id,
+        "SELECT c.id, c.position,
         CASE
             WHEN c.id_achievement IS NULL THEN TRUE
             WHEN ua.id_achievement IS NOT NULL THEN TRUE
@@ -38,6 +38,9 @@ try {
     $characters = [];
 
     foreach($fetchedCharacters as $fetchedCharacter) {
+        if (!$isDev && $fetchedCharacter['position'] === 0) {
+            continue;
+        }
         $characters[] = [
             'id' => $fetchedCharacter['id'],
             'isUnlocked' => $fetchedCharacter['is_unlocked'] === 1,

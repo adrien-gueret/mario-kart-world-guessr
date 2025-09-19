@@ -458,6 +458,10 @@ const fr: Texts = {
     "Vous avez fait au moins 4000 points trois fois de suite !",
   "4000_three_in_a_row.unlockedItem": "Lakitu est débloqué !",
   "lakitu.unlockClue": "Faire au moins 4000 points trois fois de suite.",
+
+  "photo_validated.description": "Une de vos photos a été validée !",
+  "photo_validated.unlockedItem": "Toadette est débloquée !",
+  "toadette.unlockClue": "Ayez une photo publiée dans le jeu.",
 };
 
 export default fr;
