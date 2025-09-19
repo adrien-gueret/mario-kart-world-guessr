@@ -1,5 +1,4 @@
 import Button from "@/components/Button";
-
 import ConstraintContainer from "@/components/ConstraintContainer";
 import Tabs from "@/components/Tabs";
 import { useTranslations } from "@/i18n";
@@ -8,6 +7,7 @@ import { useScreen, type ScreenName } from "@/screens/ScreensProvider";
 import useRequiredAuth from "@/services/useRequiredAuth";
 
 import Notifications from "./Notifications";
+import Photos from "./Photos";
 import Preferences from "./Preferences";
 
 type Props = {
@@ -32,7 +32,7 @@ export default function Account({ activeTab = "Account/Preferences" }: Props) {
     NonNullable<Props["activeTab"]>,
     React.ReactNode
   > = {
-    "Account/Photos": <div>Soon</div>,
+    "Account/Photos": <Photos />,
     "Account/Preferences": <Preferences />,
     "Account/Notifications": <Notifications />,
   };
@@ -83,9 +83,9 @@ export default function Account({ activeTab = "Account/Preferences" }: Props) {
         />
       </div>
 
-      <ConstraintContainer>
-        {tabToContent[activeTab]}
+      {tabToContent[activeTab]}
 
+      <ConstraintContainer>
         <div className="back-button">
           <Button
             variant="secondary"

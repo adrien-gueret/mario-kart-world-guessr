@@ -1,0 +1,36 @@
+.tag {
+  display: inline-flex;
+  padding: 2px 4px;
+  border-radius: 8px;
+  font-weight: bold;
+  background-color: #fff;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  border: 2px solid #213547;
+  color: #213547;
+}
+
+.tag.easy {
+  background-color: #41df41;
+  background-image: url(./backgrounds/dirt.webp);
+}
+
+.tag.medium {
+  background-color: #ffa500;
+  background-image: url(./backgrounds/dirt.webp);
+}
+
+.tag.hard {
+  background-color: #f65353;
+  background-image: url(./backgrounds/dirt.webp);
+}
+
+.tag > svg {
+  width: 24px;
+  height: 24px;
+}
+
+.tag > * {
+  flex-shrink: 0;
+}

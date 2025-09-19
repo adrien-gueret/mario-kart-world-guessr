@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useCurrentUser } from "@/auth/CurrentUserProvider";
 import { useTranslations } from "@/i18n";
 import Checkbox from "@/components/Checkbox";
+import ConstraintContainer from "@/components/ConstraintContainer";
 import Form from "@/components/Form";
 import Snackbar from "@/components/Snackbar";
 import Surface from "@/components/Surface";
@@ -20,7 +21,7 @@ export default function Preferences() {
   const { user, setCurrentUser } = useCurrentUser();
 
   return (
-    <>
+    <ConstraintContainer>
       <Surface disableSkew>
         <Form
           method="PUT"
@@ -107,6 +108,6 @@ export default function Preferences() {
       >
         {editAccountErrorMessage}
       </Snackbar>
-    </>
+    </ConstraintContainer>
   );
 }

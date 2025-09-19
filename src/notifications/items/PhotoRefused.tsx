@@ -18,8 +18,8 @@ export default function PhotoRefused({ notification }: Props) {
       dateTime={notification.createdAt}
       image={
         <img
-          src={`${import.meta.env.VITE_API_ROOT_URL}/photo-proxy?id=${
-            notification.specificData.photo_id
+          src={`${import.meta.env.VITE_API_ROOT_URL}/photo-proxy?pr_id=${
+            notification.specificData.pr_id
           }`}
           alt=""
         />

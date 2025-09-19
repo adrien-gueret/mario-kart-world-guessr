@@ -57,8 +57,7 @@ if ($event['pull_request']['merged'] === true) {
     $comments = githubApi("GET", "https://api.github.com/repos/adrien-gueret/mario-kart-world-guessr/issues/$prNumber/comments", $githubToken);
     $refusedReason = $comments[0]['body'];
    
-    $updateStmt = $pdo->prepare("UPDATE `mario-kart-world-photos` SET refused_at = NOW(), refused_reason=:reason WHERE github_pr_number = :prNumber");
-    $updateStmt->bindParam(':reason', $refusedReason, PDO::PARAM_STR);
+    $updateStmt = $pdo->prepare("DELETE FROM `mario-kart-world-photos` WHERE github_pr_number = :prNumber");
     $updateStmt->bindParam(':prNumber', $prNumber, PDO::PARAM_INT);
     $updateStmt->execute();
 
@@ -66,7 +65,7 @@ if ($event['pull_request']['merged'] === true) {
         "INSERT INTO `mario-kart-world-notifications` (id_user, notification_type, specific_data)
         VALUES (:id_user, 'photo_refused', :specific_data)");
     $insertStmt->bindParam(':id_user', $photo['author_id'], PDO::PARAM_INT);
-    $insertStmt->bindParam(':specific_data', json_encode(['photo_id' => $photo['id'], 'reason' => $refusedReason]), PDO::PARAM_STR);
+    $insertStmt->bindParam(':specific_data', json_encode(['pr_id' => $prNumber, 'reason' => $refusedReason]), PDO::PARAM_STR);
     $insertStmt->execute();
 
     http_response_code(200);
