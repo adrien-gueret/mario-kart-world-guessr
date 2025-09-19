@@ -62,7 +62,7 @@ const releaseNotes: ReleaseNotes = [
             Did you know? <b>Mario Kart World Guessr</b> is maintained by a
             single person, and it represents a lot of work!
             <br />
-            If you enjoy the game and would like to support me, you can
+            If you enjoy the game and would like to support me, you can&nbsp;
             <a
               href="https://buymeacoffee.com/mariouniversalis"
               target="_blank"
