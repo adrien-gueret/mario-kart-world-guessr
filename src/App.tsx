@@ -59,7 +59,7 @@ function App() {
         </a>
         <br />
 
-        <aside className="legal-links">
+        <aside className="aside-links">
           <a
             className="basic-link"
             href={
@@ -79,6 +79,15 @@ function App() {
             }
           >
             <b>{translate("terms-services.title")}</b>
+          </a>
+        </aside>
+
+        <aside className="aside-links">
+          <a
+            className="basic-link"
+            href="https://buymeacoffee.com/mariouniversalis"
+          >
+            <b>☕ {translate("buy-me-coffee")} ↗</b>
           </a>
         </aside>
       </footer>
