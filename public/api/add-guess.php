@@ -8,6 +8,8 @@ require_once __DIR__ . '/___achievements.php';
 
 require_once __DIR__ . '/___photos.php';
 
+require_once __DIR__ . '/___game.php';
+
 allowMethod('POST');
 
 $photoId = isset($_POST['photoId']) ? $_POST['photoId'] : null;
@@ -189,11 +191,8 @@ try {
         break;
 
         case 'survival':
-            $isFinished =
-                ($difficulty === "50cc" && $newScore < 3000) ||
-                ($difficulty === "100cc" && $newScore < 3250) ||
-                ($difficulty === "150cc" && $newScore < 3500) ||
-                ($difficulty === "mirror" && $newScore < 3500);
+            $minimumScoreToContinue = getSurvivalMinimumScore($difficulty, $photoCount - 1);
+            $isFinished = $newScore < $minimumScoreToContinue;
         break;
 
         case 'goal':
@@ -399,6 +398,7 @@ try {
             "isFinished" => $isFinished || empty($nextPhotoId),
             "cupData" => $cupData,
             "history" => $game['history'],
+            "minimumScoreToContinue" => $mode === 'survival' ? getSurvivalMinimumScore($difficulty, $photoCount) : null,
             "nextPhoto" => empty($nextPhotoId) ? null : [
                 'id' => $nextPhotoId,
                 'author' => [
