@@ -64,6 +64,10 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
   const [cupData, setCupData] = useState<
     AddGuessResponse["gameData"]["cupData"] | null
   >(null);
+  const [minimumScoreToContinue, setMinimumScoreToContinue] = useState<
+    number | null
+  >(null);
+  const [showHarderGameStepModal, setShowHarderGameStepModal] = useState(false);
   const [gameHistory, setGameHistory] = useState<GameHistory>([]);
   const { setCurrentScreenName } = useScreen();
 
@@ -124,6 +128,10 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
       setTotalScore(game.totalScore);
       setPhotoCount(game.history.length + 1);
       historyLength.current = game.history.length;
+
+      if (mode === "survival") {
+        setMinimumScoreToContinue(game.minimumScoreToContinue);
+      }
 
       const isFinished = !Boolean(game.currentPhoto?.id);
 
@@ -225,6 +233,17 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
 
     if (addGuessResponse.gameData.isFinished) {
       setGameHistory(addGuessResponse.gameData.history);
+    } else {
+      if (
+        mode === "survival" &&
+        addGuessResponse.gameData.minimumScoreToContinue !==
+          minimumScoreToContinue
+      ) {
+        setMinimumScoreToContinue(
+          addGuessResponse.gameData.minimumScoreToContinue
+        );
+        setShowHarderGameStepModal(true);
+      }
     }
   };
 
@@ -275,7 +294,11 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
                 {translate(`difficulty.${difficulty}.title`)}
               </h3>
               <Text component="p">
-                {translate(`difficulty.${mode}.${difficulty}.short`)}
+                {mode === "goal"
+                  ? translate(`difficulty.goal.${difficulty}.short`)
+                  : translate("difficulty.survival.short")(
+                      minimumScoreToContinue || 3000
+                    )}
               </Text>
             </>
           )}
@@ -461,6 +484,30 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
             {translate("giveUp.label")}
           </Button>
         </>
+      )}
+
+      {mode === "survival" && (
+        <Modal
+          title={translate("survival.harderGame.title")}
+          isOpen={showHarderGameStepModal}
+          noDelay
+          imageUrl="./ui/lakitu-go.png"
+        >
+          <div className="harder-game-modal-container">
+            {translate("survival.harderGame.description")(
+              minimumScoreToContinue!
+            )}
+
+            <div className="harder-game-modal-buttons">
+              <Button
+                onClick={() => setShowHarderGameStepModal(false)}
+                variant="primary"
+              >
+                {translate("survival.harderGame.okButton")}
+              </Button>
+            </div>
+          </div>
+        </Modal>
       )}
     </div>
   );

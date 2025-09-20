@@ -3,6 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 8px;
   top: 0;
   left: 0;
   right: 0;
@@ -69,4 +70,23 @@
 
 .modal-inner {
   transform: skewX(calc(var(--skew) * -1));
+}
+
+.modal-image {
+  display: block;
+  width: 300px;
+  height: 300px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none;
+  left: 0;
+  top: 0;
+  transform: skewX(calc(var(--skew) * -1));
+}
+
+@media (max-width: 600px) {
+  .modal-image {
+    display: none;
+  }
 }

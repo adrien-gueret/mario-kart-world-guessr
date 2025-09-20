@@ -37,6 +37,7 @@ export type AddGuessResponse = {
       starRank?: StarRank | null;
     } | null;
     history: GameHistory;
+    minimumScoreToContinue: number | null;
     nextPhoto: GamePhoto | null;
   };
 };
@@ -46,6 +47,7 @@ export type StartGameResponse = {
   history: GameHistory;
   totalScore: number;
   currentPhoto: GamePhoto | null;
+  minimumScoreToContinue: number | null;
 };
 
 type LeaderboardRank = {

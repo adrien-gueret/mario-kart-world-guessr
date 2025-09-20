@@ -103,24 +103,9 @@ const en: Texts = {
       </li>
     </ul>
   ),
-  "difficulty.survival.50cc.short": (
+  "difficulty.survival.short": (minimumScore: number) => (
     <>
-      Game continues as long as you score <b>3000 points</b>.
-    </>
-  ),
-  "difficulty.survival.100cc.short": (
-    <>
-      Game continues as long as you score <b>3250 points</b>.
-    </>
-  ),
-  "difficulty.survival.150cc.short": (
-    <>
-      Game continues as long as you score <b>3500 points</b>.
-    </>
-  ),
-  "difficulty.survival.mirror.short": (
-    <>
-      Game continues as long as you score <b>3500 points</b>.
+      Game continues as long as you score <b>{minimumScore} points</b>.
     </>
   ),
   "difficulty.goal.50cc": (
@@ -181,6 +166,20 @@ const en: Texts = {
       scoring system.
     </>
   ),
+  "survival.harderGame.title": "Increased difficulty!",
+  "survival.harderGame.description": (minimumScore: number) => (
+    <p>
+      You're doing well!
+      <br />
+      Let's increase the difficulty a bit! <br />
+      <b>
+        From now on, the game continues as long as you score {minimumScore}{" "}
+        points
+      </b>
+      &nbsp;!
+    </p>
+  ),
+  "survival.harderGame.okButton": "OK",
   "rules.title": "Game Rules",
   "rules.description":
     "Click on the map to guess where the photo was taken. The closer you are, the more points you score, up to 5000 per photo!",

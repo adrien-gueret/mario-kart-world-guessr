@@ -6,6 +6,8 @@ require_once __DIR__ . '/___coordinates.php';
 
 require_once __DIR__ . '/___photos.php';
 
+require_once __DIR__ . '/___game.php';
+
 allowMethod('POST');
 
 if (empty($currentUser)) {
@@ -113,6 +115,7 @@ try {
                     'character' => $game['authorCharacter'] ?? null,
                 ],
             ],
+            'minimumScoreToContinue' => $_POST['mode'] === 'survival' ? getSurvivalMinimumScore($_POST['difficulty'], count($history)) : null,
         ]);
         exit;
     }
@@ -149,6 +152,7 @@ try {
                 'character' => $firstPhoto['authorCharacter'] ?? null,
             ],
         ],
+        'minimumScoreToContinue' => $_POST['mode'] === 'survival' ? getSurvivalMinimumScore($_POST['difficulty'], 0) : null,
     ]);
 } catch (PDOException $e) {
     http_response_code(500);

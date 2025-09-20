@@ -38,10 +38,7 @@ export type Texts = {
   "difficulty.survival.100cc": ReactNode;
   "difficulty.survival.150cc": ReactNode;
   "difficulty.survival.mirror": ReactNode;
-  "difficulty.survival.50cc.short": ReactNode;
-  "difficulty.survival.100cc.short": ReactNode;
-  "difficulty.survival.150cc.short": ReactNode;
-  "difficulty.survival.mirror.short": ReactNode;
+  "difficulty.survival.short": (minimumScore: number) => ReactNode;
   "difficulty.goal.50cc": ReactNode;
   "difficulty.goal.100cc": ReactNode;
   "difficulty.goal.150cc": ReactNode;
@@ -50,6 +47,9 @@ export type Texts = {
   "difficulty.goal.100cc.short": ReactNode;
   "difficulty.goal.150cc.short": ReactNode;
   "difficulty.goal.mirror.short": ReactNode;
+  "survival.harderGame.title": string;
+  "survival.harderGame.description": (minimumScore: number) => ReactNode;
+  "survival.harderGame.okButton": string;
   "rules.title": string;
   "rules.description": string;
   "rules.mode.survival.title": string;

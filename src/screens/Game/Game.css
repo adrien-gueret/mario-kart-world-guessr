@@ -38,3 +38,7 @@
 .give-up-modal-buttons .game-button {
   margin: 0;
 }
+
+.harder-game-modal-buttons {
+  text-align: right;
+}
