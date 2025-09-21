@@ -26,7 +26,7 @@ export default function Tabs<
   const TabComponent = (tabComponent ?? "button") as ElementType;
 
   return (
-    <nav className={`tabs ${variant}`}>
+    <nav className={`tabs tabs--${variant}`}>
       {tabs.map(({ value, ...otherProps }) => (
         <TabComponent
           key={value}

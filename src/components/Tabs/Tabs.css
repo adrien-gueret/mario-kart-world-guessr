@@ -15,12 +15,12 @@
 }
 
 /* TABLE variant */
-.tabs.table {
+.tabs.tabs--table {
   margin: 0 auto -15px auto;
   padding: 0 0 0 16px;
 }
 
-.tabs.table .tab {
+.tabs.tabs--table .tab {
   background-color: rgba(0, 0, 0, 0.95);
   color: #fff;
   text-decoration: none;
@@ -34,21 +34,21 @@
   font-size: 1.25rem;
 }
 
-.tabs.table .tab:hover,
-.tabs.table .tab:focus-visible {
+.tabs.tabs--table .tab:hover,
+.tabs.tabs--table .tab:focus-visible {
   box-shadow: 1px 1px 0 1.5px white, -1px -1px 0 1.5px white;
   bottom: 1px;
 }
 
 /* CHIPS variant */
-.tabs.chips {
+.tabs.tabs--chips {
   gap: 24px;
   padding: 8px;
   justify-content: center;
   align-items: center;
 }
 
-.tabs.chips .tab {
+.tabs.tabs--chips .tab {
   color: #000;
   text-decoration: none;
   position: relative;
@@ -65,13 +65,13 @@
   font-weight: bold;
 }
 
-.tabs.chips .tab > div {
+.tabs.tabs--chips .tab > div {
   display: inline-block;
   transform: skewX(20deg);
   padding-left: 90px;
 }
 
-.tabs.chips .tab > div img {
+.tabs.tabs--chips .tab > div img {
   position: absolute;
   left: -8px;
   bottom: -12px;
@@ -101,11 +101,11 @@
     );
 }
 
-.tabs.chips .tab.is-active {
+.tabs.tabs--chips .tab.is-active {
   background-color: #f8b801;
 }
 
-.tabs.chips .tab:hover > div img,
-.tabs.chips .tab:focus-visible > div img {
+.tabs.tabs--chips .tab:hover > div img,
+.tabs.tabs--chips .tab:focus-visible > div img {
   transform: scale(1.1);
 }
