@@ -4,6 +4,42 @@ import type { ReleaseNotes } from "./types";
 
 const releaseNotes: ReleaseNotes = [
   {
+    version: "v3.3.0",
+    notes: {
+      fr: (
+        <ul>
+          <Text component="li">
+            Refonte du mode survie&nbsp;! Désormais, le score minimum à
+            atteindre pour continuer la partie augmente toutes les huit photos
+            jouées.
+            <br />
+            Ceci devrait rendre le jeu plus intéressant, surtout pour les
+            difficultés les moins élevées&nbsp;!
+          </Text>
+          <Text component="li">
+            Les classements du mode survie ont été ré-initialisés en
+            conséquences. C'est le moment de se hisser au sommet&nbsp;!
+          </Text>
+        </ul>
+      ),
+      en: (
+        <ul>
+          <Text component="li">
+            Survival mode revamped! From now on, the minimum score required to
+            continue a run increases every eight photos played.
+            <br />
+            This should make the game more interesting, especially on the lower
+            difficulty levels.
+          </Text>
+          <Text component="li">
+            Survival leaderboards have been reset accordingly. Now's your chance
+            to climb to the top!
+          </Text>
+        </ul>
+      ),
+    },
+  },
+  {
     version: "v3.2.0",
     notes: {
       fr: (

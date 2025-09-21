@@ -106,6 +106,15 @@ const en: Texts = {
   "difficulty.survival.short": (minimumScore: number) => (
     <>
       Game continues as long as you score <b>{minimumScore} points</b>.
+      <br />
+      {minimumScore < 4500 ? (
+        <>This threshold increases every eight photos played (up to 4500).</>
+      ) : (
+        <>
+          This threshold will no longer increase — keep surviving for as long as
+          you can!
+        </>
+      )}
     </>
   ),
   "difficulty.goal.50cc": (

@@ -104,6 +104,15 @@ const fr: Texts = {
   "difficulty.survival.short": (minimumScore: number) => (
     <>
       La partie continue tant que vous marquez <b>{minimumScore} points</b>.
+      <br />
+      {minimumScore < 4500 ? (
+        <>Cette limite augmente toutes les huit photos jouées (jusqu'à 4500).</>
+      ) : (
+        <>
+          Cette limite n'augmentera plus ! Continuez à survivre au
+          maximum&nbsp;!
+        </>
+      )}
     </>
   ),
   "difficulty.goal.50cc": (
