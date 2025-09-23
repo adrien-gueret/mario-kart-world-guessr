@@ -12,7 +12,7 @@ if (empty($currentUser)) {
     exit;
 }
 
-$possibleModes = ['survival', 'goal'];
+$possibleModes = ['survival', 'goal', 'chrono'];
 $mode = $_GET['mode'];
 
 if (!isset($mode) || !in_array($mode, $possibleModes)) {

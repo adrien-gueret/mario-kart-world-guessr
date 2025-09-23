@@ -67,7 +67,7 @@ try {
 
      
 
-            // Then goal/survival leaderboard
+            // Then goal/survival/chrono leaderboard
             $stmt = $pdo->prepare(
                 "SELECT difficulty, mode, photo_count, score, performed_at
                 FROM `mario-kart-world-leaderboard-goal-survival`
@@ -102,6 +102,8 @@ try {
                             ($result['photo_count'] > $userScore['photo_count']) ||
                             ($result['photo_count'] === $userScore['photo_count'] && $result['score'] > $userScore['score'])
                         );
+                    }  else if ($result['mode'] === 'chrono') {
+                        $shouldUpdate = $result['score'] > $userScore['score'];
                     }
 
                     if ($shouldUpdate) {

@@ -274,6 +274,10 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
       title: translate("rules.mode.daily.title"),
       description: translate("rules.mode.daily.description"),
     },
+    chrono: {
+      title: translate("rules.mode.chrono.title"),
+      description: translate("rules.mode.chrono.description"),
+    },
   };
 
   const gameModeRules = gameModeToRules[mode];
@@ -294,11 +298,11 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
                 {translate(`difficulty.${difficulty}.title`)}
               </h3>
               <Text component="p">
-                {mode === "goal"
-                  ? translate(`difficulty.goal.${difficulty}.short`)
-                  : translate("difficulty.survival.short")(
+                {mode === "survival"
+                  ? translate("difficulty.survival.short")(
                       minimumScoreToContinue || 3000
-                    )}
+                    )
+                  : translate(`difficulty.${mode}.${difficulty}.short`)}
               </Text>
             </>
           )}
@@ -445,6 +449,9 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
                 />
               );
 
+            case "chrono":
+              return "TODO"; // TODO
+
             case "daily":
               return (
                 <EndDailyGame
@@ -457,34 +464,35 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
         })()}
       </Modal>
 
-      {mode === "goal" && (
-        <>
-          <Modal
-            title={translate("giveUp.title")}
-            isOpen={hasRequestedGiveUp}
-            noDelay
-          >
-            <div className="give-up-modal-container">
-              {translate("giveUp.description")}
+      {mode === "goal" ||
+        (mode === "chrono" && (
+          <>
+            <Modal
+              title={translate("giveUp.title")}
+              isOpen={hasRequestedGiveUp}
+              noDelay
+            >
+              <div className="give-up-modal-container">
+                {translate("giveUp.description")}
 
-              <div className="give-up-modal-buttons">
-                <Button onClick={giveUp} variant="secondary">
-                  {translate("giveUp.confirm.accept")}
-                </Button>
-                <Button onClick={() => setHasRequestedGiveUp(false)}>
-                  {translate("giveUp.confirm.cancel")}
-                </Button>
+                <div className="give-up-modal-buttons">
+                  <Button onClick={giveUp} variant="secondary">
+                    {translate("giveUp.confirm.accept")}
+                  </Button>
+                  <Button onClick={() => setHasRequestedGiveUp(false)}>
+                    {translate("giveUp.confirm.cancel")}
+                  </Button>
+                </div>
               </div>
-            </div>
-          </Modal>
-          <Button
-            onClick={() => setHasRequestedGiveUp(true)}
-            variant="secondary"
-          >
-            {translate("giveUp.label")}
-          </Button>
-        </>
-      )}
+            </Modal>
+            <Button
+              onClick={() => setHasRequestedGiveUp(true)}
+              variant="secondary"
+            >
+              {translate("giveUp.label")}
+            </Button>
+          </>
+        ))}
 
       {mode === "survival" && (
         <Modal

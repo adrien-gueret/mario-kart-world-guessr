@@ -145,6 +145,9 @@ try {
     } else {
         $shouldShowOnlyBots = isset($_GET['only-bots']);
         $photoCountOrderType = $game['mode'] === 'survival' ? 'DESC' : 'ASC';
+        $rowLeaderBoardOrderBy = $game['mode'] === 'chrono'
+        ? "ORDER BY score DESC, photo_count DESC, performed_at DESC"
+        : "ORDER BY photo_count $photoCountOrderType, score DESC, performed_at DESC";
        
         $stmt = $pdo->prepare("WITH
         all_players AS (
@@ -179,9 +182,7 @@ try {
                 performed_at,
                 username,
                 mario_character,
-                ROW_NUMBER() OVER (
-                    ORDER BY photo_count $photoCountOrderType, score DESC, performed_at DESC
-                ) AS rank
+                ROW_NUMBER() OVER ($rowLeaderBoardOrderBy) AS rank
             FROM all_players
             ),
         your_rank AS (

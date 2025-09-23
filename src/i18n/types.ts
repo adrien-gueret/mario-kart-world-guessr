@@ -23,6 +23,8 @@ export type Texts = {
   "mode.goal.description": string;
   "mode.survival.label": string;
   "mode.survival.description": string;
+  "mode.chrono.label": string;
+  "mode.chrono.description": string;
   "mode.daily.label": string;
   "mode.daily.description": string;
   "choose.difficulty": string;
@@ -47,6 +49,14 @@ export type Texts = {
   "difficulty.goal.100cc.short": ReactNode;
   "difficulty.goal.150cc.short": ReactNode;
   "difficulty.goal.mirror.short": ReactNode;
+  "difficulty.chrono.50cc": ReactNode;
+  "difficulty.chrono.100cc": ReactNode;
+  "difficulty.chrono.150cc": ReactNode;
+  "difficulty.chrono.mirror": ReactNode;
+  "difficulty.chrono.50cc.short": ReactNode;
+  "difficulty.chrono.100cc.short": ReactNode;
+  "difficulty.chrono.150cc.short": ReactNode;
+  "difficulty.chrono.mirror.short": ReactNode;
   "survival.harderGame.title": string;
   "survival.harderGame.description": (minimumScore: number) => ReactNode;
   "survival.harderGame.okButton": string;
@@ -56,6 +66,8 @@ export type Texts = {
   "rules.mode.survival.description": string;
   "rules.mode.goal.title": string;
   "rules.mode.goal.description": string;
+  "rules.mode.chrono.title": string;
+  "rules.mode.chrono.description": string;
   "rules.mode.daily.title": string;
   "rules.mode.daily.description": string;
   "leaderboard.tab.bots": string;
@@ -73,6 +85,7 @@ export type Texts = {
     totalScore: number
   ) => ReactNode;
   "endGame.goal.description": (photoCount: number) => ReactNode;
+  "endGame.chrono.description": (score: number) => ReactNode;
   "endGame.daily.description": string;
   "endGame.daily.next": string;
   "endGame.next-button.label": string;

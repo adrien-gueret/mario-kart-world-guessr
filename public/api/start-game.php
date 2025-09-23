@@ -16,7 +16,7 @@ if (empty($currentUser)) {
     exit;
 }
 
-$possibleModes = ['daily', 'survival', 'goal'];
+$possibleModes = ['daily', 'survival', 'goal', 'chrono'];
 
 if (!isset($_POST['mode']) || !in_array($_POST['mode'], $possibleModes)) {
     http_response_code(400);
@@ -116,6 +116,7 @@ try {
                 ],
             ],
             'minimumScoreToContinue' => $_POST['mode'] === 'survival' ? getSurvivalMinimumScore($_POST['difficulty'], count($history)) : null,
+            // TODO: remainingTime
         ]);
         exit;
     }
@@ -153,6 +154,7 @@ try {
             ],
         ],
         'minimumScoreToContinue' => $_POST['mode'] === 'survival' ? getSurvivalMinimumScore($_POST['difficulty'], 0) : null,
+        // TODO: remainingTime
     ]);
 } catch (PDOException $e) {
     http_response_code(500);
