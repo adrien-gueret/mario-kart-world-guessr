@@ -100,7 +100,7 @@ try {
     $insertSuggestionStmt->bindParam(':gameId', $_POST['gameId'], PDO::PARAM_INT);
 
     $mode = $game['mode'];
-    if (!in_array($mode, ['goal', 'daily', 'survival'])) {
+    if (!in_array($mode, ['goal', 'daily', 'survival', 'chrono'])) {
         http_response_code(400);
         die('{"error":true,"message":"Invalid game mode."}');
     }
@@ -198,6 +198,10 @@ try {
         case 'goal':
             $isFinished = $totalScore >= 50000;
         break;
+
+        case 'chrono':
+            $isFinished = false; // TODO
+        break;
     }
 
     $nextPhoto = null;
@@ -234,6 +238,7 @@ try {
         } else {
             // Check achievements
             $photoCountOrderType = $mode === 'survival' ? 'DESC' : 'ASC';
+            $rowLeaderBoardOrderBy = $mode === 'chrono' ? "ORDER BY score DESC, photo_count DESC, performed_at DESC" : "ORDER BY photo_count $photoCountOrderType, score DESC, performed_at DESC";
 
             $stmt = $pdo->prepare(
                 "WITH
@@ -265,9 +270,7 @@ try {
                         photo_count,
                         performed_at,
                         average_score,
-                        ROW_NUMBER() OVER (
-                            ORDER BY photo_count $photoCountOrderType, score DESC, performed_at DESC
-                        ) AS player_rank
+                        ROW_NUMBER() OVER ($rowLeaderBoardOrderBy) AS player_rank
                     FROM all_players
                     )
                 SELECT
@@ -320,7 +323,7 @@ try {
             }
 
             // Then update leaderboards
-            $whatToSelect = $mode === 'goal' ? 'MIN(photo_count)' : 'MAX(photo_count)';
+            $whatToSelect = $mode === 'chrono' ? 'MAX(score)' : ($mode === 'goal' ? 'MIN(photo_count)' : 'MAX(photo_count)');
 
             $selectLeaderBoardStmt = $pdo->prepare(
                 "SELECT $whatToSelect FROM `mario-kart-world-leaderboard-goal-survival`
@@ -342,7 +345,7 @@ try {
                     "INSERT INTO `mario-kart-world-leaderboard-goal-survival` (player_id, difficulty, mode, photo_count, score)
                     VALUES (:playerId, :difficulty, :mode, :photoCount, :score)
                 ");
-            } else if (($mode === 'goal' && $photoCount <= $best) || ($mode === 'survival' && $photoCount >= $best)) {
+            } else if (($mode === 'goal' && $photoCount <= $best) || ($mode === 'survival' && $photoCount >= $best) || ($mode === 'chrono' && $totalScore >= $best)) {
                 $leaderboardStmt = $pdo->prepare(
                     "UPDATE `mario-kart-world-leaderboard-goal-survival` SET photo_count = :photoCount, score = :score, performed_at = NOW()
                     WHERE player_id = :playerId AND difficulty = :difficulty AND mode = :mode
@@ -399,6 +402,7 @@ try {
             "cupData" => $cupData,
             "history" => $game['history'],
             "minimumScoreToContinue" => $mode === 'survival' ? getSurvivalMinimumScore($difficulty, $photoCount) : null,
+            // TODO: add timeRemaining for chrono?
             "nextPhoto" => empty($nextPhotoId) ? null : [
                 'id' => $nextPhotoId,
                 'author' => [

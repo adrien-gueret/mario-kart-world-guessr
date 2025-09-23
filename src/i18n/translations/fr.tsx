@@ -19,6 +19,9 @@ const fr: Texts = {
   "mode.goal.label": "Objectif 50.000",
   "mode.goal.description":
     "En combien de photos atteindrez-vous 50.000 points ?",
+  "mode.chrono.label": "Chrono",
+  "mode.chrono.description":
+    "Marquez le plus de points possible en temps limité !",
   "mode.survival.label": "Survie",
   "mode.survival.description":
     "Continuez à jouer tant que vous marquez assez de points !",
@@ -150,6 +153,87 @@ const fr: Texts = {
       </li>
     </ul>
   ),
+  "difficulty.chrono.50cc": (
+    <ul>
+      <li>
+        Marquez le plus de points en <b>5 minutes</b>
+      </li>
+      <li>
+        Gagnez <b>15</b> secondes à chaque fois que vous marquez 4000 points
+      </li>
+      <li>
+        Les photos <b>les plus faciles</b>
+      </li>
+      <li>La meilleure tolérance sur le calcul du score</li>
+      <li>Possibilité d'afficher les circuits sur la carte</li>
+    </ul>
+  ),
+  "difficulty.chrono.100cc": (
+    <ul>
+      <li>
+        Marquez le plus de points en <b>4 minutes</b>
+      </li>
+      <li>
+        Gagnez <b>10</b> secondes à chaque fois que vous marquez 4000 points
+      </li>
+      <li>
+        La plupart des photos, <b>sauf</b> les plus difficiles
+      </li>
+      <li>Une bonne tolérance sur le calcul du score</li>
+      <li>Possibilité d'afficher les circuits sur la carte</li>
+    </ul>
+  ),
+  "difficulty.chrono.150cc": (
+    <ul>
+      <li>
+        Marquez le plus de points en <b>3 minutes</b>
+      </li>
+      <li>
+        Gagnez <b>5</b> secondes à chaque fois que vous marquez 4000 points
+      </li>
+      <li>
+        <b>TOUTES</b> les photos, y compris les plus difficiles
+      </li>
+      <li>Une tolérance légère sur le calcul du score</li>
+      <li>Circuits non affichés sur la carte</li>
+    </ul>
+  ),
+  "difficulty.chrono.mirror": (
+    <ul>
+      <li>Comme le 150cc mais...</li>
+      <li>
+        <b>Les photos et la carte sont inversées !</b>
+      </li>
+    </ul>
+  ),
+  "difficulty.chrono.50cc.short": (
+    <>
+      Marquez le plus de points en <b>5 minutes</b>.<br />
+      Augmentez ce temps de <b>15 secondes</b> à chaque fois que vous marquez{" "}
+      4000 points&nbsp;!
+    </>
+  ),
+  "difficulty.chrono.100cc.short": (
+    <>
+      Marquez le plus de points en <b>4 minutes</b>.<br />
+      Augmentez ce temps de <b>10 secondes</b> à chaque fois que vous marquez{" "}
+      4000 points&nbsp;!
+    </>
+  ),
+  "difficulty.chrono.150cc.short": (
+    <>
+      Marquez le plus de points en <b>3 minutes</b>.<br />
+      Augmentez ce temps de <b>5 secondes</b> à chaque fois que vous marquez{" "}
+      4000 points&nbsp;!
+    </>
+  ),
+  "difficulty.chrono.mirror.short": (
+    <>
+      Marquez le plus de points en <b>3 minutes</b>.<br />
+      Augmentez ce temps de <b>5 secondes</b> à chaque fois que vous marquez{" "}
+      4000 points&nbsp;!
+    </>
+  ),
   "difficulty.goal.50cc.short": (
     <>
       Les photos <b>les plus faciles</b> et la meilleure tolérance sur le calcul
@@ -200,6 +284,9 @@ const fr: Texts = {
   "rules.mode.daily.title": "Mode Photos du jour",
   "rules.mode.daily.description":
     "Faite le meilleur score possible sur cinq photos du jour !",
+  "rules.mode.chrono.title": "Mode Chrono",
+  "rules.mode.chrono.description":
+    "Marquez le plus de points possible en temps limité !",
   "leaderboard.tab.bots": "Mario & Co (bots)",
   "leaderboard.tab.allPlayers": "Tous les joueurs",
   "leaderboard.congrats": "Félicitations !",
@@ -223,16 +310,25 @@ const fr: Texts = {
       <p>
         Votre partie s'arrête après <b>{photoCount}</b> photo
         {photoCount > 1 ? "s" : ""}, pour un score total de <b>{totalScore}</b>{" "}
-        ! Pouvez-vous faire mieux ?
+        ! Pouvez-vous faire mieux&nbsp;?
       </p>
     </>
   ),
   "endGame.goal.description": (photoCount: number) => (
     <>
-      <p>Vous avez atteint l'objectif de 50.000 points !</p>
+      <p>Vous avez atteint l'objectif de 50.000 points&nbsp;!</p>
       <p>
-        Vous avez gagné à la photo n°<b>{photoCount}</b> ! Pouvez-vous faire
-        mieux ?
+        Vous avez gagné à la photo n°<b>{photoCount}</b>&nbsp;! Pouvez-vous
+        faire mieux&nbsp;?
+      </p>
+    </>
+  ),
+  "endGame.chrono.description": (score: number) => (
+    <>
+      <p>Temps écoulé&nbsp;!</p>
+      <p>
+        Vous avez marqué <b>{score}</b> points&nbsp;! Pouvez-vous faire
+        mieux&nbsp;?
       </p>
     </>
   ),

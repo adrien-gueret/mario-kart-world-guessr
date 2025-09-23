@@ -14,7 +14,7 @@ import Account from "./Account";
 import AccountNotifications from "./Account/Notifications/screen";
 import AccountPhotos from "./Account/Photos/screen";
 import AccountPreferences from "./Account/Preferences/screen";
-import { SurvivalGame, GoalGame, DailyGame } from "./Game";
+import { SurvivalGame, GoalGame, DailyGame, ChronoGame } from "./Game";
 import Home from "./Home";
 import Leaderboards from "./Leaderboards";
 import Login from "./Login";
@@ -33,6 +33,7 @@ export type ScreenName =
   | "Account/Preferences"
   | "DailyGame"
   | "GoalGame"
+  | "ChronoGame"
   | "Home"
   | "Leaderboards"
   | "Login"
@@ -53,6 +54,7 @@ const screenHashtagsToScreenNames: Record<ScreenHashtag, ScreenName> = {
   "#/account/preferences": "Account/Preferences",
   "#/dailygame": "DailyGame",
   "#/goalgame": "GoalGame",
+  "#/chronogame": "ChronoGame",
   "#/home": "Home",
   "#/leaderboards": "Leaderboards",
   "#/login": "Login",
@@ -121,6 +123,7 @@ export function ScreensProvider({ children }: { children: ReactNode }) {
     "Account/Preferences": AccountPreferences,
     DailyGame,
     GoalGame,
+    ChronoGame,
     Home,
     Leaderboards,
     Login,

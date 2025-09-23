@@ -23,6 +23,9 @@ const en: Texts = {
   "mode.select": "Select a game mode",
   "mode.goal.label": "Goal: 50,000",
   "mode.goal.description": "In how many photos will you reach 50,000 points?",
+  "mode.chrono.label": "Chrono",
+  "mode.chrono.description":
+    "Score as many points as possible within a time limit!",
   "mode.survival.label": "Survival",
   "mode.survival.description":
     "Keep playing as long as you score enough points!",
@@ -152,27 +155,85 @@ const en: Texts = {
       </li>
     </ul>
   ),
-  "difficulty.goal.50cc.short": (
+  "difficulty.chrono.50cc": (
+    <ul>
+      <li>
+        Score the most points in <b>5 minutes</b>
+      </li>
+      <li>
+        Gain <b>15</b> seconds each time you score 4000 points
+      </li>
+      <li>
+        The <b>easiest</b> photos
+      </li>
+      <li>The most lenient scoring system</li>
+      <li>Option to display tracks on the map</li>
+    </ul>
+  ),
+  "difficulty.chrono.100cc": (
+    <ul>
+      <li>
+        Score the most points in <b>4 minutes</b>
+      </li>
+      <li>
+        Gain <b>10</b> seconds each time you score 4000 points
+      </li>
+      <li>
+        Most photos, <b>except</b> the most difficult ones
+      </li>
+      <li>Moderate tolerance in score calculation</li>
+      <li>Option to display tracks on the map</li>
+    </ul>
+  ),
+  "difficulty.chrono.150cc": (
+    <ul>
+      <li>
+        Score the most points in <b>3 minutes</b>
+      </li>
+      <li>
+        Gain <b>5</b> seconds each time you score 4000 points
+      </li>
+      <li>
+        <b>ALL</b> photos, including the most difficult ones
+      </li>
+      <li>The strictest scoring system</li>
+      <li>Tracks not displayed on the map</li>
+    </ul>
+  ),
+  "difficulty.chrono.mirror": (
+    <ul>
+      <li>Same as 150cc but...</li>
+      <li>
+        <b>Photos and map are mirrored!</b>
+      </li>
+    </ul>
+  ),
+  "difficulty.chrono.50cc.short": (
     <>
-      The <b>easiest</b> photos and the most lenient scoring system.
+      Score the most points in <b>5 minutes</b>.<br />
+      Increase this time by <b>15 seconds</b> each time you score 4000
+      points&nbsp;!
     </>
   ),
-  "difficulty.goal.100cc.short": (
+  "difficulty.chrono.100cc.short": (
     <>
-      Most photos <b>except</b> the most difficult ones, and moderate tolerance
-      in score calculation
+      Score the most points in <b>4 minutes</b>.<br />
+      Increase this time by <b>10 seconds</b> each time you score 4000
+      points&nbsp;!
     </>
   ),
-  "difficulty.goal.150cc.short": (
+  "difficulty.chrono.150cc.short": (
     <>
-      <b>ALL</b> photos, including the most difficult ones! And the strictest
-      scoring system.
+      Score the most points in <b>3 minutes</b>.<br />
+      Increase this time by <b>5 seconds</b> each time you score 4000
+      points&nbsp;!
     </>
   ),
-  "difficulty.goal.mirror.short": (
+  "difficulty.chrono.mirror.short": (
     <>
-      <b>ALL</b> photos, including the most difficult ones! And the strictest
-      scoring system.
+      Score the most points in <b>3 minutes</b>.<br />
+      Increase this time by <b>5 seconds</b> each time you score 4000
+      points&nbsp;!
     </>
   ),
   "survival.harderGame.title": "Increased difficulty!",
@@ -201,6 +262,9 @@ const en: Texts = {
   "rules.mode.daily.title": "Daily Photos Mode",
   "rules.mode.daily.description":
     "Get the best possible score on five daily photos!",
+  "rules.mode.chrono.title": "Chrono Mode",
+  "rules.mode.chrono.description":
+    "Score as many points as possible within a time limit!",
   "leaderboard.tab.bots": "Mario & Co (bots)",
   "leaderboard.tab.allPlayers": "All Players",
   "leaderboard.congrats": "Congratulations!",
@@ -231,6 +295,14 @@ const en: Texts = {
       <p>You have reached the 50,000 points goal!</p>
       <p>
         You won at photo #<b>{photoCount}</b>! Can you do better?
+      </p>
+    </>
+  ),
+  "endGame.chrono.description": (score: number) => (
+    <>
+      <p>Time's up!</p>
+      <p>
+        You scored <b>{score}</b> points! Can you do better?
       </p>
     </>
   ),
@@ -467,6 +539,29 @@ const en: Texts = {
     "One of your submitted photos has been validated!",
   "photo_validated.unlockedItem": "Toadette is unlocked!",
   "toadette.unlockClue": "Have one of your submitted photos validated.",
+  "difficulty.goal.50cc.short": (
+    <>
+      The <b>easiest</b> photos and the most lenient scoring system.
+    </>
+  ),
+  "difficulty.goal.100cc.short": (
+    <>
+      Most photos <b>except</b> the most difficult ones and a moderate tolerance
+      in score calculation.
+    </>
+  ),
+  "difficulty.goal.150cc.short": (
+    <>
+      <b>ALL</b> photos, including the most difficult ones! And a light
+      tolerance in score calculation.
+    </>
+  ),
+  "difficulty.goal.mirror.short": (
+    <>
+      <b>ALL</b> photos, including the most difficult ones! And a light
+      tolerance in score calculation.
+    </>
+  ),
 };
 
 export default en;

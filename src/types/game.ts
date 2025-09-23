@@ -2,7 +2,7 @@ import type { Coordinates } from "./location";
 
 import type { MarioCharacter } from "./characters";
 
-export type GameMode = "survival" | "goal" | "daily";
+export type GameMode = "survival" | "goal" | "chrono" | "daily";
 
 export type GameHistory = number[];
 

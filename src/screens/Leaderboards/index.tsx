@@ -74,7 +74,7 @@ function Leaderboards() {
       <Text>{translate("leaderboards.description")}</Text>
 
       <h3>{translate("leaderboards.mode")}</h3>
-      {(["survival", "goal"] as GameMode[]).map((mode) => (
+      {(["goal", "chrono", "survival"] as GameMode[]).map((mode) => (
         <span key={mode} className="checkbox-large">
           <Checkbox
             name="game-mode"
