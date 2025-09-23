@@ -66,13 +66,23 @@ export default function PhotoList({ photos }: Props) {
                       <span>{suggestionCount}</span>
                     </Tag>
                   </span>
-                  {difficulty && (
-                    <span className="photo-difficulty">
+
+                  <span className="photo-difficulty">
+                    {difficulty ? (
                       <Tag variant={difficulty}>
                         {translate(`photo.difficulty.${difficulty}`)}
                       </Tag>
-                    </span>
-                  )}
+                    ) : (
+                      <span
+                        title={translate(`photo.difficulty.waiting.tooltip`)}
+                        style={{ cursor: "help" }}
+                      >
+                        <Tag variant="neutral">
+                          {translate(`photo.difficulty.waiting`)}
+                        </Tag>
+                      </span>
+                    )}
+                  </span>
                 </>
               ) : (
                 <div className="photo-validation-pending">

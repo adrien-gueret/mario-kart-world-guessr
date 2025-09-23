@@ -405,11 +405,14 @@ const fr: Texts = {
   "photo.difficulty.easy": "Facile",
   "photo.difficulty.medium": "Moyen",
   "photo.difficulty.hard": "Difficile",
+  "photo.difficulty.waiting": "Inconnue",
+  "photo.difficulty.waiting.tooltip":
+    "La difficulté d'une photo est déterminée après qu'elle ait été vue au moins 5 fois par les joueurs.",
   "photo.validation.pending": "En attente de validation",
   "account.photos.description":
     "Retrouvez ici les photos que vous avez prises et voyez comment se débrouillent les joueurs dessus !",
   "account.photos.stats.title": "Quelques données sur vos photos",
-  "account.photos.stats.subtitle": "Répartition des photos",
+  "account.photos.stats.subtitle": "Répartition des photos par difficulté",
   "account.photos.stats.totalLabel": "Total",
   "account.photos.stats.suggestions": (count: number) => (
     <>
