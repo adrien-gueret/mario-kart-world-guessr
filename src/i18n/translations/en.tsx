@@ -400,11 +400,14 @@ const en: Texts = {
   "photo.difficulty.easy": "Easy",
   "photo.difficulty.medium": "Medium",
   "photo.difficulty.hard": "Hard",
+  "photo.difficulty.waiting": "Unknown",
+  "photo.difficulty.waiting.tooltip":
+    "A photo's difficulty is determined after it has been seen by at least 5 players.",
   "photo.validation.pending": "Pending validation",
   "account.photos.description":
     "Here are the photos you have submitted and how players performed on them!",
   "account.photos.stats.title": "Some data about your photos",
-  "account.photos.stats.subtitle": "Photos distribution",
+  "account.photos.stats.subtitle": "Photos distribution by difficulty",
   "account.photos.stats.totalLabel": "Total",
   "account.photos.stats.suggestions": (count: number) => (
     <>

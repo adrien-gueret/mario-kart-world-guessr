@@ -169,6 +169,8 @@ export type Texts = {
   "photo.difficulty.easy": string;
   "photo.difficulty.medium": string;
   "photo.difficulty.hard": string;
+  "photo.difficulty.waiting": string;
+  "photo.difficulty.waiting.tooltip": string;
   "photo.validation.pending": string;
   "account.photos.description": string;
   "account.photos.stats.title": string;

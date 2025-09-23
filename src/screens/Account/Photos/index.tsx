@@ -73,6 +73,11 @@ export default function Photos() {
     [photos]
   );
 
+  const waitingCount = useMemo(
+    () => photos.reduce((acc, photo) => (!photo.difficulty ? acc + 1 : acc), 0),
+    [photos]
+  );
+
   return (
     <>
       <ConstraintContainer>
@@ -101,7 +106,7 @@ export default function Photos() {
                 <table className="account-photos-stats">
                   <thead>
                     <tr>
-                      <th colSpan={4}>
+                      <th colSpan={5}>
                         {translate("account.photos.stats.subtitle")}
                       </th>
                     </tr>
@@ -123,6 +128,11 @@ export default function Photos() {
                       </th>
                       <th>
                         <Tag variant="neutral">
+                          {translate(`photo.difficulty.waiting`)}
+                        </Tag>
+                      </th>
+                      <th>
+                        <Tag variant="neutral">
                           {translate("account.photos.stats.totalLabel")}
                         </Tag>
                       </th>
@@ -133,6 +143,7 @@ export default function Photos() {
                       <td>{easyCount}</td>
                       <td>{mediumCount}</td>
                       <td>{hardCount}</td>
+                      <td>{waitingCount}</td>
                       <td>{validatedPhotoCount}</td>
                     </tr>
                   </tbody>
