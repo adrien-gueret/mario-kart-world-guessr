@@ -3,14 +3,14 @@
 function getRandomPhoto($pdo, $difficulty, $currentUserId) {
     $params = [$currentUserId];
 
-    $photoDifficulty = 'AND p.difficulty IS NULL OR ';
+    $photoDifficulty = '';
 
     switch ($difficulty) {
         case '50cc':
-            $photoDifficulty .= 'p.difficulty = "easy"';
+            $photoDifficulty = 'AND p.difficulty = "easy"';
             break;
         case '100cc':
-            $photoDifficulty .= 'p.difficulty IN ("easy","medium")';
+            $photoDifficulty = 'AND p.difficulty IS NULL OR p.difficulty IN ("easy","medium")';
             break;
         default:
             $photoDifficulty = '';
