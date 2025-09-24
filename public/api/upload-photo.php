@@ -127,10 +127,8 @@ while(!$uploadOK && $triesCount < 5) {
   } 
 }
 
-
-
 $pr = githubApi("POST", "/repos/$owner/$repo/pulls", $githubToken, [
-  "title" => "Ajout photo",
+  "title" => "Ajout photo ($authorName)",
   "head" => $branchName,
   "base" => $baseBranch,
   "body" => "$authorName ($authorLocale) veut ajouter une nouvelle photo en ($x, $y)"
