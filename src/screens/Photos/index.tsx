@@ -74,7 +74,9 @@ export default function Photos() {
 
       {seeFullMap && <div className="full-map"></div>}
 
-      {photos.length > 0 && <PhotoList photos={photos} />}
+      {photos.length > 0 && (
+        <PhotoList photos={photos} canOpenDetailsOfNoValidatedPhotos />
+      )}
 
       {!isLoading && hasMorePhoto && (
         <Button

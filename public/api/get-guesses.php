@@ -17,7 +17,6 @@ try {
     $stmt = $pdo->prepare("SELECT 0 as id, p.x, p.y, 1 as isAnswer
                             FROM `mario-kart-world-photos` p
                             WHERE p.id = :id
-                            AND p.validated_at IS NOT NULL
                             UNION ALL
                             SELECT s.id, s.x, s.y, 0 as isAnswer
                             FROM `mario-kart-world-suggestions` s

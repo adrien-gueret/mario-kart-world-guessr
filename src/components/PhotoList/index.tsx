@@ -11,9 +11,13 @@ import "./PhotoList.css";
 
 type Props = {
   photos: Photo[];
+  canOpenDetailsOfNoValidatedPhotos?: boolean;
 };
 
-export default function PhotoList({ photos }: Props) {
+export default function PhotoList({
+  photos,
+  canOpenDetailsOfNoValidatedPhotos = false,
+}: Props) {
   const { translate } = useTranslations();
   const [areDetailsOpen, setAreDetailsOpen] = useState(false);
   const [selectedPhotoId, setSelectedPhotoId] = useState<string | null>(null);
@@ -41,56 +45,61 @@ export default function PhotoList({ photos }: Props) {
     <>
       <ul className="photo-list">
         {photos.map(
-          ({ id, photoUrl, difficulty, suggestionCount, validatedAt }) => (
-            <li
-              key={id}
-              role={validatedAt ? "button" : undefined}
-              tabIndex={validatedAt ? 0 : -1}
-              onClick={getHandleClick(id)}
-              onKeyDown={getHandleKeyDown(id)}
-              className={!validatedAt ? "not-validated" : ""}
-            >
-              <img draggable={false} src={photoUrl} alt="" loading="lazy" />
+          ({ id, photoUrl, difficulty, suggestionCount, validatedAt }) => {
+            const isInteractive =
+              canOpenDetailsOfNoValidatedPhotos || Boolean(validatedAt);
 
-              {validatedAt ? (
-                <>
-                  <span className="photo-suggestions">
-                    <Tag>
-                      <svg
-                        focusable="false"
-                        aria-hidden="true"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5M12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5m0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"></path>
-                      </svg>
-                      <span>{suggestionCount}</span>
-                    </Tag>
-                  </span>
+            return (
+              <li
+                key={id}
+                role={isInteractive ? "button" : undefined}
+                tabIndex={isInteractive ? 0 : -1}
+                onClick={getHandleClick(id)}
+                onKeyDown={getHandleKeyDown(id)}
+                className={!isInteractive ? "not-validated" : ""}
+              >
+                <img draggable={false} src={photoUrl} alt="" loading="lazy" />
 
-                  <span className="photo-difficulty">
-                    {difficulty ? (
-                      <Tag variant={difficulty}>
-                        {translate(`photo.difficulty.${difficulty}`)}
+                {validatedAt ? (
+                  <>
+                    <span className="photo-suggestions">
+                      <Tag>
+                        <svg
+                          focusable="false"
+                          aria-hidden="true"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5M12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5m0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"></path>
+                        </svg>
+                        <span>{suggestionCount}</span>
                       </Tag>
-                    ) : (
-                      <span
-                        title={translate(`photo.difficulty.waiting.tooltip`)}
-                        style={{ cursor: "help" }}
-                      >
-                        <Tag variant="neutral">
-                          {translate(`photo.difficulty.waiting`)}
+                    </span>
+
+                    <span className="photo-difficulty">
+                      {difficulty ? (
+                        <Tag variant={difficulty}>
+                          {translate(`photo.difficulty.${difficulty}`)}
                         </Tag>
-                      </span>
-                    )}
-                  </span>
-                </>
-              ) : (
-                <div className="photo-validation-pending">
-                  {translate("photo.validation.pending")}
-                </div>
-              )}
-            </li>
-          )
+                      ) : (
+                        <span
+                          title={translate(`photo.difficulty.waiting.tooltip`)}
+                          style={{ cursor: "help" }}
+                        >
+                          <Tag variant="neutral">
+                            {translate(`photo.difficulty.waiting`)}
+                          </Tag>
+                        </span>
+                      )}
+                    </span>
+                  </>
+                ) : (
+                  <div className="photo-validation-pending">
+                    {translate("photo.validation.pending")}
+                  </div>
+                )}
+              </li>
+            );
+          }
         )}
       </ul>
       <Modal
