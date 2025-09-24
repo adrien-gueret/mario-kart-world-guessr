@@ -11,16 +11,12 @@ export default function useReleaseNotes() {
   const { currentLocale } = useTranslations();
   const lastSeenVersion = getKey("lastSeenVersion");
 
-  // TODO: remove on next version
-  const hasUsedOldVersionOfGame = Boolean(getKey("daily"));
-
   const indexOfLastSeenVersion = allReleaseNotes.findIndex(
     (releaseNote) => releaseNote.version === lastSeenVersion
   );
 
   const shouldShowReleaseNotes =
-    hasUsedOldVersionOfGame ||
-    (lastSeenVersion && indexOfLastSeenVersion !== 0);
+    lastSeenVersion && indexOfLastSeenVersion !== 0;
 
   useEffect(() => {
     if (shouldShowReleaseNotes) {

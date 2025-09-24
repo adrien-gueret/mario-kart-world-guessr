@@ -8,6 +8,7 @@ type Props = {
   score: number;
   photoIndex?: number;
   maxPhotos?: number;
+  // TODO: remainingTime?: number;
 };
 
 export default function GlobalScore({

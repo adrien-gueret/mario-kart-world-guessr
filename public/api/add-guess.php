@@ -200,7 +200,7 @@ try {
         break;
 
         case 'chrono':
-            $isFinished = false; // TODO
+            $isFinished = false; // TODO : calculate based on remaining time
         break;
     }
 
@@ -402,7 +402,7 @@ try {
             "cupData" => $cupData,
             "history" => $game['history'],
             "minimumScoreToContinue" => $mode === 'survival' ? getSurvivalMinimumScore($difficulty, $photoCount) : null,
-            // TODO: add timeRemaining for chrono?
+            // TODO: remainingTime
             "nextPhoto" => empty($nextPhotoId) ? null : [
                 'id' => $nextPhotoId,
                 'author' => [
