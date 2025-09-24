@@ -450,7 +450,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
               );
 
             case "chrono":
-              return "TODO"; // TODO
+              return "TODO"; // TODO: EndChronoGame component to be implemented
 
             case "daily":
               return (

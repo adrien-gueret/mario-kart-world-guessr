@@ -17,20 +17,33 @@ function Play() {
       <menu className="play-menu">
         <li>
           <Card
-            icon={<ModeIcon mode="survival" />}
-            onClick={() => setCurrentScreenName("SurvivalGame")}
-            title={translate("mode.survival.label")}
-            content={translate("mode.survival.description")}
-            borderColor="#fb501e"
-          />
-        </li>
-        <li>
-          <Card
             icon={<ModeIcon mode="goal" />}
             onClick={() => setCurrentScreenName("GoalGame")}
             title={translate("mode.goal.label")}
             content={translate("mode.goal.description")}
             borderColor="#599be5"
+          />
+        </li>
+        {/*
+          TODO: uncomment
+           <li>
+            <Card
+            icon={<ModeIcon mode="chrono" />}
+            onClick={() => setCurrentScreenName("ChronoGame")}
+            title={translate("mode.chrono.label")}
+            content={translate("mode.chrono.description")}
+            borderColor="#a500a5"
+          />
+        </li>
+        */}
+
+        <li>
+          <Card
+            icon={<ModeIcon mode="survival" />}
+            onClick={() => setCurrentScreenName("SurvivalGame")}
+            title={translate("mode.survival.label")}
+            content={translate("mode.survival.description")}
+            borderColor="#fb501e"
           />
         </li>
         <li>
