@@ -473,19 +473,40 @@ const en: Texts = {
   "photo.difficulty.medium": "Medium",
   "photo.difficulty.hard": "Hard",
   "photo.difficulty.waiting": "Unknown",
+  "photo.difficulty.all": "All",
   "photo.difficulty.waiting.tooltip":
     "A photo's difficulty is determined after it has been seen by at least 5 players.",
   "photo.validation.pending": "Pending validation",
   "account.photos.description":
     "Here are the photos you have submitted and how players performed on them!",
-  "account.photos.stats.title": "Some data about your photos",
-  "account.photos.stats.subtitle": "Photos distribution by difficulty",
-  "account.photos.stats.totalLabel": "Total",
-  "account.photos.stats.suggestions": (count: number) => (
-    <>
-      In total, your photos have been viewed <b>{count}</b> times!
-    </>
-  ),
+  "account.photos.filter": "Filter your photos by difficulty",
+  "account.photos.stats.suggestions": (count: number, activeFilter) => {
+    let segment: string = "";
+
+    switch (activeFilter) {
+      case "easy":
+        segment = "your easy photos";
+        break;
+      case "medium":
+        segment = "your medium photos";
+        break;
+      case "hard":
+        segment = "your hard photos";
+        break;
+      case "all":
+        segment = "all your photos";
+        break;
+      default:
+        segment = "your photos";
+        break;
+    }
+
+    return (
+      <>
+        In total, {segment} have been viewed <b>{count}</b> times!
+      </>
+    );
+  },
   "account.your_photos.title": "Your photos",
 
   //////

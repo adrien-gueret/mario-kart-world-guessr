@@ -41,14 +41,21 @@
 }
 
 /* CHIPS variant */
-.tabs.tabs--chips {
+.tabs.tabs--chips,
+.tabs.tabs--chips-small {
   gap: 24px;
   padding: 8px;
   justify-content: center;
   align-items: center;
 }
 
-.tabs.tabs--chips .tab {
+.tabs.tabs--chips-small {
+  gap: 12px;
+  padding: 4px;
+}
+
+.tabs.tabs--chips .tab,
+.tabs.tabs--chips-small .tab {
   color: #000;
   text-decoration: none;
   position: relative;
@@ -65,10 +72,24 @@
   font-weight: bold;
 }
 
+.tabs.tabs--chips-small .tab {
+  padding: 6px 12px;
+  font-size: 1rem;
+  border-width: 2px;
+  border-radius: 8px;
+  transform: skewX(-10deg);
+  filter: drop-shadow(3px 3px 0 #000);
+}
+
 .tabs.tabs--chips .tab > div {
   display: inline-block;
   transform: skewX(20deg);
   padding-left: 90px;
+}
+
+.tabs.tabs--chips-small .tab > div {
+  display: inline-block;
+  transform: skewX(10deg);
 }
 
 .tabs.tabs--chips .tab > div img {
@@ -101,11 +122,17 @@
     );
 }
 
-.tabs.tabs--chips .tab.is-active {
+.tabs.tabs--chips .tab.is-active,
+.tabs.tabs--chips-small .tab.is-active {
   background-color: #f8b801;
 }
 
 .tabs.tabs--chips .tab:hover > div img,
 .tabs.tabs--chips .tab:focus-visible > div img {
   transform: scale(1.1);
+}
+
+.tabs.tabs--chips-small .tab:hover,
+.tabs.tabs--chips-small .tab:focus-visible {
+  transform: skewX(-10deg) translateY(-2px);
 }
