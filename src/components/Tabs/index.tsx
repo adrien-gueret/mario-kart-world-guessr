@@ -10,7 +10,7 @@ export type TabsProps<V extends string, T extends ElementType = "button"> = {
   tabs: Array<TabItem<V, T>>;
   onTabChange?: (tab: V) => void;
   tabComponent?: T;
-  variant?: "table" | "chips";
+  variant?: "table" | "chips" | "chips-small";
 };
 
 export default function Tabs<

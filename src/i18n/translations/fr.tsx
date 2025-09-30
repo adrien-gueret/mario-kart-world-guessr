@@ -502,19 +502,40 @@ const fr: Texts = {
   "photo.difficulty.medium": "Moyen",
   "photo.difficulty.hard": "Difficile",
   "photo.difficulty.waiting": "Inconnue",
+  "photo.difficulty.all": "Toutes",
   "photo.difficulty.waiting.tooltip":
     "La difficulté d'une photo est déterminée après qu'elle ait été vue au moins 5 fois par les joueurs.",
   "photo.validation.pending": "En attente de validation",
   "account.photos.description":
     "Retrouvez ici les photos que vous avez prises et voyez comment se débrouillent les joueurs dessus !",
-  "account.photos.stats.title": "Quelques données sur vos photos",
-  "account.photos.stats.subtitle": "Répartition des photos par difficulté",
-  "account.photos.stats.totalLabel": "Total",
-  "account.photos.stats.suggestions": (count: number) => (
-    <>
-      Accumulées, vos photos ont été vues <b>{count}</b> fois !
-    </>
-  ),
+  "account.photos.filter": "Filtrer vos photos par difficulté",
+  "account.photos.stats.suggestions": (count: number, activeFilter) => {
+    let segment: string = "";
+
+    switch (activeFilter) {
+      case "easy":
+        segment = "vos photos faciles";
+        break;
+      case "medium":
+        segment = "vos photos moyennes";
+        break;
+      case "hard":
+        segment = "vos photos difficiles";
+        break;
+      case "all":
+        segment = "toutes vos photos";
+        break;
+      default:
+        segment = "vos photos";
+        break;
+    }
+
+    return (
+      <>
+        Accumulées, {segment} ont été vues <b>{count}</b> fois !
+      </>
+    );
+  },
   "account.your_photos.title": "Vos photos",
 
   //////

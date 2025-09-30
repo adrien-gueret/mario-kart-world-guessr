@@ -5,3 +5,5 @@ export type Photo = {
   photoUrl: string;
   suggestionCount: number;
 };
+
+export type PhotoFilter = NonNullable<Photo["difficulty"]> | "all";

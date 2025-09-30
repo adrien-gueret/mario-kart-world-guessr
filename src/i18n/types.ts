@@ -1,6 +1,7 @@
 import type { LockedCharacter } from "@/types/characters";
 import type { GameMode, Difficulty } from "@/types/game";
 import type { Achievement } from "@/types/achievements";
+import type { PhotoFilter } from "@/types/photos";
 import type { Version } from "@/versions/types";
 import type { ReactNode } from "react";
 
@@ -182,14 +183,16 @@ export type Texts = {
   "photo.difficulty.easy": string;
   "photo.difficulty.medium": string;
   "photo.difficulty.hard": string;
+  "photo.difficulty.all": string;
   "photo.difficulty.waiting": string;
   "photo.difficulty.waiting.tooltip": string;
   "photo.validation.pending": string;
   "account.photos.description": string;
-  "account.photos.stats.title": string;
-  "account.photos.stats.subtitle": string;
-  "account.photos.stats.totalLabel": string;
-  "account.photos.stats.suggestions": (count: number) => ReactNode;
+  "account.photos.filter": string;
+  "account.photos.stats.suggestions": (
+    count: number,
+    activeFilter: PhotoFilter
+  ) => ReactNode;
   "account.your_photos.title": string;
 } & {
   [K in Achievement as `${K}.unlockedItem`]: string;
