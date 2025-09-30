@@ -9,6 +9,21 @@
   padding: 8px;
   margin: 16px auto;
   background-color: #fff;
-  border-collapse: separate;
-  border-spacing: 16px 0;
+  width: 80%;
+}
+
+.account-photos-stats-stack {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  margin: 8px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.account-photos-stats-stack > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

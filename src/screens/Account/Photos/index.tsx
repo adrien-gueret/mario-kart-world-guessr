@@ -103,51 +103,46 @@ export default function Photos() {
             <ConstraintContainer>
               <h3>{translate("account.photos.stats.title")}</h3>
               <Surface>
-                <table className="account-photos-stats">
-                  <thead>
-                    <tr>
-                      <th colSpan={5}>
-                        {translate("account.photos.stats.subtitle")}
-                      </th>
-                    </tr>
-                    <tr>
-                      <th>
-                        <Tag variant="easy">
-                          {translate(`photo.difficulty.easy`)}
-                        </Tag>
-                      </th>
-                      <th>
-                        <Tag variant="medium">
-                          {translate(`photo.difficulty.medium`)}
-                        </Tag>
-                      </th>
-                      <th>
-                        <Tag variant="hard">
-                          {translate(`photo.difficulty.hard`)}
-                        </Tag>
-                      </th>
-                      <th>
-                        <Tag variant="neutral">
-                          {translate(`photo.difficulty.waiting`)}
-                        </Tag>
-                      </th>
-                      <th>
-                        <Tag variant="neutral">
-                          {translate("account.photos.stats.totalLabel")}
-                        </Tag>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>{easyCount}</td>
-                      <td>{mediumCount}</td>
-                      <td>{hardCount}</td>
-                      <td>{waitingCount}</td>
-                      <td>{validatedPhotoCount}</td>
-                    </tr>
-                  </tbody>
-                </table>
+                <div className="account-photos-stats">
+                  <b>{translate("account.photos.stats.subtitle")}</b>
+
+                  <div className="account-photos-stats-stack">
+                    <div>
+                      <Tag variant="easy">
+                        {translate(`photo.difficulty.easy`)}
+                      </Tag>
+                      <span>{easyCount}</span>
+                    </div>
+
+                    <div>
+                      <Tag variant="medium">
+                        {translate(`photo.difficulty.medium`)}
+                      </Tag>
+                      <span>{mediumCount}</span>
+                    </div>
+
+                    <div>
+                      <Tag variant="hard">
+                        {translate(`photo.difficulty.hard`)}
+                      </Tag>
+                      <span>{hardCount}</span>
+                    </div>
+
+                    <div>
+                      <Tag variant="neutral">
+                        {translate(`photo.difficulty.waiting`)}
+                      </Tag>
+                      <span>{waitingCount}</span>
+                    </div>
+
+                    <div>
+                      <Tag variant="neutral">
+                        {translate("account.photos.stats.totalLabel")}
+                      </Tag>
+                      <span>{validatedPhotoCount}</span>
+                    </div>
+                  </div>
+                </div>
 
                 <p>
                   {translate("account.photos.stats.suggestions")(
