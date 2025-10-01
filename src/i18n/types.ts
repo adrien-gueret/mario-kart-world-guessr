@@ -190,7 +190,7 @@ export type Texts = {
   "account.photos.description": string;
   "account.photos.filter": string;
   "account.photos.stats.suggestions": (
-    count: number,
+    count: string,
     activeFilter: PhotoFilter
   ) => ReactNode;
   "account.your_photos.title": string;

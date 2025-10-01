@@ -22,7 +22,7 @@ export default function Photos() {
   const [selectedDifficulty, setSelectedDifficulty] =
     useState<PhotoFilter>("all");
 
-  const { translate } = useTranslations();
+  const { translate, currentLocale } = useTranslations();
   const { setCurrentScreenName } = useScreen();
 
   useEffect(() => {
@@ -91,7 +91,7 @@ export default function Photos() {
       children: (
         <div>
           <Tag>{translate("photo.difficulty.all")}</Tag>{" "}
-          <span> ({photoCount})</span>
+          <span> ({photoCount.toLocaleString(currentLocale)})</span>
         </div>
       ),
       shouldBeRendered: photoCount > 0,
@@ -101,7 +101,7 @@ export default function Photos() {
       children: (
         <div>
           <Tag variant="easy">{translate(`photo.difficulty.easy`)}</Tag>
-          <span> ({easyCount})</span>
+          <span> ({easyCount.toLocaleString(currentLocale)})</span>
         </div>
       ),
       shouldBeRendered: easyCount > 0,
@@ -111,7 +111,7 @@ export default function Photos() {
       children: (
         <div>
           <Tag variant="medium">{translate(`photo.difficulty.medium`)}</Tag>
-          <span> ({mediumCount})</span>
+          <span> ({mediumCount.toLocaleString(currentLocale)})</span>
         </div>
       ),
       shouldBeRendered: mediumCount > 0,
@@ -121,7 +121,7 @@ export default function Photos() {
       children: (
         <div>
           <Tag variant="hard">{translate(`photo.difficulty.hard`)}</Tag>
-          <span> ({hardCount})</span>
+          <span> ({hardCount.toLocaleString(currentLocale)})</span>
         </div>
       ),
       shouldBeRendered: hardCount > 0,
@@ -175,7 +175,7 @@ export default function Photos() {
                     </svg>
 
                     {translate("account.photos.stats.suggestions")(
-                      suggestionCount,
+                      suggestionCount.toLocaleString(currentLocale),
                       selectedDifficulty
                     )}
                   </div>

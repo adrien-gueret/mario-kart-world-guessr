@@ -480,7 +480,7 @@ const en: Texts = {
   "account.photos.description":
     "Here are the photos you have submitted and how players performed on them!",
   "account.photos.filter": "Filter your photos by difficulty",
-  "account.photos.stats.suggestions": (count: number, activeFilter) => {
+  "account.photos.stats.suggestions": (count, activeFilter) => {
     let segment: string = "";
 
     switch (activeFilter) {

@@ -509,7 +509,7 @@ const fr: Texts = {
   "account.photos.description":
     "Retrouvez ici les photos que vous avez prises et voyez comment se débrouillent les joueurs dessus !",
   "account.photos.filter": "Filtrer vos photos par difficulté",
-  "account.photos.stats.suggestions": (count: number, activeFilter) => {
+  "account.photos.stats.suggestions": (count, activeFilter) => {
     let segment: string = "";
 
     switch (activeFilter) {
