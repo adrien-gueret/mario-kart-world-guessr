@@ -6,7 +6,7 @@ function loadEnv($path) {
     $count = count($lines);
 
     for ($i = 0; $i < $count; $i++) {
-        $line = $lines[$i];
+        $line = isset($lines[$i]) ? $lines[$i] : '';
         $trim = ltrim($line);
         if ($trim === '' || str_starts_with($trim, '#')) continue;
 

@@ -15,6 +15,8 @@ if (!isset($_GET['mode']) || !in_array($_GET['mode'], $possibleModes)) {
 
 $possibleDifficulties = ['50cc', '100cc', '150cc', 'mirror'];
 
+$isDailyMode = $_GET['mode'] === 'daily';
+
 if (!$isDailyMode && (!isset($_GET['difficulty']) || !in_array($_GET['difficulty'], $possibleDifficulties))) {
     http_response_code(400);
     die('{"error":true,"message":"Invalid difficulty"}');
