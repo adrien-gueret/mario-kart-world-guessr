@@ -79,7 +79,7 @@ try {
         $game['guesses'] = [];
     }
 
-    $difficulty = $game['difficulty'];
+    $difficulty = empty($game['difficulty']) ? '150cc' : $game['difficulty'];
     if (!in_array($difficulty, ['50cc', '100cc', '150cc', 'mirror'])) {
         $difficulty = '150cc';
     }
