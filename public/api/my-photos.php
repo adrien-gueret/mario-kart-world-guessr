@@ -18,7 +18,12 @@ try {
             p.id,
             p.difficulty,
             p.validated_at AS validatedAt,
-            COALESCE(SUM(CASE WHEN g.player_id <> p.author_id THEN 1 ELSE 0 END),0) AS suggestionCount,
+            CAST(
+                COALESCE(
+                    SUM(CASE WHEN g.player_id <> p.author_id THEN 1 ELSE 0 END),
+                    0
+                ) AS UNSIGNED
+            ) AS suggestionCount,
             CASE
                 WHEN p.validated_at IS NOT NULL 
                     AND p.validated_at <= NOW() - INTERVAL 5 MINUTE
