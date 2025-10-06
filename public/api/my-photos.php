@@ -13,16 +13,25 @@ if (empty($currentUser)) {
 }
 
 try {
-    $stmt = $pdo->prepare("SELECT p.id, p.difficulty, p.validated_at as validatedAt, COUNT(s.id) as suggestionCount,
-        CASE
-            WHEN p.validated_at IS NOT NULL AND p.validated_at <= NOW() - INTERVAL 5 MINUTE
+    $stmt = $pdo->prepare(
+        "SELECT 
+            p.id,
+            p.difficulty,
+            p.validated_at AS validatedAt,
+            COALESCE(SUM(CASE WHEN g.player_id <> p.author_id THEN 1 ELSE 0 END),0) AS suggestionCount,
+            CASE
+                WHEN p.validated_at IS NOT NULL 
+                    AND p.validated_at <= NOW() - INTERVAL 5 MINUTE
                 THEN CONCAT('https://www.mariouniversalis.fr/mario-kart-world-guessr/photos/', p.id, '.jpg')
-            ELSE CONCAT('https://www.mariouniversalis.fr/mario-kart-world-guessr/api/photo-proxy?pr_id=', p.github_pr_number)
-        END AS photoUrl
+                ELSE CONCAT('https://www.mariouniversalis.fr/mario-kart-world-guessr/api/photo-proxy?pr_id=', p.github_pr_number)
+            END AS photoUrl
         FROM `mario-kart-world-photos` p
-        LEFT JOIN `mario-kart-world-suggestions` s ON s.photo_id = p.id
+        LEFT JOIN `mario-kart-world-suggestions` s 
+            ON s.photo_id = p.id
+        LEFT JOIN `mario-kart-world-games` g
+            ON g.id = s.game_id
         WHERE p.author_id = :authorId
-        GROUP BY p.id
+        GROUP BY p.id, p.difficulty, p.validated_at, p.github_pr_number
         ORDER BY (p.validated_at IS NULL) DESC, p.validated_at DESC"
     );
 
