@@ -123,12 +123,7 @@ function Upload() {
             <Text component="p">{translate("upload.step2.info")}</Text>
           </div>
 
-          <Map
-            onClick={({ realCoordinates }) => {
-              setLocationCoordinates(realCoordinates);
-            }}
-            canShowCourses
-          >
+          <Map onClick={setLocationCoordinates} canShowCourses>
             {locationCoordinates && (
               <Pin
                 x={locationCoordinates.x}
@@ -140,8 +135,8 @@ function Upload() {
 
             {locationCoordinates && (
               <UploadCoordinates
-                x={locationCoordinates.x}
-                y={locationCoordinates.y}
+                coordinates={locationCoordinates}
+                onChange={setLocationCoordinates}
               />
             )}
           </Map>

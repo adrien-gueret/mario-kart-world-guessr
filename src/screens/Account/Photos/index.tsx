@@ -159,7 +159,9 @@ export default function Photos() {
                 <Tabs
                   activeTab={selectedDifficulty}
                   onTabChange={setSelectedDifficulty}
-                  tabs={photoTabs.filter((tab) => tab.shouldBeRendered)}
+                  tabs={photoTabs
+                    .filter((tab) => tab.shouldBeRendered)
+                    .map(({ shouldBeRendered, ...tabProps }) => tabProps)}
                   variant="chips-small"
                 />
                 <Surface>

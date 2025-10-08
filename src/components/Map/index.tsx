@@ -1,28 +1,24 @@
-import {
-  useState,
-  type MouseEvent,
-  useLayoutEffect,
-  createContext,
-  useRef,
-} from "react";
+import { useState, createContext } from "react";
+
+import { MapContainer, SVGOverlay } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 
 import Checkbox from "@/components/Checkbox";
 import { useTranslations } from "@/i18n";
 import type { Coordinates } from "@/types/location";
-import { getCoordinatesFromImage } from "@/services/coordinates";
+import { MAP_SIZE_IN_PIXELS } from "@/services/coordinates";
 
 import "./Map.css";
 import mapImageUrl from "./map.png";
 import mapCoursesImageUrl from "./map_courses.png";
+import mapImageHQUrl from "./map-hq.png";
+import mapCoursesImageHQUrl from "./map_courses-hq.png";
 
 type Props = {
-  onClick?: (coordinates: {
-    realCoordinates: Coordinates;
-    renderedCoordinates: { x: number; y: number };
-  }) => void;
+  onClick?: (coordinates: Coordinates) => void;
   ref?: React.Ref<HTMLImageElement>;
   isMirrored?: boolean;
-  onLoad?: () => void;
   canShowCourses?: boolean;
   children?: React.ReactNode;
 };
@@ -40,91 +36,117 @@ export default function Map({
   onClick,
   canShowCourses = false,
   isMirrored = false,
-  onLoad,
   children = null,
 }: Props) {
   const { translate } = useTranslations();
-  const imgRef = useRef<HTMLImageElement>(null);
 
-  const [ratio, setRatio] = useState(1);
+  const [hqImageLoaded, setHqImageLoaded] = useState(false);
+  const [hqCoursesImageLoaded, setHqCoursesImageLoaded] = useState(false);
+
   const [shouldShowCourses, setShouldShowCourses] = useState(canShowCourses);
-  const handleMapClick = (event: MouseEvent<HTMLImageElement>) => {
-    const coordinates = getCoordinatesFromImage(event.currentTarget, {
-      x: event.clientX,
-      y: event.clientY,
-    });
 
-    onClick?.(coordinates);
-  };
+  const bounds: L.LatLngBoundsLiteral = [
+    [0, 0],
+    [MAP_SIZE_IN_PIXELS.height, MAP_SIZE_IN_PIXELS.width],
+  ];
 
-  const handleLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
-    onLoad?.();
-    const imageElement = event.currentTarget;
-    setRatio(imageElement.naturalWidth / imageElement.width);
-  };
-
-  useLayoutEffect(() => {
-    const onResize = () => {
-      if (!imgRef.current) {
-        return;
-      }
-      const imageElement = imgRef.current;
-      setRatio(imageElement.naturalWidth / imageElement.width);
-    };
-
-    window.addEventListener("resize", onResize);
-    return () => {
-      window.removeEventListener("resize", onResize);
-    };
-  }, []);
+  const t = isMirrored
+    ? `scale(-1,1) translate(-${MAP_SIZE_IN_PIXELS.width},0)`
+    : undefined;
 
   return (
     <>
-      {canShowCourses && (
-        <div className="map-show-courses-container">
-          <Checkbox
-            name="map-show-courses"
-            label={translate("upload.step2.help.label")}
-            checked={shouldShowCourses}
-            onChange={setShouldShowCourses}
+      <MapContainer
+        crs={L.CRS.Simple}
+        bounds={bounds}
+        maxBounds={bounds}
+        maxBoundsViscosity={1}
+        minZoom={-1}
+        maxZoom={2}
+        attributionControl={false}
+      >
+        <SVGOverlay
+          bounds={bounds}
+          attributes={{
+            viewBox: `0 0 ${MAP_SIZE_IN_PIXELS.width} ${MAP_SIZE_IN_PIXELS.height}`,
+            preserveAspectRatio: "none",
+          }}
+          interactive={Boolean(onClick)}
+          eventHandlers={{
+            click: onClick
+              ? (event) => {
+                  const coordinates = {
+                    x: Math.floor(event.latlng.lng),
+                    y: Math.floor(MAP_SIZE_IN_PIXELS.height - event.latlng.lat),
+                  };
+                  onClick(coordinates);
+                }
+              : undefined,
+          }}
+        >
+          <image
+            href={mapImageUrl}
+            x="0"
+            y="0"
+            width={MAP_SIZE_IN_PIXELS.width}
+            height={MAP_SIZE_IN_PIXELS.height}
+            {...(t ? { transform: t } : {})}
           />
-        </div>
-      )}
 
-      <div className={`map-container ${isMirrored ? "mirrored" : ""}`}>
-        <img
-          ref={imgRef}
-          draggable={false}
-          className={`game-map ${onClick ? "" : " no-interaction"}`}
-          src={mapImageUrl}
-          alt="Game Map"
-          onClick={onClick ? handleMapClick : void 0}
-          onLoad={handleLoad}
-        />
-
-        {shouldShowCourses && (
-          <img
-            draggable={false}
-            className="game-map-courses"
-            style={{ pointerEvents: "none" }}
-            src={mapCoursesImageUrl}
-            alt=""
+          <image
+            href={mapImageHQUrl}
+            x="0"
+            y="0"
+            width={MAP_SIZE_IN_PIXELS.width}
+            height={MAP_SIZE_IN_PIXELS.height}
+            {...(t ? { transform: t } : {})}
+            style={{ opacity: hqImageLoaded ? 1 : 0.1 }}
+            onLoad={() => {
+              setHqImageLoaded(true);
+            }}
           />
+
+          {shouldShowCourses && (
+            <>
+              <image
+                href={mapCoursesImageUrl}
+                x="0"
+                y="0"
+                width={MAP_SIZE_IN_PIXELS.width}
+                height={MAP_SIZE_IN_PIXELS.height}
+                {...(t ? { transform: t } : {})}
+                style={{ opacity: hqCoursesImageLoaded ? 0 : 1 }}
+              />
+
+              <image
+                href={mapCoursesImageHQUrl}
+                x="0"
+                y="0"
+                width={MAP_SIZE_IN_PIXELS.width}
+                height={MAP_SIZE_IN_PIXELS.height}
+                {...(t ? { transform: t } : {})}
+                style={{ opacity: hqCoursesImageLoaded ? 1 : 0.1 }}
+                onLoad={() => {
+                  setHqCoursesImageLoaded(true);
+                }}
+              />
+            </>
+          )}
+        </SVGOverlay>
+
+        {children}
+
+        {canShowCourses && (
+          <div className="map-show-courses-container">
+            <Checkbox
+              name="map-show-courses"
+              label={translate("upload.step2.help.label")}
+              checked={shouldShowCourses}
+              onChange={setShouldShowCourses}
+            />
+          </div>
         )}
-
-        <MapContext value={{ ratio, isMirrored }}>{children}</MapContext>
-      </div>
-
-      {canShowCourses && (
-        <div className="map-show-courses-container">
-          <Checkbox
-            name="map-show-courses"
-            label={translate("upload.step2.help.label")}
-            checked={shouldShowCourses}
-            onChange={setShouldShowCourses}
-          />
-        </div>
-      )}
+      </MapContainer>
     </>
   );
 }
