@@ -1,6 +1,8 @@
-import { useContext } from "react";
+import { Marker } from "react-leaflet";
+import L from "leaflet";
 
-import { MapContext } from "@/components/Map";
+import { MAP_SIZE_IN_PIXELS } from "@/services/coordinates";
+
 import type { Coordinates } from "@/types/location";
 import type { MarioCharacter } from "@/types/characters";
 
@@ -12,25 +14,6 @@ type Props = Coordinates & {
   zIndex?: number;
 };
 
-const FULL_PIN_SIZE = 64;
-const ONLY_HEAD_PIN_SIZE = 36;
-
-function targetCoordinatesToFullPinDomCoordinates(coordinates: Coordinates) {
-  return {
-    x: coordinates.x - FULL_PIN_SIZE / 2,
-    y: coordinates.y - FULL_PIN_SIZE,
-  };
-}
-
-function targetCoordinatesToOnlyHeadPinDomCoordinates(
-  coordinates: Coordinates
-) {
-  return {
-    x: coordinates.x - ONLY_HEAD_PIN_SIZE / 2,
-    y: coordinates.y - ONLY_HEAD_PIN_SIZE / 2,
-  };
-}
-
 export default function Pin({
   x,
   y,
@@ -38,30 +21,25 @@ export default function Pin({
   onlyHead = false,
   zIndex,
 }: Props) {
-  const { ratio } = useContext(MapContext);
-  const { x: domX, y: domY } = onlyHead
-    ? targetCoordinatesToOnlyHeadPinDomCoordinates({
-        x: x / ratio,
-        y: y / ratio,
-      })
-    : targetCoordinatesToFullPinDomCoordinates({
-        x: x / ratio,
-        y: y / ratio,
-      });
+  const pin = L.divIcon({
+    html: `<div
+        class="game-map-pin variant-${variant ?? "mario"} ${
+      onlyHead ? "only-head" : ""
+    }"
+      >
+        ${variant ? `<img src="./ui/pins/icon-${variant}.png" alt="" />` : ""}
+      </div>`,
+    className: "",
+    iconSize: onlyHead ? [36, 36] : [64, 64],
+    iconAnchor: onlyHead ? [18, 18] : [32, 64],
+  });
 
   return (
-    <div
-      key={`${domX}-${domY}`}
-      className={`game-map-pin variant-${variant ?? "mario"} ${
-        onlyHead ? "only-head" : ""
-      }`}
-      style={{
-        left: `${domX}px`,
-        top: `${domY}px`,
-        zIndex: zIndex || Math.max(1, domY),
-      }}
-    >
-      {variant && <img src={`./ui/pins/icon-${variant}.png`} alt="" />}
-    </div>
+    <Marker
+      position={[MAP_SIZE_IN_PIXELS.height - y, x]}
+      icon={pin}
+      zIndexOffset={zIndex}
+      interactive={false}
+    />
   );
 }

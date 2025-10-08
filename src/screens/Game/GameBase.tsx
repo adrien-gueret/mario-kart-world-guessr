@@ -326,8 +326,8 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
             isMirrored={difficulty === "mirror"}
             onClick={
               canGuess
-                ? ({ realCoordinates }) => {
-                    setUserGuess(realCoordinates);
+                ? (coordinates) => {
+                    setUserGuess(coordinates);
                   }
                 : undefined
             }
