@@ -1,4 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from "react";
+import { SVGOverlay } from "react-leaflet";
+
 import type {
   AddGuessResponse,
   StartGameResponse,
@@ -331,58 +333,74 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
                   }
                 : undefined
             }
+            flyTo={
+              shouldShowAnswer &&
+              currentLocationCoordinates &&
+              currentLocationPlayersCoordinates
+                ? currentLocationCoordinates
+                : null
+            }
           >
-            {userGuess && (
-              <>
-                {shouldShowAnswer &&
-                  currentLocationCoordinates &&
-                  currentLocationPlayersCoordinates && (
-                    <>
-                      <Line
-                        x1={userGuess.x}
-                        y1={userGuess.y}
-                        x2={currentLocationCoordinates.x}
-                        y2={currentLocationCoordinates.y}
-                      />
-                      <Pin
-                        x={currentLocationCoordinates.x}
-                        y={currentLocationCoordinates.y}
-                        variant="star"
-                      />
-                      {shouldShowOtherPlayersGuesses && (
+            {(bounds) =>
+              userGuess ? (
+                <>
+                  {shouldShowAnswer &&
+                    currentLocationCoordinates &&
+                    currentLocationPlayersCoordinates && (
+                      <>
+                        <SVGOverlay
+                          bounds={bounds}
+                          attributes={{
+                            viewBox: `0 0 ${MAP_SIZE_IN_PIXELS.width} ${MAP_SIZE_IN_PIXELS.height}`,
+                            preserveAspectRatio: "none",
+                          }}
+                          interactive={false}
+                        >
+                          <Line
+                            x1={userGuess.x}
+                            y1={userGuess.y}
+                            x2={currentLocationCoordinates.x}
+                            y2={currentLocationCoordinates.y}
+                          />
+                        </SVGOverlay>
                         <Pin
-                          x={currentLocationPlayersCoordinates.x}
-                          y={currentLocationPlayersCoordinates.y}
-                          variant={
-                            user.marioCharacter === "luigi"
-                              ? "mario"
-                              : user.marioCharacter
-                          }
+                          x={currentLocationCoordinates.x}
+                          y={currentLocationCoordinates.y}
+                          variant="star"
                         />
-                      )}
+                        {shouldShowOtherPlayersGuesses && (
+                          <Pin
+                            x={currentLocationPlayersCoordinates.x}
+                            y={currentLocationPlayersCoordinates.y}
+                            variant={
+                              user.marioCharacter === "luigi"
+                                ? "mario"
+                                : user.marioCharacter
+                            }
+                          />
+                        )}
+                      </>
+                    )}
 
-                      <GuessScore
-                        distance={guessResults!.distance}
-                        score={guessResults!.score}
-                        canShowPlayersCoordinates={canShowPlayersCoordinates}
-                        shouldShowPlayersCoordinates={
-                          shouldShowOtherPlayersGuesses
-                        }
-                        onShowPlayersCoordinatesChange={
-                          setShouldShowOtherPlayersGuesses
-                        }
-                      />
-                    </>
-                  )}
-
-                <Pin
-                  x={userGuess.x}
-                  y={userGuess.y}
-                  variant={user.marioCharacter}
-                />
-              </>
-            )}
+                  <Pin
+                    x={userGuess.x}
+                    y={userGuess.y}
+                    variant={user.marioCharacter}
+                  />
+                </>
+              ) : null
+            }
           </Map>
+
+          {shouldShowAnswer && (
+            <GuessScore
+              distance={guessResults!.distance}
+              score={guessResults!.score}
+              canShowPlayersCoordinates={canShowPlayersCoordinates}
+              shouldShowPlayersCoordinates={shouldShowOtherPlayersGuesses}
+              onShowPlayersCoordinatesChange={setShouldShowOtherPlayersGuesses}
+            />
+          )}
         </div>
       </div>
 
