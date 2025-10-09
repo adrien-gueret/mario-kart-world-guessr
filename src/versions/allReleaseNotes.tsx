@@ -4,6 +4,51 @@ import type { ReleaseNotes } from "./types";
 
 const releaseNotes: ReleaseNotes = [
   {
+    version: "v3.4.0",
+    notes: {
+      fr: (
+        <ul>
+          <Text component="li">
+            La carte affichant le monde de <b>Mario Kart World</b> a été
+            améliorée&nbsp;: il est désormais possible de zoomer dedans pour
+            être plus précis&nbsp;!
+          </Text>
+          <Text component="li">
+            Les circuits ont également été repositionnés pour être plus
+            conformes à leurs emplacements dans le jeu d'origine{" "}
+            <i>
+              (certains étaient décalés de plusieurs dizaines de pixels quand
+              même&nbsp;!)
+            </i>
+            .
+          </Text>
+          <Text component="li">
+            <b>Mario Kart World Guessr</b> contient désormais plus de{" "}
+            <b>410 photos</b>&nbsp;! Merci à tous les photographes qui ont
+            contribué à enrichir le jeu&nbsp;!
+          </Text>
+        </ul>
+      ),
+      en: (
+        <ul>
+          <Text component="li">
+            The map showing the world of <b>Mario Kart World</b> has been
+            improved: you can now zoom in on it to be more precise!
+          </Text>
+          <Text component="li">
+            Tracks have also been repositioned to better match their locations
+            in the original game <i>(some were off by several dozen pixels!)</i>
+            .
+          </Text>
+          <Text component="li">
+            <b>Mario Kart World Guessr</b> now contains over <b>410 photos</b>!
+            Thanks to all the photographers who helped enrich the game!
+          </Text>
+        </ul>
+      ),
+    },
+  },
+  {
     version: "v3.3.0",
     notes: {
       fr: (
