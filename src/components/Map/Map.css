@@ -1,7 +1,7 @@
 .map-show-courses-container {
   position: absolute;
   top: 8px;
-  right: 8px;
+  right: 64px;
   z-index: 2000;
 }
 
@@ -34,4 +34,8 @@
 
 svg.leaflet-interactive {
   cursor: crosshair !important;
+}
+
+.leaflet-marker-draggable {
+  cursor: move;
 }

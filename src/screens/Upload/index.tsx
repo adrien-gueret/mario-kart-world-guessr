@@ -130,6 +130,7 @@ function Upload() {
                 y={locationCoordinates.y}
                 variant={user.marioCharacter}
                 onlyHead
+                onDragEnd={setLocationCoordinates}
               />
             )}
 
