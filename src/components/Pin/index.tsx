@@ -12,6 +12,7 @@ type Props = Coordinates & {
   variant?: MarioCharacter | "star" | null;
   onlyHead?: boolean;
   zIndex?: number;
+  onDragEnd?: (newCoordinates: Coordinates) => void;
 };
 
 export default function Pin({
@@ -20,6 +21,7 @@ export default function Pin({
   variant,
   onlyHead = false,
   zIndex,
+  onDragEnd,
 }: Props) {
   const pin = L.divIcon({
     html: `<div
@@ -34,12 +36,29 @@ export default function Pin({
     iconAnchor: onlyHead ? [18, 18] : [32, 64],
   });
 
+  const draggable = Boolean(onDragEnd);
+
   return (
     <Marker
       position={[MAP_SIZE_IN_PIXELS.height - y, x]}
       icon={pin}
       zIndexOffset={zIndex}
-      interactive={false}
+      interactive={draggable}
+      draggable={draggable}
+      eventHandlers={
+        draggable
+          ? {
+              dragend: (event) => {
+                const marker = event.target;
+                const position = marker.getLatLng();
+                onDragEnd!({
+                  x: Math.floor(position.lng),
+                  y: Math.floor(MAP_SIZE_IN_PIXELS.height - position.lat),
+                });
+              },
+            }
+          : undefined
+      }
     />
   );
 }

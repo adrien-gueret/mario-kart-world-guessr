@@ -1,6 +1,6 @@
 import { useState, useRef, useLayoutEffect } from "react";
 
-import { MapContainer, SVGOverlay } from "react-leaflet";
+import { MapContainer, SVGOverlay, ZoomControl } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -24,6 +24,7 @@ type Props = {
     | React.ReactNode
     | ((bounds: L.LatLngBoundsLiteral) => React.ReactNode);
   flyTo?: Coordinates | null;
+  shouldZoomOnScroll?: boolean;
 };
 
 export default function Map({
@@ -32,6 +33,7 @@ export default function Map({
   isMirrored = false,
   children = null,
   flyTo = null,
+  shouldZoomOnScroll = false,
 }: Props) {
   const { translate } = useTranslations();
   const mapRef = useRef<L.Map>(null);
@@ -60,97 +62,110 @@ export default function Map({
   }, [flyTo]);
 
   return (
-    <MapContainer
-      crs={L.CRS.Simple}
-      bounds={bounds}
-      maxBounds={bounds}
-      maxBoundsViscosity={1}
-      minZoom={-1}
-      maxZoom={2}
-      attributionControl={false}
-      ref={mapRef}
+    <div
+      onMouseMove={() => {
+        mapRef.current?.scrollWheelZoom.enable();
+      }}
+      onMouseLeave={() => {
+        mapRef.current?.scrollWheelZoom.disable();
+      }}
     >
-      <SVGOverlay
+      <MapContainer
+        crs={L.CRS.Simple}
         bounds={bounds}
-        attributes={{
-          viewBox: `0 0 ${MAP_SIZE_IN_PIXELS.width} ${MAP_SIZE_IN_PIXELS.height}`,
-          preserveAspectRatio: "none",
-        }}
-        interactive={Boolean(onClick)}
-        eventHandlers={{
-          click: onClick
-            ? (event) => {
-                const coordinates = {
-                  x: Math.floor(event.latlng.lng),
-                  y: Math.floor(MAP_SIZE_IN_PIXELS.height - event.latlng.lat),
-                };
-                onClick(coordinates);
-              }
-            : undefined,
-        }}
+        maxBounds={bounds}
+        maxBoundsViscosity={1}
+        minZoom={-1}
+        maxZoom={2}
+        attributionControl={false}
+        ref={mapRef}
+        scrollWheelZoom={shouldZoomOnScroll}
+        zoomControl={false}
+        doubleClickZoom={false}
       >
-        <image
-          href={mapImageUrl}
-          x="0"
-          y="0"
-          width={MAP_SIZE_IN_PIXELS.width}
-          height={MAP_SIZE_IN_PIXELS.height}
-          {...(t ? { transform: t } : {})}
-        />
-
-        <image
-          href={mapImageHQUrl}
-          x="0"
-          y="0"
-          width={MAP_SIZE_IN_PIXELS.width}
-          height={MAP_SIZE_IN_PIXELS.height}
-          {...(t ? { transform: t } : {})}
-          style={{ opacity: hqImageLoaded ? 1 : 0.1 }}
-          onLoad={() => {
-            setHqImageLoaded(true);
+        <ZoomControl position="topright" />
+        <SVGOverlay
+          bounds={bounds}
+          attributes={{
+            viewBox: `0 0 ${MAP_SIZE_IN_PIXELS.width} ${MAP_SIZE_IN_PIXELS.height}`,
+            preserveAspectRatio: "none",
           }}
-        />
-
-        {shouldShowCourses && (
-          <>
-            <image
-              href={mapCoursesImageUrl}
-              x="0"
-              y="0"
-              width={MAP_SIZE_IN_PIXELS.width}
-              height={MAP_SIZE_IN_PIXELS.height}
-              {...(t ? { transform: t } : {})}
-              style={{ opacity: hqCoursesImageLoaded ? 0 : 1 }}
-            />
-
-            <image
-              href={mapCoursesImageHQUrl}
-              x="0"
-              y="0"
-              width={MAP_SIZE_IN_PIXELS.width}
-              height={MAP_SIZE_IN_PIXELS.height}
-              {...(t ? { transform: t } : {})}
-              style={{ opacity: hqCoursesImageLoaded ? 1 : 0.1 }}
-              onLoad={() => {
-                setHqCoursesImageLoaded(true);
-              }}
-            />
-          </>
-        )}
-      </SVGOverlay>
-
-      {typeof children === "function" ? children(bounds) : children}
-
-      {canShowCourses && (
-        <div className="map-show-courses-container">
-          <Checkbox
-            name="map-show-courses"
-            label={translate("upload.step2.help.label")}
-            checked={shouldShowCourses}
-            onChange={setShouldShowCourses}
+          interactive={Boolean(onClick)}
+          eventHandlers={{
+            click: onClick
+              ? (event) => {
+                  const coordinates = {
+                    x: Math.floor(event.latlng.lng),
+                    y: Math.floor(MAP_SIZE_IN_PIXELS.height - event.latlng.lat),
+                  };
+                  onClick(coordinates);
+                }
+              : undefined,
+          }}
+        >
+          <image
+            href={mapImageUrl}
+            x="0"
+            y="0"
+            width={MAP_SIZE_IN_PIXELS.width}
+            height={MAP_SIZE_IN_PIXELS.height}
+            {...(t ? { transform: t } : {})}
           />
-        </div>
-      )}
-    </MapContainer>
+
+          <image
+            href={mapImageHQUrl}
+            x="0"
+            y="0"
+            width={MAP_SIZE_IN_PIXELS.width}
+            height={MAP_SIZE_IN_PIXELS.height}
+            {...(t ? { transform: t } : {})}
+            style={{ opacity: hqImageLoaded ? 1 : 0.1 }}
+            onLoad={() => {
+              setHqImageLoaded(true);
+            }}
+          />
+
+          {shouldShowCourses && (
+            <>
+              <image
+                href={mapCoursesImageUrl}
+                x="0"
+                y="0"
+                width={MAP_SIZE_IN_PIXELS.width}
+                height={MAP_SIZE_IN_PIXELS.height}
+                {...(t ? { transform: t } : {})}
+                style={{ opacity: hqCoursesImageLoaded ? 0 : 1 }}
+              />
+
+              <image
+                href={mapCoursesImageHQUrl}
+                x="0"
+                y="0"
+                width={MAP_SIZE_IN_PIXELS.width}
+                height={MAP_SIZE_IN_PIXELS.height}
+                {...(t ? { transform: t } : {})}
+                style={{ opacity: hqCoursesImageLoaded ? 1 : 0.1 }}
+                onLoad={() => {
+                  setHqCoursesImageLoaded(true);
+                }}
+              />
+            </>
+          )}
+        </SVGOverlay>
+
+        {typeof children === "function" ? children(bounds) : children}
+
+        {canShowCourses && (
+          <div className="map-show-courses-container">
+            <Checkbox
+              name="map-show-courses"
+              label={translate("upload.step2.help.label")}
+              checked={shouldShowCourses}
+              onChange={setShouldShowCourses}
+            />
+          </div>
+        )}
+      </MapContainer>
+    </div>
   );
 }
