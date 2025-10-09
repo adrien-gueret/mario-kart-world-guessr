@@ -42,3 +42,35 @@
 .harder-game-modal-buttons {
   text-align: right;
 }
+
+.floating-photo-container {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 150px;
+  height: auto;
+  z-index: 2000;
+  border-radius: 8px;
+  overflow: hidden;
+  opacity: 0.5;
+  transform-origin: bottom right;
+  transition: width 0.3s ease-in-out;
+}
+
+.floating-photo-container:hover {
+  opacity: 1;
+  cursor: zoom-in;
+}
+
+.floating-photo-container.zoomed {
+  width: 100%;
+  opacity: 1;
+  cursor: zoom-out;
+}
+
+/* TODO: handling fullscreen */
+/*
+.game-screen:fullscreen .rules-container, .game-screen:fullscreen .photo-container, .game-screen:fullscreen .map-container h2 {
+  display: none;
+}
+  */

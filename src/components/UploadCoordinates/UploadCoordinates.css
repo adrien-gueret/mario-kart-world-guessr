@@ -1,20 +1,21 @@
 .upload-coordinates {
   position: absolute;
-  bottom: 8px;
-  left: 0;
+  bottom: 0;
+  left: calc(50% - 119px);
   background-color: rgba(255, 255, 255, 0.9);
   color: rgba(0, 0, 0, 0.8);
-  border: 2px solid rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
   border-bottom: 0;
+  border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   font-size: 1rem;
   font-family: sans-serif;
   padding: 8px;
-  z-index: 100;
+  z-index: 2000;
   text-align: left;
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  flex-direction: row;
+  gap: 20px;
   white-space: nowrap;
   font-size: 1.5rem;
 }
@@ -22,12 +23,29 @@
 .upload-coordinates > div {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
 }
 
 .upload-coordinates label {
   font-weight: bold;
   margin-right: 4px;
+}
+
+.upload-coordinates input {
+  appearance: none;
+  font-size: inherit;
+  display: inline-block;
+  width: 100%;
+  padding: 0;
+  padding-block: 0;
+  padding-inline: 0;
+  margin: 0;
+
+  background: transparent;
+  color: inherit;
+  border: 0;
 }
 
 @media screen and (max-width: 420px) {

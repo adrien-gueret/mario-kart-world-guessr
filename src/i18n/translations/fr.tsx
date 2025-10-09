@@ -361,7 +361,7 @@ const fr: Texts = {
   "upload.step2.title": "2. Où avez-vous pris cette photo ?",
   "upload.step2.info":
     "Cliquez sur la carte pour indiquer l'emplacement de votre photo. Soyez le plus précis possible !",
-  "upload.step2.help.label": "Afficher les circuits et les routes",
+  "upload.step2.help.label": "Afficher les circuits",
   "upload.step3.title": "3. Confirmez votre envoi",
   "upload.step3.info":
     "En envoyant votre photo, vous acceptez que celle-ci soit utilisée dans le jeu.",
