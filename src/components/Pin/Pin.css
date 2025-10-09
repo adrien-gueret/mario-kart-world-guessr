@@ -8,7 +8,6 @@
   background-size: contain;
   background-repeat: no-repeat;
   filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.5));
-  animation: fallDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
   text-align: center;
   pointer-events: none;
 }
@@ -52,7 +51,7 @@
 }
 
 .game-map-pin > img {
-  width: 32px;
+  width: 32px !important;
   position: relative;
   top: 8px;
 }
@@ -68,15 +67,6 @@
 }
 
 .game-map-pin.only-head > img {
-  width: 36px;
+  width: 36px !important;
   top: 0;
-}
-
-@keyframes fallDown {
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: translateY(0);
-  }
 }

@@ -1,36 +1,41 @@
-.game-map {
-  cursor: crosshair;
-  max-width: 100%;
-  height: auto;
-  border: 2px solid rgba(0, 0, 0, 0.8);
-}
-
-.game-map.no-interaction {
-  cursor: default;
-  pointer-events: none;
-}
-
-.game-map-courses {
-  cursor: default;
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-}
-
-.map-container {
-  position: relative;
-}
-
-.map-container.mirrored .game-map,
-.map-container.mirrored .game-map-courses {
-  transform: scaleX(-1);
-}
-
 .map-show-courses-container {
-  margin-top: 24px;
-  margin-bottom: 8px;
+  position: absolute;
+  top: 8px;
+  right: 64px;
+  z-index: 2000;
+}
+
+.map-show-courses-container .text {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  vertical-align: middle;
+  padding: 2px 8px;
+  border-radius: 15px;
+  border-top-left-radius: 0;
+  font-size: 1rem;
+  border-bottom-left-radius: 0;
+  position: relative;
+  left: -10px;
+  z-index: -1;
+}
+
+.leaflet-container {
+  width: 80vw;
+  height: calc(80vw * 9 / 16);
+  background-color: #3d7cb6;
+  border: 1px solid #213547;
+  border-radius: 27px;
+}
+
+.leaflet-container svg {
+  outline: none;
+}
+
+svg.leaflet-interactive {
+  cursor: crosshair !important;
+}
+
+.leaflet-marker-draggable {
+  cursor: move;
 }

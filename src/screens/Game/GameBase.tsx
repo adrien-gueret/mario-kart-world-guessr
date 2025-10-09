@@ -1,4 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from "react";
+import { SVGOverlay } from "react-leaflet";
+
 import type {
   AddGuessResponse,
   StartGameResponse,
@@ -44,6 +46,8 @@ type Props = {
 export default function Game({ mode, difficulty, onReplay }: Props) {
   const hasBeenInit = useRef(false);
 
+  const [hasZoomOnFloatingPhoto, setHasZoomOnFloatingPhoto] = useState(false);
+
   const [currentGameId, setCurrentGameId] = useState<number | null>(null);
   const [currentPhotoId, setCurrentPhotoId] = useState<string | null>(null);
   const [nextPhotoId, setNextPhotoId] = useState<string | null>(null);
@@ -52,6 +56,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     name: string;
     character: MarioCharacter | null;
   } | null>(null);
+
   const [nextPhotoAuthor, setNextPhotoAuthor] = useState<{
     id: number;
     name: string;
@@ -168,6 +173,8 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     if (!userGuess || !currentPhotoId || isGuessing.current) {
       return;
     }
+
+    setHasZoomOnFloatingPhoto(false);
 
     const formData = new FormData();
     formData.append("photoId", currentPhotoId);
@@ -326,63 +333,100 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
             isMirrored={difficulty === "mirror"}
             onClick={
               canGuess
-                ? ({ realCoordinates }) => {
-                    setUserGuess(realCoordinates);
+                ? (coordinates) => {
+                    setUserGuess(coordinates);
                   }
                 : undefined
             }
+            flyTo={
+              shouldShowAnswer &&
+              currentLocationCoordinates &&
+              currentLocationPlayersCoordinates
+                ? currentLocationCoordinates
+                : null
+            }
           >
-            {userGuess && (
+            {(bounds) => (
               <>
-                {shouldShowAnswer &&
-                  currentLocationCoordinates &&
-                  currentLocationPlayersCoordinates && (
-                    <>
-                      <Line
-                        x1={userGuess.x}
-                        y1={userGuess.y}
-                        x2={currentLocationCoordinates.x}
-                        y2={currentLocationCoordinates.y}
-                      />
-                      <Pin
-                        x={currentLocationCoordinates.x}
-                        y={currentLocationCoordinates.y}
-                        variant="star"
-                      />
-                      {shouldShowOtherPlayersGuesses && (
-                        <Pin
-                          x={currentLocationPlayersCoordinates.x}
-                          y={currentLocationPlayersCoordinates.y}
-                          variant={
-                            user.marioCharacter === "luigi"
-                              ? "mario"
-                              : user.marioCharacter
-                          }
-                        />
+                {userGuess ? (
+                  <>
+                    {shouldShowAnswer &&
+                      currentLocationCoordinates &&
+                      currentLocationPlayersCoordinates && (
+                        <>
+                          <SVGOverlay
+                            bounds={bounds}
+                            attributes={{
+                              viewBox: `0 0 ${MAP_SIZE_IN_PIXELS.width} ${MAP_SIZE_IN_PIXELS.height}`,
+                              preserveAspectRatio: "none",
+                            }}
+                            interactive={false}
+                          >
+                            <Line
+                              x1={userGuess.x}
+                              y1={userGuess.y}
+                              x2={currentLocationCoordinates.x}
+                              y2={currentLocationCoordinates.y}
+                            />
+                          </SVGOverlay>
+                          <Pin
+                            x={currentLocationCoordinates.x}
+                            y={currentLocationCoordinates.y}
+                            variant="star"
+                          />
+                          {shouldShowOtherPlayersGuesses && (
+                            <Pin
+                              x={currentLocationPlayersCoordinates.x}
+                              y={currentLocationPlayersCoordinates.y}
+                              variant={
+                                user.marioCharacter === "luigi"
+                                  ? "mario"
+                                  : user.marioCharacter
+                              }
+                            />
+                          )}
+                        </>
                       )}
 
-                      <GuessScore
-                        distance={guessResults!.distance}
-                        score={guessResults!.score}
-                        canShowPlayersCoordinates={canShowPlayersCoordinates}
-                        shouldShowPlayersCoordinates={
-                          shouldShowOtherPlayersGuesses
-                        }
-                        onShowPlayersCoordinatesChange={
-                          setShouldShowOtherPlayersGuesses
-                        }
-                      />
-                    </>
-                  )}
-
-                <Pin
-                  x={userGuess.x}
-                  y={userGuess.y}
-                  variant={user.marioCharacter}
-                />
+                    <Pin
+                      x={userGuess.x}
+                      y={userGuess.y}
+                      onDragEnd={setUserGuess}
+                      variant={user.marioCharacter}
+                    />
+                  </>
+                ) : null}
+                {currentPhotoId && !shouldShowAnswer && (
+                  <div
+                    className={`floating-photo-container ${
+                      hasZoomOnFloatingPhoto ? "zoomed" : ""
+                    }`}
+                    role="button"
+                    onClick={() =>
+                      setHasZoomOnFloatingPhoto(
+                        canGuess && !hasZoomOnFloatingPhoto
+                      )
+                    }
+                  >
+                    <Photo
+                      photoName={currentPhotoId}
+                      isMirrored={difficulty === "mirror"}
+                    />
+                  </div>
+                )}
               </>
             )}
           </Map>
+
+          {shouldShowAnswer && (
+            <GuessScore
+              distance={guessResults!.distance}
+              score={guessResults!.score}
+              canShowPlayersCoordinates={canShowPlayersCoordinates}
+              shouldShowPlayersCoordinates={shouldShowOtherPlayersGuesses}
+              onShowPlayersCoordinatesChange={setShouldShowOtherPlayersGuesses}
+            />
+          )}
         </div>
       </div>
 
