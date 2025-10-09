@@ -436,7 +436,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
         maxPhotos={mode === "daily" ? 5 : 0}
       />
 
-      {userGuess && !shouldShowAnswer && (
+      {userGuess && !shouldShowAnswer && !hasZoomOnFloatingPhoto && (
         <StickyButtonContainer>
           <Button onClick={handleConfirmGuess}>
             {translate("guess.label")}
