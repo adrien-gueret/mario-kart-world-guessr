@@ -20,7 +20,12 @@ try {
             p.validated_at AS validatedAt,
              CAST(
                 COALESCE(
-                    SUM(CASE WHEN g.player_id <> p.author_id THEN 1 ELSE 0 END),
+                    SUM(
+                        CASE
+                            WHEN g.player_id IS NULL THEN 1
+                            WHEN g.player_id <> p.author_id THEN 1
+                            ELSE 0
+                        END),
                     0
                 ) AS UNSIGNED
             ) AS suggestionCount,
