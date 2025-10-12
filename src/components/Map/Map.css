@@ -20,9 +20,15 @@
   z-index: -1;
 }
 
+.map-container {
+  --map-width: 80vw;
+  --map-height: calc(var(--map-width) * 9 / 16);
+  width: 100%;
+}
+
 .leaflet-container {
-  width: 80vw;
-  height: calc(80vw * 9 / 16);
+  width: var(--map-width);
+  height: var(--map-height);
   background-color: #3d7cb6;
   border: 1px solid #213547;
   border-radius: 27px;

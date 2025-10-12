@@ -46,8 +46,13 @@ export default function PhotoGuesses({ photoId, onClose }: Props) {
 
   return (
     <div className="photo-details">
-      <div style={{ position: "relative", textAlign: "center" }}>
-        <Map>
+      <div style={{ position: "relative", textAlign: "center", width: "100%" }}>
+        <Map
+          shouldZoomOnDoubleClick
+          size={{
+            height: "60vh",
+          }}
+        >
           {isLoading ? (
             <Loader />
           ) : (

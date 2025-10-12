@@ -1,4 +1,4 @@
-import { useState, useRef, useLayoutEffect } from "react";
+import { useState, useRef, useLayoutEffect, type CSSProperties } from "react";
 
 import { MapContainer, SVGOverlay, ZoomControl } from "react-leaflet";
 import L from "leaflet";
@@ -25,6 +25,11 @@ type Props = {
     | ((bounds: L.LatLngBoundsLiteral) => React.ReactNode);
   flyTo?: Coordinates | null;
   shouldZoomOnScroll?: boolean;
+  shouldZoomOnDoubleClick?: boolean;
+  size?: {
+    width?: CSSProperties["width"];
+    height?: CSSProperties["height"];
+  } | null;
 };
 
 export default function Map({
@@ -34,6 +39,8 @@ export default function Map({
   children = null,
   flyTo = null,
   shouldZoomOnScroll = false,
+  shouldZoomOnDoubleClick = false,
+  size = null,
 }: Props) {
   const { translate } = useTranslations();
   const mapRef = useRef<L.Map>(null);
@@ -69,6 +76,13 @@ export default function Map({
       onMouseLeave={() => {
         mapRef.current?.scrollWheelZoom.disable();
       }}
+      className="map-container"
+      style={
+        {
+          ...(size?.width ? { "--map-width": size.width } : {}),
+          ...(size?.height ? { "--map-height": size.height } : {}),
+        } as React.CSSProperties
+      }
     >
       <MapContainer
         crs={L.CRS.Simple}
@@ -81,7 +95,7 @@ export default function Map({
         ref={mapRef}
         scrollWheelZoom={shouldZoomOnScroll}
         zoomControl={false}
-        doubleClickZoom={false}
+        doubleClickZoom={shouldZoomOnDoubleClick}
       >
         <ZoomControl position="topright" />
         <SVGOverlay
