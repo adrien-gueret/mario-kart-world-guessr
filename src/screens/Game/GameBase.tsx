@@ -329,6 +329,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
           <h2>{translate("clickMap.subtitle")}</h2>
 
           <Map
+            key={currentPhotoId}
             canShowCourses={difficulty === "50cc" || difficulty === "100cc"}
             isMirrored={difficulty === "mirror"}
             onClick={
