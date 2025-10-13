@@ -44,6 +44,7 @@ export default function Map({
 }: Props) {
   const { translate } = useTranslations();
   const mapRef = useRef<L.Map>(null);
+  const dblClickClock = useRef<number | null>(null);
 
   const [hqImageLoaded, setHqImageLoaded] = useState(false);
   const [hqCoursesImageLoaded, setHqCoursesImageLoaded] = useState(false);
@@ -108,11 +109,23 @@ export default function Map({
           eventHandlers={{
             click: onClick
               ? (event) => {
-                  const coordinates = {
-                    x: Math.floor(event.latlng.lng),
-                    y: Math.floor(MAP_SIZE_IN_PIXELS.height - event.latlng.lat),
-                  };
-                  onClick(coordinates);
+                  if (event.originalEvent.detail === 2) {
+                    window.clearTimeout(dblClickClock.current!);
+                    return;
+                  }
+
+                  dblClickClock.current = window.setTimeout(
+                    () => {
+                      const coordinates = {
+                        x: Math.floor(event.latlng.lng),
+                        y: Math.floor(
+                          MAP_SIZE_IN_PIXELS.height - event.latlng.lat
+                        ),
+                      };
+                      onClick(coordinates);
+                    },
+                    shouldZoomOnDoubleClick ? 200 : 0
+                  );
                 }
               : undefined,
           }}

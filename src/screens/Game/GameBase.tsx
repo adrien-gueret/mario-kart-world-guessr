@@ -332,6 +332,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
             key={currentPhotoId}
             canShowCourses={difficulty === "50cc" || difficulty === "100cc"}
             isMirrored={difficulty === "mirror"}
+            shouldZoomOnDoubleClick
             onClick={
               canGuess
                 ? (coordinates) => {
