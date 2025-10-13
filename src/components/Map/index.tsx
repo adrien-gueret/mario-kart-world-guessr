@@ -24,7 +24,6 @@ type Props = {
     | React.ReactNode
     | ((bounds: L.LatLngBoundsLiteral) => React.ReactNode);
   flyTo?: Coordinates | null;
-  shouldZoomOnScroll?: boolean;
   shouldZoomOnDoubleClick?: boolean;
   size?: {
     width?: CSSProperties["width"];
@@ -38,7 +37,6 @@ export default function Map({
   isMirrored = false,
   children = null,
   flyTo = null,
-  shouldZoomOnScroll = false,
   shouldZoomOnDoubleClick = false,
   size = null,
 }: Props) {
@@ -94,7 +92,6 @@ export default function Map({
         maxZoom={2}
         attributionControl={false}
         ref={mapRef}
-        scrollWheelZoom={shouldZoomOnScroll}
         zoomControl={false}
         doubleClickZoom={shouldZoomOnDoubleClick}
       >

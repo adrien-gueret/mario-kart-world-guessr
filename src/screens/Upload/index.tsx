@@ -123,7 +123,11 @@ function Upload() {
             <Text component="p">{translate("upload.step2.info")}</Text>
           </div>
 
-          <Map onClick={setLocationCoordinates} canShowCourses>
+          <Map
+            onClick={setLocationCoordinates}
+            shouldZoomOnDoubleClick
+            canShowCourses
+          >
             {locationCoordinates && (
               <Pin
                 x={locationCoordinates.x}
