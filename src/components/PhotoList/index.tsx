@@ -57,9 +57,6 @@ export default function PhotoList({
                 onClick={getHandleClick(id)}
                 onKeyDown={getHandleKeyDown(id)}
                 className={!isInteractive ? "not-validated" : ""}
-                style={{
-                  viewTransitionName: `photo-${id}`,
-                }}
               >
                 <img draggable={false} src={photoUrl} alt="" loading="lazy" />
 
