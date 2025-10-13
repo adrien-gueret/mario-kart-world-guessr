@@ -325,7 +325,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
           />
         </div>
 
-        <div className="map-container">
+        <div className="game-map-container">
           <h2>{translate("clickMap.subtitle")}</h2>
 
           <Map
