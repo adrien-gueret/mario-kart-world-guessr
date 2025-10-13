@@ -70,7 +70,7 @@
 
 /* TODO: handling fullscreen */
 /*
-.game-screen:fullscreen .rules-container, .game-screen:fullscreen .photo-container, .game-screen:fullscreen .map-container h2 {
+.game-screen:fullscreen .rules-container, .game-screen:fullscreen .photo-container, .game-screen:fullscreen .game-map-container h2 {
   display: none;
 }
   */
