@@ -383,7 +383,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
                               variant={
                                 user.marioCharacter === "luigi"
                                   ? "mario"
-                                  : user.marioCharacter
+                                  : "luigi"
                               }
                             />
                           )}

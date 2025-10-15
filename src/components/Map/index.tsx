@@ -182,6 +182,7 @@ export default function Map({
         {canShowCourses && (
           <div className="map-show-courses-container">
             <Checkbox
+              variant="glued"
               name="map-show-courses"
               label={translate("upload.step2.help.label")}
               checked={shouldShowCourses}

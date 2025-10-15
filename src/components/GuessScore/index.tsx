@@ -24,6 +24,7 @@ export default function GuessScore({
       {canShowPlayersCoordinates && (
         <div className="game-guess-checkbox-container">
           <Checkbox
+            variant="glued"
             name="show-players-coordinates"
             label={translate("game.globalScore.showOtherPlayers")}
             checked={shouldShowPlayersCoordinates}
