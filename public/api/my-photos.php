@@ -22,7 +22,7 @@ try {
                 COALESCE(
                     SUM(
                         CASE
-                            WHEN g.player_id IS NULL THEN 1
+                            WHEN (s.id IS NOT NULL AND g.player_id IS NULL) THEN 1
                             WHEN g.player_id <> p.author_id THEN 1
                             ELSE 0
                         END),
