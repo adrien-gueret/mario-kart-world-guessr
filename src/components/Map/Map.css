@@ -5,21 +5,6 @@
   z-index: 2000;
 }
 
-.map-show-courses-container .text {
-  background-color: rgba(255, 255, 255, 0.9);
-  color: rgba(0, 0, 0, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  vertical-align: middle;
-  padding: 2px 8px;
-  border-radius: 15px;
-  border-top-left-radius: 0;
-  font-size: 1rem;
-  border-bottom-left-radius: 0;
-  position: relative;
-  left: -10px;
-  z-index: -1;
-}
-
 .map-container {
   --map-width: 80vw;
   --map-height: calc(var(--map-width) * 9 / 16);

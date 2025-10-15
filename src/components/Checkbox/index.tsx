@@ -12,6 +12,7 @@ type Props = {
   isRadio?: boolean;
   value?: string;
   onChange: (checked: boolean) => void;
+  variant?: "default" | "glued";
 };
 
 export default function Checkbox({
@@ -22,9 +23,10 @@ export default function Checkbox({
   label,
   isRadio,
   value,
+  variant = "default",
 }: Props) {
   return (
-    <label className="checkbox-label">
+    <label className={`checkbox-label checkbox-label--${variant}`}>
       <input
         id={id}
         name={name}

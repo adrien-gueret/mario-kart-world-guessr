@@ -122,31 +122,43 @@ try {
         AND (g.player_id IS NULL OR g.player_id != p.author_id)
     ");
 
-    /*
+    
      $selectPhotoStmt = $pdo->prepare(
-        "SELECT DISTINCT
-            p.id as photoId, p.x, p.y,
-            md.guess_median_x, md.guess_median_y,
-            COUNT(s.photo_id) as guess_count
-        FROM `mario-kart-world-photos` p
-        LEFT JOIN `mario-kart-world-suggestions` s 
-            ON p.id = s.photo_id
-        LEFT JOIN `mario-kart-world-games` g 
-            ON s.game_id = g.id
-        LEFT JOIN (
-            SELECT DISTINCT
-                s.photo_id,
-                MEDIAN(s.x) OVER (PARTITION BY s.photo_id) AS guess_median_x,
-                MEDIAN(s.y) OVER (PARTITION BY s.photo_id) AS guess_median_y
-            FROM 
-                `mario-kart-world-suggestions` s
-            LEFT JOIN `mario-kart-world-games` g ON s.game_id = g.id
-            WHERE (g.player_id IS NULL OR g.player_id != p.author_id)
-        ) md ON p.id = md.photo_id
-        WHERE p.id = :id 
-        AND p.validated_at IS NOT NULL
-        AND (g.player_id IS NULL OR g.player_id != p.author_id)
-    ");*/
+        "SELECT 
+    p.id AS photoId,
+    p.x,
+    p.y,
+    md.guess_median_x,
+    md.guess_median_y,
+     AVG(s.x) AS guess_mean_x,
+    AVG(s.y) AS guess_mean_y,
+    COUNT(DISTINCT s.id) AS guess_count
+FROM `mario-kart-world-photos` p
+LEFT JOIN `mario-kart-world-suggestions` s 
+    ON p.id = s.photo_id
+LEFT JOIN `mario-kart-world-games` g 
+    ON s.game_id = g.id
+    AND (g.player_id IS NULL OR g.player_id != p.author_id)
+LEFT JOIN (
+    SELECT 
+        s.photo_id,
+        PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY s.x) 
+            OVER (PARTITION BY s.photo_id) AS guess_median_x,
+        PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY s.y) 
+            OVER (PARTITION BY s.photo_id) AS guess_median_y
+    FROM `mario-kart-world-suggestions` s
+    LEFT JOIN `mario-kart-world-games` g ON s.game_id = g.id
+    WHERE s.photo_id = :id
+      AND (g.player_id IS NULL OR g.player_id != (
+        SELECT author_id FROM `mario-kart-world-photos` WHERE id = :id
+      ))
+) md ON p.id = md.photo_id
+WHERE p.id = :id 
+  AND p.validated_at IS NOT NULL
+  AND g.player_id != p.author_id
+GROUP BY p.id, p.x, p.y, md.guess_median_x, md.guess_median_y
+ORDER BY p.validated_at DESC;
+");
     $selectPhotoStmt->bindParam(':id', $photoId, PDO::PARAM_STR);
     $selectPhotoStmt->execute();
     
@@ -388,10 +400,10 @@ try {
         "playersMedianCoordinates" => [
             "x" => 0,
             "y" => 0,
-            //"x" => $photo['guess_median_x'],
-            //"y" => $photo['guess_median_y'],
+            "x" => $photo['guess_median_x'],
+            "y" => $photo['guess_median_y'],
         ],
-        "playersGuessCount" => 0, //$photo['guess_count'],
+        "playersGuessCount" => $photo['guess_count'],
         "currentPlayerGuess" => [
             "distanceInKm" => $distanceInKm,
             "newScore" => $newScore,
