@@ -17,37 +17,38 @@ function getRandomPhoto($pdo, $difficulty, $currentUserId) {
             break;
     }
 
-    $sql = "SELECT
-                p.id,
-                p.author_id as authorId,
-                u.username as authorName,
-                u.mario_character as authorCharacter,
-                COUNT(s.photo_id) as viewCount,
-                IFNULL(user_sugg.userViewCount, 0) as userViewCount
-            FROM `mario-kart-world-photos` p
-            LEFT JOIN `mario-kart-world-suggestions` s 
-                ON p.id = s.photo_id
-            LEFT JOIN `mario-kart-world-games` g
-                ON s.game_id = g.id
-            LEFT JOIN `mario-kart-world-users` u
-                ON p.author_id = u.id
-            LEFT JOIN (
-                SELECT
-                    s.photo_id,
-                    COUNT(*) as userViewCount
-                FROM `mario-kart-world-suggestions` s
-                LEFT JOIN `mario-kart-world-games` g ON s.game_id = g.id
-                WHERE g.player_id = ?
-                GROUP BY s.photo_id
-            ) user_sugg ON user_sugg.photo_id = p.id
-            WHERE
-                p.validated_at IS NOT NULL AND
-                p.validated_at <= NOW() - INTERVAL 5 MINUTE AND
-                (g.player_id IS NULL OR g.player_id != 1)
-                $photoDifficulty
-            GROUP BY p.id
-            ORDER BY userViewCount ASC, viewCount ASC, RAND()
-            LIMIT 1";
+    $sql = 
+        "SELECT
+            p.id,
+            p.author_id AS authorId,
+            u.username AS authorName,
+            u.mario_character AS authorCharacter,
+            COUNT(s.photo_id) AS viewCount,
+            IFNULL(user_sugg.userViewCount, 0) AS userViewCount
+        FROM `mario-kart-world-photos` p
+        LEFT JOIN `mario-kart-world-suggestions` s 
+            ON p.id = s.photo_id
+        LEFT JOIN `mario-kart-world-games` g
+            ON s.game_id = g.id
+            AND (g.player_id IS NULL OR g.player_id != p.author_id)
+        LEFT JOIN `mario-kart-world-users` u
+            ON p.author_id = u.id
+        LEFT JOIN (
+            SELECT
+                s.photo_id,
+                COUNT(*) AS userViewCount
+            FROM `mario-kart-world-suggestions` s
+            LEFT JOIN `mario-kart-world-games` g ON s.game_id = g.id
+            WHERE g.player_id = ?
+            GROUP BY s.photo_id
+        ) user_sugg ON user_sugg.photo_id = p.id
+        WHERE
+            p.validated_at IS NOT NULL
+            AND p.validated_at <= NOW() - INTERVAL 5 MINUTE
+            $photoDifficulty
+        GROUP BY p.id
+        ORDER BY userViewCount ASC, viewCount ASC, RAND()
+        LIMIT 1;";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
