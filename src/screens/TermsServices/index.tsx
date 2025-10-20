@@ -17,7 +17,7 @@ function TermsServices() {
         <>
           <h2>Conditions Générales d'Utilisation</h2>
 
-          <Text component="p">Dernière mise à jour : 10 juillet 2025</Text>
+          <Text component="p">Dernière mise à jour : 20 octobre 2025</Text>
 
           <h3>1. Présentation</h3>
 
@@ -26,6 +26,12 @@ function TermsServices() {
               <strong>Mario Kart World Guessr</strong> est un jeu de
               localisation dans l'univers de <strong>Mario Kart World</strong>,
               édité par <strong>Mario Universalis</strong>.
+            </Text>
+            <Text component="p">
+              <strong>Mario Kart World Guessr</strong> n'est{" "}
+              <strong>pas</strong> un jeu officiel de Nintendo. Tous les
+              éléments relatifs à l'univers <strong>Mario Kart</strong> restent
+              la propriété de Nintendo.
             </Text>
           </Surface>
 
@@ -130,6 +136,12 @@ function TermsServices() {
               <strong>Mario Kart World Guessr</strong> is a location-based game
               in the <strong>Mario Kart World</strong> universe, published by{" "}
               <strong>Mario Universalis</strong>.
+            </Text>
+            <Text component="p">
+              <strong>Mario Kart World Guessr</strong> is <strong>not</strong>{" "}
+              an official Nintendo game. All elements related to the{" "}
+              <strong>Mario Kart</strong> universe remain the property of
+              Nintendo.
             </Text>
           </Surface>
 
