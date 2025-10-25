@@ -507,6 +507,33 @@ const en: Texts = {
       </>
     );
   },
+  "all-photos.stats.suggestions": (count, activeFilter) => {
+    let segment: string = "";
+
+    switch (activeFilter) {
+      case "easy":
+        segment = "all easy photos";
+        break;
+      case "medium":
+        segment = "all medium photos";
+        break;
+      case "hard":
+        segment = "all hard photos";
+        break;
+      case "all":
+        segment = "all photos";
+        break;
+      default:
+        segment = "all photos";
+        break;
+    }
+
+    return (
+      <>
+        In total, {segment} have been viewed <b>{count}</b> times!
+      </>
+    );
+  },
   "account.your_photos.title": "Your photos",
 
   //////

@@ -193,6 +193,10 @@ export type Texts = {
     count: string,
     activeFilter: PhotoFilter
   ) => ReactNode;
+  "all-photos.stats.suggestions": (
+    count: string,
+    activeFilter: PhotoFilter
+  ) => ReactNode;
   "account.your_photos.title": string;
 } & {
   [K in Achievement as `${K}.unlockedItem`]: string;

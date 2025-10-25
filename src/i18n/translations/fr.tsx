@@ -536,6 +536,33 @@ const fr: Texts = {
       </>
     );
   },
+  "all-photos.stats.suggestions": (count, activeFilter) => {
+    let segment: string = "";
+
+    switch (activeFilter) {
+      case "easy":
+        segment = "toutes les photos faciles";
+        break;
+      case "medium":
+        segment = "toutes les photos moyennes";
+        break;
+      case "hard":
+        segment = "toutes les photos difficiles";
+        break;
+      case "all":
+        segment = "toutes les photos";
+        break;
+      default:
+        segment = "toutes les photos";
+        break;
+    }
+
+    return (
+      <>
+        Accumulées, {segment} ont été vues <b>{count}</b> fois !
+      </>
+    );
+  },
   "account.your_photos.title": "Vos photos",
 
   //////
