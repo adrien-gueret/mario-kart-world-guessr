@@ -6,11 +6,3 @@
 .account-photos-subtitle {
   margin: 48px 0 16px 0;
 }
-
-.account-photos-filters {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 16px;
-  margin-bottom: 48px;
-}
