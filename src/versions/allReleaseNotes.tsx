@@ -4,6 +4,38 @@ import type { ReleaseNotes } from "./types";
 
 const releaseNotes: ReleaseNotes = [
   {
+    version: "v3.4.1",
+    notes: {
+      fr: (
+        <ul>
+          <Text component="li">
+            La façon de calculer la difficulté des photos a été revue. Les
+            photos "faciles" devraient normalement être vraiment faciles
+            désormais, et beaucoup de photos "normales" sont devenues
+            "difficiles".
+          </Text>
+          <Text component="li">
+            Le mode <b>100cc</b> est désormais accessible dès le début du jeu,
+            il n'est plus nécessaire de le débloquer.
+          </Text>
+        </ul>
+      ),
+      en: (
+        <ul>
+          <Text component="li">
+            The way photo difficulty is calculated has been revised. "Easy"
+            photos should now actually be easy, and many "normal" photos have
+            become "hard".
+          </Text>
+          <Text component="li">
+            The <b>100cc</b> mode is now available from the start of the game
+            and no longer needs to be unlocked.
+          </Text>
+        </ul>
+      ),
+    },
+  },
+  {
     version: "v3.4.0",
     notes: {
       fr: (

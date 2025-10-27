@@ -34,14 +34,6 @@ const fr: Texts = {
   "difficulty.100cc.title": "100cc",
   "difficulty.150cc.title": "150cc",
   "difficulty.mirror.title": "Miroir",
-  "difficulty.100cc.locked": (
-    <ul>
-      <li>
-        Obtenez <strong>n'importe quelle</strong> coupe en <strong>50cc</strong>{" "}
-        pour débloquer le 100cc !
-      </li>
-    </ul>
-  ),
   "difficulty.150cc.locked": (
     <ul>
       <li>
