@@ -46,7 +46,7 @@ export default function DifficultySelector({ mode, onSelect }: Props) {
     isUnlocked: boolean;
   }> = ALL_DIFFICULTIES.map((difficulty, index) => {
     const isUnlocked = (() => {
-      if (index === 0) {
+      if (index <= 1) {
         return true;
       }
 
@@ -101,7 +101,7 @@ export default function DifficultySelector({ mode, onSelect }: Props) {
 
   const difficultiesLockedLabels: Record<Difficulty, ReactNode> = {
     "50cc": "",
-    "100cc": translate("difficulty.100cc.locked"),
+    "100cc": "",
     "150cc": translate("difficulty.150cc.locked"),
     mirror: translate("difficulty.mirror.locked"),
   };
