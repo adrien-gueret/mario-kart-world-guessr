@@ -1,6 +1,11 @@
 import { useState, useRef, useLayoutEffect, type CSSProperties } from "react";
 
-import { MapContainer, SVGOverlay, ZoomControl } from "react-leaflet";
+import {
+  MapContainer,
+  SVGOverlay,
+  ZoomControl,
+  useMapEvents,
+} from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -17,6 +22,7 @@ import mapCoursesImageHQUrl from "./map_courses-hq.png";
 
 type Props = {
   onClick?: (coordinates: Coordinates) => void;
+  onZoomChange?: (zoomLevel: number) => void;
   ref?: React.Ref<HTMLImageElement>;
   isMirrored?: boolean;
   canShowCourses?: boolean;
@@ -31,8 +37,27 @@ type Props = {
   } | null;
 };
 
+function ZoomListener({
+  onZoomChange,
+}: {
+  onZoomChange: (zoomLevel: number) => void;
+}) {
+  const mapEvents = useMapEvents({
+    zoomend: () => {
+      onZoomChange(mapEvents.getZoom());
+    },
+  });
+
+  useLayoutEffect(() => {
+    onZoomChange(mapEvents.getZoom());
+  }, [onZoomChange, mapEvents]);
+
+  return null;
+}
+
 export default function Map({
   onClick,
+  onZoomChange,
   canShowCourses = false,
   isMirrored = false,
   children = null,
@@ -95,6 +120,8 @@ export default function Map({
         zoomControl={false}
         doubleClickZoom={shouldZoomOnDoubleClick}
       >
+        {onZoomChange && <ZoomListener onZoomChange={onZoomChange} />}
+
         <ZoomControl position="topright" />
         <SVGOverlay
           bounds={bounds}
