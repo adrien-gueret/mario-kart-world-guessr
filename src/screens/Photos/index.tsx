@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 
+import Checkbox from "@/components/Checkbox";
 import Loader from "@/components/Loader";
+import PhotosMap from "@/components/PhotosMap";
 import PhotoListContainer from "@/components/PhotoListContainer";
 import Text from "@/components/Text";
 
@@ -13,6 +15,7 @@ import type { Photo } from "@/types/photos";
 export default function Photos() {
   const [isLoading, setIsLoading] = useState(false);
   const [photos, setPhotos] = useState<Photo[]>([]);
+  const [showMap, setShowMap] = useState(false);
   const { translate } = useTranslations();
 
   const isAnonymous = useRequiredAuth();
@@ -47,7 +50,22 @@ export default function Photos() {
       <Text component="p">{translate("photos.description")}</Text>
 
       {photos.length > 0 && (
-        <PhotoListContainer photos={photos} canOpenDetailsOfNoValidatedPhotos />
+        <>
+          <div style={{ marginTop: "32px" }}>
+            <Checkbox
+              name="show-map"
+              label={translate("photos.showMap")}
+              variant="default"
+              checked={showMap}
+              onChange={setShowMap}
+            />
+            {showMap && <PhotosMap photos={photos} />}
+          </div>
+          <PhotoListContainer
+            photos={photos}
+            canOpenDetailsOfNoValidatedPhotos
+          />
+        </>
       )}
 
       {isLoading && <Loader />}

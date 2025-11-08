@@ -123,6 +123,7 @@ export type Texts = {
   "need.help": string;
   "photos.title": string;
   "photos.description": ReactNode;
+  "photos.showMap": string;
   "photo.details.title": string;
   "photo.by": string;
   "login.screen.title": string;

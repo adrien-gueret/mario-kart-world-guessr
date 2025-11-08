@@ -383,6 +383,7 @@ const fr: Texts = {
       Découvrez toutes les photos de <b>Mario Kart World Guessr</b>!
     </>
   ),
+  "photos.showMap": "Afficher la carte",
   "photo.details.title": "Suggestions des joueurs",
   "photo.by": "Photo par",
   "login.screen.title": "Se connecter",

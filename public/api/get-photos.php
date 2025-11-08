@@ -10,6 +10,8 @@ try {
             p.id,
             p.difficulty,
             p.validated_at AS validatedAt,
+            p.x,
+            p.y,
              CAST(
                 COALESCE(
                     SUM(

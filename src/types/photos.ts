@@ -1,6 +1,8 @@
 export type Photo = {
   id: string;
   difficulty: "easy" | "medium" | "hard" | null;
+  x: number;
+  y: number;
   validatedAt: string | null;
   photoUrl: string;
   suggestionCount: number;
