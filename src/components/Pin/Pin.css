@@ -70,3 +70,16 @@
   width: 36px !important;
   top: 0;
 }
+
+.game-map-pin.variant-image {
+  border-radius: 0;
+  border: 1px solid #213547;
+  box-shadow: none;
+  height: 20px;
+  transform-origin: center;
+  transform: scale(var(--image-scale, 1));
+}
+
+.game-map-pin.variant-image:hover {
+  border-color: red;
+}
