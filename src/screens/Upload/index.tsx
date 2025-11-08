@@ -35,6 +35,7 @@ function Upload() {
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [uploaderKey, setUploaderKey] = useState<number>(0);
 
   const { translate } = useTranslations();
 
@@ -71,6 +72,7 @@ function Upload() {
       if (response.ok) {
         setIsSuccess(true);
         setUploadErrorStatus(null);
+        setUploaderKey((prev) => prev + 1);
         form.reset();
       } else {
         setUploadErrorStatus(response.status);
@@ -108,7 +110,7 @@ function Upload() {
           <Text component="p">{translate("upload.step1.info1")}</Text>
 
           <div style={{ marginTop: "24px" }}>
-            <Uploader name="photo" required>
+            <Uploader name="photo" required key={uploaderKey}>
               <p>
                 <i>{translate("upload.step1.info2")}</i>
               </p>
