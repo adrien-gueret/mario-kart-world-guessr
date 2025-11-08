@@ -356,6 +356,7 @@ const en: Texts = {
       Discover all the photos of <b>Mario Kart World Guessr</b>!
     </>
   ),
+  "photos.showMap": "Show map",
   "photo.details.title": "Players suggestions",
   "photo.by": "Photo by",
   "login.screen.title": "Log in",
