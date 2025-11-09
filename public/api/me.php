@@ -8,9 +8,17 @@ allowMethod('GET');
 
 if (empty($currentUser)) {
     try {
-        $newAnonymousUserName = $headers['accept-language'] === 'fr' ? 'Vous !' : 'You!';
-        $stmt = $pdo->prepare("INSERT INTO `mario-kart-world-users` (username) VALUES (:username)");
+        $isFrench = $headers['accept-language'] === 'fr';
+        $newAnonymousUserName = $isFrench ? 'Vous !' : 'You!';
+        $newAnonymousUserLocale = $isFrench ? 'fr' : 'en';
+        $newAnonymousUserDistanceUnit = $isFrench ? 'km' : 'miles';
+        $stmt = $pdo->prepare(
+            "INSERT INTO `mario-kart-world-users` (username, locale, distance_unit)
+            VALUES (:username, :locale, :distance_unit)"
+        );
         $stmt->bindParam(':username', $newAnonymousUserName, PDO::PARAM_STR);
+        $stmt->bindParam(':locale', $newAnonymousUserLocale, PDO::PARAM_STR);
+        $stmt->bindParam(':distance_unit', $newAnonymousUserDistanceUnit, PDO::PARAM_STR);
 
         $stmt->execute();
 
