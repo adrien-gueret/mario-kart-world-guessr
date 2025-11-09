@@ -348,7 +348,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
                 : null
             }
           >
-            {(bounds) => (
+            {({ bounds, disableDoubleClickZoomOnHover }) => (
               <>
                 {userGuess ? (
                   <>
@@ -409,6 +409,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
                         canGuess && !hasZoomOnFloatingPhoto
                       )
                     }
+                    {...disableDoubleClickZoomOnHover}
                   >
                     <Photo
                       photoName={currentPhotoId}

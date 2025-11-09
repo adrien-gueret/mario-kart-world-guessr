@@ -28,7 +28,13 @@ type Props = {
   canShowCourses?: boolean;
   children?:
     | React.ReactNode
-    | ((bounds: L.LatLngBoundsLiteral) => React.ReactNode);
+    | ((childrenParams: {
+        bounds: L.LatLngBoundsLiteral;
+        disableDoubleClickZoomOnHover: {
+          onMouseMove: () => void;
+          onMouseLeave: () => void;
+        };
+      }) => React.ReactNode);
   flyTo?: Coordinates | null;
   shouldZoomOnDoubleClick?: boolean;
   size?: {
@@ -91,6 +97,17 @@ export default function Map({
       });
     }
   }, [flyTo]);
+
+  const disableDoubleClickZoomOnHover = {
+    onMouseMove: () => {
+      mapRef.current?.doubleClickZoom.disable();
+    },
+    onMouseLeave: () => {
+      if (shouldZoomOnDoubleClick) {
+        mapRef.current?.doubleClickZoom.enable();
+      }
+    },
+  };
 
   return (
     <div
@@ -204,10 +221,15 @@ export default function Map({
           )}
         </SVGOverlay>
 
-        {typeof children === "function" ? children(bounds) : children}
+        {typeof children === "function"
+          ? children({ bounds, disableDoubleClickZoomOnHover })
+          : children}
 
         {canShowCourses && (
-          <div className="map-show-courses-container">
+          <div
+            className="map-show-courses-container"
+            {...disableDoubleClickZoomOnHover}
+          >
             <Checkbox
               variant="glued"
               name="map-show-courses"
