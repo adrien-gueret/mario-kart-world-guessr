@@ -37,8 +37,12 @@ export default async function fetchApi(
   method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" = "GET",
   body?: FormData
 ): Promise<Response> {
+  const documentLang = document.documentElement.lang;
   const currentUser = getKey("currentUser");
-  const acceptLanguage = currentUser?.locale ?? "fr";
+  const acceptLanguage =
+    documentLang === "fr" || documentLang === "en"
+      ? documentLang
+      : currentUser?.locale ?? "en";
   let headers = getHeaders({
     accessToken: currentUser?.accessToken ?? undefined,
     acceptLanguage,
