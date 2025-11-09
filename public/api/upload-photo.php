@@ -6,6 +6,17 @@ require_once __DIR__ . '/___github.php';
 
 allowMethod('POST');
 
+if (empty($currentUser)) {
+    http_response_code(401);
+    die(json_encode([
+      'error' => true,
+      'message' => $headers['accept-language'] === 'fr'
+          ? 'Vous semblez être déconnecté. Connectez-vous et réessayez.'
+          : 'You seem to be logged out. Please log in and try again.'
+    ]));
+    exit;
+}
+
 function getUuidVersion($uuid) {
   if (!preg_match(
       '/^[0-9a-f]{8}-[0-9a-f]{4}-([1-5])[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i',
@@ -117,12 +128,12 @@ while(!$uploadOK && $triesCount < 5) {
 
     if ($triesCount >= 5) {
       http_response_code(500);
-       die(json_encode([
+      die(json_encode([
         'error' => true,
         'message' => $headers['accept-language'] === 'fr'
             ? 'Impossible de sauvegarder votre photo : veuillez réessayer plus tard.'
             : 'Unable to save your photo: please try again later.'
-    ]));
+      ]));
     }
   } 
 }
@@ -134,7 +145,7 @@ $pr = githubApi("POST", "/repos/$owner/$repo/pulls", $githubToken, [
   "body" => "$authorName ($authorLocale) veut ajouter une nouvelle photo en ($x, $y)"
 ]);
 
-// Ajouter la photo dans la table `mario-kart-world-photos`
+
 $stmt = $pdo->prepare("INSERT INTO `mario-kart-world-photos` (id, x, y, github_pr_number, author_id)
   VALUES (:id, :x, :y, :github_pr_number, :author_id)
 ");
