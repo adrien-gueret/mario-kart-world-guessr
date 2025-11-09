@@ -6,8 +6,8 @@ define('MAP_SIZE_IN_PIXELS', [
 ]);
 
 define('MAP_SIZE_IN_KM', [
-    'width' => 10,
-    'height' => 9,
+    'width' => 14,
+    'height' => 13,
 ]);
 
 const SCORE_MAX = 5000;
