@@ -47,7 +47,7 @@ function UploadHelp() {
             </Surface>
 
             <figure>
-              <img src="./ui/upload/start-free-roam.jpg" alt="" />
+              <img src="./ui/upload/help/start-free-roam.jpg" alt="" />
               <figcaption>
                 Baladez-vous jusqu'à trouver un endroit intéressant à prendre en
                 photo.
@@ -81,7 +81,7 @@ function UploadHelp() {
             </Surface>
 
             <figure>
-              <img src="./ui/upload/wrong-photo-too-zoomed.jpg" alt="" />
+              <img src="./ui/upload/help/wrong-photo-too-zoomed.jpg" alt="" />
               <figcaption>
                 Cette photo trop zoomée est presque impossible à localiser. Ce
                 n'est <b>pas</b> amusant pour les joueurs et{" "}
@@ -103,7 +103,7 @@ function UploadHelp() {
             </Surface>
 
             <figure>
-              <img src="./ui/upload/wrong-photo-frames.jpg" alt="" />
+              <img src="./ui/upload/help/wrong-photo-frames.jpg" alt="" />
               <figcaption>
                 Cette photo utilise un cadre spécial. Pour garder une cohérence
                 entre toutes les photos du jeu, <b>elle sera refusée</b>.
@@ -121,7 +121,7 @@ function UploadHelp() {
             </Surface>
 
             <figure>
-              <img src="./ui/upload/final-photo.jpg" alt="" />
+              <img src="./ui/upload/help/fr/final-photo.jpg" alt="" />
               <figcaption>
                 Cette photo en montre suffisamment pour qu'elle soit
                 identifiable : c'est parfait&nbsp;!
@@ -139,7 +139,7 @@ function UploadHelp() {
             </Surface>
 
             <figure>
-              <img src="./ui/upload/album.png" alt="" />
+              <img src="./ui/upload/help/fr/album.png" alt="" />
               <figcaption>Accédez à l'album de votre console.</figcaption>
             </figure>
 
@@ -157,13 +157,13 @@ function UploadHelp() {
             </Surface>
 
             <figure>
-              <img src="./ui/upload/send-to-device.png" alt="" />
+              <img src="./ui/upload/help/fr/send-to-device.png" alt="" />
               <figcaption>
                 Envoyez votre photo vers un appareil connecté.
               </figcaption>
             </figure>
             <figure>
-              <img src="./ui/upload/send-to-server.png" alt="" />
+              <img src="./ui/upload/help/fr/send-to-server.png" alt="" />
               <figcaption>
                 Confirmez l'envoi vers les serveurs de Nintendo.
               </figcaption>
@@ -190,14 +190,21 @@ function UploadHelp() {
             </Surface>
 
             <figure>
-              <img src="./ui/upload/about-nintendo-switch-app.png" alt="" />
+              <img
+                src="./ui/upload/help/fr/about-nintendo-switch-app.png"
+                alt=""
+              />
               <figcaption>
                 Votre console peut vous donner plus d'informations sur
                 l'application <b>Nintendo Switch App</b>.
               </figcaption>
             </figure>
             <figure>
-              <img className="mobile" src="./ui/upload/app-album.jpg" alt="" />
+              <img
+                className="mobile"
+                src="./ui/upload/help/fr/app-album.jpg"
+                alt=""
+              />
               <figcaption>
                 Accédez à votre album depuis l'application.
               </figcaption>
@@ -214,7 +221,11 @@ function UploadHelp() {
             </Surface>
 
             <figure>
-              <img className="mobile" src="./ui/upload/app-share.jpg" alt="" />
+              <img
+                className="mobile"
+                src="./ui/upload/help/fr/app-share.jpg"
+                alt=""
+              />
               <figcaption>
                 Partagez votre photo depuis l'application.
               </figcaption>
@@ -259,7 +270,7 @@ function UploadHelp() {
             </Surface>
 
             <figure>
-              <img src="./ui/upload/game-map.jpg" alt="" />
+              <img src="./ui/upload/help/game-map.jpg" alt="" />
               <figcaption>
                 La carte de <b>Mario Kart World</b> n'est pas très précise, mais
                 elle devrait suffire à vous aider à positioner votre photo
@@ -316,7 +327,7 @@ function UploadHelp() {
             </Surface>
 
             <figure>
-              <img src="./ui/upload/start-free-roam.jpg" alt="" />
+              <img src="./ui/upload/help/start-free-roam.jpg" alt="" />
               <figcaption>
                 Explore until you find an interesting place to photograph.
               </figcaption>
@@ -347,7 +358,7 @@ function UploadHelp() {
             </Surface>
 
             <figure>
-              <img src="./ui/upload/wrong-photo-too-zoomed.jpg" alt="" />
+              <img src="./ui/upload/help/wrong-photo-too-zoomed.jpg" alt="" />
               <figcaption>
                 This photo is too zoomed in and almost impossible to locate.
                 This is <b>not</b> fun for players and{" "}
@@ -368,7 +379,7 @@ function UploadHelp() {
             </Surface>
 
             <figure>
-              <img src="./ui/upload/wrong-photo-frames.jpg" alt="" />
+              <img src="./ui/upload/help/wrong-photo-frames.jpg" alt="" />
               <figcaption>
                 This photo uses a special frame. To maintain consistency between
                 all game photos, <b>it will be rejected</b>.
@@ -385,7 +396,7 @@ function UploadHelp() {
             </Surface>
 
             <figure>
-              <img src="./ui/upload/final-photo.jpg" alt="" />
+              <img src="./ui/upload/help/en/final-photo.jpg" alt="" />
               <figcaption>
                 This photo shows enough to be identifiable: perfect!
               </figcaption>
@@ -402,7 +413,7 @@ function UploadHelp() {
             </Surface>
 
             <figure>
-              <img src="./ui/upload/album.png" alt="" />
+              <img src="./ui/upload/help/en/album.png" alt="" />
               <figcaption>Access your console's album.</figcaption>
             </figure>
 
@@ -416,11 +427,11 @@ function UploadHelp() {
             </Surface>
 
             <figure>
-              <img src="./ui/upload/send-to-device.png" alt="" />
+              <img src="./ui/upload/help/en/send-to-device.png" alt="" />
               <figcaption>Send your photo to a connected device.</figcaption>
             </figure>
             <figure>
-              <img src="./ui/upload/send-to-server.png" alt="" />
+              <img src="./ui/upload/help/en/send-to-server.png" alt="" />
               <figcaption>Confirm sending to Nintendo's servers.</figcaption>
             </figure>
 
@@ -445,14 +456,21 @@ function UploadHelp() {
             </Surface>
 
             <figure>
-              <img src="./ui/upload/about-nintendo-switch-app.png" alt="" />
+              <img
+                src="./ui/upload/help/en/about-nintendo-switch-app.png"
+                alt=""
+              />
               <figcaption>
                 Your console can give you more information about the{" "}
                 <b>Nintendo Switch App</b>.
               </figcaption>
             </figure>
             <figure>
-              <img className="mobile" src="./ui/upload/app-album.jpg" alt="" />
+              <img
+                className="mobile"
+                src="./ui/upload/help/en/app-album.png"
+                alt=""
+              />
               <figcaption>Access your album from the app.</figcaption>
             </figure>
 
@@ -466,7 +484,11 @@ function UploadHelp() {
             </Surface>
 
             <figure>
-              <img className="mobile" src="./ui/upload/app-share.jpg" alt="" />
+              <img
+                className="mobile"
+                src="./ui/upload/help/en/app-share.png"
+                alt=""
+              />
               <figcaption>Share your photo from the app.</figcaption>
             </figure>
 
@@ -505,7 +527,7 @@ function UploadHelp() {
             </Surface>
 
             <figure>
-              <img src="./ui/upload/game-map.jpg" alt="" />
+              <img src="./ui/upload/help/game-map.jpg" alt="" />
               <figcaption>
                 The <b>Mario Kart World</b> map isn't very precise, but it
                 should be enough to help you position your photo from the{" "}
@@ -532,6 +554,20 @@ function UploadHelp() {
                 and a <b>big</b> thank you for your contribution!
               </Text>
             </Surface>
+
+            <aside
+              style={{
+                marginTop: "16px",
+                textAlign: "center",
+              }}
+            >
+              <Text component="p">
+                <i style={{ fontSize: "0.9em" }}>
+                  Thanks to <b>AprilShade</b> for the english screenshots used
+                  in this guide!
+                </i>
+              </Text>
+            </aside>
           </>
         )}
 
