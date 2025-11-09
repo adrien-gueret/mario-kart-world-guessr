@@ -44,9 +44,9 @@ export default function DifficultySelector({ mode, onSelect }: Props) {
   const difficulties: Array<{
     difficulty: Difficulty;
     isUnlocked: boolean;
-  }> = ALL_DIFFICULTIES.map((difficulty, index) => {
+  }> = ALL_DIFFICULTIES.map((difficulty) => {
     const isUnlocked = (() => {
-      if (index <= 1) {
+      if (difficulty !== "mirror") {
         return true;
       }
 
@@ -54,22 +54,7 @@ export default function DifficultySelector({ mode, onSelect }: Props) {
         return false;
       }
 
-      if (difficultiesCups[difficulty]?.cup !== "none") {
-        return true;
-      }
-
-      if (difficulty === "mirror") {
-        return (
-          difficultiesCups["50cc"].cup === "gold" &&
-          (difficultiesCups["100cc"].cup === "silver" ||
-            difficultiesCups["100cc"].cup === "gold") &&
-          difficultiesCups["150cc"].cup !== "none"
-        );
-      }
-
-      const previousDifficulty = ALL_DIFFICULTIES[index - 1];
-
-      return difficultiesCups[previousDifficulty]?.cup !== "none";
+      return difficultiesCups["150cc"].cup !== "none";
     })();
 
     return { difficulty, isUnlocked };
@@ -102,7 +87,7 @@ export default function DifficultySelector({ mode, onSelect }: Props) {
   const difficultiesLockedLabels: Record<Difficulty, ReactNode> = {
     "50cc": "",
     "100cc": "",
-    "150cc": translate("difficulty.150cc.locked"),
+    "150cc": "",
     mirror: translate("difficulty.mirror.locked"),
   };
 
