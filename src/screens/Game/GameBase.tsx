@@ -190,6 +190,10 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
 
     formData.append("gameId", `${currentGameId}`);
 
+    if (import.meta.env.DEV) {
+      formData.append("noRegister", "1");
+    }
+
     isGuessing.current = true;
 
     const response = await fetchApi("/add-guess", "POST", formData);
