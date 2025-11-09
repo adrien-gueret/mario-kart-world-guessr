@@ -408,8 +408,8 @@ function UploadHelp() {
 
             <Surface disableSkew>
               <Text component="p">
-                Select your photo and choose <i>Send to Connected Device</i>.
-                Then send your photo to Nintendo's servers.
+                Select your photo and choose <i>Upload to Smart Device</i>. Then
+                send your photo to Nintendo's servers.
                 <br />
                 <b>You need a Nintendo account to perform this operation.</b>
               </Text>
