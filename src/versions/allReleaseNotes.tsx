@@ -4,6 +4,60 @@ import type { ReleaseNotes } from "./types";
 
 const releaseNotes: ReleaseNotes = [
   {
+    version: "v3.4.2",
+    notes: {
+      fr: (
+        <ul>
+          <Text component="li">
+            Le mode <b>150cc</b> est désormais accessible dès le début du jeu,
+            il n'est plus nécessaire de le débloquer.
+          </Text>
+          <Text component="li">
+            Il est désormais possible de fermer la fenêtre de fin de jeu afin de
+            voir où se situe la dernière photo de votre partie.
+          </Text>
+          <Text component="li">
+            Depuis les préférences de votre compte, vous pouvez demander à
+            afficher les distances en kilomètres ou en miles.
+          </Text>
+          <Text component="li">
+            Double-cliquer sur le bouton "Afficher les circuits" lors d'une
+            partie ne fait plus de zoom sur la carte.
+          </Text>
+          <Text component="li">
+            <b>Mario Kart World Guessr</b> a maintenant <b>480</b> photos
+            différentes&nbsp;! Merci à tous les photographes qui ont
+            contribué&nbsp;!
+          </Text>
+        </ul>
+      ),
+      en: (
+        <ul>
+          <Text component="li">
+            The <b>150cc</b> mode is now available from the start of the game
+            and no longer needs to be unlocked.
+          </Text>
+          <Text component="li">
+            It is now possible to close the end-of-game window to see where the
+            last photo from your game is located.
+          </Text>
+          <Text component="li">
+            From your account preferences, you can choose to display distances
+            in kilometers or miles.
+          </Text>
+          <Text component="li">
+            Double-clicking the "Show tracks" button during a game no longer
+            zooms the map.
+          </Text>
+          <Text component="li">
+            <b>Mario Kart World Guessr</b> now has <b>480</b> different photos!
+            Thanks to all the photographers who contributed!
+          </Text>
+        </ul>
+      ),
+    },
+  },
+  {
     version: "v3.4.1",
     notes: {
       fr: (
