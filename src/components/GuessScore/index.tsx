@@ -1,3 +1,4 @@
+import { useCurrentUser } from "@/auth/CurrentUserProvider";
 import Checkbox from "@/components/Checkbox";
 import { useTranslations } from "@/i18n";
 
@@ -11,6 +12,10 @@ type Props = {
   canShowPlayersCoordinates: boolean;
 };
 
+const kilometersToMiles = (km: number): string => {
+  return (km * 0.621371).toFixed(2);
+};
+
 export default function GuessScore({
   distance,
   score,
@@ -19,6 +24,13 @@ export default function GuessScore({
   onShowPlayersCoordinatesChange,
 }: Props) {
   const { translate } = useTranslations();
+  const { user } = useCurrentUser();
+
+  const distanceToShow =
+    user.distanceUnit === "miles"
+      ? kilometersToMiles(distance)
+      : distance.toFixed(2);
+
   return (
     <div className="game-guess-score">
       {canShowPlayersCoordinates && (
@@ -37,7 +49,9 @@ export default function GuessScore({
         <div className="game-guess-score-banner-inner">
           <div>
             <label>{translate("distance.label")}</label>
-            <span>{translate("distance.value")(distance)}</span>
+            <span>
+              {distanceToShow} {user.distanceUnit}
+            </span>
           </div>
           <div>
             <label>{translate("score.label")}</label>

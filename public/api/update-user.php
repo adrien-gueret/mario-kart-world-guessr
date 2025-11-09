@@ -30,6 +30,9 @@ if (strlen($username) < 2 || strlen($username) > 100) {
 }
 
 $locale = $_PUT['locale'] === 'fr' || $_PUT['locale'] === 'en' ? $_PUT['locale'] : 'en';
+$distanceUnit = $_PUT['distanceUnit'] === 'km' || $_PUT['distanceUnit'] === 'miles'
+    ? $_PUT['distanceUnit']
+    : ($headers['accept-language'] === 'fr' ? 'km' : 'miles');
 
 $stmt = $pdo->prepare(
     "SELECT c.id
@@ -59,9 +62,17 @@ if (!isset($_PUT['mario-character']) || !in_array($_PUT['mario-character'], $pos
 }
 
 try {
-   $stmt = $pdo->prepare("UPDATE `mario-kart-world-users` SET username = :username, locale = :locale, mario_character = :marioCharacter WHERE id = :id");
+   $stmt = $pdo->prepare(
+    "UPDATE `mario-kart-world-users`
+    SET
+        username = :username,
+        locale = :locale,
+        distance_unit = :distanceUnit,
+        mario_character = :marioCharacter
+    WHERE id = :id");
    $stmt->bindParam(':username', $username, PDO::PARAM_STR);
    $stmt->bindParam(':locale', $locale, PDO::PARAM_STR);
+   $stmt->bindParam(':distanceUnit', $distanceUnit, PDO::PARAM_STR);
    $stmt->bindParam(':id', $currentUser['id'], PDO::PARAM_INT);
 
    if ($_PUT['mario-character'] === 'none') {
@@ -73,7 +84,7 @@ try {
    $stmt->execute();
 
     $stmt = $pdo->prepare("SELECT u.id, u.email, u.username, u.mario_character as marioCharacter,
-                        u.locale,
+                        u.locale, u.distance_unit as distanceUnit,
                         t.token as accessToken, t.refresh_token as refreshToken,
                         t.expired_at as expiredAt
                         FROM `mario-kart-world-users` u

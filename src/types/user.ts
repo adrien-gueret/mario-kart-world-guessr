@@ -9,4 +9,5 @@ export type User = {
   expiredAt: string;
   marioCharacter: MarioCharacter | null;
   locale: "fr" | "en" | null;
+  distanceUnit: "km" | "miles" | null;
 };

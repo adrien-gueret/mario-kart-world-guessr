@@ -20,6 +20,10 @@ export default function Preferences() {
 
   const { user, setCurrentUser } = useCurrentUser();
 
+  const [currentDistanceUnit, setCurrentDistanceUnit] = useState<
+    "km" | "miles"
+  >(user.distanceUnit ?? "km");
+
   return (
     <ConstraintContainer>
       <Surface disableSkew>
@@ -79,6 +83,33 @@ export default function Preferences() {
               isRadio
             />
             <span className="helper">{translate("account.locale.helper")}</span>
+          </div>
+
+          <div className="row">
+            <label htmlFor="locale-fr">
+              {translate("account.distanceUnit.label")}
+            </label>
+            <Checkbox
+              id="distance-km"
+              name="distanceUnit"
+              label={translate("account.distanceUnit.km")}
+              value="km"
+              checked={currentDistanceUnit === "km"}
+              onChange={() => setCurrentDistanceUnit("km")}
+              isRadio
+            />
+            <Checkbox
+              id="distance-miles"
+              name="distanceUnit"
+              label={translate("account.distanceUnit.miles")}
+              value="miles"
+              checked={currentDistanceUnit === "miles"}
+              onChange={() => setCurrentDistanceUnit("miles")}
+              isRadio
+            />
+            <span className="helper">
+              {translate("account.distanceUnit.helper")}
+            </span>
           </div>
 
           <div className="row">
