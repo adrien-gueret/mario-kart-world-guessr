@@ -1,8 +1,12 @@
 .end-game-content-buttons {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   flex-wrap: wrap;
   gap: 16px;
+}
+
+.end-game-content-buttons > button {
+  margin: 0;
 }

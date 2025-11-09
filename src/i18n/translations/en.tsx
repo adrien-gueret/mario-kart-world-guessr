@@ -32,19 +32,10 @@ const en: Texts = {
   "difficulty.100cc.title": "100cc",
   "difficulty.150cc.title": "150cc",
   "difficulty.mirror.title": "Mirror",
-  "difficulty.150cc.locked": (
-    <ul>
-      <li>
-        Get <strong>any</strong> cup in <strong>100cc</strong> to unlock 150cc!
-      </li>
-    </ul>
-  ),
   "difficulty.mirror.locked": (
     <ul>
       <li>
-        Get the <strong>gold</strong> cup in <strong>50cc</strong>, at least the{" "}
-        <strong>silver</strong> cup in <strong>100cc</strong> and{" "}
-        <strong>any</strong> cup in <strong>150cc</strong> to unlock mirror
+        Get <strong>any</strong> cup in <strong>150cc</strong> to unlock mirror
         mode!
       </li>
     </ul>

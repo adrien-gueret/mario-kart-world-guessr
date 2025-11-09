@@ -32,7 +32,6 @@ export type Texts = {
   "difficulty.50cc.title": string;
   "difficulty.100cc.title": string;
   "difficulty.150cc.title": string;
-  "difficulty.150cc.locked": ReactNode;
   "difficulty.mirror.locked": ReactNode;
   "difficulty.mirror.title": string;
   "difficulty.survival.50cc": ReactNode;

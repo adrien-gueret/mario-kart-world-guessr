@@ -15,6 +15,7 @@ type Props = {
   gameId: number;
   difficulty: Difficulty;
   onReplay: () => void;
+  onClose: () => void;
   onLeaderboardShow: () => void;
   cupData: LeaderboardProps["cupData"];
 };
@@ -26,6 +27,7 @@ export default function SurvivalEnd({
   gameId,
   difficulty,
   onReplay,
+  onClose,
   onLeaderboardShow,
   cupData,
 }: Props) {
@@ -46,6 +48,7 @@ export default function SurvivalEnd({
           cupData={cupData}
         />
       }
+      onClose={onClose}
       onReplay={onReplay}
       onLeaderboardShow={onLeaderboardShow}
     />

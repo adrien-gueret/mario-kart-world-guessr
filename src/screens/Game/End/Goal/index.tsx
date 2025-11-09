@@ -13,6 +13,7 @@ type Props = {
   difficulty: Difficulty;
   cupData: LeaderboardProps["cupData"];
   onReplay: () => void;
+  onClose: () => void;
   onLeaderboardShow: () => void;
 };
 
@@ -21,6 +22,7 @@ export default function GoalEnd({
   gameId,
   difficulty,
   onReplay,
+  onClose,
   onLeaderboardShow,
   cupData,
 }: Props) {
@@ -38,6 +40,7 @@ export default function GoalEnd({
         />
       }
       onReplay={onReplay}
+      onClose={onClose}
       onLeaderboardShow={onLeaderboardShow}
     />
   );

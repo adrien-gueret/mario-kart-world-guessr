@@ -56,6 +56,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     name: string;
     character: MarioCharacter | null;
   } | null>(null);
+  const [hasEndGameModalDelay, setHasEndGameModalDelay] = useState(true);
 
   const [nextPhotoAuthor, setNextPhotoAuthor] = useState<{
     id: number;
@@ -89,6 +90,8 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
   const [canShowPlayersCoordinates, setCanShowPlayersCoordinates] =
     useState(false);
   const [isGameEnded, setIsGameEnded] = useState(false);
+  const [isGameEndModalOpen, setIsGameEndModalOpen] =
+    useState<boolean>(isGameEnded);
   const [isLeaderboardShown, setIsLeaderboardShown] = useState(false);
 
   const [guessResults, setGuessResults] = useState<{
@@ -142,6 +145,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
 
       if (isFinished) {
         setIsGameEnded(true);
+        setIsGameEndModalOpen(true);
         setGameHistory(game.history);
       }
     };
@@ -240,6 +244,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     setTotalScore(addGuessResponse.gameData.totalScore);
 
     setIsGameEnded(addGuessResponse.gameData.isFinished);
+    setIsGameEndModalOpen(addGuessResponse.gameData.isFinished);
     setCupData(addGuessResponse.gameData.cupData);
 
     if (addGuessResponse.gameData.isFinished) {
@@ -292,6 +297,11 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
   };
 
   const gameModeRules = gameModeToRules[mode];
+
+  const onGameEndModalClose = () => {
+    setIsGameEndModalOpen(false);
+    setHasEndGameModalDelay(false);
+  };
 
   return (
     <div className="game-screen">
@@ -457,6 +467,18 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
         </StickyButtonContainer>
       )}
 
+      {isGameEnded && !isGameEndModalOpen && (
+        <StickyButtonContainer>
+          <Button
+            onClick={() => {
+              setIsGameEndModalOpen(true);
+            }}
+          >
+            {translate("next.label")}
+          </Button>
+        </StickyButtonContainer>
+      )}
+
       <Modal
         title={
           isLeaderboardShown
@@ -469,8 +491,9 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
               }`
             : translate("endGame.title")
         }
-        isOpen={isGameEnded}
+        isOpen={isGameEndModalOpen}
         disableSkew={mode === "daily" || isLeaderboardShown}
+        noDelay={!hasEndGameModalDelay}
       >
         {(() => {
           switch (mode) {
@@ -482,6 +505,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
                   totalScore={totalScore}
                   gameId={currentGameId!}
                   difficulty={difficulty!}
+                  onClose={onGameEndModalClose}
                   onReplay={onReplay}
                   onLeaderboardShow={() => setIsLeaderboardShown(true)}
                   cupData={cupData!}
@@ -494,6 +518,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
                   photoCount={photoCount}
                   gameId={currentGameId!}
                   difficulty={difficulty!}
+                  onClose={onGameEndModalClose}
                   onReplay={onReplay}
                   onLeaderboardShow={() => setIsLeaderboardShown(true)}
                   cupData={cupData!}
