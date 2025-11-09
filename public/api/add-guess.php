@@ -104,11 +104,11 @@ try {
         http_response_code(400);
         die('{"error":true,"message":"Invalid game mode."}');
     }
-   
-    $insertSuggestionStmt->execute();
-    $lastInsertId = $pdo->lastInsertId();
 
-    
+    if (!isset($_POST['noRegister']) || $_POST['noRegister'] !== '1') {
+        $insertSuggestionStmt->execute();
+    }
+   
     $selectPhotoStmt = $pdo->prepare(
         "SELECT 
             p.id AS photoId,
