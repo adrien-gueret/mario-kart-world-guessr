@@ -30,6 +30,8 @@ if (empty($currentUser)) {
             'id' => $userId,
             'username' => $newAnonymousUserName,
             'email' => null,
+            'locale' => $newAnonymousUserLocale,
+            'distanceUnit' => $newAnonymousUserDistanceUnit,
             'accessToken' => $accessTokenData['accessToken'],
             'refreshToken' => $accessTokenData['refreshToken'],
             'expiredAt' => $accessTokenData['expiredAt'],

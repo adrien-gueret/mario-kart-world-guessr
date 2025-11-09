@@ -39,7 +39,7 @@
            
             if ($accessToken) {
                 $stmt = $pdo->prepare("SELECT u.id, u.email, u.username, u.mario_character as marioCharacter,
-                                        u.locale,
+                                        u.locale, u.distance_unit as distanceUnit,
                                         t.token as accessToken, t.refresh_token as refreshToken,
                                         t.expired_at as expiredAt
                                         FROM `mario-kart-world-users` u

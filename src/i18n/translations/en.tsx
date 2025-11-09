@@ -3,10 +3,6 @@ import type { GameMode, Difficulty } from "@/types/game";
 import type { Version } from "@/versions/types";
 import type { Texts } from "../types";
 
-const kilometersToMiles = (km: number): string => {
-  return (km * 0.621371).toFixed(2);
-};
-
 const en: Texts = {
   "buy-me-coffee": "Buy me a coffee",
   "photo.subtitle": "Where was this photo taken?",
@@ -16,8 +12,6 @@ const en: Texts = {
   "close.label": "Close",
   "more.label": "More",
   "distance.label": "Distance: ",
-  "distance.value": (distance: number) =>
-    `${kilometersToMiles(distance)} miles`,
   "score.label": "Score: ",
   "score.value": (score: number) => `+${score}`,
   "mode.select": "Select a game mode",
@@ -379,6 +373,11 @@ const en: Texts = {
     "Your can change your username. It's displayed to other players in leaderboards.",
   "account.locale.label": "Language",
   "account.locale.helper": "Language used for displaying game texts.",
+  "account.distanceUnit.label": "Distance Unit",
+  "account.distanceUnit.km": "Kilometers",
+  "account.distanceUnit.miles": "Miles",
+  "account.distanceUnit.helper":
+    "Unit used for displaying distances on the map.",
   "account.save.success": "Changes saved successfully",
   "play.label": "Play",
   "account.marioCharacter.label": "Select your favorite character",

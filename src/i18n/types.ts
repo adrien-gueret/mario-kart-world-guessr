@@ -16,7 +16,6 @@ export type Texts = {
   "close.label": string;
   "more.label": string;
   "distance.label": string;
-  "distance.value": (distance: number) => string;
   "score.label": string;
   "score.value": (score: number) => string;
   "mode.select": string;
@@ -141,6 +140,10 @@ export type Texts = {
   "account.username.helper": string;
   "account.locale.label": string;
   "account.locale.helper": string;
+  "account.distanceUnit.label": string;
+  "account.distanceUnit.km": string;
+  "account.distanceUnit.miles": string;
+  "account.distanceUnit.helper": string;
   "account.save.success": string;
   "account.tab.preferences": string;
   "account.tab.notifications": string;

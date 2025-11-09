@@ -12,7 +12,6 @@ const fr: Texts = {
   "close.label": "Fermer",
   "more.label": "Plus",
   "distance.label": "Distance : ",
-  "distance.value": (distance: number) => `${distance.toFixed(2)} km`,
   "score.label": "Score : ",
   "score.value": (score: number) => `+ ${score}`,
   "mode.select": "Choisissez un mode de jeu",
@@ -408,6 +407,11 @@ const fr: Texts = {
   "account.locale.label": "Langue",
   "account.locale.helper":
     "Langue utilisée pour l'affichage des textes du jeu.",
+  "account.distanceUnit.label": "Unité de distance",
+  "account.distanceUnit.km": "Kilomètres",
+  "account.distanceUnit.miles": "Miles",
+  "account.distanceUnit.helper":
+    "Unité utilisée pour l'affichage des distances sur la carte.",
   "account.save.success": "Modifications enregistrées avec succès",
   "play.label": "Jouer",
   "account.marioCharacter.label": "Sélectionnez votre personnage favori",
