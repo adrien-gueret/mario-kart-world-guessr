@@ -176,6 +176,7 @@ echo json_encode([
     'email' => $email,
     'username' => $name,
     'marioCharacter' => $marioCharacter,
+    'distanceUnit' => $distanceUnit,
     'accessToken' => $accessTokenData['accessToken'],
     'refreshToken' => $accessTokenData['refreshToken'],
     'expiredAt' => $accessTokenData['expiredAt'],
