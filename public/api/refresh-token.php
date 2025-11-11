@@ -34,9 +34,9 @@ try {
         die('{"error":true,"message":"Invalid refresh token"}');
     }
 
-    $stmt = $pdo->prepare("DELETE FROM `mario-kart-world-tokens` WHERE token = :token OR (user_id = :userId AND expired_at < NOW())");
+    $stmt = $pdo->prepare("DELETE FROM `mario-kart-world-tokens` WHERE token = :token OR (user_id = :userId AND expired_at <= NOW() - INTERVAL 7 DAY)");
     $stmt->bindParam(':token', $user['token'], PDO::PARAM_STR);
-      $stmt->bindParam(':userId', $user['id'], PDO::PARAM_INT);
+    $stmt->bindParam(':userId', $user['id'], PDO::PARAM_INT);
     $stmt->execute();
 
 
