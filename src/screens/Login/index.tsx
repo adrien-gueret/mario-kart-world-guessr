@@ -20,10 +20,6 @@ function Login() {
 
   useEffect(() => {
     if (!isAnonymous) {
-      console.log(
-        "Already logged in, redirecting to",
-        targetScreenNameRef.current
-      );
       setCurrentScreenName(targetScreenNameRef.current ?? "Account");
     }
   }, [isAnonymous]);
