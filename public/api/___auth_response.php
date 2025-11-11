@@ -158,7 +158,7 @@ try {
     }
 
     if (!$isNewUser) {  
-        $stmt = $pdo->prepare("DELETE FROM `mario-kart-world-tokens` WHERE user_id = :userId AND expired_at < NOW()");
+        $stmt = $pdo->prepare("DELETE FROM `mario-kart-world-tokens` WHERE user_id = :userId AND expired_at <= NOW() - INTERVAL 7 DAY");
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         $stmt->execute();
     }
