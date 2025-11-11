@@ -35,6 +35,7 @@ const CurrentUserContext = createContext<CurrentUserContextType>({
     refreshToken: "",
     expiredAt: "",
     marioCharacter: null,
+    distanceUnit: null,
     locale: null,
   },
   isAnonymous: true,
