@@ -9,7 +9,6 @@ export default function useRequiredAuth() {
 
   useEffect(() => {
     if (isAnonymous) {
-      console.log("go to login from", currentScreenName);
       setCurrentScreenName("Login", {
         state: {
           targetScreenName: currentScreenName,
