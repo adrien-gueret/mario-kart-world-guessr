@@ -123,14 +123,14 @@ if (empty($payload['sub']) || empty($payload['email']) || empty($payload['name']
     die('{"error":true,"message":"Missing user infos"}');
 }
 
-$stmt = $pdo->prepare("SELECT id, username, email, mario_character as marioCharacter FROM `mario-kart-world-users` WHERE id_google = ?");
+$stmt = $pdo->prepare("SELECT id, username, email, mario_character as marioCharacter, distance_unit as distanceUnit FROM `mario-kart-world-users` WHERE id_google = ?");
 $stmt->execute([$payload['sub']]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $hasBeenFoundFromGoogle = (bool) $user;
 
 if (!$user) {
-    $stmt = $pdo->prepare("SELECT id, username, email, mario_character as marioCharacter FROM `mario-kart-world-users` WHERE email = ?");
+    $stmt = $pdo->prepare("SELECT id, username, email, mario_character as marioCharacter, distance_unit as distanceUnit FROM `mario-kart-world-users` WHERE email = ?");
     $stmt->execute([$payload['email']]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 }
@@ -152,6 +152,7 @@ $userGoogleId = $payload['sub'];
 $email = $payload['email'];
 $name = $payload['name'];
 $marioCharacter = null;
+$distanceUnit = null;
 
 if ($isNewUser) {
     try {
@@ -176,6 +177,7 @@ if ($isNewUser) {
     $email = $user['email'];
     $name = $user['username'];
     $marioCharacter = $user['marioCharacter'];
+    $distanceUnit = $user['distanceUnit'];
 }
 
 require_once __DIR__ . '/___auth_response.php';
