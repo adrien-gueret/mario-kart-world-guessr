@@ -485,6 +485,7 @@ const fr: Texts = {
   ),
   "notifications.deleting": "Suppression...",
   "notification.delete": "Effacer la notification",
+  "notifications.clear_all": "Effacer toutes les notifications",
   "photo.difficulty.easy": "Facile",
   "photo.difficulty.medium": "Moyen",
   "photo.difficulty.hard": "Difficile",

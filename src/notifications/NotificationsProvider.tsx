@@ -17,6 +17,7 @@ type NotificationsContextType = {
   allNotifications: Notification[];
   unreadNotificationCount: number;
   readNotification: (notificationId: number) => Promise<void>;
+  clearNotifications: () => Promise<void>;
 };
 
 const NotificationsContext = createContext<NotificationsContextType>({
@@ -24,6 +25,7 @@ const NotificationsContext = createContext<NotificationsContextType>({
   allNotifications: [],
   unreadNotificationCount: 0,
   readNotification: async () => {},
+  clearNotifications: async () => {},
 } as NotificationsContextType);
 
 export function NotificationsProvider({ children }: { children: ReactNode }) {
@@ -46,6 +48,16 @@ export function NotificationsProvider({ children }: { children: ReactNode }) {
     },
     [isAnonymous]
   );
+
+  const clearNotifications = useCallback(async () => {
+    if (isAnonymous) {
+      return;
+    }
+
+    const response = await fetchApi("/clear-notifications", "DELETE");
+    const newNotifications = await response.json();
+    setAllNotifications(newNotifications);
+  }, [isAnonymous]);
 
   const fetchNotifications = useCallback(async () => {
     if (isAnonymous) {
@@ -75,6 +87,7 @@ export function NotificationsProvider({ children }: { children: ReactNode }) {
         allNotifications,
         unreadNotificationCount: allNotifications.length,
         readNotification,
+        clearNotifications,
       }}
     >
       {children}

@@ -453,6 +453,7 @@ const en: Texts = {
   ),
   "notifications.deleting": "Deleting...",
   "notification.delete": "Delete notification",
+  "notifications.clear_all": "Clear all notifications",
   "photo.difficulty.easy": "Easy",
   "photo.difficulty.medium": "Medium",
   "photo.difficulty.hard": "Hard",
