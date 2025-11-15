@@ -182,6 +182,7 @@ export type Texts = {
   "notifications.photo_refused.description": (reason: string) => ReactNode;
   "notifications.deleting": string;
   "notification.delete": string;
+  "notifications.clear_all": string;
   "photo.difficulty.easy": string;
   "photo.difficulty.medium": string;
   "photo.difficulty.hard": string;
