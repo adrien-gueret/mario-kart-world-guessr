@@ -157,7 +157,7 @@ function PrivacyPolicies() {
         </>
       ) : (
         <>
-          <h2>Privacy Policies</h2>
+          <h2>Privacy Policiy</h2>
 
           <Text component="p">Last update: July 10, 2025</Text>
 

@@ -8,12 +8,16 @@ import useRequiredAuth from "@/services/useRequiredAuth";
 
 import Notifications from "./Notifications";
 import Photos from "./Photos";
+import Albums from "./Albums";
 import Preferences from "./Preferences";
 
 type Props = {
   activeTab?: Extract<
     ScreenName,
-    "Account/Preferences" | "Account/Notifications" | "Account/Photos"
+    | "Account/Preferences"
+    | "Account/Notifications"
+    | "Account/Photos"
+    | "Account/Albums"
   >;
 };
 
@@ -33,6 +37,7 @@ export default function Account({ activeTab = "Account/Preferences" }: Props) {
     React.ReactNode
   > = {
     "Account/Photos": <Photos />,
+    "Account/Albums": <Albums />,
     "Account/Preferences": <Preferences />,
     "Account/Notifications": <Notifications />,
   };
