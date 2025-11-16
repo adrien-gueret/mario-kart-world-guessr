@@ -5,7 +5,6 @@ import { useTranslations } from "@/i18n";
 import Checkbox from "@/components/Checkbox";
 import ConstraintContainer from "@/components/ConstraintContainer";
 import Form from "@/components/Form";
-import Snackbar from "@/components/Snackbar";
 import Surface from "@/components/Surface";
 
 import type { User } from "@/types/user";
@@ -14,9 +13,6 @@ import CharacterSelect from "./CharacterSelect";
 
 export default function Preferences() {
   const { currentLocale, translate, setCurrentLocale } = useTranslations();
-  const [showEditAccountSuccess, setShowEditAccountSuccess] = useState(false);
-  const [showEditAccountError, setShowEditAccountError] = useState(false);
-  const [editAccountErrorMessage, setEditAccountErrorMessage] = useState("");
 
   const { user, setCurrentUser } = useCurrentUser();
 
@@ -30,17 +26,9 @@ export default function Preferences() {
         <Form
           method="PUT"
           action="/update-user"
-          onSubmit={() => {
-            setShowEditAccountSuccess(false);
-            setShowEditAccountError(false);
-          }}
+          successMessage={translate("account.save.success")}
           onSuccess={(response: { user: User }) => {
-            setShowEditAccountSuccess(true);
             setCurrentUser(response.user);
-          }}
-          onError={(error) => {
-            setEditAccountErrorMessage(error.message ?? "An error occurred");
-            setShowEditAccountError(true);
           }}
         >
           <div className="row">
@@ -125,20 +113,6 @@ export default function Preferences() {
           </div>
         </Form>
       </Surface>
-      <Snackbar
-        isOpen={showEditAccountSuccess}
-        onClose={() => setShowEditAccountSuccess(false)}
-      >
-        {translate("account.save.success")}
-      </Snackbar>
-
-      <Snackbar
-        isOpen={showEditAccountError}
-        onClose={() => setShowEditAccountError(false)}
-        type="error"
-      >
-        {editAccountErrorMessage}
-      </Snackbar>
     </ConstraintContainer>
   );
 }

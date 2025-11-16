@@ -251,7 +251,7 @@ const en: Texts = {
   "endGame.title": "Game over!",
   "endGame.title.leaderboard": "Leaderboard",
   "endGame.titleScreen.label": "Home",
-  "endGame.replay.label": "Replay",
+  "endGame.replay.label": "Play again",
   "endGame.survival.description": (
     lastGuess: number,
     photoCount: number,
@@ -294,6 +294,7 @@ const en: Texts = {
   "share.copy.success": "Copied to clipboard",
   "share.share.button.label": "Share",
   "credits.by": "A game by ",
+  "credits.followOn": (platform: string) => `Follow on ${platform}`,
   "game.globalScore": "Score: ",
   "game.globalScore.photoIndex": "Photo #",
   "game.globalScore.showOtherPlayers":
@@ -342,7 +343,7 @@ const en: Texts = {
     </>
   ),
   "photos.showMap": "Show map",
-  "photo.details.title": "Players suggestions",
+  "photo.details.title": "Players' guesses",
   "photo.by": "Photo by",
   "login.screen.title": "Log in",
   "login.screen.description": (
@@ -353,7 +354,7 @@ const en: Texts = {
   "login.discord.label": "Log in with Discord",
   "logout.label": "Log out",
   "new-version.title": (version: Version) => `New version: ${version}`,
-  "privacy-policies.title": "Privacy Policies",
+  "privacy-policies.title": "Privacy Policy",
   "terms-services.title": "Terms of Service",
   "see-release-notes.label": "See all release notes",
   "release-notes.title": "Release notes",
@@ -520,6 +521,11 @@ const en: Texts = {
     );
   },
   "account.your_photos.title": "Your photos",
+  "account.albums.description":
+    "Create albums with your photos and share them!",
+  "account.albums.create.title": "Create a new album",
+  "account.albums.create.name": "Album name",
+  "account.albums.create.success": "Album created successfully!",
 
   //////
   "gold_50cc_survival.description":

@@ -93,6 +93,7 @@ export type Texts = {
   "share.copy.success": string;
   "share.share.button.label": string;
   "credits.by": string;
+  "credits.followOn": (platform: string) => string;
   "game.globalScore": string;
   "game.globalScore.photoIndex": string;
   "game.globalScore.showOtherPlayers": string;
@@ -201,6 +202,10 @@ export type Texts = {
     activeFilter: PhotoFilter
   ) => ReactNode;
   "account.your_photos.title": string;
+  "account.albums.description": string;
+  "account.albums.create.title": string;
+  "account.albums.create.name": string;
+  "account.albums.create.success": string;
 } & {
   [K in Achievement as `${K}.unlockedItem`]: string;
 } & {

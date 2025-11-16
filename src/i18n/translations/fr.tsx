@@ -323,6 +323,7 @@ const fr: Texts = {
   "share.copy.success": "Copié dans le presse-papiers",
   "share.share.button.label": "Partager",
   "credits.by": "Un jeu par ",
+  "credits.followOn": (platform: string) => `Suivre sur ${platform}`,
   "game.globalScore": "Score : ",
   "game.globalScore.photoIndex": "Photo n° ",
   "game.globalScore.showOtherPlayers":
@@ -552,6 +553,11 @@ const fr: Texts = {
     );
   },
   "account.your_photos.title": "Vos photos",
+  "account.albums.description":
+    "Créez des albums avec vos photos et partagez-les !",
+  "account.albums.create.title": "Créer un nouvel album",
+  "account.albums.create.name": "Nom de l'album",
+  "account.albums.create.success": "Album créé avec succès !",
 
   //////
   "gold_50cc_survival.description":

@@ -198,7 +198,7 @@ export default function DailyEnd({
                 onClick={() => window.location.reload()}
                 variant="primary"
               >
-                {translate("endGame.replay.label")}
+                {translate("play.label")}
               </Button>
             ) : (
               <p className="counter-container">

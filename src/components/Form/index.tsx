@@ -5,6 +5,7 @@ import { useTranslations } from "@/i18n";
 import fetchApi from "@/services/api";
 
 import Button from "../Button";
+import Snackbar from "../Snackbar";
 
 import "./Form.css";
 
@@ -18,24 +19,23 @@ type Props = {
   submitLabel?: string;
   method?: FetchMethod;
   children: ReactNode;
+  successMessage: string;
   onSubmit?: () => void;
-  onSuccess?: (response: any) => void;
+  onSuccess: (response: any) => void;
   onError?: (error: { message: string }) => void;
 };
 
 async function submitFormAndCallAPI(
   event: React.FormEvent<HTMLFormElement>,
-  method: FetchMethod,
-  onSuccess: Required<Props>["onSuccess"],
-  onError: Required<Props>["onError"]
-) {
+  method: FetchMethod
+): Promise<{ success: boolean; data: any }> {
   const form = event.currentTarget;
   const formData = new FormData(form);
   const action = form.getAttribute("action") as ApiEndPoint | null;
 
   if (!action) {
     console.error("Form action is not defined.");
-    return;
+    return { success: false, data: null };
   }
 
   try {
@@ -44,12 +44,11 @@ async function submitFormAndCallAPI(
     const responseJson = await response.json();
 
     if (response.ok) {
-      onSuccess(responseJson);
-    } else {
-      onError(responseJson);
+      return { success: true, data: responseJson };
     }
+    return { success: false, data: responseJson };
   } catch (error: any) {
-    onError(error);
+    return { success: false, data: error };
   }
 }
 
@@ -57,15 +56,19 @@ export default function Form({
   action,
   children,
   submitLabel,
+  successMessage,
   method = "POST",
   onSubmit = () => {},
-  onSuccess = () => {},
+  onSuccess,
   onError = (error) => {
     console.error("Form submission error:", error);
   },
 }: Props) {
   const { translate } = useTranslations();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [showFormSuccess, setShowFormSuccess] = useState(false);
+  const [showFormError, setShowFormError] = useState(false);
+  const [editFormErrorMessage, setEditFormErrorMessage] = useState("");
 
   const handleSubmit = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
@@ -75,26 +78,55 @@ export default function Form({
         return;
       }
 
+      setShowFormSuccess(false);
+      setShowFormError(false);
+
       onSubmit();
       setIsProcessing(true);
-      await submitFormAndCallAPI(event, method, onSuccess, onError);
+      const { success, data } = await submitFormAndCallAPI(event, method);
       setIsProcessing(false);
+
+      if (success) {
+        setShowFormSuccess(true);
+        onSuccess(data);
+      } else {
+        setShowFormError(true);
+        setEditFormErrorMessage(data.message ?? "An error occurred");
+        onError(data);
+      }
     },
     [isProcessing, onSuccess, onError]
   );
 
   return (
-    <form
-      className="form"
-      method={method === "GET" ? "GET" : "POST"}
-      action={action}
-      onSubmit={handleSubmit}
-    >
-      {children}
+    <>
+      <form
+        className="form"
+        method={method === "GET" ? "GET" : "POST"}
+        action={action}
+        onSubmit={handleSubmit}
+      >
+        {children}
 
-      <Button variant="primary" type="submit">
-        {submitLabel ?? translate("form.submit")}
-      </Button>
-    </form>
+        <Button variant="primary" type="submit">
+          {submitLabel ?? translate("form.submit")}
+        </Button>
+      </form>
+
+      <Snackbar
+        isOpen={showFormSuccess}
+        onClose={() => setShowFormSuccess(false)}
+      >
+        {successMessage}
+      </Snackbar>
+
+      <Snackbar
+        isOpen={showFormError}
+        onClose={() => setShowFormError(false)}
+        type="error"
+      >
+        {editFormErrorMessage}
+      </Snackbar>
+    </>
   );
 }

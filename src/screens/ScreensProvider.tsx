@@ -13,6 +13,7 @@ import { flushSync } from "react-dom";
 import Account from "./Account";
 import AccountNotifications from "./Account/Notifications/screen";
 import AccountPhotos from "./Account/Photos/screen";
+import AccountAlbums from "./Account/Albums/screen";
 import AccountPreferences from "./Account/Preferences/screen";
 import { SurvivalGame, GoalGame, DailyGame, ChronoGame } from "./Game";
 import Home from "./Home";
@@ -30,6 +31,7 @@ export type ScreenName =
   | "Account"
   | "Account/Notifications"
   | "Account/Photos"
+  | "Account/Albums"
   | "Account/Preferences"
   | "DailyGame"
   | "GoalGame"
@@ -51,6 +53,7 @@ const screenHashtagsToScreenNames: Record<ScreenHashtag, ScreenName> = {
   "#/account": "Account",
   "#/account/notifications": "Account/Notifications",
   "#/account/photos": "Account/Photos",
+  "#/account/albums": "Account/Albums",
   "#/account/preferences": "Account/Preferences",
   "#/dailygame": "DailyGame",
   "#/goalgame": "GoalGame",
@@ -120,6 +123,7 @@ export function ScreensProvider({ children }: { children: ReactNode }) {
     Account,
     "Account/Notifications": AccountNotifications,
     "Account/Photos": AccountPhotos,
+    "Account/Albums": AccountAlbums,
     "Account/Preferences": AccountPreferences,
     DailyGame,
     GoalGame,

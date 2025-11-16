@@ -14,7 +14,7 @@ export default function Credits() {
           <a
             href="https://x.com/MarioUnivRsalis"
             className="social-logo x"
-            title="Suivre sur X"
+            title={translate("credits.followOn")("X")}
           >
             @MarioUnivRsalis
           </a>
@@ -23,7 +23,7 @@ export default function Credits() {
           <a
             href="https://bsky.app/profile/mariouniversalis.fr"
             className="social-logo bluesky"
-            title="Suivre sur Bluesky"
+            title={translate("credits.followOn")("Bluesky")}
           >
             @mariouniversalis.fr
           </a>
