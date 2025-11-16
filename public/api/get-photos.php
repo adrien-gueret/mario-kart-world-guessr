@@ -35,7 +35,9 @@ try {
         LEFT JOIN `mario-kart-world-games` g
             ON g.id = s.game_id
         GROUP BY p.id, p.difficulty, p.validated_at, p.github_pr_number
-        ORDER BY (p.validated_at IS NULL) DESC, p.validated_at DESC"
+        ORDER BY (p.validated_at IS NULL) DESC,
+            CASE WHEN p.validated_at IS NULL THEN p.github_pr_number ELSE NULL END ASC,
+            p.validated_at DESC"
     );
     $stmt->execute();
     
