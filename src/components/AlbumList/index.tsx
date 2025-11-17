@@ -1,10 +1,11 @@
 import { useState, type MouseEventHandler } from "react";
 
+import { useTranslations } from "@/i18n";
+import { useScreen } from "@/screens/ScreensProvider";
+import type { Album } from "@/types/photos";
+
 import Form from "../Form";
 import Modal from "../Modal";
-
-import { useTranslations } from "@/i18n";
-import type { Album } from "@/types/photos";
 
 import "./AlbumList.css";
 
@@ -14,6 +15,8 @@ type Props = {
 };
 
 export default function AlbumList({ albums, canCreateNewAlbum }: Props) {
+  const { setCurrentScreenName } = useScreen();
+
   const [isCreateAlbumModalOpen, setIsCreateAlbumModalOpen] = useState(false);
 
   const { translate } = useTranslations();
@@ -64,7 +67,12 @@ export default function AlbumList({ albums, canCreateNewAlbum }: Props) {
             onClick={handleClickNewAlbum}
             onKeyDown={handleKeyDownNewAlbum}
           >
-            {translate("account.albums.create.title")}
+            <svg focusable="false" aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m5 11h-4v4h-2v-4H7v-2h4V7h2v4h4z"></path>
+            </svg>
+            <div className="album-name">
+              {translate("account.albums.create.title")}
+            </div>
           </li>
         )}
         {albums.map(({ id, name }) => {
@@ -95,6 +103,7 @@ export default function AlbumList({ albums, canCreateNewAlbum }: Props) {
             onSuccess={(response: { album: Album }) => {
               console.log("Created album:", response.album);
             }}
+            onCancel={() => setIsCreateAlbumModalOpen(false)}
           >
             <div className="row">
               <label htmlFor="form-albumname">

@@ -14,7 +14,7 @@ if (empty($currentUser)) {
 
 try {
     $stmt = $pdo->prepare(
-        "SELECT a.id, a.name
+        "SELECT a.id, a.album_name as `name`
         FROM `mario-kart-world-albums` a
         WHERE a.author_id = :authorId
         ORDER BY a.created_at DESC"

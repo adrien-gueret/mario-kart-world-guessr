@@ -14,6 +14,7 @@ import Account from "./Account";
 import AccountNotifications from "./Account/Notifications/screen";
 import AccountPhotos from "./Account/Photos/screen";
 import AccountAlbums from "./Account/Albums/screen";
+import AccountAlbumId from "./Account/Albums/ID";
 import AccountPreferences from "./Account/Preferences/screen";
 import { SurvivalGame, GoalGame, DailyGame, ChronoGame } from "./Game";
 import Home from "./Home";
@@ -29,9 +30,10 @@ import TermsServices from "./TermsServices";
 
 export type ScreenName =
   | "Account"
+  | "Account/Albums"
+  | `Account/Albums/${number}`
   | "Account/Notifications"
   | "Account/Photos"
-  | "Account/Albums"
   | "Account/Preferences"
   | "DailyGame"
   | "GoalGame"
@@ -51,9 +53,9 @@ type ScreenHashtag = `#/${Lowercase<ScreenName>}`;
 
 const screenHashtagsToScreenNames: Record<ScreenHashtag, ScreenName> = {
   "#/account": "Account",
+  "#/account/albums": "Account/Albums",
   "#/account/notifications": "Account/Notifications",
   "#/account/photos": "Account/Photos",
-  "#/account/albums": "Account/Albums",
   "#/account/preferences": "Account/Preferences",
   "#/dailygame": "DailyGame",
   "#/goalgame": "GoalGame",
@@ -124,6 +126,7 @@ export function ScreensProvider({ children }: { children: ReactNode }) {
     "Account/Notifications": AccountNotifications,
     "Account/Photos": AccountPhotos,
     "Account/Albums": AccountAlbums,
+    "Account/Albums/ID": AccountAlbumId,
     "Account/Preferences": AccountPreferences,
     DailyGame,
     GoalGame,
