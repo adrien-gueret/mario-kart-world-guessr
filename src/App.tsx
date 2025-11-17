@@ -55,7 +55,7 @@ function App() {
             currentScreenName === "ReleaseNotes" ? undefined : "#/releasenotes"
           }
         >
-          <b>{currentVersion}</b>
+          <b>{currentVersion.version}</b>
         </a>
         <br />
 

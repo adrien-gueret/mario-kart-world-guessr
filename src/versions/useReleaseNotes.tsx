@@ -21,11 +21,9 @@ export default function useReleaseNotes() {
   useEffect(() => {
     if (shouldShowReleaseNotes) {
       removeKey("daily");
-      storeKey("lastSeenVersion", currentVersion);
+      storeKey("lastSeenVersion", currentVersion.version);
     }
   }, [shouldShowReleaseNotes]);
 
-  return shouldShowReleaseNotes
-    ? allReleaseNotes[0].notes[currentLocale]
-    : null;
+  return shouldShowReleaseNotes ? currentVersion.notes[currentLocale] : null;
 }
