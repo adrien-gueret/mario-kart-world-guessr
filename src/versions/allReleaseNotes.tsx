@@ -4,6 +4,48 @@ import type { ReleaseNotes } from "./types";
 
 const releaseNotes: ReleaseNotes = [
   {
+    version: "v3.4.3",
+    notes: {
+      fr: (
+        <ul>
+          <Text component="li">
+            Un gros bug empêchant les joueurs de débloquer les coupes d'or a été
+            trouvé. À cause de lui, certains joueurs ne pouvaient pas aller
+            au-delà de la coupe d'argent...
+            <br />
+            Ce bug a donc été corrigé et les joueurs affectés ont obtenu la
+            coupe d'or comme il se doit. Désolé pour le dérangement&nbsp;!
+          </Text>
+          <Text component="li">
+            Plusieurs textes anglais ont également été améliorés.
+          </Text>
+          <Text component="li">
+            Un grand merci à <b>AprilShade</b> pour son aide, ses suggestions et
+            ses rapports de bugs précis&nbsp;!
+          </Text>
+        </ul>
+      ),
+      en: (
+        <ul>
+          <Text component="li">
+            A major bug preventing players from unlocking gold cups was found.
+            Because of it, some players couldn't get past the silver cup...
+            <br />
+            This bug has now been fixed and affected players were awarded the
+            gold cup as they should have been. Sorry for the inconvenience!
+          </Text>
+          <Text component="li">
+            Several English texts have also been improved.
+          </Text>
+          <Text component="li">
+            A big thank you to <b>AprilShade</b> for their help, suggestions,
+            and bug reports!
+          </Text>
+        </ul>
+      ),
+    },
+  },
+  {
     version: "v3.4.2",
     notes: {
       fr: (
