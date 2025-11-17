@@ -301,12 +301,17 @@ try {
             }
 
             if ($cupData["cup"] !== 'none') {
-                $cupStmt =$pdo->prepare(
+                 $cupStmt =$pdo->prepare(
                     "INSERT INTO `mario-kart-world-cups` (player_id, difficulty, mode, cup, star_rank)
                     VALUES (:playerId, :difficulty, :mode, :cup, :starRank)
                     ON DUPLICATE KEY UPDATE
-                    cup = IF(VALUES(cup) > cup, VALUES(cup), cup),
-                    star_rank = IF(star_rank IS NULL OR VALUES(star_rank) > star_rank, VALUES(star_rank), star_rank)
+                    cup = CASE
+                        WHEN FIELD(VALUES(cup), 'none','bronze','silver','gold') > FIELD(cup, 'none','bronze','silver','gold')
+                        THEN VALUES(cup) ELSE cup END,
+                    star_rank = CASE
+                        WHEN star_rank IS NULL THEN VALUES(star_rank)
+                        WHEN FIELD(VALUES(star_rank), 'rank-0','rank-1','rank-2','rank-3') > FIELD(star_rank, 'rank-0','rank-1','rank-2','rank-3')
+                        THEN VALUES(star_rank) ELSE star_rank END
                 ");
 
                 $cupStmt->bindParam(':playerId', $currentUser['id'], PDO::PARAM_INT);
