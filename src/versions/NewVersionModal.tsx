@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import Button from "@/components/Button";
+import Date from "@/components/Date";
 import Modal from "@/components/Modal";
 import { useTranslations } from "@/i18n";
 
@@ -22,12 +23,13 @@ export default function NewVersionModal() {
 
   return (
     <Modal
-      title={translate("new-version.title")(currentVersion)}
+      title={translate("new-version.title")(currentVersion.version)}
       isOpen={isOpen}
       disableSkew
       noDelay
     >
       <div className="new-version-modal-content">
+        <Date date={currentVersion.publishedAt} />
         <div>{releaseNotes}</div>
 
         <div className="new-version-modal-actions">

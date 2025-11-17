@@ -5,6 +5,7 @@ import type { ReleaseNotes } from "./types";
 const releaseNotes: ReleaseNotes = [
   {
     version: "v3.4.3",
+    publishedAt: new Date("2025-11-17T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -47,6 +48,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v3.4.2",
+    publishedAt: new Date("2025-11-09T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -101,6 +103,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v3.4.1",
+    publishedAt: new Date("2025-10-27T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -133,6 +136,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v3.4.0",
+    publishedAt: new Date("2025-10-09T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -178,6 +182,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v3.3.0",
+    publishedAt: new Date("2025-09-21T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -214,6 +219,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v3.2.0",
+    publishedAt: new Date("2025-09-19T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -287,6 +293,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v3.1.0",
+    publishedAt: new Date("2025-09-07T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -331,6 +338,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v3.0.0",
+    publishedAt: new Date("2025-08-11T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -392,6 +400,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v2.2.0",
+    publishedAt: new Date("2025-07-31T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -432,6 +441,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v2.1.1",
+    publishedAt: new Date("2025-07-18T00:00:00Z"),
     notes: {
       fr: (
         <Text component="p">
@@ -458,6 +468,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v2.1.0",
+    publishedAt: new Date("2025-07-17T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -507,6 +518,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v2.0.1",
+    publishedAt: new Date("2025-07-15T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -538,6 +550,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v2.0.0",
+    publishedAt: new Date("2025-07-14T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -591,6 +604,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v1.1.0",
+    publishedAt: new Date("2025-06-30T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -613,6 +627,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v1.0.0",
+    publishedAt: new Date("2025-06-21T00:00:00Z"),
     notes: {
       fr: (
         <ul>
