@@ -21,6 +21,7 @@ type Props = {
   children: ReactNode;
   successMessage: string;
   onSubmit?: () => void;
+  onCancel?: () => void;
   onSuccess: (response: any) => void;
   onError?: (error: { message: string }) => void;
 };
@@ -59,6 +60,7 @@ export default function Form({
   successMessage,
   method = "POST",
   onSubmit = () => {},
+  onCancel,
   onSuccess,
   onError = (error) => {
     console.error("Form submission error:", error);
@@ -108,9 +110,16 @@ export default function Form({
       >
         {children}
 
-        <Button variant="primary" type="submit">
-          {submitLabel ?? translate("form.submit")}
-        </Button>
+        <div className={`form-actions ${onCancel ? "" : "center"}`}>
+          {onCancel && (
+            <Button variant="secondary" type="button" onClick={onCancel}>
+              {translate("form.cancel")}
+            </Button>
+          )}
+          <Button variant="primary" type="submit">
+            {submitLabel ?? translate("form.submit")}
+          </Button>
+        </div>
       </form>
 
       <Snackbar

@@ -9,14 +9,12 @@ import Surface from "@/components/Surface";
 import fetchApi from "@/services/api";
 
 import type { Album } from "@/types/photos";
-import { useScreen } from "@/screens/ScreensProvider";
 
 export default function Albums() {
   const [albums, setAlbums] = useState<Album[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const { translate } = useTranslations();
-  const { setCurrentScreenName } = useScreen();
 
   useEffect(() => {
     async function fetchAlbums() {

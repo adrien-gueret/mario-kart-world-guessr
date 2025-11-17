@@ -135,6 +135,7 @@ export type Texts = {
   "see-release-notes.label": string;
   "release-notes.title": string;
   "form.submit": string;
+  "form.cancel": string;
   "account.title": string;
   "account.username.label": string;
   "account.username.helper": string;

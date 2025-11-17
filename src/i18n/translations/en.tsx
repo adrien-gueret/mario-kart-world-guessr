@@ -359,6 +359,7 @@ const en: Texts = {
   "see-release-notes.label": "See all release notes",
   "release-notes.title": "Release notes",
   "form.submit": "Submit",
+  "form.cancel": "Cancel",
   "account.title": "My account",
   "account.username.label": "Username",
   "account.username.helper":

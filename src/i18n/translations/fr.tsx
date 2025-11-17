@@ -391,6 +391,7 @@ const fr: Texts = {
   "see-release-notes.label": "Voir toutes les notes de version",
   "release-notes.title": "Notes de version",
   "form.submit": "Envoyer",
+  "form.cancel": "Annuler",
   "account.title": "Mon compte",
   "account.username.label": "Pseudo",
   "account.username.helper":
