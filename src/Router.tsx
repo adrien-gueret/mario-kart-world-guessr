@@ -27,13 +27,16 @@ const router = createHashRouter([
       { index: true, Component: Home },
       {
         path: "/home",
-        element: <Navigate to="/" />,
+        element: <Navigate to="/" replace />,
       },
       {
         path: "/account",
         Component: AccountLayout,
         children: [
-          { index: true, element: <Navigate to="/account/preferences" /> },
+          {
+            index: true,
+            element: <Navigate to="/account/preferences" replace />,
+          },
           {
             path: "/account/preferences",
             Component: AccountPreferences,
@@ -71,7 +74,25 @@ const router = createHashRouter([
       },
       {
         path: "/leaderboards",
-        Component: Leaderboards,
+        children: [
+          {
+            index: true,
+            element: <Navigate to="survival/150cc" replace />,
+          },
+          {
+            path: ":mode",
+            children: [
+              {
+                index: true,
+                element: <Navigate to="150cc" replace />,
+              },
+              {
+                path: ":difficulty",
+                Component: Leaderboards,
+              },
+            ],
+          },
+        ],
       },
       {
         path: "/login",
