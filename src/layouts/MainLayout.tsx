@@ -1,4 +1,3 @@
-import { useLayoutEffect } from "react";
 import { Outlet, useLocation, ScrollRestoration } from "react-router-dom";
 
 import Credits from "@/components/Credits";
@@ -11,10 +10,6 @@ import Providers from "@/Providers";
 
 function MainLayout() {
   const location = useLocation();
-
-  useLayoutEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-  }, [location.pathname]);
 
   const isOnHome = location.pathname === "/";
 

@@ -14,10 +14,12 @@ import "./Login.css";
 function Login() {
   const { isAnonymous } = useCurrentUser();
   const { translate } = useTranslations();
-  const { state } = useLocation();
+  const state = useLocation().state ?? {};
   const navigate = useNavigate();
 
   const targetUrlRef = useRef(state.targetUrl || "/account");
+
+  console.log(state.targetUrl);
 
   useEffect(() => {
     if (!isAnonymous) {

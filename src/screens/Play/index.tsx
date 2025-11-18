@@ -19,7 +19,13 @@ function Play() {
             icon={<ModeIcon mode="goal" />}
             onClick={() => navigate("/goalgame")}
             title={translate("mode.goal.label")}
-            content={translate("mode.goal.description")}
+            content={
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: translate("mode.goal.description"),
+                }}
+              />
+            }
             borderColor="#599be5"
           />
         </li>
@@ -41,7 +47,13 @@ function Play() {
             icon={<ModeIcon mode="survival" />}
             onClick={() => navigate("/survivalgame")}
             title={translate("mode.survival.label")}
-            content={translate("mode.survival.description")}
+            content={
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: translate("mode.survival.description"),
+                }}
+              />
+            }
             borderColor="#fb501e"
           />
         </li>
@@ -50,7 +62,13 @@ function Play() {
             icon={<ModeIcon mode="daily" />}
             onClick={() => navigate("/dailygame")}
             title={translate("mode.daily.label")}
-            content={translate("mode.daily.description")}
+            content={
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: translate("mode.daily.description"),
+                }}
+              />
+            }
             borderColor="#00951f"
           />
         </li>
