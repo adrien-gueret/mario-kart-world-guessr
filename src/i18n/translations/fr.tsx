@@ -612,11 +612,16 @@ const fr: Texts = {
   "4000_three_in_a_row.description":
     "Vous avez fait au moins 4000 points trois fois de suite !",
   "4000_three_in_a_row.unlockedItem": "Lakitu est débloqué !",
-  "lakitu.unlockClue": "Faire au moins 4000 points trois fois de suite.",
+  "lakitu.unlockClue": "Faites au moins 4000 points trois fois de suite.",
 
   "photo_validated.description": "Une de vos photos a été validée !",
   "photo_validated.unlockedItem": "Toadette est débloquée !",
   "toadette.unlockClue": "Ayez une photo publiée dans le jeu.",
+
+  "break_everything.description": "Vous avez cassé le jeu !",
+  "break_everything.unlockedItem": "Waluigi est débloqué !",
+  "waluigi.unlockClue":
+    "Cassez le jeu en accédant à quelque chose d'inhabituel.",
 };
 
 export default fr;
