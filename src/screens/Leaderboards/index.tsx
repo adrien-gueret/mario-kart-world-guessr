@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { useCurrentUser } from "@/auth/CurrentUserProvider";
 
@@ -16,13 +17,12 @@ import fetchApi from "@/services/api";
 
 import type { LeaderboardsResponse, GameMode, Difficulty } from "@/types/game";
 
-import { useScreen } from "../ScreensProvider";
-
 import "./Leaderboards.css";
 import Button from "@/components/Button";
 
 function Leaderboards() {
-  const { setCurrentScreenName, state } = useScreen();
+  const { state } = useLocation();
+  const navigate = useNavigate();
 
   const [leaderboard, setLeaderboard] = useState<LeaderboardsResponse>([]);
   const [gameMode, setGameMode] = useState<GameMode>(
@@ -164,7 +164,7 @@ function Leaderboards() {
         </div>
       )}
 
-      <Button variant="primary" onClick={() => setCurrentScreenName("Home")}>
+      <Button variant="primary" onClick={() => navigate("/")}>
         {translate("home.button")}
       </Button>
     </div>

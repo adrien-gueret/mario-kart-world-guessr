@@ -1,4 +1,4 @@
-import { createHashRouter, RouterProvider, Navigate } from "react-router";
+import { createHashRouter, RouterProvider, Navigate } from "react-router-dom";
 
 import MainLayout from "@/layouts/MainLayout";
 
