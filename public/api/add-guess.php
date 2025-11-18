@@ -84,7 +84,7 @@ try {
         $difficulty = '150cc';
     }
 
-    $game['history'] = array_map(function($guess) {
+    $game['history'] = array_map(function($guess) use ($difficulty) {
         $distanceInKm = distanceBetweenCoordinatesInKilometers(
             ['x' => $guess['guess_x'], 'y' => $guess['guess_y']],
             ['x' => $guess['actual_x'], 'y' => $guess['actual_y']]
