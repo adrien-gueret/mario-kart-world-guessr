@@ -207,6 +207,9 @@ export type Texts = {
   "account.albums.create.title": string;
   "account.albums.create.name": string;
   "account.albums.create.success": string;
+  "error.title": string;
+  "error.description": string;
+  "error.button": string;
 } & {
   [K in Achievement as `${K}.unlockedItem`]: string;
 } & {

@@ -19,8 +19,6 @@ function Login() {
 
   const targetUrlRef = useRef(state.targetUrl || "/account");
 
-  console.log(state.targetUrl);
-
   useEffect(() => {
     if (!isAnonymous) {
       navigate(targetUrlRef.current ?? "/account");

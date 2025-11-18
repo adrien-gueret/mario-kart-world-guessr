@@ -527,6 +527,9 @@ const en: Texts = {
   "account.albums.create.title": "Create a new album",
   "account.albums.create.name": "Album name",
   "account.albums.create.success": "Album created successfully!",
+  "error.title": "Oops! Something went wrong.",
+  "error.description": "An unexpected error occurred... Everything is broken!",
+  "error.button": "Back to home",
 
   //////
   "gold_50cc_survival.description":

@@ -1,4 +1,9 @@
-import { createHashRouter, RouterProvider, Navigate } from "react-router-dom";
+import {
+  createHashRouter,
+  RouterProvider,
+  Navigate,
+  isRouteErrorResponse,
+} from "react-router-dom";
 
 import AccountLayout from "@/layouts/AccountLayout";
 import MainLayout from "@/layouts/MainLayout";
@@ -8,6 +13,7 @@ import AccountPhotos from "@/screens/Account/Photos";
 import AccountAlbums from "@/screens/Account/Albums";
 import AccountAlbumId from "@/screens/Account/Albums/ID";
 import AccountPreferences from "@/screens/Account/Preferences";
+import ErrorScreen from "@/screens/Error";
 import { SurvivalGame, GoalGame, DailyGame, ChronoGame } from "@/screens/Game";
 import Home from "@/screens/Home";
 import Leaderboards from "@/screens/Leaderboards";
@@ -23,6 +29,7 @@ import TermsServices from "@/screens/TermsServices";
 const router = createHashRouter([
   {
     Component: MainLayout,
+    errorElement: <ErrorScreen />,
     children: [
       { index: true, Component: Home },
       {
