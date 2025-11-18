@@ -84,7 +84,7 @@ try {
         $difficulty = '150cc';
     }
 
-    $game['history'] = array_map(function($guess) {
+    $game['history'] = array_map(function($guess) use ($difficulty) {
         $distanceInKm = distanceBetweenCoordinatesInKilometers(
             ['x' => $guess['guess_x'], 'y' => $guess['guess_y']],
             ['x' => $guess['actual_x'], 'y' => $guess['actual_y']]
@@ -355,8 +355,8 @@ try {
                         WHERE player_id = :playerId AND difficulty = :difficulty AND mode = :mode
                     ");
 
-                    $newScore = $totalScore > $bestScore ? $totalScore : $bestScore;
-                    $leaderboardStmt->bindValue(':score', $newScore, PDO::PARAM_INT);
+                    $scoreToStore = $totalScore > $bestScore ? $totalScore : $bestScore;
+                    $leaderboardStmt->bindValue(':score', $scoreToStore, PDO::PARAM_INT);
                 }
             }
 
