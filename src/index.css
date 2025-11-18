@@ -84,15 +84,6 @@ h3 {
   gap: 64px;
 }
 
-.app-Home .app-home-button {
-  display: none;
-}
-
-.app-Home .app-login-button,
-.app-Login .app-login-button {
-  display: none;
-}
-
 .app-header {
   display: flex;
   flex-direction: row;
