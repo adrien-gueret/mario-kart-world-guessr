@@ -109,7 +109,7 @@ h3 {
   text-decoration: none;
 }
 
-.basic-link:not([href]) {
+.basic-link[aria-current="page"] {
   text-decoration: none;
   pointer-events: none;
 }

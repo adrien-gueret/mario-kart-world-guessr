@@ -133,7 +133,7 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
         const [, target = "/account"] = state.split("_");
         fetchDiscord(authCode, target);
       } else {
-        fetchMe("Login");
+        fetchMe("/login");
       }
     } else {
       fetchMe();

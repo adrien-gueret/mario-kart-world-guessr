@@ -1,44 +1,25 @@
+import { NavLink } from "react-router-dom";
 import { useTranslations } from "@/i18n";
 import currentVersion from "@/versions/currentVersion";
 
 export default function Footer() {
   const { translate } = useTranslations();
 
-  const currentScreenName = ""; // TODO
-
   return (
     <footer style={{ marginTop: "48px" }}>
-      <a
-        className="basic-link"
-        href={
-          currentScreenName === "ReleaseNotes" ? undefined : "#/releasenotes"
-        }
-      >
+      <NavLink className="basic-link" to="/releasenotes">
         <b>{currentVersion.version}</b>
-      </a>
+      </NavLink>
       <br />
 
       <aside className="aside-links">
-        <a
-          className="basic-link"
-          href={
-            currentScreenName === "PrivacyPolicies"
-              ? undefined
-              : "#/privacypolicies"
-          }
-        >
+        <NavLink className="basic-link" to="/privacypolicies">
           <b>{translate("privacy-policies.title")}</b>
-        </a>
-        <a
-          className="basic-link"
-          href={
-            currentScreenName === "TermsServices"
-              ? undefined
-              : "#/termsservices"
-          }
-        >
+        </NavLink>
+
+        <NavLink className="basic-link" to="/termsservices">
           <b>{translate("terms-services.title")}</b>
-        </a>
+        </NavLink>
       </aside>
 
       <aside className="aside-links">

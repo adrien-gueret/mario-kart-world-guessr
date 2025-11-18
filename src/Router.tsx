@@ -1,13 +1,13 @@
 import { createHashRouter, RouterProvider, Navigate } from "react-router-dom";
 
+import AccountLayout from "@/layouts/AccountLayout";
 import MainLayout from "@/layouts/MainLayout";
 
-import Account from "@/screens/Account";
-import AccountNotifications from "@/screens/Account/Notifications/screen";
-import AccountPhotos from "@/screens/Account/Photos/screen";
-import AccountAlbums from "@/screens/Account/Albums/screen";
+import AccountNotifications from "@/screens/Account/Notifications";
+import AccountPhotos from "@/screens/Account/Photos";
+import AccountAlbums from "@/screens/Account/Albums";
 import AccountAlbumId from "@/screens/Account/Albums/ID";
-import AccountPreferences from "@/screens/Account/Preferences/screen";
+import AccountPreferences from "@/screens/Account/Preferences";
 import { SurvivalGame, GoalGame, DailyGame, ChronoGame } from "@/screens/Game";
 import Home from "@/screens/Home";
 import Leaderboards from "@/screens/Leaderboards";
@@ -31,28 +31,32 @@ const router = createHashRouter([
       },
       {
         path: "/account",
-        Component: Account,
+        Component: AccountLayout,
+        children: [
+          { index: true, element: <Navigate to="/account/preferences" /> },
+          {
+            path: "/account/preferences",
+            Component: AccountPreferences,
+          },
+          {
+            path: "/account/notifications",
+            Component: AccountNotifications,
+          },
+          {
+            path: "/account/photos",
+            Component: AccountPhotos,
+          },
+          {
+            path: "/account/albums",
+            Component: AccountAlbums,
+          },
+          {
+            path: "/account/albums/:id",
+            Component: AccountAlbumId,
+          },
+        ],
       },
-      {
-        path: "/account/notifications",
-        Component: AccountNotifications,
-      },
-      {
-        path: "/account/photos",
-        Component: AccountPhotos,
-      },
-      {
-        path: "/account/albums",
-        Component: AccountAlbums,
-      },
-      {
-        path: "/account/albums/:id",
-        Component: AccountAlbumId,
-      },
-      {
-        path: "/account/preferences",
-        Component: AccountPreferences,
-      },
+
       {
         path: "/dailygame",
         Component: DailyGame,

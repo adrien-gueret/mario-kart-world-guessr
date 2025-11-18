@@ -26,7 +26,7 @@ const fr: Texts = {
     "Continuez à jouer tant que vous marquez assez de points !",
   "mode.daily.label": "Photos du jour",
   "mode.daily.description":
-    "Chaque jour, une nouvelle sélection de cinq photos : faites un meilleur score que vos amis !",
+    "Chaque jour, une nouvelle sélection de cinq photos : faites un meilleur score que vos amis&nbsp;!",
   "choose.difficulty": "Choisissez la difficulté",
   "difficulty.label": "Difficulté : ",
   "difficulty.50cc.title": "50cc",

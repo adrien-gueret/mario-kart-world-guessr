@@ -21,7 +21,7 @@ import "./Leaderboards.css";
 import Button from "@/components/Button";
 
 function Leaderboards() {
-  const { state } = useLocation();
+  const state = useLocation().state ?? {};
   const navigate = useNavigate();
 
   const [leaderboard, setLeaderboard] = useState<LeaderboardsResponse>([]);
