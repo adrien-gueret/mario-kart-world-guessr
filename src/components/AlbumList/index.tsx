@@ -1,7 +1,6 @@
 import { useState, type MouseEventHandler } from "react";
 
 import { useTranslations } from "@/i18n";
-import { useScreen } from "@/screens/ScreensProvider";
 import type { Album } from "@/types/photos";
 
 import Form from "../Form";
@@ -15,8 +14,6 @@ type Props = {
 };
 
 export default function AlbumList({ albums, canCreateNewAlbum }: Props) {
-  const { setCurrentScreenName } = useScreen();
-
   const [isCreateAlbumModalOpen, setIsCreateAlbumModalOpen] = useState(false);
 
   const { translate } = useTranslations();
