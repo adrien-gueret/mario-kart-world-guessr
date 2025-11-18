@@ -355,8 +355,8 @@ try {
                         WHERE player_id = :playerId AND difficulty = :difficulty AND mode = :mode
                     ");
 
-                    $newScore = $totalScore > $bestScore ? $totalScore : $bestScore;
-                    $leaderboardStmt->bindValue(':score', $newScore, PDO::PARAM_INT);
+                    $scoreToStore = $totalScore > $bestScore ? $totalScore : $bestScore;
+                    $leaderboardStmt->bindValue(':score', $scoreToStore, PDO::PARAM_INT);
                 }
             }
 
