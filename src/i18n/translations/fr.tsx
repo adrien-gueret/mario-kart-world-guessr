@@ -559,6 +559,10 @@ const fr: Texts = {
   "account.albums.create.title": "Créer un nouvel album",
   "account.albums.create.name": "Nom de l'album",
   "account.albums.create.success": "Album créé avec succès !",
+  "error.title": "Oups ! Une erreur est survenue.",
+  "error.description":
+    "Une erreur inattendue s'est produite... Tout est cassé !",
+  "error.button": "Retour à l'accueil",
 
   //////
   "gold_50cc_survival.description":

@@ -30,7 +30,6 @@ function Leaderboards() {
     mode: GameMode;
     difficulty: Difficulty;
   }>();
-  console.log({ gameMode, gameDifficulty });
   const navigate = useNavigate();
 
   const [leaderboard, setLeaderboard] = useState<LeaderboardsResponse>([]);
