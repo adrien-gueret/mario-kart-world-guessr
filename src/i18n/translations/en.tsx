@@ -207,6 +207,29 @@ const en: Texts = {
       points&nbsp;!
     </>
   ),
+  "difficulty.goal.50cc.short": (
+    <>
+      The <b>easiest</b> photos and the most lenient scoring system.
+    </>
+  ),
+  "difficulty.goal.100cc.short": (
+    <>
+      Most photos <b>except</b> the most difficult ones and a moderate tolerance
+      in score calculation.
+    </>
+  ),
+  "difficulty.goal.150cc.short": (
+    <>
+      <b>ALL</b> photos, including the most difficult ones! And a light
+      tolerance in score calculation.
+    </>
+  ),
+  "difficulty.goal.mirror.short": (
+    <>
+      <b>ALL</b> photos, including the most difficult ones! And a light
+      tolerance in score calculation.
+    </>
+  ),
   "difficulty.chrono.mirror.short": (
     <>
       Score the most points in <b>3 minutes</b>.<br />
@@ -582,29 +605,10 @@ const en: Texts = {
     "One of your submitted photos has been validated!",
   "photo_validated.unlockedItem": "Toadette is unlocked!",
   "toadette.unlockClue": "Have one of your submitted photos validated.",
-  "difficulty.goal.50cc.short": (
-    <>
-      The <b>easiest</b> photos and the most lenient scoring system.
-    </>
-  ),
-  "difficulty.goal.100cc.short": (
-    <>
-      Most photos <b>except</b> the most difficult ones and a moderate tolerance
-      in score calculation.
-    </>
-  ),
-  "difficulty.goal.150cc.short": (
-    <>
-      <b>ALL</b> photos, including the most difficult ones! And a light
-      tolerance in score calculation.
-    </>
-  ),
-  "difficulty.goal.mirror.short": (
-    <>
-      <b>ALL</b> photos, including the most difficult ones! And a light
-      tolerance in score calculation.
-    </>
-  ),
+
+  "break_everything.description": "You have broken the game!",
+  "break_everything.unlockedItem": "Waluigi is unlocked!",
+  "waluigi.unlockClue": "Break the game by accessing something unusual.",
 };
 
 export default en;
