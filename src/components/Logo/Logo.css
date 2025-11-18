@@ -7,7 +7,7 @@
   view-transition-name: logo;
 }
 
-.app-Home .logo {
+.logo.is-big {
   max-width: 50vw;
 }
 

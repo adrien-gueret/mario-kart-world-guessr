@@ -1,4 +1,5 @@
-import { Outlet } from "react-router-dom";
+import { useLayoutEffect } from "react";
+import { Outlet, useLocation, ScrollRestoration } from "react-router-dom";
 
 import Credits from "@/components/Credits";
 import Footer from "@/components/Footer";
@@ -9,18 +10,25 @@ import NewVersionModal from "@/versions/NewVersionModal";
 import Providers from "@/Providers";
 
 function MainLayout() {
+  const location = useLocation();
+
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [location.pathname]);
+
+  const isOnHome = location.pathname === "/";
+
   return (
     <Providers>
-      <div>
-        <Header showHomeButton />
-        <div className="app-container">
-          <Logo />
-          <Outlet />
-          <Credits />
-        </div>
-        <NewVersionModal />
-        <Footer />
+      <ScrollRestoration />
+      <Header showHomeButton={!isOnHome} />
+      <div className="app-container">
+        <Logo isBig={isOnHome} />
+        <Outlet />
+        <Credits />
       </div>
+      <NewVersionModal />
+      <Footer />
     </Providers>
   );
 }

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import Button from "@/components/Button";
 import Date from "@/components/Date";
@@ -10,14 +11,16 @@ import currentVersion from "./currentVersion";
 import useReleaseNotes from "./useReleaseNotes";
 
 import "./NewVersionModal.css";
-import { useScreen } from "@/screens";
 
 export default function NewVersionModal() {
   const { translate } = useTranslations();
 
   const releaseNotes = useReleaseNotes();
 
-  const { currentScreenName, setCurrentScreenName } = useScreen();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // TODO: check location
 
   const [isOpen, setIsOpen] = useState(Boolean(releaseNotes));
 
@@ -33,12 +36,12 @@ export default function NewVersionModal() {
         <div>{releaseNotes}</div>
 
         <div className="new-version-modal-actions">
-          {currentScreenName !== "ReleaseNotes" && (
+          {location.pathname !== "/releaseNotes" && (
             <Button
               variant="secondary"
               onClick={() => {
                 setIsOpen(false);
-                setCurrentScreenName("ReleaseNotes");
+                navigate("/releaseNotes");
               }}
             >
               {translate("see-release-notes.label")}
