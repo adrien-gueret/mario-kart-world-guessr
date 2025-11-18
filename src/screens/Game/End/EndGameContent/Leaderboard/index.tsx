@@ -165,14 +165,7 @@ export default function Leaderboard({
         <div className="leaderboard-actions">
           <Button
             variant="secondary"
-            onClick={() =>
-              navigate("/leaderboards", {
-                state: {
-                  gameMode: mode,
-                  gameDifficulty: difficulty,
-                },
-              })
-            }
+            onClick={() => navigate(`/leaderboards/${mode}/${difficulty}`)}
           >
             {translate("endGame.see-leaderboards")}
           </Button>
