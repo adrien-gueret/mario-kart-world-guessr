@@ -137,6 +137,15 @@ try {
             }
         }
 
+        $updateErrorTrackerStmt = $pdo->prepare(
+            "UPDATE `mario-kart-world-errors-tracker`
+            SET user_id = ?
+            WHERE user_id = ?"
+        );
+
+        $errorTrackerParams = array_merge([$userId, $anonymousUserId]);
+        $updateErrorTrackerStmt->execute($errorTrackerParams);
+
         $deleteStmt = $pdo->prepare("DELETE FROM `mario-kart-world-leaderboard-daily` WHERE player_id = :anonymousUserId");
         $deleteStmt->bindParam(':anonymousUserId', $anonymousUserId, PDO::PARAM_INT);
         $deleteStmt->execute();
