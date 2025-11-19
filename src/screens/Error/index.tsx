@@ -1,11 +1,33 @@
+import { useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import Button from "@/components/Button";
 import ConstraintContainer from "@/components/ConstraintContainer";
 import Text from "@/components/Text";
 
+import fetchApi from "@/services/api";
 import useNavigate from "@/services/useNavigate";
 import { useTranslations } from "@/i18n";
 
-export default function ErrorScreen() {
+export default function ErrorScreen({ error }: { error: Error }) {
+  const hasTrackedRef = useRef(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (hasTrackedRef.current || import.meta.env.DEV) {
+      return;
+    }
+
+    hasTrackedRef.current = true;
+
+    const formData = new FormData();
+    formData.append("pathname", location.pathname);
+    formData.append(
+      "errorContent",
+      error ? JSON.stringify(error, Object.getOwnPropertyNames(error)) : "{}"
+    );
+
+    fetchApi("/track-error", "POST", formData);
+  }, [error, location.pathname]);
   const navigate = useNavigate();
   const { translate } = useTranslations();
 

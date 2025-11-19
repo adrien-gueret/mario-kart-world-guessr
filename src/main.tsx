@@ -1,9 +1,13 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
+import { AchievementsProvider } from "./achievements/AchievementsProvider.tsx";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { NotificationsProvider } from "./notifications/NotificationsProvider";
+import { TranslationsProvider } from "./i18n";
+
 import "./index.css";
 import Router from "./Router.tsx";
-import { TranslationsProvider } from "./i18n";
 
 if (!document.startViewTransition) {
   // @ts-ignore
@@ -20,7 +24,13 @@ if (!document.startViewTransition) {
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <TranslationsProvider>
-      <Router />
+      <GoogleOAuthProvider clientId="1063543539522-m89mibo9kp0esu299c8jgj2bali17ltl.apps.googleusercontent.com">
+        <AchievementsProvider>
+          <NotificationsProvider>
+            <Router />
+          </NotificationsProvider>
+        </AchievementsProvider>
+      </GoogleOAuthProvider>
     </TranslationsProvider>
   </StrictMode>
 );
