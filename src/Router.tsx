@@ -1,9 +1,4 @@
-import {
-  createHashRouter,
-  RouterProvider,
-  Navigate,
-  isRouteErrorResponse,
-} from "react-router-dom";
+import { createHashRouter, RouterProvider, Navigate } from "react-router-dom";
 
 import AccountLayout from "@/layouts/AccountLayout";
 import MainLayout from "@/layouts/MainLayout";
@@ -29,7 +24,7 @@ import TermsServices from "@/screens/TermsServices";
 const router = createHashRouter([
   {
     Component: MainLayout,
-    errorElement: <ErrorScreen />,
+    ErrorBoundary: ErrorScreen,
     children: [
       { index: true, Component: Home },
       {
