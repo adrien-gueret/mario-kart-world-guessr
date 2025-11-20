@@ -21,6 +21,7 @@ try {
         if ($isNewUser) {
             $updates[] = ['table' => 'mario-kart-world-leaderboard-daily', 'field' => 'player_id'];
             $updates[] = ['table' => 'mario-kart-world-leaderboard-goal-survival', 'field' => 'player_id'];
+            $updates[] = ['table' => 'mario-kart-world-cups', 'field' => 'player_id'];
         }
 
         foreach ($updates as $update) {
@@ -152,6 +153,12 @@ try {
 
         $deleteStmt = $pdo->prepare(
             "DELETE FROM `mario-kart-world-leaderboard-goal-survival` WHERE player_id = :anonymousUserId"
+        );
+        $deleteStmt->bindParam(':anonymousUserId', $anonymousUserId, PDO::PARAM_INT);
+        $deleteStmt->execute();
+
+        $deleteStmt = $pdo->prepare(
+            "DELETE FROM `mario-kart-world-cups` WHERE player_id = :anonymousUserId"
         );
         $deleteStmt->bindParam(':anonymousUserId', $anonymousUserId, PDO::PARAM_INT);
         $deleteStmt->execute();
