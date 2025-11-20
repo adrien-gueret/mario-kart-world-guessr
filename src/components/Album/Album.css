@@ -17,6 +17,23 @@
   background-color: rgba(255, 255, 255, 0.6);
   box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.15);
   text-align: left;
+  position: sticky;
+  top: 0;
+}
+
+.album-container h2 input {
+  margin: 0;
+  line-height: normal;
+  white-space: normal;
+  font-size: inherit;
+}
+
+.album-container h2 form {
+  display: inline;
+}
+
+.album-container h2 form .form-actions {
+  display: none;
 }
 
 .album-author {
@@ -27,12 +44,12 @@
   gap: 2px;
   justify-content: center;
   align-items: center;
-  justify-self: center;
+  justify-self: flex-end;
   color: #213547;
   padding: 2px 4px;
   background-color: rgba(255, 255, 255, 0.6);
   box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.15);
-  position: absolute;
+  position: sticky;
   bottom: 0;
   right: 0;
 }
@@ -45,17 +62,46 @@
   box-sizing: border-box;
 }
 
-/* Each grid item becomes a responsive 16:9 rectangle */
-.album-photos .album-placeholder {
+.album-photos .album-item {
   aspect-ratio: 16 / 9;
   width: 100%;
-  min-width: 0; /* allow items to shrink inside the grid */
-  background-color: rgba(0, 0, 0, 0.04);
-  border: 2px dashed rgba(33, 53, 71, 0.08);
+  min-width: 0;
+  border: 2px solid rgba(33, 53, 71, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+}
+
+.album-photos .album-placeholder {
+  background-color: rgba(0, 0, 0, 0.04);
+  border-style: dashed;
   color: #213547;
   font-weight: 600;
-  overflow: hidden;
+}
+
+.album-edit-name-button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-right: 8px;
+  cursor: pointer;
+  vertical-align: middle;
+  color: #213547;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+}
+
+.album-edit-name-button:focus-visible,
+.album-edit-name-button:hover {
+  box-shadow: 0 0 0 1px currentColor;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.album-edit-name-button svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+  vertical-align: middle;
 }

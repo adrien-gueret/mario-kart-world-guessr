@@ -20,6 +20,7 @@ type Props = {
   method?: FetchMethod;
   children: ReactNode;
   successMessage: string;
+  withoutStyle?: boolean;
   onSubmit?: () => void;
   onCancel?: () => void;
   onSuccess: (response: any) => void;
@@ -65,6 +66,7 @@ export default function Form({
   onError = (error) => {
     console.error("Form submission error:", error);
   },
+  withoutStyle,
 }: Props) {
   const { translate } = useTranslations();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -103,7 +105,7 @@ export default function Form({
   return (
     <>
       <form
-        className="form"
+        className={withoutStyle ? "" : "form-container"}
         method={method === "GET" ? "GET" : "POST"}
         action={action}
         onSubmit={handleSubmit}
