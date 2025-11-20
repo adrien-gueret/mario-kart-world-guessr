@@ -57,6 +57,6 @@
   font-weight: bold;
   background-color: var(--highlight-color);
   padding: 2px 8px;
-  margin: 24px 0;
+  margin: 24px 16px;
   border-radius: 8px;
 }

@@ -1,0 +1,61 @@
+.album-container {
+  margin-top: 64px;
+  background-color: #e3e3e3;
+  box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.15);
+  border: 3px solid #213547;
+  text-align: left;
+  position: relative;
+}
+
+.album-container h2 {
+  background-image: none;
+  margin: 0;
+  height: auto;
+  line-height: normal;
+  padding: 8px 16px;
+  white-space: normal;
+  background-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.15);
+  text-align: left;
+}
+
+.album-author {
+  margin: 0;
+  text-align: right;
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+  justify-content: center;
+  align-items: center;
+  justify-self: center;
+  color: #213547;
+  padding: 2px 4px;
+  background-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.15);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.album-photos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+/* Each grid item becomes a responsive 16:9 rectangle */
+.album-photos .album-placeholder {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  min-width: 0; /* allow items to shrink inside the grid */
+  background-color: rgba(0, 0, 0, 0.04);
+  border: 2px dashed rgba(33, 53, 71, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #213547;
+  font-weight: 600;
+  overflow: hidden;
+}
