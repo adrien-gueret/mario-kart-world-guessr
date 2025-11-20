@@ -1,6 +1,7 @@
 import { useState, type MouseEventHandler } from "react";
 
 import { useTranslations } from "@/i18n";
+import useNavigate from "@/services/useNavigate";
 import type { Album } from "@/types/photos";
 
 import Form from "../Form";
@@ -11,15 +12,21 @@ import "./AlbumList.css";
 type Props = {
   albums: Album[];
   canCreateNewAlbum?: boolean;
+  getAlbumURL: (albumId: number) => string;
 };
 
-export default function AlbumList({ albums, canCreateNewAlbum }: Props) {
+export default function AlbumList({
+  albums,
+  canCreateNewAlbum,
+  getAlbumURL,
+}: Props) {
   const [isCreateAlbumModalOpen, setIsCreateAlbumModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const { translate } = useTranslations();
 
   const selectAlbumId = (albumId: number) => {
-    console.log("Selected album ID:", albumId);
+    navigate(getAlbumURL(albumId));
   };
 
   const createAlbum = () => {
@@ -98,7 +105,7 @@ export default function AlbumList({ albums, canCreateNewAlbum }: Props) {
             action="/create-album"
             successMessage={translate("account.albums.create.success")}
             onSuccess={(response: { album: Album }) => {
-              console.log("Created album:", response.album);
+              selectAlbumId(response.album.id);
             }}
             onCancel={() => setIsCreateAlbumModalOpen(false)}
           >

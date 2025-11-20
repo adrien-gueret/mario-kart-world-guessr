@@ -31,11 +31,21 @@ export default function Albums() {
   }, []);
 
   return (
-    <ConstraintContainer>
-      <Surface>
-        <p>{translate("account.albums.description")}</p>
-      </Surface>
-      {isLoading ? <Loader /> : <AlbumList albums={albums} canCreateNewAlbum />}
-    </ConstraintContainer>
+    <>
+      <ConstraintContainer>
+        <Surface>
+          <p>{translate("account.albums.description")}</p>
+        </Surface>
+      </ConstraintContainer>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <AlbumList
+          albums={albums}
+          getAlbumURL={(albumId) => `/account/albums/${albumId}`}
+          canCreateNewAlbum
+        />
+      )}
+    </>
   );
 }

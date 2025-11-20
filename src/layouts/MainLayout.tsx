@@ -1,24 +1,30 @@
-import { Outlet, useLocation, ScrollRestoration } from "react-router-dom";
+import { Outlet, ScrollRestoration } from "react-router-dom";
 
 import { CurrentUserProvider } from "@/auth/CurrentUserProvider";
 
 import Credits from "@/components/Credits";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import Logo from "@/components/Logo";
+import Logo, { type Props as LogoProps } from "@/components/Logo";
 import NewVersionModal from "@/versions/NewVersionModal";
 
-function MainLayout() {
-  const location = useLocation();
+type Props = {
+  shouldHideHomeButton?: boolean;
+  shouldHideHeader?: boolean;
+  logoVariant?: LogoProps["variant"];
+};
 
-  const isOnHome = location.pathname === "/";
-
+function MainLayout({
+  logoVariant = "default",
+  shouldHideHomeButton = false,
+  shouldHideHeader = false,
+}: Props) {
   return (
     <CurrentUserProvider>
       <ScrollRestoration />
-      <Header showHomeButton={!isOnHome} />
+      {!shouldHideHeader && <Header showHomeButton={!shouldHideHomeButton} />}
       <div className="app-container">
-        <Logo isBig={isOnHome} />
+        <Logo variant={logoVariant} />
         <Outlet />
         <Credits />
       </div>

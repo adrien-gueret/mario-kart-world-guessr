@@ -125,6 +125,7 @@ export type Texts = {
   "photos.showMap": string;
   "photo.details.title": string;
   "photo.by": string;
+  "album.by": string;
   "login.screen.title": string;
   "login.screen.description": ReactNode;
   "login.discord.label": string;

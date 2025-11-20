@@ -19,6 +19,8 @@ export type AlbumPhoto = Omit<
 export type Album = {
   id: number;
   name: string;
+  isPublished: boolean;
+  createdAt: string;
   author: {
     id: number;
     name: string;

@@ -1,6 +1,6 @@
 import { createHashRouter, RouterProvider, Navigate } from "react-router-dom";
 
-import AccountLayout from "@/layouts/AccountLayout";
+import AccountLayout from "@/layouts/sublayouts/AccountLayout";
 import MainLayout from "@/layouts/MainLayout";
 
 import AccountNotifications from "@/screens/Account/Notifications";
@@ -8,7 +8,7 @@ import AccountPhotos from "@/screens/Account/Photos";
 import AccountAlbums from "@/screens/Account/Albums";
 import AccountAlbumId from "@/screens/Account/Albums/ID";
 import AccountPreferences from "@/screens/Account/Preferences";
-import ErrorScreen from "@/screens/Error";
+import ErrorBoundary from "@/screens/Error";
 import { SurvivalGame, GoalGame, DailyGame, ChronoGame } from "@/screens/Game";
 import Home from "@/screens/Home";
 import Leaderboards from "@/screens/Leaderboards";
@@ -20,17 +20,43 @@ import Upload from "@/screens/Upload";
 import UploadHelp from "@/screens/UploadHelp";
 import ReleaseNotes from "@/screens/ReleaseNotes";
 import TermsServices from "@/screens/TermsServices";
+import fetchApi from "@/services/api";
 
 const router = createHashRouter([
   {
-    Component: MainLayout,
-    ErrorBoundary: ErrorScreen,
+    element: <MainLayout shouldHideHomeButton logoVariant="big" />,
+    ErrorBoundary,
     children: [
       { index: true, Component: Home },
       {
         path: "/home",
         element: <Navigate to="/" replace />,
       },
+    ],
+  },
+  {
+    element: <MainLayout logoVariant="corner" />,
+    ErrorBoundary,
+    children: [
+      {
+        path: "/account/albums/:id",
+        Component: AccountAlbumId,
+        loader: async ({ params }) => {
+          const response = await fetchApi(`/album?id=${params.id}`, "GET");
+
+          if (!response.ok) {
+            throw new Error(`Cannot fetch album ${params.id}`);
+          }
+
+          return response.json();
+        },
+      },
+    ],
+  },
+  {
+    Component: MainLayout,
+    ErrorBoundary,
+    children: [
       {
         path: "/account",
         Component: AccountLayout,
@@ -55,24 +81,7 @@ const router = createHashRouter([
             path: "/account/albums",
             Component: AccountAlbums,
           },
-          {
-            path: "/account/albums/:id",
-            Component: AccountAlbumId,
-          },
         ],
-      },
-
-      {
-        path: "/dailygame",
-        Component: DailyGame,
-      },
-      {
-        path: "/goalgame",
-        Component: GoalGame,
-      },
-      {
-        path: "/chronogame",
-        Component: ChronoGame,
       },
       {
         path: "/leaderboards",
@@ -115,6 +124,18 @@ const router = createHashRouter([
       {
         path: "/releasenotes",
         Component: ReleaseNotes,
+      },
+      {
+        path: "/dailygame",
+        Component: DailyGame,
+      },
+      {
+        path: "/goalgame",
+        Component: GoalGame,
+      },
+      {
+        path: "/chronogame",
+        Component: ChronoGame,
       },
       {
         path: "/survivalgame",

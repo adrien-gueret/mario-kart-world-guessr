@@ -368,6 +368,7 @@ const en: Texts = {
   "photos.showMap": "Show map",
   "photo.details.title": "Players' guesses",
   "photo.by": "Photo by",
+  "album.by": "An album by",
   "login.screen.title": "Log in",
   "login.screen.description": (
     <>

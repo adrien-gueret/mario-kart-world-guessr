@@ -376,6 +376,7 @@ const fr: Texts = {
   "photos.showMap": "Afficher la carte",
   "photo.details.title": "Suggestions des joueurs",
   "photo.by": "Photo par",
+  "album.by": "Un album par",
   "login.screen.title": "Se connecter",
   "login.screen.description": (
     <>
