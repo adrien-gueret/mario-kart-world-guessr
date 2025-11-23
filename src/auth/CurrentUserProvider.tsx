@@ -118,6 +118,7 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
           delete user.isNewUser;
           setCurrentUser(user);
           storeConnectedUser(user);
+          setCurrentLocale(user.locale ?? currentLocale);
         })
         .catch(fetchMe)
         .finally(() => {

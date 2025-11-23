@@ -553,6 +553,7 @@ const en: Texts = {
     "Create albums with your photos and share them!",
   "account.albums.create.title": "Create a new album",
   "account.albums.create.name": "Album name",
+  "account.albums.create.defaultName": "My album",
   "account.albums.create.success": "Album created successfully.",
   "album.edit.name.success": "Album name updated successfully.",
   "account.albums.delete.title": "Delete album",

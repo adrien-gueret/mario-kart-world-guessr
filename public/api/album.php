@@ -42,7 +42,7 @@ try {
     }
 
     $stmt = $pdo->prepare(
-        "SELECT ap.id_photo, p.difficulty,
+        "SELECT ap.id_photo, p.difficulty, ap.position,
          CASE
             WHEN p.validated_at IS NOT NULL 
                 AND p.validated_at <= NOW() - INTERVAL 5 MINUTE
@@ -74,6 +74,7 @@ try {
             'id' => $photo['id_photo'],
             'difficulty' => $photo['difficulty'] ?? null,
             'photoUrl' => $photo['photo_url'],
+            'position' => $photo['position'],
         ], $fetchedPhotos),
     ]);
     

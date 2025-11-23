@@ -119,6 +119,9 @@ export default function AlbumList({
                 type="text"
                 name="albumname"
                 id="form-albumname"
+                defaultValue={translate("account.albums.create.defaultName")}
+                autoFocus
+                onFocus={(e) => e.target.select()}
                 required
                 maxLength={100}
               />
