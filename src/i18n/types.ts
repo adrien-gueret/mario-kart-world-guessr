@@ -147,6 +147,8 @@ export type Texts = {
   "account.distanceUnit.km": string;
   "account.distanceUnit.miles": string;
   "account.distanceUnit.helper": string;
+  "account.withSafeArea.label": string;
+  "account.withSafeArea.helper": string;
   "account.save.success": string;
   "account.tab.preferences": string;
   "account.tab.notifications": string;
