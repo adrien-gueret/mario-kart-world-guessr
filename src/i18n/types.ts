@@ -210,6 +210,7 @@ export type Texts = {
   "account.albums.description": string;
   "account.albums.create.title": string;
   "account.albums.create.name": string;
+  "account.albums.create.defaultName": string;
   "account.albums.create.success": string;
   "account.albums.delete.title": string;
   "account.albums.delete.warning": ReactNode;

@@ -22,6 +22,8 @@ import ReleaseNotes from "@/screens/ReleaseNotes";
 import TermsServices from "@/screens/TermsServices";
 import fetchApi from "@/services/api";
 
+import type { Photo } from "@/types/photos";
+
 const router = createHashRouter([
   {
     element: <MainLayout shouldHideHomeButton logoVariant="big" />,
@@ -42,13 +44,26 @@ const router = createHashRouter([
         path: "/account/albums/:id",
         Component: AccountAlbumId,
         loader: async ({ params }) => {
-          const response = await fetchApi(`/album?id=${params.id}`, "GET");
+          const getReponseJson = async (response: Response) => {
+            if (!response.ok) {
+              throw new Error(`Cannot fetch album ${params.id}`);
+            }
+            return response.json();
+          };
 
-          if (!response.ok) {
-            throw new Error(`Cannot fetch album ${params.id}`);
-          }
+          const responses = await Promise.all([
+            fetchApi(`/album?id=${params.id}`, "GET").then(getReponseJson),
+            fetchApi("/my-photos", "GET")
+              .then(getReponseJson)
+              .then((photos: Photo[]) =>
+                photos.filter((photo) => Boolean(photo.validatedAt))
+              ),
+          ]);
 
-          return response.json();
+          return {
+            album: responses[0],
+            availablePhotos: responses[1],
+          };
         },
       },
     ],
@@ -80,6 +95,15 @@ const router = createHashRouter([
           {
             path: "/account/albums",
             Component: AccountAlbums,
+            loader: async () => {
+              const response = await fetchApi(`/my-albums`, "GET");
+
+              if (!response.ok) {
+                throw new Error(`Cannot fetch albums`);
+              }
+
+              return response.json();
+            },
           },
         ],
       },

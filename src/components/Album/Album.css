@@ -77,16 +77,19 @@
   aspect-ratio: 16 / 9;
   width: 100%;
   min-width: 0;
-  border: 2px solid rgba(33, 53, 71, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
 
+.album-photos .album-photo {
+  border: 2px solid rgba(33, 53, 71, 0.08);
+}
+
 .album-photos .album-placeholder {
   background-color: rgba(0, 0, 0, 0.04);
-  border-style: dashed;
+  border: 2px dashed rgba(33, 53, 71, 0.08);
   color: #213547;
   font-weight: 600;
 }
