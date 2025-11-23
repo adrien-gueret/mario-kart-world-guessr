@@ -383,6 +383,7 @@ const en: Texts = {
   "see-release-notes.label": "See all release notes",
   "release-notes.title": "Release notes",
   "form.submit": "Submit",
+  "form.confirm": "Confirm",
   "form.cancel": "Cancel",
   "account.title": "My account",
   "account.username.label": "Username",
@@ -550,7 +551,18 @@ const en: Texts = {
     "Create albums with your photos and share them!",
   "account.albums.create.title": "Create a new album",
   "account.albums.create.name": "Album name",
-  "account.albums.create.success": "Album created successfully!",
+  "account.albums.create.success": "Album created successfully.",
+  "album.edit.name.success": "Album name updated successfully.",
+  "account.albums.delete.title": "Delete album",
+  "account.albums.delete.warning": (
+    <>
+      Are you sure you want to delete this album?
+      <br />
+      The photos it contains will <b>not</b> be deleted, but the album itself
+      cannot be recovered.
+    </>
+  ),
+  "account.albums.delete.success": "Album deleted successfully.",
   "error.title": "Oops! Something went wrong.",
   "error.description": "An unexpected error occurred... Everything is broken!",
   "error.button": "Back to home",

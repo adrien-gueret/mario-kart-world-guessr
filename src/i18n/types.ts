@@ -136,6 +136,7 @@ export type Texts = {
   "see-release-notes.label": string;
   "release-notes.title": string;
   "form.submit": string;
+  "form.confirm": string;
   "form.cancel": string;
   "account.title": string;
   "account.username.label": string;
@@ -208,6 +209,10 @@ export type Texts = {
   "account.albums.create.title": string;
   "account.albums.create.name": string;
   "account.albums.create.success": string;
+  "account.albums.delete.title": string;
+  "account.albums.delete.warning": ReactNode;
+  "account.albums.delete.success": string;
+  "album.edit.name.success": string;
   "error.title": string;
   "error.description": string;
   "error.button": string;
