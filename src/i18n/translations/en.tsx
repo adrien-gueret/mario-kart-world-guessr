@@ -396,6 +396,8 @@ const en: Texts = {
   "account.distanceUnit.miles": "Miles",
   "account.distanceUnit.helper":
     "Unit used for displaying distances on the map.",
+  "account.withSafeArea.label": "Safe area",
+  "account.withSafeArea.helper": `This option adds a non-clickable area around the "Guess" button, helping to avoid miss-clicks.`,
   "account.save.success": "Changes saved successfully",
   "play.label": "Play",
   "account.marioCharacter.label": "Select your favorite character",

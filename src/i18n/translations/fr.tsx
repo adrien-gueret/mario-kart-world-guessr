@@ -406,6 +406,8 @@ const fr: Texts = {
   "account.distanceUnit.miles": "Miles",
   "account.distanceUnit.helper":
     "Unité utilisée pour l'affichage des distances sur la carte.",
+  "account.withSafeArea.label": "Zone de sécurité",
+  "account.withSafeArea.helper": `Cette option ajoute une zone non clicable autour du bouton "Deviner", permettant d'éviter des clics accidentels.`,
   "account.save.success": "Modifications enregistrées avec succès",
   "play.label": "Jouer",
   "account.marioCharacter.label": "Sélectionnez votre personnage favori",

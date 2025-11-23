@@ -453,7 +453,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
       />
 
       {userGuess && !shouldShowAnswer && !hasZoomOnFloatingPhoto && (
-        <StickyButtonContainer>
+        <StickyButtonContainer withSafeArea={user.withSafeArea}>
           <Button onClick={handleConfirmGuess}>
             {translate("guess.label")}
           </Button>

@@ -55,14 +55,14 @@ if (!$payload || !isset($payload['id']) || !isset($payload['email']) || !isset($
     die('{"error":true,"message":"Invalid Discord token"}');
 }
 
-$stmt = $pdo->prepare("SELECT id, username, email, mario_character as marioCharacter, distance_unit as distanceUnit FROM `mario-kart-world-users` WHERE id_discord = ?");
+$stmt = $pdo->prepare("SELECT id, username, email, mario_character as marioCharacter, distance_unit as distanceUnit, with_safe_area as withSafeArea FROM `mario-kart-world-users` WHERE id_discord = ?");
 $stmt->execute([$payload['id']]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $hasBeenFoundFromDiscord = (bool) $user;
 
 if (!$user) {
-    $stmt = $pdo->prepare("SELECT id, username, email, mario_character as marioCharacter, distance_unit as distanceUnit FROM `mario-kart-world-users` WHERE email = ?");
+    $stmt = $pdo->prepare("SELECT id, username, email, mario_character as marioCharacter, distance_unit as distanceUnit, with_safe_area as withSafeArea FROM `mario-kart-world-users` WHERE email = ?");
     $stmt->execute([$payload['email']]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 }
