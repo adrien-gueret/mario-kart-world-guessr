@@ -7,33 +7,44 @@
   position: relative;
 }
 
-.album-container h2 {
-  background-image: none;
-  margin: 0;
-  height: auto;
-  line-height: normal;
+.album-header {
   padding: 8px 16px;
-  white-space: normal;
   background-color: rgba(255, 255, 255, 0.6);
   box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  display: flex;
+  gap: 8px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.album-name {
+  background-image: none;
+  margin: 0;
+  margin-right: auto;
+  height: auto;
+  line-height: normal;
+  padding: 0;
+  white-space: normal;
   text-align: left;
   position: sticky;
   top: 0;
 }
 
-.album-container h2 input {
-  margin: 0;
-  line-height: normal;
-  white-space: normal;
+#edit-album-name-form {
+  width: 50%;
   font-size: inherit;
 }
 
-.album-container h2 form {
-  display: inline;
-}
-
-.album-container h2 form .form-actions {
-  display: none;
+.album-header input {
+  margin: 0;
+  line-height: normal;
+  white-space: normal;
+  font-size: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .album-author {
@@ -78,30 +89,4 @@
   border-style: dashed;
   color: #213547;
   font-weight: 600;
-}
-
-.album-edit-name-button {
-  background: none;
-  border: none;
-  padding: 0;
-  margin-right: 8px;
-  cursor: pointer;
-  vertical-align: middle;
-  color: #213547;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-}
-
-.album-edit-name-button:focus-visible,
-.album-edit-name-button:hover {
-  box-shadow: 0 0 0 1px currentColor;
-  background-color: rgba(0, 0, 0, 0.04);
-}
-
-.album-edit-name-button svg {
-  width: 24px;
-  height: 24px;
-  fill: currentColor;
-  vertical-align: middle;
 }

@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 
-type Props = SVGProps<SVGSVGElement>;
+export type Props = SVGProps<SVGSVGElement>;
 
 export default function Icon(props: Props) {
   return (

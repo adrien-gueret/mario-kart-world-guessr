@@ -10,7 +10,7 @@
      
     if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
         header("Access-Control-Allow-Origin: " . $origin);
-        header("Access-Control-Allow-Methods: OPTIONS, GET, POST, PUT, DELETE");
+        header("Access-Control-Allow-Methods: OPTIONS, GET, POST, PUT, PATCH, DELETE");
         http_response_code(204);
         die('{"success":true}');
     }
@@ -88,6 +88,7 @@
 
         switch ($method) {
             case 'PUT':
+            case 'PATCH':
             case 'DELETE':
                 $input = file_get_contents("php://input");
                 $bodyParams = [];

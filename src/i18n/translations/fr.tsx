@@ -392,6 +392,7 @@ const fr: Texts = {
   "see-release-notes.label": "Voir toutes les notes de version",
   "release-notes.title": "Notes de version",
   "form.submit": "Envoyer",
+  "form.confirm": "Confirmer",
   "form.cancel": "Annuler",
   "account.title": "Mon compte",
   "account.username.label": "Pseudo",
@@ -559,7 +560,18 @@ const fr: Texts = {
     "Créez des albums avec vos photos et partagez-les !",
   "account.albums.create.title": "Créer un nouvel album",
   "account.albums.create.name": "Nom de l'album",
-  "account.albums.create.success": "Album créé avec succès !",
+  "account.albums.create.success": "Album créé avec succès.",
+  "account.albums.delete.title": "Supprimer l'album",
+  "account.albums.delete.warning": (
+    <>
+      Êtes-vous sûr de vouloir supprimer cet album&nbsp;?
+      <br />
+      Les photos qu'il contient ne seront <b>pas</b> supprimées, mais l'album
+      lui-même ne pourra pas être récupéré.
+    </>
+  ),
+  "account.albums.delete.success": "Album supprimé avec succès.",
+  "album.edit.name.success": "Nom de l'album mis à jour.",
   "error.title": "Oups ! Une erreur est survenue.",
   "error.description":
     "Une erreur inattendue s'est produite... Tout est cassé !",

@@ -1,10 +1,11 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import { AchievementsProvider } from "./achievements/AchievementsProvider.tsx";
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import { NotificationsProvider } from "./notifications/NotificationsProvider";
 import { TranslationsProvider } from "./i18n";
+import { SnackbarsProvider } from "./snackbars/SnackbarsProvider";
 
 import "./index.css";
 import Router from "./Router.tsx";
@@ -27,7 +28,9 @@ createRoot(document.getElementById("root")!).render(
       <GoogleOAuthProvider clientId="1063543539522-m89mibo9kp0esu299c8jgj2bali17ltl.apps.googleusercontent.com">
         <AchievementsProvider>
           <NotificationsProvider>
-            <Router />
+            <SnackbarsProvider>
+              <Router />
+            </SnackbarsProvider>
           </NotificationsProvider>
         </AchievementsProvider>
       </GoogleOAuthProvider>
