@@ -14,7 +14,6 @@ type Props = Omit<
 
 export default function IconButton({
   children,
-
   color = "#213547",
   ...props
 }: Props) {

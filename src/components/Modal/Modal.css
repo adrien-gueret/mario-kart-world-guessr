@@ -58,6 +58,13 @@
   border-radius: 0;
   animation: slideModalX 0.3s ease-in forwards;
   width: 50%;
+  max-height: 100vh;
+}
+
+@media screen and (max-width: 600px) {
+  .drawer .modal-box {
+    width: 100%;
+  }
 }
 
 .modal-overlay.no-delay .modal-box {
