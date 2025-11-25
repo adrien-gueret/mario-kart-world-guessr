@@ -569,6 +569,10 @@ const en: Texts = {
   "error.title": "Oops! Something went wrong.",
   "error.description": "An unexpected error occurred... Everything is broken!",
   "error.button": "Back to home",
+  "error.logoutWarning.title": "You have been logged out",
+  "error.logoutWarning.description":
+    "An error occurred with your session: for security reasons, it has been expired and you have been logged out. Please log in again.",
+  "error.logoutWarning.button": "Log in",
 
   //////
   "gold_50cc_survival.description":

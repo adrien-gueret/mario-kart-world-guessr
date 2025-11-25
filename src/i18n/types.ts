@@ -219,6 +219,9 @@ export type Texts = {
   "error.title": string;
   "error.description": string;
   "error.button": string;
+  "error.logoutWarning.title": string;
+  "error.logoutWarning.description": string;
+  "error.logoutWarning.button": string;
 } & {
   [K in Achievement as `${K}.unlockedItem`]: string;
 } & {
