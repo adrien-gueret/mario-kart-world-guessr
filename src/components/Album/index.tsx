@@ -1,12 +1,15 @@
 import { useState, useMemo } from "react";
 
 import Icon from "../Icon";
+import ChangeIcon from "../Icon/Change";
 import TrashIcon from "../Icon/Trash";
 import ValidIcon from "../Icon/Valid";
 import { useTranslations } from "@/i18n";
 import type { Album, Photo, AlbumPhoto } from "@/types/photos";
 
 import useNavigate from "@/services/useNavigate";
+
+import PlusIcon from "../Icon/Plus";
 
 import FormBase from "../FormBase";
 import Form from "../Form";
@@ -34,7 +37,7 @@ export default function Album({
   const [isEditingName, setIsEditingName] = useState(false);
   const [albumName, setAlbumName] = useState(name);
   const [isDeleteAlbumModalOpen, setIsDeleteAlbumModalOpen] = useState(false);
-  const [isAddPhotoModalOpen, setIsAddPhotoModalOpen] = useState(false);
+  const [editedPosition, setEditedPosition] = useState<number | null>(null);
   const navigate = useNavigate();
 
   const { translate } = useTranslations();
@@ -145,15 +148,31 @@ export default function Album({
 
       <div className="album-photos">
         {albumPhotos.map(({ position, photo }) => {
+          const hasPhoto = Boolean(photo);
           let containerClassName = "album-item";
+          let UpdateIcon = PlusIcon;
 
-          if (photo) {
+          if (hasPhoto) {
             containerClassName += " album-photo";
+            UpdateIcon = ChangeIcon;
           } else if (isEditing) {
             containerClassName += " album-placeholder";
           }
 
-          return <div key={position} className={containerClassName} />;
+          console.log(photo);
+
+          return isEditing ? (
+            <button
+              type="button"
+              key={position}
+              className={containerClassName}
+              onClick={() => setEditedPosition(position)}
+            >
+              <UpdateIcon width="64px" />
+            </button>
+          ) : (
+            <div key={position} className={containerClassName} />
+          );
         })}
       </div>
 
@@ -172,80 +191,24 @@ export default function Album({
 
       {isEditing && (
         <Modal
-          isOpen={isAddPhotoModalOpen}
-          title="Test"
+          isOpen={editedPosition !== null}
+          title=""
           isDrawer
           noDelay
           onClose={() => {
-            setIsAddPhotoModalOpen(false);
+            setEditedPosition(null);
           }}
         >
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum
-            suscipit, aperiam reiciendis laboriosam consequuntur deserunt
-            sapiente sed neque consectetur, optio harum expedita, totam
-            blanditiis qui maxime dolorum molestias quod repudiandae.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum
-            suscipit, aperiam reiciendis laboriosam consequuntur deserunt
-            sapiente sed neque consectetur, optio harum expedita, totam
-            blanditiis qui maxime dolorum molestias quod repudiandae.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum
-            suscipit, aperiam reiciendis laboriosam consequuntur deserunt
-            sapiente sed neque consectetur, optio harum expedita, totam
-            blanditiis qui maxime dolorum molestias quod repudiandae.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum
-            suscipit, aperiam reiciendis laboriosam consequuntur deserunt
-            sapiente sed neque consectetur, optio harum expedita, totam
-            blanditiis qui maxime dolorum molestias quod repudiandae.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum
-            suscipit, aperiam reiciendis laboriosam consequuntur deserunt
-            sapiente sed neque consectetur, optio harum expedita, totam
-            blanditiis qui maxime dolorum molestias quod repudiandae.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum
-            suscipit, aperiam reiciendis laboriosam consequuntur deserunt
-            sapiente sed neque consectetur, optio harum expedita, totam
-            blanditiis qui maxime dolorum molestias quod repudiandae.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum
-            suscipit, aperiam reiciendis laboriosam consequuntur deserunt
-            sapiente sed neque consectetur, optio harum expedita, totam
-            blanditiis qui maxime dolorum molestias quod repudiandae.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum
-            suscipit, aperiam reiciendis laboriosam consequuntur deserunt
-            sapiente sed neque consectetur, optio harum expedita, totam
-            blanditiis qui maxime dolorum molestias quod repudiandae.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum
-            suscipit, aperiam reiciendis laboriosam consequuntur deserunt
-            sapiente sed neque consectetur, optio harum expedita, totam
-            blanditiis qui maxime dolorum molestias quod repudiandae.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum
-            suscipit, aperiam reiciendis laboriosam consequuntur deserunt
-            sapiente sed neque consectetur, optio harum expedita, totam
-            blanditiis qui maxime dolorum molestias quod repudiandae.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum
-            suscipit, aperiam reiciendis laboriosam consequuntur deserunt
-            sapiente sed neque consectetur, optio harum expedita, totam
-            blanditiis qui maxime dolorum molestias quod repudiandae.
-          </p>
+          <p>Seules vos photos validées peuvent être ajoutées dans un album.</p>
+          <ul className="album-photos">
+            {availablePhotos.map((photo) => (
+              <li key={photo.id} className="album-item album-photo">
+                <button type="button" className="album-select-photo-button">
+                  <img src={photo.photoUrl} alt="" loading="lazy" />
+                </button>
+              </li>
+            ))}
+          </ul>
         </Modal>
       )}
     </article>
