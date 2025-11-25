@@ -11,6 +11,7 @@ type Props = {
   noDelay?: boolean;
   disableSkew?: boolean;
   imageUrl?: string;
+  isDrawer?: boolean;
 };
 
 export default function Modal({
@@ -20,16 +21,21 @@ export default function Modal({
   imageUrl,
   noDelay = false,
   disableSkew = false,
+  isDrawer = false,
 }: Props) {
   return isOpen ? (
-    <div className={`modal-overlay ${noDelay ? "no-delay" : ""}`}>
+    <div
+      className={`modal-overlay ${noDelay ? "no-delay" : ""}  ${
+        isDrawer ? "drawer" : ""
+      }`}
+    >
       {imageUrl && (
         <div
           className="modal-image"
           style={{ backgroundImage: `url(${imageUrl})` }}
         />
       )}
-      <div className={`modal-box ${disableSkew ? "no-skew" : ""}`}>
+      <div className={`modal-box ${disableSkew || isDrawer ? "no-skew" : ""}`}>
         <div className="modal-inner">
           <h2>{title}</h2>
           <Text component="div" display="block">
