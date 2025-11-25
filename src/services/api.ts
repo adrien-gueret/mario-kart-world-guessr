@@ -57,14 +57,23 @@ export default async function fetchApi(
       const refreshFormData = new FormData();
       refreshFormData.append("refreshToken", currentUser.refreshToken);
 
-      const refreshReponse = await fetch(`${ROOT_URL}/refresh-token`, {
+      const refreshResponse = await fetch(`${ROOT_URL}/refresh-token`, {
         method: "POST",
         body: refreshFormData,
         headers,
         mode: "cors",
       });
 
-      const newUser = await refreshReponse.json();
+      if (!refreshResponse.ok) {
+        throw new Error("Failed to refresh token");
+      }
+
+      const newUser = await refreshResponse.json();
+
+      if (newUser?.error) {
+        throw new Error(newUser.message || "Failed to refresh token");
+      }
+
       storeKey("currentUser", newUser);
 
       headers = getHeaders({
@@ -73,6 +82,7 @@ export default async function fetchApi(
       });
     } catch (e) {
       storeKey("currentUser", null);
+      window.location.hash = "#/logout-warning";
     }
   }
 

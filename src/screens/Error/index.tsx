@@ -8,7 +8,21 @@ import fetchApi from "@/services/api";
 import useNavigate from "@/services/useNavigate";
 import { useTranslations } from "@/i18n";
 
-export default function ErrorScreen() {
+type ErrorScreenProps = {
+  title?: string;
+  description?: string;
+  buttonLabel?: string;
+  buttonTarget?: string;
+  imageUrl?: string;
+};
+
+export default function ErrorScreen({
+  title,
+  description,
+  buttonLabel,
+  buttonTarget = "/",
+  imageUrl = "./ui/toad_oopsy.png",
+}: ErrorScreenProps) {
   const hasTrackedRef = useRef(false);
   const location = useLocation();
   const error = useRouteError();
@@ -44,13 +58,13 @@ export default function ErrorScreen() {
           alignItems: "center",
         }}
       >
-        <img src="./ui/toad_oopsy.png" alt="" aria-hidden="true" />
+        <img src={imageUrl} alt="" aria-hidden="true" />
 
-        <Text>{translate("error.title")}</Text>
-        <p>{translate("error.description")}</p>
+        <Text>{title ?? translate("error.title")}</Text>
+        <p>{description ?? translate("error.description")}</p>
 
-        <Button variant="primary" onClick={() => navigate("/")}>
-          {translate("error.button")}
+        <Button variant="primary" onClick={() => navigate(buttonTarget)}>
+          {buttonLabel ?? translate("error.button")}
         </Button>
       </div>
     </ConstraintContainer>

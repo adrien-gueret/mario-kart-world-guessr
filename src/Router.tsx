@@ -9,6 +9,7 @@ import AccountAlbums from "@/screens/Account/Albums";
 import AccountAlbumId from "@/screens/Account/Albums/ID";
 import AccountPreferences from "@/screens/Account/Preferences";
 import ErrorBoundary from "@/screens/Error";
+import LogoutWarning from "@/screens/Error/LogoutWarning";
 import { SurvivalGame, GoalGame, DailyGame, ChronoGame } from "@/screens/Game";
 import Home from "@/screens/Home";
 import Leaderboards from "@/screens/Leaderboards";
@@ -25,6 +26,10 @@ import fetchApi from "@/services/api";
 import type { Photo } from "@/types/photos";
 
 const router = createHashRouter([
+  {
+    Component: LogoutWarning,
+    path: "/logout-warning",
+  },
   {
     element: <MainLayout shouldHideHomeButton logoVariant="big" />,
     ErrorBoundary,

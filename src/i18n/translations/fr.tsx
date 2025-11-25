@@ -579,6 +579,10 @@ const fr: Texts = {
   "error.description":
     "Une erreur inattendue s'est produite... Tout est cassé !",
   "error.button": "Retour à l'accueil",
+  "error.logoutWarning.title": "Vous avez été déconnecté(e)",
+  "error.logoutWarning.description":
+    "Une erreur est survenue sur votre session : par sécurité, elle a été expirée et vous avez été déconnecté(e). Veuillez vous reconnecter.",
+  "error.logoutWarning.button": "Se reconnecter",
 
   //////
   "gold_50cc_survival.description":
