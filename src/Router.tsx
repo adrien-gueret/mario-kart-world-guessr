@@ -42,7 +42,7 @@ const router = createHashRouter([
     ],
   },
   {
-    element: <MainLayout logoVariant="corner" />,
+    element: <MainLayout logoVariant="corner" enableLoader />,
     ErrorBoundary,
     children: [
       {

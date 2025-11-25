@@ -81,10 +81,12 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  visibility: hidden;
 }
 
 .album-photos .album-photo {
   border: 2px solid rgba(33, 53, 71, 0.08);
+  visibility: visible;
 }
 
 .album-photos .album-placeholder {
@@ -92,4 +94,48 @@
   border: 2px dashed rgba(33, 53, 71, 0.08);
   color: #213547;
   font-weight: 600;
+  visibility: visible;
+}
+
+button.album-item {
+  cursor: pointer;
+  color: inherit;
+}
+
+button.album-item svg {
+  opacity: 0.5;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+button.album-item:hover,
+button.album-item:focus-visible {
+  background-color: rgba(0, 0, 0, 0.08);
+  border-color: rgba(33, 53, 71, 0.16);
+}
+
+button.album-item:hover svg,
+button.album-item:focus svg {
+  opacity: 0.8;
+  transform: scale(1.1);
+}
+
+.album-select-photo-button {
+  padding: 0;
+  border: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.album-select-photo-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.album-select-photo-button:hover,
+.album-select-photo-button:focus-visible {
+  transform: scale(1.5);
 }
