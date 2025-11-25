@@ -1,4 +1,5 @@
-import { type ReactNode } from "react";
+import { type ReactNode, type MouseEvent, useLayoutEffect } from "react";
+import { createPortal } from "react-dom";
 
 import Text from "../Text";
 
@@ -12,6 +13,7 @@ type Props = {
   disableSkew?: boolean;
   imageUrl?: string;
   isDrawer?: boolean;
+  onClose?: () => void;
 };
 
 export default function Modal({
@@ -19,30 +21,55 @@ export default function Modal({
   title,
   isOpen,
   imageUrl,
+  onClose,
   noDelay = false,
   disableSkew = false,
   isDrawer = false,
 }: Props) {
-  return isOpen ? (
-    <div
-      className={`modal-overlay ${noDelay ? "no-delay" : ""}  ${
-        isDrawer ? "drawer" : ""
-      }`}
-    >
-      {imageUrl && (
+  useLayoutEffect(() => {
+    if (isOpen && isDrawer) {
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen, isDrawer]);
+
+  const onOverlayClick = onClose
+    ? (e: MouseEvent<HTMLDivElement>) => {
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
+      }
+    : undefined;
+
+  return isOpen
+    ? createPortal(
         <div
-          className="modal-image"
-          style={{ backgroundImage: `url(${imageUrl})` }}
-        />
-      )}
-      <div className={`modal-box ${disableSkew || isDrawer ? "no-skew" : ""}`}>
-        <div className="modal-inner">
-          <h2>{title}</h2>
-          <Text component="div" display="block">
-            {children}
-          </Text>
-        </div>
-      </div>
-    </div>
-  ) : null;
+          className={`modal-overlay ${noDelay ? "no-delay" : ""}  ${
+            isDrawer ? "drawer" : ""
+          }`}
+          onClick={onOverlayClick}
+        >
+          {imageUrl && (
+            <div
+              className="modal-image"
+              style={{ backgroundImage: `url(${imageUrl})` }}
+            />
+          )}
+          <div
+            className={`modal-box ${disableSkew || isDrawer ? "no-skew" : ""}`}
+          >
+            <div className="modal-inner">
+              <h2>{title}</h2>
+              <Text component="div" display="block">
+                {children}
+              </Text>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )
+    : null;
 }
