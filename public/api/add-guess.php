@@ -374,7 +374,7 @@ try {
 
         $nextPhoto = $mode === 'daily'
             ? getDailyPhoto($pdo, $game['id'])
-            : getRandomPhoto($pdo, $difficulty, $currentUser['id']);
+            : getRandomPhoto($pdo, $difficulty, $currentUser['id'], $game['id']);
 
         $nextPhotoId = $nextPhoto['id'];
 

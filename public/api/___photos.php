@@ -1,6 +1,6 @@
 <?php
 
-function getRandomPhoto($pdo, $difficulty, $currentUserId) {
+function getRandomPhoto($pdo, $difficulty, $currentUserId, $gameId = null) {
     $params = [$currentUserId];
 
     $photoDifficulty = '';
@@ -15,6 +15,19 @@ function getRandomPhoto($pdo, $difficulty, $currentUserId) {
         default:
             $photoDifficulty = '';
             break;
+    }
+
+    $inGameJoin = '';
+    $excludeCondition = '';
+    if ($gameId !== null) {
+        $params[] = $gameId;
+        $inGameJoin =
+            "LEFT JOIN (
+                SELECT photo_id
+                FROM `mario-kart-world-suggestions`
+                WHERE game_id = ?
+            ) s_in_game ON s_in_game.photo_id = p.id";
+        $excludeCondition = 'AND s_in_game.photo_id IS NULL';
     }
 
     $sql = 
@@ -42,10 +55,12 @@ function getRandomPhoto($pdo, $difficulty, $currentUserId) {
             WHERE g.player_id = ?
             GROUP BY s.photo_id
         ) user_sugg ON user_sugg.photo_id = p.id
+        $inGameJoin
         WHERE
             p.validated_at IS NOT NULL
             AND p.validated_at <= NOW() - INTERVAL 5 MINUTE
             $photoDifficulty
+            $excludeCondition
         GROUP BY p.id
         ORDER BY userViewCount ASC, viewCount ASC, RAND()
         LIMIT 1;";
@@ -53,7 +68,9 @@ function getRandomPhoto($pdo, $difficulty, $currentUserId) {
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
 
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+    $photo = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $photo ?: getRandomPhoto($pdo, $difficulty, $currentUserId);
 }
 
 function getDailyPhoto($pdo, $gameId = null) {
