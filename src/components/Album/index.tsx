@@ -163,6 +163,12 @@ export default function Album({
           />
         )}
       </p>
+
+      {isEditing && (
+        <Modal isOpen title="Test" isDrawer noDelay>
+          Test
+        </Modal>
+      )}
     </article>
   );
 }
