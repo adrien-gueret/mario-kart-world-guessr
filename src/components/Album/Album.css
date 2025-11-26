@@ -12,6 +12,7 @@
   background-color: rgba(255, 255, 255, 0.6);
   box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.15);
   position: sticky;
+  z-index: 1;
   top: 0;
   display: flex;
   gap: 8px;
@@ -30,6 +31,7 @@
   white-space: normal;
   text-align: left;
   position: sticky;
+  z-index: 1;
   top: 0;
 }
 
@@ -82,11 +84,19 @@
   justify-content: center;
   overflow: hidden;
   visibility: hidden;
+  position: relative;
 }
 
 .album-photos .album-photo {
   border: 2px solid rgba(33, 53, 71, 0.08);
   visibility: visible;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.album-photos .album-photo.selected {
+  border-color: #213547;
 }
 
 .album-photos .album-placeholder {
@@ -105,6 +115,8 @@ button.album-item {
 button.album-item svg {
   opacity: 0.5;
   transition: transform 0.2s ease, opacity 0.2s ease;
+  background: #fff;
+  border-radius: 50%;
 }
 
 button.album-item:hover,
@@ -115,7 +127,7 @@ button.album-item:focus-visible {
 
 button.album-item:hover svg,
 button.album-item:focus svg {
-  opacity: 0.8;
+  opacity: 1;
   transform: scale(1.1);
 }
 
@@ -128,6 +140,12 @@ button.album-item:focus svg {
   cursor: pointer;
 }
 
+.album-select-photo-button:disabled {
+  cursor: default;
+  pointer-events: none;
+  filter: contrast(80%);
+}
+
 .album-select-photo-button img {
   width: 100%;
   height: 100%;
@@ -138,4 +156,21 @@ button.album-item:focus svg {
 .album-select-photo-button:hover,
 .album-select-photo-button:focus-visible {
   transform: scale(1.5);
+}
+
+.album-photo-selected-badge {
+  position: absolute;
+  color: green;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #213547;
+}
+
+.album-photo-selected-badge svg {
+  stroke-width: 0.5px;
+  stroke: #fff;
 }

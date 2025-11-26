@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback, type CSSProperties } from "react";
 
 import Icon from "../Icon";
 import ChangeIcon from "../Icon/Change";
@@ -17,6 +17,7 @@ import IconButton from "../IconButton";
 import Modal from "../Modal";
 
 import "./Album.css";
+import { flushSync } from "react-dom";
 
 const photoPositions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
@@ -42,17 +43,38 @@ export default function Album({
 
   const { translate } = useTranslations();
 
-  const albumPhotos: Array<{
-    position: number;
-    photo: AlbumPhoto | undefined;
-  }> = useMemo(
-    () =>
-      photoPositions.map((position) => ({
-        position,
-        photo: photos.find((p) => p.position === position),
-      })),
-    [photos]
+  const [albumPhotos, setAlbumPhotos] = useState<
+    Array<{
+      position: number;
+      photo: AlbumPhoto | undefined;
+    }>
+  >(() =>
+    photoPositions.map((position) => ({
+      position,
+      photo: photos.find((p) => p.position === position),
+    }))
   );
+
+  const selectedPhotoIds = useMemo(
+    () =>
+      albumPhotos.filter((item) => item.photo).map((item) => item.photo!.id),
+    [albumPhotos]
+  );
+
+  const isPhotoSelected = useCallback(
+    (photoId: Photo["id"]) => selectedPhotoIds.includes(photoId),
+    [selectedPhotoIds]
+  );
+
+  const setPhotoAtPosition = (position: number, photo?: Photo | undefined) => {
+    setAlbumPhotos((prev) =>
+      prev.map((item) =>
+        item.position === position
+          ? { ...item, photo: photo ? { ...photo, position } : undefined }
+          : item
+      )
+    );
+  };
 
   return (
     <article className="album-container">
@@ -151,27 +173,37 @@ export default function Album({
           const hasPhoto = Boolean(photo);
           let containerClassName = "album-item";
           let UpdateIcon = PlusIcon;
+          let containerStyle: CSSProperties = {};
 
           if (hasPhoto) {
             containerClassName += " album-photo";
             UpdateIcon = ChangeIcon;
+            containerStyle = {
+              backgroundImage: `url(${photo!.photoUrl})`,
+              viewTransitionName: `album-photo-${photo!.id}`,
+            };
           } else if (isEditing) {
             containerClassName += " album-placeholder";
           }
-
-          console.log(photo);
 
           return isEditing ? (
             <button
               type="button"
               key={position}
               className={containerClassName}
-              onClick={() => setEditedPosition(position)}
+              onClick={() => {
+                setEditedPosition(position);
+              }}
+              style={containerStyle}
             >
               <UpdateIcon width="64px" />
             </button>
           ) : (
-            <div key={position} className={containerClassName} />
+            <div
+              key={position}
+              className={containerClassName}
+              style={containerStyle}
+            />
           );
         })}
       </div>
@@ -201,13 +233,45 @@ export default function Album({
         >
           <p>Seules vos photos validées peuvent être ajoutées dans un album.</p>
           <ul className="album-photos">
-            {availablePhotos.map((photo) => (
-              <li key={photo.id} className="album-item album-photo">
-                <button type="button" className="album-select-photo-button">
-                  <img src={photo.photoUrl} alt="" loading="lazy" />
-                </button>
-              </li>
-            ))}
+            {availablePhotos.map((photo) => {
+              const isSelected = isPhotoSelected(photo.id);
+              return (
+                <li
+                  key={photo.id}
+                  className={`album-item album-photo ${
+                    isSelected ? "selected" : ""
+                  }`}
+                >
+                  <button
+                    type="button"
+                    className="album-select-photo-button"
+                    disabled={isSelected}
+                    tabIndex={isSelected ? -1 : 0}
+                    onClick={(e) => {
+                      const img = e.currentTarget.querySelector("img");
+
+                      if (img) {
+                        img.style.viewTransitionName = `album-photo-${photo.id}`;
+                      }
+
+                      document.startViewTransition(() => {
+                        flushSync(() => {
+                          setPhotoAtPosition(editedPosition!, photo);
+                          setEditedPosition(null);
+                        });
+                      });
+                    }}
+                  >
+                    <img src={photo.photoUrl} alt="" loading="lazy" />
+                  </button>
+                  {isSelected && (
+                    <span className="album-photo-selected-badge">
+                      <ValidIcon width="48px" />
+                    </span>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </Modal>
       )}

@@ -28,11 +28,14 @@ export default function Modal({
 }: Props) {
   useLayoutEffect(() => {
     if (isOpen && isDrawer) {
+      const sbw = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.paddingRight = sbw + "px";
       document.body.style.overflow = "hidden";
     }
 
     return () => {
       document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
     };
   }, [isOpen, isDrawer]);
 
