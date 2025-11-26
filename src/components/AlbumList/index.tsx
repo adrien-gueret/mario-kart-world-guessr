@@ -78,7 +78,7 @@ export default function AlbumList({
             </div>
           </li>
         )}
-        {albums.map(({ id, name }) => {
+        {albums.map(({ id, name, coverUrl }) => {
           return (
             <li
               key={id}
@@ -86,6 +86,7 @@ export default function AlbumList({
               tabIndex={0}
               onClick={getHandleClickAlbum(id)}
               onKeyDown={getHandleKeyDownAlbum(id)}
+              style={{ backgroundImage: `url(${coverUrl})` }}
             >
               <div className="album-name">{name}</div>
             </li>

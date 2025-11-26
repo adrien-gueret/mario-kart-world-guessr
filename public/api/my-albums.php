@@ -14,7 +14,8 @@ if (empty($currentUser)) {
 
 try {
     $stmt = $pdo->prepare(
-        "SELECT a.id, a.album_name as `name`
+        "SELECT a.id, a.album_name as `name`,
+         CONCAT('https://www.mariouniversalis.fr/mario-kart-world-guessr/api/album-cover.php?id=', a.id) AS coverUrl
         FROM `mario-kart-world-albums` a
         WHERE a.author_id = :authorId
         ORDER BY a.created_at DESC"
