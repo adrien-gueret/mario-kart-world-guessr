@@ -216,6 +216,7 @@ export type Texts = {
   "account.albums.delete.warning": ReactNode;
   "account.albums.delete.success": string;
   "album.edit.name.success": string;
+  "account.albums.delete.photo": string;
   "error.title": string;
   "error.description": string;
   "error.button": string;

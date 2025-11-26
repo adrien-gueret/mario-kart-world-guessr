@@ -187,17 +187,30 @@ export default function Album({
           }
 
           return isEditing ? (
-            <button
-              type="button"
-              key={position}
-              className={containerClassName}
-              onClick={() => {
-                setEditedPosition(position);
-              }}
-              style={containerStyle}
-            >
-              <UpdateIcon width="64px" />
-            </button>
+            <div className="album-photo-edit-container" key={position}>
+              <button
+                type="button"
+                className={containerClassName}
+                onClick={() => {
+                  setEditedPosition(position);
+                }}
+                style={containerStyle}
+              >
+                <UpdateIcon width="64px" />
+              </button>
+              {photo && (
+                <span className="album-photo-delete-container">
+                  <IconButton
+                    color="#e03300"
+                    aria-label={translate("account.albums.delete.photo")}
+                    title={translate("account.albums.delete.photo")}
+                    onClick={() => setPhotoAtPosition(position!)}
+                  >
+                    <TrashIcon />
+                  </IconButton>
+                </span>
+              )}
+            </div>
           ) : (
             <div
               key={position}

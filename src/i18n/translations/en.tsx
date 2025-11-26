@@ -566,6 +566,7 @@ const en: Texts = {
     </>
   ),
   "account.albums.delete.success": "Album deleted successfully.",
+  "account.albums.delete.photo": "Delete this photo from the album",
   "error.title": "Oops! Something went wrong.",
   "error.description": "An unexpected error occurred... Everything is broken!",
   "error.button": "Back to home",
