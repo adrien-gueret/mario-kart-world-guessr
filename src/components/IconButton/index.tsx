@@ -1,5 +1,5 @@
 import type { ButtonHTMLAttributes } from "react";
-import Icon, { type Props as IconProps } from "../Icon";
+import { type Props as IconProps } from "../Icon";
 
 import "./IconButton.css";
 
@@ -19,7 +19,7 @@ export default function IconButton({
 }: Props) {
   return (
     <button type="button" {...props} className="icon-button" style={{ color }}>
-      <Icon>{children}</Icon>
+      {children}
     </button>
   );
 }
