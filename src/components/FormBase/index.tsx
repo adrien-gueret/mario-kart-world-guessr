@@ -12,7 +12,7 @@ type FetchMethod = FetchParameters[1];
 type Props = {
   action: ApiEndPoint;
   method?: FetchMethod;
-  children: ReactNode;
+  children?: ReactNode;
   id?: string;
   successMessage: string;
   onSuccess?: (response: any) => void;
@@ -48,7 +48,7 @@ async function submitFormAndCallAPI(
 
 export default function FormBase({
   action,
-  children,
+  children = null,
   id,
   successMessage,
   method = "POST",
