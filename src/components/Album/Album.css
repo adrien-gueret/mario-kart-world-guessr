@@ -174,3 +174,21 @@ button.album-item:focus svg {
   stroke-width: 0.5px;
   stroke: #fff;
 }
+
+.album-photo-edit-container {
+  position: relative;
+}
+
+.album-photo-delete-container {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.album-photo-delete-container button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: #fff;
+  border-radius: 50%;
+}
