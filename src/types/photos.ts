@@ -18,6 +18,7 @@ export type AlbumPhoto = Pick<Photo, "id" | "difficulty" | "photoUrl"> & {
 export type Album = {
   id: number;
   name: string;
+  coverUrl: string;
   isPublished: boolean;
   createdAt: string;
   author: {
