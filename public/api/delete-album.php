@@ -22,6 +22,13 @@ try {
     checkAlbumAuthor($pdo, $_DELETE['albumId'], $currentUser['id'], $headers['accept-language']);
 
     $stmt = $pdo->prepare(
+        "DELETE FROM `mario-kart-world-albums-photos`
+        WHERE id_album = :id");
+    $stmt->bindParam(':id', $_DELETE['albumId'], PDO::PARAM_INT);
+
+    $stmt->execute();
+
+    $stmt = $pdo->prepare(
         "DELETE FROM `mario-kart-world-albums`
         WHERE id = :id AND author_id = :authorId");
     $stmt->bindParam(':id', $_DELETE['albumId'], PDO::PARAM_INT);
