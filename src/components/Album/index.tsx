@@ -1,16 +1,18 @@
 import { useState, useMemo, useCallback, type CSSProperties } from "react";
 
-import Icon from "../Icon";
-import ChangeIcon from "../Icon/Change";
-import TrashIcon from "../Icon/Trash";
-import ValidIcon from "../Icon/Valid";
+import StickyButtonContainer from "@/components/StickyButtonContainer";
+
 import { useTranslations } from "@/i18n";
 import type { Album, Photo, AlbumPhoto } from "@/types/photos";
 
 import useNavigate from "@/services/useNavigate";
 
+import Button from "../Button";
 import PlusIcon from "../Icon/Plus";
-
+import Icon from "../Icon";
+import ChangeIcon from "../Icon/Change";
+import TrashIcon from "../Icon/Trash";
+import ValidIcon from "../Icon/Valid";
 import FormBase from "../FormBase";
 import Form from "../Form";
 import IconButton from "../IconButton";
@@ -199,16 +201,24 @@ export default function Album({
                 <UpdateIcon width="64px" />
               </button>
               {photo && (
-                <span className="album-photo-delete-container">
-                  <IconButton
-                    color="#e03300"
-                    aria-label={translate("account.albums.delete.photo")}
-                    title={translate("account.albums.delete.photo")}
-                    onClick={() => setPhotoAtPosition(position!)}
-                  >
-                    <TrashIcon />
-                  </IconButton>
-                </span>
+                <>
+                  <input
+                    type="hidden"
+                    name={`position[${position}]`}
+                    value={photo.id}
+                    form="edit-album-photos"
+                  />
+                  <span className="album-photo-delete-container">
+                    <IconButton
+                      color="#e03300"
+                      aria-label={translate("account.albums.delete.photo")}
+                      title={translate("account.albums.delete.photo")}
+                      onClick={() => setPhotoAtPosition(position!)}
+                    >
+                      <TrashIcon />
+                    </IconButton>
+                  </span>
+                </>
               )}
             </div>
           ) : (
@@ -220,6 +230,24 @@ export default function Album({
           );
         })}
       </div>
+
+      {isEditing && (
+        <>
+          <FormBase
+            id="edit-album-photos"
+            method="POST"
+            action="/update-album-photos"
+            successMessage={translate("album.edit.photos.success")}
+          >
+            <input type="hidden" name="albumId" value={id} />
+          </FormBase>
+          <StickyButtonContainer>
+            <Button form="edit-album-photos" type="submit">
+              {translate("form.submit")}
+            </Button>
+          </StickyButtonContainer>
+        </>
+      )}
 
       <p className="album-author">
         <span>
@@ -237,14 +265,14 @@ export default function Album({
       {isEditing && (
         <Modal
           isOpen={editedPosition !== null}
-          title=""
+          title={translate("account.albums.photo.select.title")}
           isDrawer
           noDelay
           onClose={() => {
             setEditedPosition(null);
           }}
         >
-          <p>Seules vos photos validées peuvent être ajoutées dans un album.</p>
+          <p>{translate("account.albums.photo.select.description")}</p>
           <ul className="album-photos">
             {availablePhotos.map((photo) => {
               const isSelected = isPhotoSelected(photo.id);

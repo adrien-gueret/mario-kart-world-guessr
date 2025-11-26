@@ -575,7 +575,11 @@ const fr: Texts = {
   ),
   "account.albums.delete.success": "Album supprimé avec succès.",
   "account.albums.delete.photo": "Supprimer cette photo de l'album",
+  "account.albums.photo.select.title": "Sélectionner une photo",
+  "account.albums.photo.select.description":
+    "Seules vos photos validées peuvent être ajoutées dans un album.",
   "album.edit.name.success": "Nom de l'album mis à jour.",
+  "album.edit.photos.success": "Photos de l'album mises à jour.",
   "error.title": "Oups ! Une erreur est survenue.",
   "error.description":
     "Une erreur inattendue s'est produite... Tout est cassé !",

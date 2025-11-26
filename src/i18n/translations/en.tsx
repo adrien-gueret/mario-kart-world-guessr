@@ -556,6 +556,7 @@ const en: Texts = {
   "account.albums.create.defaultName": "My album",
   "account.albums.create.success": "Album created successfully.",
   "album.edit.name.success": "Album name updated successfully.",
+  "album.edit.photos.success": "Album photos updated successfully.",
   "account.albums.delete.title": "Delete album",
   "account.albums.delete.warning": (
     <>
@@ -566,6 +567,9 @@ const en: Texts = {
     </>
   ),
   "account.albums.delete.success": "Album deleted successfully.",
+  "account.albums.photo.select.title": "Select a photo",
+  "account.albums.photo.select.description":
+    "Only your validated photos can be added to an album.",
   "account.albums.delete.photo": "Delete this photo from the album",
   "error.title": "Oops! Something went wrong.",
   "error.description": "An unexpected error occurred... Everything is broken!",
