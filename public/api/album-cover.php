@@ -24,6 +24,38 @@ if (empty($albumId)) {
   output_default();
 }
 
+// file cache configuration
+$cacheDir = __DIR__ . '/../cache/album-covers';
+$cacheTtl = 3600; // seconds
+if (!is_dir($cacheDir)) {
+  @mkdir($cacheDir, 0755, true);
+}
+$cacheFileName = preg_replace('/[^a-zA-Z0-9_-]/', '_', (string)$albumId) . '.jpg';
+$cacheFile = $cacheDir . '/' . $cacheFileName;
+
+// serve from cache if fresh
+if (is_file($cacheFile)) {
+  $fm = filemtime($cacheFile);
+  if ($fm !== false && (time() - $fm) <= $cacheTtl) {
+    $etag = '"' . md5($fm . '|' . filesize($cacheFile)) . '"';
+    header('Cache-Control: public, max-age=' . $cacheTtl);
+    header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $fm) . ' GMT');
+    header('ETag: ' . $etag);
+
+    $ifNoneMatch = isset($_SERVER['HTTP_IF_NONE_MATCH']) ? trim($_SERVER['HTTP_IF_NONE_MATCH']) : '';
+    $ifModSince = isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) ? strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) : false;
+
+    if (($ifNoneMatch !== '' && $ifNoneMatch === $etag) || ($ifModSince !== false && $ifModSince >= $fm)) {
+      http_response_code(304);
+      exit;
+    }
+
+    header('Content-Type: image/jpeg');
+    readfile($cacheFile);
+    exit;
+  }
+}
+
 try {
   $stmt = $pdo->prepare(
     "SELECT
@@ -84,8 +116,8 @@ if (count($images) === 0) {
 }
 
 // Create collage canvas
-$w = 1600;
-$h = 900;
+$w = 800;
+$h = 450;
 $canvas = imagecreatetruecolor($w, $h);
 $bg = imagecolorallocate($canvas, 255, 255, 255);
 imagefill($canvas, 0, 0, $bg);
@@ -168,11 +200,18 @@ if (count($images) === 1) {
 
 // free original images
 foreach ($images as $im) {
-    @imagedestroy($im);
+  @imagedestroy($im);
 }
 
 // Output JPEG
 
-imagejpeg($canvas, null, 85);
+// write to temp file then atomically rename to cache
+$tmpPath = $cacheFile . '.tmp';
+if (!is_dir(dirname($cacheFile))) {
+  @mkdir(dirname($cacheFile), 0755, true);
+}
+// try saving generated image to cache
+if (@imagejpeg($canvas, $tmpPath, 85)) {
+  @rename($tmpPath, $cacheFile);
+}
 imagedestroy($canvas);
-exit;
