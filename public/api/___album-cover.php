@@ -135,15 +135,9 @@ function createAlbumCover(PDO $pdo, int $albumId) {
   imagefill($canvas, 0, 0, $bg);
 
   $borderImage = null;
-  if (count($images) === 1) {
-    $borderImage = imagecreatefrompng(__DIR__ . '/../backgrounds/albums/borders-1-photo.png');
-  } elseif (count($images) === 2) {
-    $borderImage = imagecreatefrompng(__DIR__ . '/../backgrounds/albums/borders-2-photos.png');
-  } else {
-    $borderImage = imagecreatefrompng(__DIR__ . '/../backgrounds/albums/borders-3-photos.png');
-  }
 
   if (count($images) === 1) {
+    $borderImage = imagecreatefrompng(__DIR__ . '/../backgrounds/albums/borders-1-photo.png');
     $src = $images[0];
     $sw = imagesx($src);
     $sh = imagesy($src);
@@ -157,6 +151,7 @@ function createAlbumCover(PDO $pdo, int $albumId) {
     imagecopy($canvas, $tmp, $x, $y, 0, 0, $nw, $nh);
     imagedestroy($tmp);
   } elseif (count($images) === 2) {
+    $borderImage = imagecreatefrompng(__DIR__ . '/../backgrounds/albums/borders-2-photos.png');
     $dstW = (int) floor($w / 2);
     $dstH = $h;
     for ($i = 0; $i < 2; $i++) {
@@ -178,6 +173,7 @@ function createAlbumCover(PDO $pdo, int $albumId) {
       imagedestroy($dstImg);
     }
   } else {
+    $borderImage = imagecreatefrompng(__DIR__ . '/../backgrounds/albums/borders-3-photos.png');
     $leftW = (int) floor($w / 2);
     $leftH = $h;
     $src = $images[0];
