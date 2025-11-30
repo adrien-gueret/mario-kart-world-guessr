@@ -8,6 +8,7 @@ import AccountPhotos from "@/screens/Account/Photos";
 import AccountAlbums from "@/screens/Account/Albums";
 import AccountAlbumId from "@/screens/Account/Albums/ID";
 import AccountPreferences from "@/screens/Account/Preferences";
+import AlbumId from "@/screens/Albums/ID";
 import ErrorBoundary from "@/screens/Error";
 import LogoutWarning from "@/screens/Error/LogoutWarning";
 import { SurvivalGame, GoalGame, DailyGame, ChronoGame } from "@/screens/Game";
@@ -69,6 +70,24 @@ const router = createHashRouter([
             album: responses[0],
             availablePhotos: responses[1],
           };
+        },
+      },
+      {
+        path: "/albums/:id",
+        Component: AlbumId,
+        loader: async ({ params }) => {
+          const getReponseJson = async (response: Response) => {
+            if (!response.ok) {
+              throw new Error(`Cannot fetch album ${params.id}`);
+            }
+            return response.json();
+          };
+
+          const album = await fetchApi(`/album?id=${params.id}`, "GET").then(
+            getReponseJson
+          );
+
+          return { album };
         },
       },
     ],
