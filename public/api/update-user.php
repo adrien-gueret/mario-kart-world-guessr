@@ -62,29 +62,32 @@ if (!isset($_PUT['mario-character']) || !in_array($_PUT['mario-character'], $pos
 }
 
 try {
-   $stmt = $pdo->prepare(
+    $stmt = $pdo->prepare(
     "UPDATE `mario-kart-world-users`
     SET
         username = :username,
         locale = :locale,
         distance_unit = :distanceUnit,
+        with_safe_area = :withSafeArea,
         mario_character = :marioCharacter
     WHERE id = :id");
-   $stmt->bindParam(':username', $username, PDO::PARAM_STR);
-   $stmt->bindParam(':locale', $locale, PDO::PARAM_STR);
-   $stmt->bindParam(':distanceUnit', $distanceUnit, PDO::PARAM_STR);
-   $stmt->bindParam(':id', $currentUser['id'], PDO::PARAM_INT);
+    $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+    $stmt->bindParam(':locale', $locale, PDO::PARAM_STR);
+    $stmt->bindParam(':distanceUnit', $distanceUnit, PDO::PARAM_STR);
+    $withSafeArea = isset($_PUT['with-safe-area']) ? (int)$_PUT['with-safe-area'] : 0;
+    $stmt->bindValue(':withSafeArea', $withSafeArea, PDO::PARAM_INT);
+    $stmt->bindParam(':id', $currentUser['id'], PDO::PARAM_INT);
 
-   if ($_PUT['mario-character'] === 'none') {
+    if ($_PUT['mario-character'] === 'none') {
         $stmt->bindValue(':marioCharacter', null, PDO::PARAM_NULL);
-   } else {
+    } else {
         $stmt->bindParam(':marioCharacter', $_PUT['mario-character'], PDO::PARAM_STR);
-   }
+    }
 
-   $stmt->execute();
+    $stmt->execute();
 
     $stmt = $pdo->prepare("SELECT u.id, u.email, u.username, u.mario_character as marioCharacter,
-                        u.locale, u.distance_unit as distanceUnit,
+                        u.locale, u.distance_unit as distanceUnit, u.with_safe_area as withSafeArea,
                         t.token as accessToken, t.refresh_token as refreshToken,
                         t.expired_at as expiredAt
                         FROM `mario-kart-world-users` u

@@ -11,6 +11,7 @@ export type LockedCharacter =
   | "pauline"
   | "shyguy"
   | "lakitu"
-  | "toadette";
+  | "toadette"
+  | "waluigi";
 
 export type MarioCharacter = DefaultCharacter | LockedCharacter;

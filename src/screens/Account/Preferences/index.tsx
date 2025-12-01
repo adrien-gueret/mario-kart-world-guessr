@@ -101,6 +101,22 @@ export default function Preferences() {
           </div>
 
           <div className="row">
+            <Checkbox
+              id="with-safe-area"
+              name="with-safe-area"
+              label={translate("account.withSafeArea.label")}
+              value="1"
+              checked={user.withSafeArea}
+              onChange={() =>
+                setCurrentUser({ ...user, withSafeArea: !user.withSafeArea })
+              }
+            />
+            <span className="helper">
+              {translate("account.withSafeArea.helper")}
+            </span>
+          </div>
+
+          <div className="row">
             <label htmlFor="mario-character">
               {translate("account.marioCharacter.label")}
             </label>

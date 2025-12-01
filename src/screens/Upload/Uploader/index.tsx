@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
+import IconButton from "@/components/IconButton";
+import TrashIcon from "@/components/Icon/Trash";
 import Surface from "@/components/Surface";
 
 import { useTranslations } from "@/i18n";
@@ -144,11 +146,10 @@ export default function Uploader({
                 src={preview.url}
                 alt={preview.name}
               />
-              <span>
-                {preview.name}
-
-                <button
-                  className="uploader-preview-remove"
+              <span className="uploader-preview-name">
+                <span>{preview.name}</span>
+                <IconButton
+                  color="#e03300"
                   aria-label={translate("uploader.preview.remove")}
                   title={translate("uploader.preview.remove")}
                   onClick={() => {
@@ -158,10 +159,8 @@ export default function Uploader({
                     setPreview(null);
                   }}
                 >
-                  <svg focusable="false" viewBox="0 0 24 24">
-                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z"></path>
-                  </svg>
-                </button>
+                  <TrashIcon />
+                </IconButton>
               </span>
             </>
           ) : (
