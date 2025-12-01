@@ -10,4 +10,5 @@ export type User = {
   marioCharacter: MarioCharacter | null;
   locale: "fr" | "en" | null;
   distanceUnit: "km" | "miles" | null;
+  withSafeArea: boolean;
 };

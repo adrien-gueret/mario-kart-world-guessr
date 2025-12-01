@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
 
+import { useLocation, useNavigate } from "react-router-dom";
+
 import Text from "@/components/Text";
 import GoogleLoginButton from "@/auth/GoogleLoginButton";
 import DiscordLoginButton from "@/auth/DiscordLoginButton";
@@ -7,20 +9,19 @@ import { useCurrentUser } from "@/auth/CurrentUserProvider";
 
 import { useTranslations } from "@/i18n";
 
-import { useScreen } from "@/screens/ScreensProvider";
-
 import "./Login.css";
 
 function Login() {
   const { isAnonymous } = useCurrentUser();
   const { translate } = useTranslations();
-  const { setCurrentScreenName, state } = useScreen();
+  const state = useLocation().state ?? {};
+  const navigate = useNavigate();
 
-  const targetScreenNameRef = useRef(state.targetScreenName || "Account");
+  const targetUrlRef = useRef(state.targetUrl || "/account");
 
   useEffect(() => {
     if (!isAnonymous) {
-      setCurrentScreenName(targetScreenNameRef.current ?? "Account");
+      navigate(targetUrlRef.current ?? "/account");
     }
   }, [isAnonymous]);
 
@@ -36,7 +37,7 @@ function Login() {
         <Text component="p">{translate("login.screen.description")}</Text>
         <div className="login-buttons">
           <GoogleLoginButton />
-          <DiscordLoginButton targetScreenName={targetScreenNameRef.current} />
+          <DiscordLoginButton targetUrl={targetUrlRef.current} />
         </div>
       </div>
     </div>

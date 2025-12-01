@@ -125,6 +125,7 @@ export type Texts = {
   "photos.showMap": string;
   "photo.details.title": string;
   "photo.by": string;
+  "album.by": string;
   "login.screen.title": string;
   "login.screen.description": ReactNode;
   "login.discord.label": string;
@@ -135,6 +136,8 @@ export type Texts = {
   "see-release-notes.label": string;
   "release-notes.title": string;
   "form.submit": string;
+  "form.confirm": string;
+  "form.cancel": string;
   "account.title": string;
   "account.username.label": string;
   "account.username.helper": string;
@@ -144,6 +147,8 @@ export type Texts = {
   "account.distanceUnit.km": string;
   "account.distanceUnit.miles": string;
   "account.distanceUnit.helper": string;
+  "account.withSafeArea.label": string;
+  "account.withSafeArea.helper": string;
   "account.save.success": string;
   "account.tab.preferences": string;
   "account.tab.notifications": string;
@@ -205,7 +210,22 @@ export type Texts = {
   "account.albums.description": string;
   "account.albums.create.title": string;
   "account.albums.create.name": string;
+  "account.albums.create.defaultName": string;
   "account.albums.create.success": string;
+  "account.albums.delete.title": string;
+  "account.albums.delete.warning": ReactNode;
+  "account.albums.delete.success": string;
+  "album.edit.name.success": string;
+  "album.edit.photos.success": string;
+  "account.albums.delete.photo": string;
+  "account.albums.photo.select.title": string;
+  "account.albums.photo.select.description": string;
+  "error.title": string;
+  "error.description": string;
+  "error.button": string;
+  "error.logoutWarning.title": string;
+  "error.logoutWarning.description": string;
+  "error.logoutWarning.button": string;
 } & {
   [K in Achievement as `${K}.unlockedItem`]: string;
 } & {
