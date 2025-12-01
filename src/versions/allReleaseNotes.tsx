@@ -4,7 +4,61 @@ import type { ReleaseNotes } from "./types";
 
 const releaseNotes: ReleaseNotes = [
   {
+    version: "v4.0.0",
+    publishedAt: new Date("2025-12-01T00:00:00Z"),
+    notes: {
+      fr: (
+        <ul>
+          <Text component="li">
+            Le moteur du jeu a été profondément modifié pour permettre des URLs
+            dynamiques&nbsp;: pour le moment ceci n'est pas utile, mais c'est
+            une étape majeure pour une future fonctionnalité à venir qui portera
+            sur la création d'albums&nbsp;!
+            <br />
+          </Text>
+          <Text component="li">
+            Waluigi fait son apparition dans la liste des personnages&nbsp;! Il
+            faut "casser" le jeu pour le débloquer... Y arriverez-vous&nbsp;?
+          </Text>
+          <Text component="li">
+            Il est désormais possible d'activer depuis les préférences de son
+            compte une "zone de sécurité" autour du bouton "Deviner"&nbsp;: ceci
+            peut permettre d'éviter les <i>missclicks</i> avant de valider sa
+            suggestion.
+          </Text>
+          <Text component="li">
+            La date de publication des mises à jours est désormais indiquée pour
+            chacune d'entre elles.
+          </Text>
+        </ul>
+      ),
+      en: (
+        <ul>
+          <Text component="li">
+            The game's engine has been thoroughly reworked to support dynamic
+            URLs: for now this isn't particularly useful, but it's a major step
+            towards a future feature that will enable albums creation!
+            <br />
+          </Text>
+          <Text component="li">
+            Waluigi has been added to the list of characters! You have to
+            "break" the game to unlock him... Will you manage it?
+          </Text>
+          <Text component="li">
+            From your account preferences, you can now enable a "safety zone"
+            around the "Guess" button: this can help avoid misclicks before
+            submitting your guess.
+          </Text>
+          <Text component="li">
+            The publication date of updates is now shown for each release notes.
+          </Text>
+        </ul>
+      ),
+    },
+  },
+  {
     version: "v3.4.3",
+    publishedAt: new Date("2025-11-17T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -47,6 +101,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v3.4.2",
+    publishedAt: new Date("2025-11-09T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -101,6 +156,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v3.4.1",
+    publishedAt: new Date("2025-10-27T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -133,6 +189,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v3.4.0",
+    publishedAt: new Date("2025-10-09T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -178,6 +235,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v3.3.0",
+    publishedAt: new Date("2025-09-21T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -214,6 +272,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v3.2.0",
+    publishedAt: new Date("2025-09-19T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -287,6 +346,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v3.1.0",
+    publishedAt: new Date("2025-09-07T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -331,6 +391,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v3.0.0",
+    publishedAt: new Date("2025-08-11T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -392,6 +453,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v2.2.0",
+    publishedAt: new Date("2025-07-31T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -432,6 +494,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v2.1.1",
+    publishedAt: new Date("2025-07-18T00:00:00Z"),
     notes: {
       fr: (
         <Text component="p">
@@ -458,6 +521,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v2.1.0",
+    publishedAt: new Date("2025-07-17T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -507,6 +571,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v2.0.1",
+    publishedAt: new Date("2025-07-15T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -538,6 +603,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v2.0.0",
+    publishedAt: new Date("2025-07-14T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -591,6 +657,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v1.1.0",
+    publishedAt: new Date("2025-06-30T00:00:00Z"),
     notes: {
       fr: (
         <ul>
@@ -613,6 +680,7 @@ const releaseNotes: ReleaseNotes = [
   },
   {
     version: "v1.0.0",
+    publishedAt: new Date("2025-06-21T00:00:00Z"),
     notes: {
       fr: (
         <ul>

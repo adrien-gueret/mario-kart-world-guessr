@@ -1,13 +1,12 @@
+import useNavigate from "@/services/useNavigate";
 import Card from "@/components/Card";
 import ModeIcon from "@/components/ModeIcon";
 import { useTranslations } from "@/i18n";
 
-import { useScreen } from "../ScreensProvider";
-
 import "./Play.css";
 
 function Play() {
-  const { setCurrentScreenName } = useScreen();
+  const navigate = useNavigate();
   const { translate } = useTranslations();
 
   return (
@@ -18,9 +17,15 @@ function Play() {
         <li>
           <Card
             icon={<ModeIcon mode="goal" />}
-            onClick={() => setCurrentScreenName("GoalGame")}
+            onClick={() => navigate("/goalgame")}
             title={translate("mode.goal.label")}
-            content={translate("mode.goal.description")}
+            content={
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: translate("mode.goal.description"),
+                }}
+              />
+            }
             borderColor="#599be5"
           />
         </li>
@@ -40,18 +45,30 @@ function Play() {
         <li>
           <Card
             icon={<ModeIcon mode="survival" />}
-            onClick={() => setCurrentScreenName("SurvivalGame")}
+            onClick={() => navigate("/survivalgame")}
             title={translate("mode.survival.label")}
-            content={translate("mode.survival.description")}
+            content={
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: translate("mode.survival.description"),
+                }}
+              />
+            }
             borderColor="#fb501e"
           />
         </li>
         <li>
           <Card
             icon={<ModeIcon mode="daily" />}
-            onClick={() => setCurrentScreenName("DailyGame")}
+            onClick={() => navigate("/dailygame")}
             title={translate("mode.daily.label")}
-            content={translate("mode.daily.description")}
+            content={
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: translate("mode.daily.description"),
+                }}
+              />
+            }
             borderColor="#00951f"
           />
         </li>

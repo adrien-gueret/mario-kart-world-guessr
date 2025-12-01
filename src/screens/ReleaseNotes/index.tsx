@@ -1,15 +1,16 @@
+import useNavigate from "@/services/useNavigate";
+
 import { useTranslations } from "@/i18n";
 import allReleaseNotes from "@/versions/allReleaseNotes";
 
 import Button from "@/components/Button";
+import Date from "@/components/Date";
 import ConstraintContainer from "@/components/ConstraintContainer";
 import Surface from "@/components/Surface";
 
-import { useScreen } from "@/screens/ScreensProvider";
-
 export default function ReleaseNotes() {
   const { currentLocale, translate } = useTranslations();
-  const { setCurrentScreenName } = useScreen();
+  const navigate = useNavigate();
 
   return (
     <ConstraintContainer>
@@ -18,12 +19,15 @@ export default function ReleaseNotes() {
         <div className="release-note" key={releaseNote.version}>
           <h3>{releaseNote.version}</h3>
 
-          <Surface>{releaseNote.notes[currentLocale]}</Surface>
+          <Surface disableSkew>
+            <Date date={releaseNote.publishedAt} />
+            {releaseNote.notes[currentLocale]}
+          </Surface>
         </div>
       ))}
 
       <div className="back-button">
-        <Button onClick={() => setCurrentScreenName("Home")}>
+        <Button onClick={() => navigate("/")}>
           {translate("home.button")}
         </Button>
       </div>

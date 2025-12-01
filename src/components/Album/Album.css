@@ -1,0 +1,194 @@
+.album-container {
+  margin-top: 64px;
+  background-color: #e3e3e3;
+  box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.15);
+  border: 3px solid #213547;
+  text-align: left;
+  position: relative;
+}
+
+.album-header {
+  padding: 8px 16px;
+  background-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.15);
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  display: flex;
+  gap: 8px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.album-name {
+  background-image: none;
+  margin: 0;
+  margin-right: auto;
+  height: auto;
+  line-height: normal;
+  padding: 0;
+  white-space: normal;
+  text-align: left;
+  position: sticky;
+  z-index: 1;
+  top: 0;
+}
+
+#edit-album-name-form {
+  width: 50%;
+  font-size: inherit;
+}
+
+.album-header input {
+  margin: 0;
+  line-height: normal;
+  white-space: normal;
+  font-size: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.album-author {
+  margin: 0;
+  text-align: right;
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+  justify-content: center;
+  align-items: center;
+  justify-self: flex-end;
+  color: #213547;
+  padding: 2px 4px;
+  background-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.15);
+  position: sticky;
+  bottom: 0;
+  right: 0;
+}
+
+.album-photos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.album-photos .album-item {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  visibility: hidden;
+  position: relative;
+}
+
+.album-photos .album-photo {
+  border: 2px solid rgba(33, 53, 71, 0.08);
+  visibility: visible;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.album-photos .album-photo.selected {
+  border-color: #213547;
+}
+
+.album-photos .album-placeholder {
+  background-color: rgba(0, 0, 0, 0.04);
+  border: 2px dashed rgba(33, 53, 71, 0.08);
+  color: #213547;
+  font-weight: 600;
+  visibility: visible;
+}
+
+button.album-item {
+  cursor: pointer;
+  color: inherit;
+}
+
+button.album-item svg {
+  opacity: 0.5;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  background: #fff;
+  border-radius: 50%;
+}
+
+button.album-item:hover,
+button.album-item:focus-visible {
+  background-color: rgba(0, 0, 0, 0.08);
+  border-color: rgba(33, 53, 71, 0.16);
+}
+
+button.album-item:hover svg,
+button.album-item:focus svg {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.album-select-photo-button {
+  padding: 0;
+  border: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.album-select-photo-button:disabled {
+  cursor: default;
+  pointer-events: none;
+  filter: contrast(80%);
+}
+
+.album-select-photo-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.album-select-photo-button:hover,
+.album-select-photo-button:focus-visible {
+  transform: scale(1.5);
+}
+
+.album-photo-selected-badge {
+  position: absolute;
+  color: green;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #213547;
+}
+
+.album-photo-selected-badge svg {
+  stroke-width: 0.5px;
+  stroke: #fff;
+}
+
+.album-photo-edit-container {
+  position: relative;
+}
+
+.album-photo-delete-container {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.album-photo-delete-container button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: #fff;
+  border-radius: 50%;
+}

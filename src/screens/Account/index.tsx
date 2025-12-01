@@ -1,9 +1,10 @@
+import useNavigate from "@/services/useNavigate";
+
 import Button from "@/components/Button";
 import ConstraintContainer from "@/components/ConstraintContainer";
 import Tabs from "@/components/Tabs";
 import { useTranslations } from "@/i18n";
 import { useNotifications } from "@/notifications/NotificationsProvider";
-import { useScreen, type ScreenName } from "@/screens/ScreensProvider";
 import useRequiredAuth from "@/services/useRequiredAuth";
 
 import Notifications from "./Notifications";
@@ -12,17 +13,15 @@ import Albums from "./Albums";
 import Preferences from "./Preferences";
 
 type Props = {
-  activeTab?: Extract<
-    ScreenName,
-    | "Account/Preferences"
-    | "Account/Notifications"
-    | "Account/Photos"
-    | "Account/Albums"
-  >;
+  activeTab?:
+    | "/account/preferences"
+    | "/account/notifications"
+    | "/account/photos"
+    | "/account/albums";
 };
 
-export default function Account({ activeTab = "Account/Preferences" }: Props) {
-  const { setCurrentScreenName } = useScreen();
+export default function Account({ activeTab = "/account/preferences" }: Props) {
+  const navigate = useNavigate();
   const { translate } = useTranslations();
   const { unreadNotificationCount } = useNotifications();
 
@@ -36,10 +35,10 @@ export default function Account({ activeTab = "Account/Preferences" }: Props) {
     NonNullable<Props["activeTab"]>,
     React.ReactNode
   > = {
-    "Account/Photos": <Photos />,
-    "Account/Albums": <Albums />,
-    "Account/Preferences": <Preferences />,
-    "Account/Notifications": <Notifications />,
+    "/account/photos": <Photos />,
+    "/account/albums": <Albums />,
+    "/account/preferences": <Preferences />,
+    "/account/notifications": <Notifications />,
   };
 
   return (
@@ -92,10 +91,7 @@ export default function Account({ activeTab = "Account/Preferences" }: Props) {
 
       <ConstraintContainer>
         <div className="back-button">
-          <Button
-            variant="secondary"
-            onClick={() => setCurrentScreenName("Play")}
-          >
+          <Button variant="secondary" onClick={() => navigate("/play")}>
             {translate("play.label")}
           </Button>
         </div>
