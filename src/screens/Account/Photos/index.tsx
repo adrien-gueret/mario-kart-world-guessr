@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import useNavigate from "@/services/useNavigate";
 import { useTranslations } from "@/i18n";
 
 import ConstraintContainer from "@/components/ConstraintContainer";
@@ -11,6 +10,7 @@ import fetchApi from "@/services/api";
 
 import type { Photo } from "@/types/photos";
 import Button from "@/components/Button";
+import { useScreen } from "@/screens/ScreensProvider";
 
 import "./Photos.css";
 
@@ -19,7 +19,7 @@ export default function Photos() {
   const [isLoading, setIsLoading] = useState(false);
 
   const { translate } = useTranslations();
-  const navigate = useNavigate();
+  const { setCurrentScreenName } = useScreen();
 
   useEffect(() => {
     async function fetchPhotos() {
@@ -45,7 +45,10 @@ export default function Photos() {
         </Surface>
 
         <div className="account-photos-upload-button">
-          <Button onClick={() => navigate("/upload")} variant="primary">
+          <Button
+            onClick={() => setCurrentScreenName("Upload")}
+            variant="primary"
+          >
             {translate("upload.title")}
           </Button>
         </div>

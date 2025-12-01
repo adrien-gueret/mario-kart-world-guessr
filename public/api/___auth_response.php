@@ -138,15 +138,6 @@ try {
             }
         }
 
-        $updateErrorTrackerStmt = $pdo->prepare(
-            "UPDATE `mario-kart-world-errors-tracker`
-            SET user_id = ?
-            WHERE user_id = ?"
-        );
-
-        $errorTrackerParams = array_merge([$userId, $anonymousUserId]);
-        $updateErrorTrackerStmt->execute($errorTrackerParams);
-
         $deleteStmt = $pdo->prepare("DELETE FROM `mario-kart-world-leaderboard-daily` WHERE player_id = :anonymousUserId");
         $deleteStmt->bindParam(':anonymousUserId', $anonymousUserId, PDO::PARAM_INT);
         $deleteStmt->execute();
@@ -192,9 +183,7 @@ echo json_encode([
     'email' => $email,
     'username' => $name,
     'marioCharacter' => $marioCharacter,
-    'locale' => $locale,
     'distanceUnit' => $distanceUnit,
-    'withSafeArea' => (int)$withSafeArea,
     'accessToken' => $accessTokenData['accessToken'],
     'refreshToken' => $accessTokenData['refreshToken'],
     'expiredAt' => $accessTokenData['expiredAt'],

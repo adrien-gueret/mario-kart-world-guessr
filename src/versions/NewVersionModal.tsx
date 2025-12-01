@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
 
 import Button from "@/components/Button";
-import Date from "@/components/Date";
 import Modal from "@/components/Modal";
 import { useTranslations } from "@/i18n";
 
@@ -11,35 +9,34 @@ import currentVersion from "./currentVersion";
 import useReleaseNotes from "./useReleaseNotes";
 
 import "./NewVersionModal.css";
+import { useScreen } from "@/screens";
 
 export default function NewVersionModal() {
   const { translate } = useTranslations();
 
   const releaseNotes = useReleaseNotes();
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { currentScreenName, setCurrentScreenName } = useScreen();
 
   const [isOpen, setIsOpen] = useState(Boolean(releaseNotes));
 
   return (
     <Modal
-      title={translate("new-version.title")(currentVersion.version)}
+      title={translate("new-version.title")(currentVersion)}
       isOpen={isOpen}
       disableSkew
       noDelay
     >
       <div className="new-version-modal-content">
-        <Date date={currentVersion.publishedAt} />
         <div>{releaseNotes}</div>
 
         <div className="new-version-modal-actions">
-          {location.pathname !== "/releaseNotes" && (
+          {currentScreenName !== "ReleaseNotes" && (
             <Button
               variant="secondary"
               onClick={() => {
                 setIsOpen(false);
-                navigate("/releaseNotes");
+                setCurrentScreenName("ReleaseNotes");
               }}
             >
               {translate("see-release-notes.label")}

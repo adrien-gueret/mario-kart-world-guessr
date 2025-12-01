@@ -4,7 +4,6 @@ import mkcert from "vite-plugin-mkcert";
 import { resolve } from "path";
 
 export default defineConfig({
-  base: "/mario-kart-world-guessr/",
   plugins: [react(), mkcert()],
   resolve: {
     alias: {

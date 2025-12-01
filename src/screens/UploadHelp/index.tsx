@@ -1,4 +1,3 @@
-import useNavigate from "@/services/useNavigate";
 import { useTranslations } from "@/i18n";
 
 import Button from "@/components/Button";
@@ -6,11 +5,13 @@ import ConstraintContainer from "@/components/ConstraintContainer";
 import Surface from "@/components/Surface";
 import Text from "@/components/Text";
 
+import { useScreen } from "@/screens/ScreensProvider";
+
 import "./UploadHelp.css";
 
 function UploadHelp() {
   const { currentLocale, translate } = useTranslations();
-  const navigate = useNavigate();
+  const { setCurrentScreenName } = useScreen();
 
   return (
     <div className="upload-help">
@@ -571,11 +572,14 @@ function UploadHelp() {
         )}
 
         <div className="back-button">
-          <Button variant="secondary" onClick={() => navigate("/")}>
+          <Button
+            variant="secondary"
+            onClick={() => setCurrentScreenName("Home")}
+          >
             {translate("home.button")}
           </Button>
 
-          <Button onClick={() => navigate("/upload")}>
+          <Button onClick={() => setCurrentScreenName("Upload")}>
             {translate("home.menu.upload.title")}
           </Button>
         </div>

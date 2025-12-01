@@ -36,14 +36,3 @@
   position: relative;
   bottom: 8px;
 }
-
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 16px;
-}
-
-.form-actions.center {
-  justify-content: center;
-}
