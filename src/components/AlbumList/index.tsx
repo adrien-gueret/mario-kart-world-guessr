@@ -1,25 +1,33 @@
 import { useState, type MouseEventHandler } from "react";
 
-import Form from "../Form";
-import Modal from "../Modal";
-
 import { useTranslations } from "@/i18n";
+import useNavigate from "@/services/useNavigate";
 import type { Album } from "@/types/photos";
+
+import Form from "../Form";
+import PlusIcon from "../Icon/Plus";
+import Modal from "../Modal";
 
 import "./AlbumList.css";
 
 type Props = {
   albums: Album[];
   canCreateNewAlbum?: boolean;
+  getAlbumURL: (albumId: number) => string;
 };
 
-export default function AlbumList({ albums, canCreateNewAlbum }: Props) {
+export default function AlbumList({
+  albums,
+  canCreateNewAlbum,
+  getAlbumURL,
+}: Props) {
   const [isCreateAlbumModalOpen, setIsCreateAlbumModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const { translate } = useTranslations();
 
   const selectAlbumId = (albumId: number) => {
-    console.log("Selected album ID:", albumId);
+    navigate(getAlbumURL(albumId));
   };
 
   const createAlbum = () => {
@@ -64,10 +72,13 @@ export default function AlbumList({ albums, canCreateNewAlbum }: Props) {
             onClick={handleClickNewAlbum}
             onKeyDown={handleKeyDownNewAlbum}
           >
-            {translate("account.albums.create.title")}
+            <PlusIcon />
+            <div className="album-name">
+              {translate("account.albums.create.title")}
+            </div>
           </li>
         )}
-        {albums.map(({ id, name }) => {
+        {albums.map(({ id, name, coverUrl }) => {
           return (
             <li
               key={id}
@@ -75,6 +86,7 @@ export default function AlbumList({ albums, canCreateNewAlbum }: Props) {
               tabIndex={0}
               onClick={getHandleClickAlbum(id)}
               onKeyDown={getHandleKeyDownAlbum(id)}
+              style={{ backgroundImage: `url(${coverUrl})` }}
             >
               <div className="album-name">{name}</div>
             </li>
@@ -93,8 +105,9 @@ export default function AlbumList({ albums, canCreateNewAlbum }: Props) {
             action="/create-album"
             successMessage={translate("account.albums.create.success")}
             onSuccess={(response: { album: Album }) => {
-              console.log("Created album:", response.album);
+              selectAlbumId(response.album.id);
             }}
+            onCancel={() => setIsCreateAlbumModalOpen(false)}
           >
             <div className="row">
               <label htmlFor="form-albumname">
@@ -105,6 +118,9 @@ export default function AlbumList({ albums, canCreateNewAlbum }: Props) {
                 type="text"
                 name="albumname"
                 id="form-albumname"
+                defaultValue={translate("account.albums.create.defaultName")}
+                autoFocus
+                onFocus={(e) => e.target.select()}
                 required
                 maxLength={100}
               />
