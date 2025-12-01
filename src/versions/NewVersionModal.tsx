@@ -20,8 +20,6 @@ export default function NewVersionModal() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // TODO: check location
-
   const [isOpen, setIsOpen] = useState(Boolean(releaseNotes));
 
   return (
