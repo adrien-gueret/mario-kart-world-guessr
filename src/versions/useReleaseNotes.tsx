@@ -15,8 +15,6 @@ export default function useReleaseNotes() {
     (releaseNote) => releaseNote.version === lastSeenVersion
   );
 
-  console.log({ lastSeenVersion });
-
   const shouldShowReleaseNotes =
     lastSeenVersion && indexOfLastSeenVersion !== 0;
 
