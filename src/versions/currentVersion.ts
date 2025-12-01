@@ -1,3 +1,3 @@
 import allReleaseNotes from "./allReleaseNotes";
 
-export default allReleaseNotes[0];
+export default allReleaseNotes[0].version;

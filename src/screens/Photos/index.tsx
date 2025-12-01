@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 import Checkbox from "@/components/Checkbox";
 import Loader from "@/components/Loader";
@@ -14,7 +13,6 @@ import useRequiredAuth from "@/services/useRequiredAuth";
 import type { Photo } from "@/types/photos";
 
 export default function Photos() {
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [showMap, setShowMap] = useState(false);
@@ -26,7 +24,6 @@ export default function Photos() {
 
   useEffect(() => {
     if (!isAdmin) {
-      navigate("/nope", { replace: true });
       return;
     }
 

@@ -14,13 +14,6 @@
   animation-delay: 1s;
 }
 
-.game-sticky-button-container.with-safe-area {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 32px;
-  cursor: not-allowed;
-  border-radius: 30% / 60%;
-}
-
 @keyframes slideUp {
   from {
     opacity: 0;

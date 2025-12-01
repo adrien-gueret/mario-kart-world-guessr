@@ -19,8 +19,7 @@ if (empty($_POST['albumname'])) {
 }
 
 $albumName = trim($_POST['albumname']);
-$albumNameLength = mb_strlen($albumName);
-if ($albumNameLength < 2 || $albumNameLength > 100) {
+if (strlen($albumName) < 2 || strlen($albumName) > 100) {
     http_response_code(400);
 
     echo json_encode([
@@ -42,7 +41,7 @@ try {
 
     $stmt->execute();
 
-    $albumId = (int) $pdo->lastInsertId();
+    $albumId = $pdo->lastInsertId();
 
     echo json_encode(["success" => true, "album" => ["id" => $albumId, "name" => $albumName]]);
 } catch (PDOException $e) {

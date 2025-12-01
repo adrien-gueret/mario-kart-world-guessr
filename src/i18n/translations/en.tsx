@@ -207,29 +207,6 @@ const en: Texts = {
       points&nbsp;!
     </>
   ),
-  "difficulty.goal.50cc.short": (
-    <>
-      The <b>easiest</b> photos and the most lenient scoring system.
-    </>
-  ),
-  "difficulty.goal.100cc.short": (
-    <>
-      Most photos <b>except</b> the most difficult ones and a moderate tolerance
-      in score calculation.
-    </>
-  ),
-  "difficulty.goal.150cc.short": (
-    <>
-      <b>ALL</b> photos, including the most difficult ones! And a light
-      tolerance in score calculation.
-    </>
-  ),
-  "difficulty.goal.mirror.short": (
-    <>
-      <b>ALL</b> photos, including the most difficult ones! And a light
-      tolerance in score calculation.
-    </>
-  ),
   "difficulty.chrono.mirror.short": (
     <>
       Score the most points in <b>3 minutes</b>.<br />
@@ -368,7 +345,6 @@ const en: Texts = {
   "photos.showMap": "Show map",
   "photo.details.title": "Players' guesses",
   "photo.by": "Photo by",
-  "album.by": "An album by",
   "login.screen.title": "Log in",
   "login.screen.description": (
     <>
@@ -383,8 +359,6 @@ const en: Texts = {
   "see-release-notes.label": "See all release notes",
   "release-notes.title": "Release notes",
   "form.submit": "Submit",
-  "form.confirm": "Confirm",
-  "form.cancel": "Cancel",
   "account.title": "My account",
   "account.username.label": "Username",
   "account.username.helper":
@@ -396,8 +370,6 @@ const en: Texts = {
   "account.distanceUnit.miles": "Miles",
   "account.distanceUnit.helper":
     "Unit used for displaying distances on the map.",
-  "account.withSafeArea.label": "Safe area",
-  "account.withSafeArea.helper": `This option adds a non-clickable area around the "Guess" button, helping to avoid miss-clicks.`,
   "account.save.success": "Changes saved successfully",
   "play.label": "Play",
   "account.marioCharacter.label": "Select your favorite character",
@@ -553,31 +525,7 @@ const en: Texts = {
     "Create albums with your photos and share them!",
   "account.albums.create.title": "Create a new album",
   "account.albums.create.name": "Album name",
-  "account.albums.create.defaultName": "My album",
-  "account.albums.create.success": "Album created successfully.",
-  "album.edit.name.success": "Album name updated successfully.",
-  "album.edit.photos.success": "Album photos updated successfully.",
-  "account.albums.delete.title": "Delete album",
-  "account.albums.delete.warning": (
-    <>
-      Are you sure you want to delete this album?
-      <br />
-      The photos it contains will <b>not</b> be deleted, but the album itself
-      cannot be recovered.
-    </>
-  ),
-  "account.albums.delete.success": "Album deleted successfully.",
-  "account.albums.photo.select.title": "Select a photo",
-  "account.albums.photo.select.description":
-    "Only your validated photos can be added to an album.",
-  "account.albums.delete.photo": "Delete this photo from the album",
-  "error.title": "Oops! Something went wrong.",
-  "error.description": "An unexpected error occurred... Everything is broken!",
-  "error.button": "Back to home",
-  "error.logoutWarning.title": "You have been logged out",
-  "error.logoutWarning.description":
-    "An error occurred with your session: for security reasons, it has been expired and you have been logged out. Please log in again.",
-  "error.logoutWarning.button": "Log in",
+  "account.albums.create.success": "Album created successfully!",
 
   //////
   "gold_50cc_survival.description":
@@ -630,10 +578,29 @@ const en: Texts = {
     "One of your submitted photos has been validated!",
   "photo_validated.unlockedItem": "Toadette is unlocked!",
   "toadette.unlockClue": "Have one of your submitted photos validated.",
-
-  "break_everything.description": "You have broken the game!",
-  "break_everything.unlockedItem": "Waluigi is unlocked!",
-  "waluigi.unlockClue": "Break the game by accessing something unusual.",
+  "difficulty.goal.50cc.short": (
+    <>
+      The <b>easiest</b> photos and the most lenient scoring system.
+    </>
+  ),
+  "difficulty.goal.100cc.short": (
+    <>
+      Most photos <b>except</b> the most difficult ones and a moderate tolerance
+      in score calculation.
+    </>
+  ),
+  "difficulty.goal.150cc.short": (
+    <>
+      <b>ALL</b> photos, including the most difficult ones! And a light
+      tolerance in score calculation.
+    </>
+  ),
+  "difficulty.goal.mirror.short": (
+    <>
+      <b>ALL</b> photos, including the most difficult ones! And a light
+      tolerance in score calculation.
+    </>
+  ),
 };
 
 export default en;

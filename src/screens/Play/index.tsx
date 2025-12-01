@@ -1,12 +1,13 @@
-import useNavigate from "@/services/useNavigate";
 import Card from "@/components/Card";
 import ModeIcon from "@/components/ModeIcon";
 import { useTranslations } from "@/i18n";
 
+import { useScreen } from "../ScreensProvider";
+
 import "./Play.css";
 
 function Play() {
-  const navigate = useNavigate();
+  const { setCurrentScreenName } = useScreen();
   const { translate } = useTranslations();
 
   return (
@@ -17,15 +18,9 @@ function Play() {
         <li>
           <Card
             icon={<ModeIcon mode="goal" />}
-            onClick={() => navigate("/goalgame")}
+            onClick={() => setCurrentScreenName("GoalGame")}
             title={translate("mode.goal.label")}
-            content={
-              <span
-                dangerouslySetInnerHTML={{
-                  __html: translate("mode.goal.description"),
-                }}
-              />
-            }
+            content={translate("mode.goal.description")}
             borderColor="#599be5"
           />
         </li>
@@ -45,30 +40,18 @@ function Play() {
         <li>
           <Card
             icon={<ModeIcon mode="survival" />}
-            onClick={() => navigate("/survivalgame")}
+            onClick={() => setCurrentScreenName("SurvivalGame")}
             title={translate("mode.survival.label")}
-            content={
-              <span
-                dangerouslySetInnerHTML={{
-                  __html: translate("mode.survival.description"),
-                }}
-              />
-            }
+            content={translate("mode.survival.description")}
             borderColor="#fb501e"
           />
         </li>
         <li>
           <Card
             icon={<ModeIcon mode="daily" />}
-            onClick={() => navigate("/dailygame")}
+            onClick={() => setCurrentScreenName("DailyGame")}
             title={translate("mode.daily.label")}
-            content={
-              <span
-                dangerouslySetInnerHTML={{
-                  __html: translate("mode.daily.description"),
-                }}
-              />
-            }
+            content={translate("mode.daily.description")}
             borderColor="#00951f"
           />
         </li>

@@ -1,5 +1,4 @@
 import { useState, useCallback, useRef, useEffect } from "react";
-import useNavigate from "@/services/useNavigate";
 import { SVGOverlay } from "react-leaflet";
 
 import type {
@@ -29,6 +28,8 @@ import type { MarioCharacter } from "@/types/characters";
 import type { Difficulty, GameMode } from "@/types/game";
 
 import { useTranslations } from "@/i18n";
+
+import { useScreen } from "../ScreensProvider";
 
 import EndDailyGame from "./End/Daily";
 import EndGoalGame from "./End/Goal";
@@ -74,7 +75,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
   >(null);
   const [showHarderGameStepModal, setShowHarderGameStepModal] = useState(false);
   const [gameHistory, setGameHistory] = useState<GameHistory>([]);
-  const navigate = useNavigate();
+  const { setCurrentScreenName } = useScreen();
 
   const [currentLocationCoordinates, setCurrentLocationCoordinates] =
     useState<Coordinates | null>(null);
@@ -270,7 +271,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
       await fetchApi("/give-up", "PUT", formData);
     } catch (error) {}
 
-    navigate("/");
+    setCurrentScreenName("Home");
   };
 
   const gameModeToRules: Record<
@@ -453,7 +454,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
       />
 
       {userGuess && !shouldShowAnswer && !hasZoomOnFloatingPhoto && (
-        <StickyButtonContainer withSafeArea={user.withSafeArea}>
+        <StickyButtonContainer>
           <Button onClick={handleConfirmGuess}>
             {translate("guess.label")}
           </Button>

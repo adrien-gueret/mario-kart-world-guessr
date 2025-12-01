@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 import { getKey, storeKey, removeKey } from "@/services/store";
 import { useTranslations } from "@/i18n";
@@ -9,13 +9,11 @@ import currentVersion from "./currentVersion";
 
 export default function useReleaseNotes() {
   const { currentLocale } = useTranslations();
-  const lastSeenVersion = useRef(getKey("lastSeenVersion")).current;
+  const lastSeenVersion = getKey("lastSeenVersion");
 
   const indexOfLastSeenVersion = allReleaseNotes.findIndex(
     (releaseNote) => releaseNote.version === lastSeenVersion
   );
-
-  console.log({ lastSeenVersion });
 
   const shouldShowReleaseNotes =
     lastSeenVersion && indexOfLastSeenVersion !== 0;
@@ -23,9 +21,11 @@ export default function useReleaseNotes() {
   useEffect(() => {
     if (shouldShowReleaseNotes) {
       removeKey("daily");
-      storeKey("lastSeenVersion", currentVersion.version);
+      storeKey("lastSeenVersion", currentVersion);
     }
   }, [shouldShowReleaseNotes]);
 
-  return shouldShowReleaseNotes ? currentVersion.notes[currentLocale] : null;
+  return shouldShowReleaseNotes
+    ? allReleaseNotes[0].notes[currentLocale]
+    : null;
 }

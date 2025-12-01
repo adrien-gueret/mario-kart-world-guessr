@@ -25,6 +25,7 @@
 body {
   margin: 0;
   display: flex;
+  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -83,6 +84,15 @@ h3 {
   gap: 64px;
 }
 
+.app-Home .app-home-button {
+  display: none;
+}
+
+.app-Home .app-login-button,
+.app-Login .app-login-button {
+  display: none;
+}
+
 .app-header {
   display: flex;
   flex-direction: row;
@@ -108,7 +118,7 @@ h3 {
   text-decoration: none;
 }
 
-.basic-link[aria-current="page"] {
+.basic-link:not([href]) {
   text-decoration: none;
   pointer-events: none;
 }
