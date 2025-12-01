@@ -1,4 +1,8 @@
-import { createHashRouter, RouterProvider, Navigate } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 
 import AccountLayout from "@/layouts/sublayouts/AccountLayout";
 import MainLayout from "@/layouts/MainLayout";
@@ -26,184 +30,187 @@ import fetchApi from "@/services/api";
 
 import type { Photo } from "@/types/photos";
 
-const router = createHashRouter([
-  {
-    Component: LogoutWarning,
-    path: "/logout-warning",
-  },
-  {
-    element: <MainLayout shouldHideHomeButton logoVariant="big" />,
-    ErrorBoundary,
-    children: [
-      { index: true, Component: Home },
-      {
-        path: "/home",
-        element: <Navigate to="/" replace />,
-      },
-    ],
-  },
-  {
-    element: <MainLayout logoVariant="corner" enableLoader />,
-    ErrorBoundary,
-    children: [
-      {
-        path: "/account/albums/:id",
-        Component: AccountAlbumId,
-        loader: async ({ params }) => {
-          const getReponseJson = async (response: Response) => {
-            if (!response.ok) {
-              throw new Error(`Cannot fetch album ${params.id}`);
-            }
-            return response.json();
-          };
-
-          const responses = await Promise.all([
-            fetchApi(`/album?id=${params.id}`, "GET").then(getReponseJson),
-            fetchApi("/my-photos", "GET")
-              .then(getReponseJson)
-              .then((photos: Photo[]) =>
-                photos.filter((photo) => Boolean(photo.validatedAt))
-              ),
-          ]);
-
-          return {
-            album: responses[0],
-            availablePhotos: responses[1],
-          };
+const router = createBrowserRouter(
+  [
+    {
+      Component: LogoutWarning,
+      path: "/logout-warning",
+    },
+    {
+      element: <MainLayout shouldHideHomeButton logoVariant="big" />,
+      ErrorBoundary,
+      children: [
+        { index: true, Component: Home },
+        {
+          path: "/home",
+          element: <Navigate to="/" replace />,
         },
-      },
-      {
-        path: "/albums/:id",
-        Component: AlbumId,
-        loader: async ({ params }) => {
-          const getReponseJson = async (response: Response) => {
-            if (!response.ok) {
-              throw new Error(`Cannot fetch album ${params.id}`);
-            }
-            return response.json();
-          };
-
-          const album = await fetchApi(`/album?id=${params.id}`, "GET").then(
-            getReponseJson
-          );
-
-          return { album };
-        },
-      },
-    ],
-  },
-  {
-    Component: MainLayout,
-    ErrorBoundary,
-    children: [
-      {
-        path: "/account",
-        Component: AccountLayout,
-        children: [
-          {
-            index: true,
-            element: <Navigate to="/account/preferences" replace />,
-          },
-          {
-            path: "/account/preferences",
-            Component: AccountPreferences,
-          },
-          {
-            path: "/account/notifications",
-            Component: AccountNotifications,
-          },
-          {
-            path: "/account/photos",
-            Component: AccountPhotos,
-          },
-          {
-            path: "/account/albums",
-            Component: AccountAlbums,
-            loader: async () => {
-              const response = await fetchApi(`/my-albums`, "GET");
-
+      ],
+    },
+    {
+      element: <MainLayout logoVariant="corner" enableLoader />,
+      ErrorBoundary,
+      children: [
+        {
+          path: "/account/albums/:id",
+          Component: AccountAlbumId,
+          loader: async ({ params }) => {
+            const getReponseJson = async (response: Response) => {
               if (!response.ok) {
-                throw new Error(`Cannot fetch albums`);
+                throw new Error(`Cannot fetch album ${params.id}`);
               }
-
               return response.json();
+            };
+
+            const responses = await Promise.all([
+              fetchApi(`/album?id=${params.id}`, "GET").then(getReponseJson),
+              fetchApi("/my-photos", "GET")
+                .then(getReponseJson)
+                .then((photos: Photo[]) =>
+                  photos.filter((photo) => Boolean(photo.validatedAt))
+                ),
+            ]);
+
+            return {
+              album: responses[0],
+              availablePhotos: responses[1],
+            };
+          },
+        },
+        {
+          path: "/albums/:id",
+          Component: AlbumId,
+          loader: async ({ params }) => {
+            const getReponseJson = async (response: Response) => {
+              if (!response.ok) {
+                throw new Error(`Cannot fetch album ${params.id}`);
+              }
+              return response.json();
+            };
+
+            const album = await fetchApi(`/album?id=${params.id}`, "GET").then(
+              getReponseJson
+            );
+
+            return { album };
+          },
+        },
+      ],
+    },
+    {
+      Component: MainLayout,
+      ErrorBoundary,
+      children: [
+        {
+          path: "/account",
+          Component: AccountLayout,
+          children: [
+            {
+              index: true,
+              element: <Navigate to="/account/preferences" replace />,
             },
-          },
-        ],
-      },
-      {
-        path: "/leaderboards",
-        children: [
-          {
-            index: true,
-            element: <Navigate to="survival/150cc" replace />,
-          },
-          {
-            path: ":mode",
-            children: [
-              {
-                index: true,
-                element: <Navigate to="150cc" replace />,
+            {
+              path: "/account/preferences",
+              Component: AccountPreferences,
+            },
+            {
+              path: "/account/notifications",
+              Component: AccountNotifications,
+            },
+            {
+              path: "/account/photos",
+              Component: AccountPhotos,
+            },
+            {
+              path: "/account/albums",
+              Component: AccountAlbums,
+              loader: async () => {
+                const response = await fetchApi(`/my-albums`, "GET");
+
+                if (!response.ok) {
+                  throw new Error(`Cannot fetch albums`);
+                }
+
+                return response.json();
               },
-              {
-                path: ":difficulty",
-                Component: Leaderboards,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        path: "/login",
-        Component: Login,
-      },
-      {
-        path: "/photos",
-        Component: Photos,
-      },
-      {
-        path: "/play",
-        Component: Play,
-      },
-      {
-        path: "/privacypolicies",
-        Component: PrivacyPolicies,
-      },
-      {
-        path: "/releasenotes",
-        Component: ReleaseNotes,
-      },
-      {
-        path: "/dailygame",
-        Component: DailyGame,
-      },
-      {
-        path: "/goalgame",
-        Component: GoalGame,
-      },
-      {
-        path: "/chronogame",
-        Component: ChronoGame,
-      },
-      {
-        path: "/survivalgame",
-        Component: SurvivalGame,
-      },
-      {
-        path: "/termsservices",
-        Component: TermsServices,
-      },
-      {
-        path: "/upload",
-        Component: Upload,
-      },
-      {
-        path: "/uploadhelp",
-        Component: UploadHelp,
-      },
-    ],
-  },
-]);
+            },
+          ],
+        },
+        {
+          path: "/leaderboards",
+          children: [
+            {
+              index: true,
+              element: <Navigate to="survival/150cc" replace />,
+            },
+            {
+              path: ":mode",
+              children: [
+                {
+                  index: true,
+                  element: <Navigate to="150cc" replace />,
+                },
+                {
+                  path: ":difficulty",
+                  Component: Leaderboards,
+                },
+              ],
+            },
+          ],
+        },
+        {
+          path: "/login",
+          Component: Login,
+        },
+        {
+          path: "/photos",
+          Component: Photos,
+        },
+        {
+          path: "/play",
+          Component: Play,
+        },
+        {
+          path: "/privacypolicies",
+          Component: PrivacyPolicies,
+        },
+        {
+          path: "/releasenotes",
+          Component: ReleaseNotes,
+        },
+        {
+          path: "/dailygame",
+          Component: DailyGame,
+        },
+        {
+          path: "/goalgame",
+          Component: GoalGame,
+        },
+        {
+          path: "/chronogame",
+          Component: ChronoGame,
+        },
+        {
+          path: "/survivalgame",
+          Component: SurvivalGame,
+        },
+        {
+          path: "/termsservices",
+          Component: TermsServices,
+        },
+        {
+          path: "/upload",
+          Component: Upload,
+        },
+        {
+          path: "/uploadhelp",
+          Component: UploadHelp,
+        },
+      ],
+    },
+  ],
+  { basename: import.meta.env.BASE_URL || "/" }
+);
 
 export default function Router() {
   return <RouterProvider router={router} />;
