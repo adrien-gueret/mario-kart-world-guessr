@@ -8,8 +8,6 @@ import {
   type ReactNode,
 } from "react";
 
-import useNavigate from "@/services/useNavigate";
-
 import { googleLogout } from "@react-oauth/google";
 
 import { useTranslations } from "@/i18n";
@@ -19,6 +17,7 @@ import { storeKey } from "@/services/store";
 import type { User } from "@/types/user";
 import fetchApi from "@/services/api";
 import Loader from "@/components/Loader";
+import { useScreen, type ScreenName } from "@/screens";
 
 type CurrentUserContextType = {
   user: User;
@@ -37,7 +36,6 @@ const CurrentUserContext = createContext<CurrentUserContextType>({
     expiredAt: "",
     marioCharacter: null,
     distanceUnit: null,
-    withSafeArea: false,
     locale: null,
   },
   isAnonymous: true,
@@ -49,7 +47,7 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
   const { currentLocale, setCurrentLocale } = useTranslations();
   const [isLoading, setIsLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const navigate = useNavigate();
+  const { setCurrentScreenName } = useScreen();
   const hasBeenMounted = useRef(false);
 
   const logout = useCallback(() => {
@@ -74,15 +72,16 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
 
     hasBeenMounted.current = true;
 
-    async function redirectTo(target: string) {
+    function redirectTo(target: ScreenName) {
       window.history.replaceState({}, document.title, window.location.pathname);
-
-      await navigate(target, { replace: true, viewTransition: true });
-
-      setIsLoading(false);
+      setCurrentScreenName(target, {
+        onSuccess: () => {
+          setIsLoading(false);
+        },
+      });
     }
 
-    function fetchMe(redirectTarget?: string) {
+    function fetchMe(redirectScreeName?: ScreenName) {
       setIsLoading(true);
 
       fetchApi("/me", "GET")
@@ -93,15 +92,15 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
           setCurrentLocale(user.locale ?? currentLocale);
         })
         .finally(() => {
-          if (redirectTarget) {
-            redirectTo(redirectTarget);
+          if (redirectScreeName) {
+            redirectTo(redirectScreeName);
           } else {
             setIsLoading(false);
           }
         });
     }
 
-    function fetchDiscord(discordCode: string, target: string) {
+    function fetchDiscord(discordCode: string, targetScreenName: ScreenName) {
       setIsLoading(true);
 
       const formData = new FormData();
@@ -118,11 +117,10 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
           delete user.isNewUser;
           setCurrentUser(user);
           storeConnectedUser(user);
-          setCurrentLocale(user.locale ?? currentLocale);
         })
         .catch(fetchMe)
         .finally(() => {
-          redirectTo(target);
+          redirectTo(targetScreenName);
         });
     }
 
@@ -132,10 +130,10 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
 
     if (state?.startsWith("from-discord")) {
       if (authCode) {
-        const [, target = "/account"] = state.split("_");
-        fetchDiscord(authCode, target);
+        const [, targetScreenName = "Account"] = state.split("_");
+        fetchDiscord(authCode, targetScreenName as ScreenName);
       } else {
-        fetchMe("/login");
+        fetchMe("Login");
       }
     } else {
       fetchMe();

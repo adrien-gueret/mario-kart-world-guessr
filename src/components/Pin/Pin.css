@@ -50,10 +50,6 @@
   background-image: url("./ui/pins/pin-yellow.png");
 }
 
-.game-map-pin.variant-waluigi {
-  background-image: url("./ui/pins/pin-purple.png");
-}
-
 .game-map-pin > img {
   width: 32px !important;
   position: relative;

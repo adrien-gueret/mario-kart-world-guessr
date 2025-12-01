@@ -12,7 +12,6 @@
 }
 
 .album-list > li {
-  --highlight-color: rgba(255, 255, 255, 0.8);
   position: relative;
   transition: transform 200ms ease-in, box-shadow 200ms ease-in;
   cursor: pointer;
@@ -20,18 +19,10 @@
   height: 221px;
   border: 2px solid #222;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
 .album-list > li:hover,
 .album-list > li:focus-visible {
-  --highlight-color: #fff;
   transform: scale(1.05);
   box-shadow: 2px 2px 0 #222;
 }
@@ -42,24 +33,4 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-}
-
-.new-album {
-  background-image: url("./backgrounds/new-album.avif");
-}
-
-.new-album svg {
-  width: 64px;
-  height: 64px;
-  fill: currentColor;
-  background-color: var(--highlight-color);
-  border-radius: 50%;
-}
-
-.album-list .album-name {
-  font-weight: bold;
-  background-color: var(--highlight-color);
-  padding: 2px 8px;
-  margin: 24px 16px;
-  border-radius: 8px;
 }

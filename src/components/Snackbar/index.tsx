@@ -1,5 +1,4 @@
 import { type ReactNode, useLayoutEffect } from "react";
-import { createPortal } from "react-dom";
 
 import Text from "@/components/Text";
 
@@ -34,7 +33,7 @@ export default function Snackbar({
     };
   }, [isOpen, onClose]);
 
-  return createPortal(
+  return (
     <div className={`snackbar-container ${isOpen ? "snackbar-open" : ""}`}>
       <div className={`snackbar snackbar-${type}`}>
         {icon && (
@@ -47,7 +46,6 @@ export default function Snackbar({
           {children}
         </Text>
       </div>
-    </div>,
-    document.body
+    </div>
   );
 }
