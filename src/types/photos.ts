@@ -11,16 +11,14 @@ export type Photo = {
 
 export type PhotoFilter = NonNullable<Photo["difficulty"]> | "all";
 
-export type AlbumPhoto = Pick<Photo, "id" | "difficulty" | "photoUrl"> & {
-  position: number;
-};
+export type AlbumPhoto = Omit<
+  Photo,
+  "suggestionCount" | "x" | "y" | "validatedAt"
+>;
 
 export type Album = {
   id: number;
   name: string;
-  coverUrl: string;
-  isPublished: boolean;
-  createdAt: string;
   author: {
     id: number;
     name: string;

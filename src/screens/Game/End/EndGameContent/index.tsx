@@ -1,9 +1,10 @@
 import { useState, type ReactNode } from "react";
-import useNavigate from "@/services/useNavigate";
 
 import Button from "@/components/Button";
 
 import { useTranslations } from "@/i18n";
+
+import { useScreen } from "@/screens/ScreensProvider";
 
 import "./EndGameContent.css";
 
@@ -24,7 +25,7 @@ export default function EndGameContent({
 }: Props) {
   const [currentStep, setCurrentStep] = useState(1);
   const { translate } = useTranslations();
-  const navigate = useNavigate();
+  const { setCurrentScreenName } = useScreen();
 
   const onClickNext = () => {
     setCurrentStep((prev) => prev + 1);
@@ -50,7 +51,7 @@ export default function EndGameContent({
           <>
             <Button
               variant={onReplay ? "secondary" : "primary"}
-              onClick={() => navigate("/")}
+              onClick={() => setCurrentScreenName("Home")}
             >
               {translate("endGame.titleScreen.label")}
             </Button>

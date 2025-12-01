@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import useNavigate from "@/services/useNavigate";
 
 import { useCurrentUser } from "@/auth/CurrentUserProvider";
 
@@ -13,6 +12,7 @@ import Table from "@/components/Table";
 import Tabs from "@/components/Tabs";
 
 import fetchApi from "@/services/api";
+import { useScreen } from "@/screens";
 
 import type {
   GameMode,
@@ -43,7 +43,7 @@ export default function Leaderboard({
   const hasBeenInit = useRef(false);
 
   const { user, isAnonymous } = useCurrentUser();
-  const navigate = useNavigate();
+  const { setCurrentScreenName } = useScreen();
   const { translate } = useTranslations();
 
   const [activeTab, setActiveTab] = useState<"all" | "bots">("bots");
@@ -150,7 +150,7 @@ export default function Leaderboard({
                   </p>
                   <Button
                     variant="secondary"
-                    onClick={() => navigate("/login")}
+                    onClick={() => setCurrentScreenName("Login")}
                   >
                     {translate("login.screen.title")}
                   </Button>
@@ -165,7 +165,14 @@ export default function Leaderboard({
         <div className="leaderboard-actions">
           <Button
             variant="secondary"
-            onClick={() => navigate(`/leaderboards/${mode}/${difficulty}`)}
+            onClick={() =>
+              setCurrentScreenName("Leaderboards", {
+                state: {
+                  gameMode: mode,
+                  gameDifficulty: difficulty,
+                },
+              })
+            }
           >
             {translate("endGame.see-leaderboards")}
           </Button>

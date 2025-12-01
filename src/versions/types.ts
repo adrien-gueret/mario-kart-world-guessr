@@ -6,6 +6,5 @@ export type Version = `v${number}.${number}.${number}`;
 
 export type ReleaseNotes = Array<{
   version: Version;
-  publishedAt: Date;
   notes: Record<Locale, ReactNode>;
 }>;
