@@ -123,14 +123,14 @@ if (empty($payload['sub']) || empty($payload['email']) || empty($payload['name']
     die('{"error":true,"message":"Missing user infos"}');
 }
 
-$stmt = $pdo->prepare("SELECT id, username, email, mario_character as marioCharacter, locale, distance_unit as distanceUnit, with_safe_area as withSafeArea FROM `mario-kart-world-users` WHERE id_google = ?");
+$stmt = $pdo->prepare("SELECT id, username, email, mario_character as marioCharacter, distance_unit as distanceUnit FROM `mario-kart-world-users` WHERE id_google = ?");
 $stmt->execute([$payload['sub']]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $hasBeenFoundFromGoogle = (bool) $user;
 
 if (!$user) {
-    $stmt = $pdo->prepare("SELECT id, username, email, mario_character as marioCharacter, locale, distance_unit as distanceUnit, with_safe_area as withSafeArea FROM `mario-kart-world-users` WHERE email = ?");
+    $stmt = $pdo->prepare("SELECT id, username, email, mario_character as marioCharacter, distance_unit as distanceUnit FROM `mario-kart-world-users` WHERE email = ?");
     $stmt->execute([$payload['email']]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 }
@@ -152,22 +152,16 @@ $userGoogleId = $payload['sub'];
 $email = $payload['email'];
 $name = $payload['name'];
 $marioCharacter = null;
-$locale = $currentUser['locale'];
-$distanceUnit = $locale === 'fr' ? 'km' : 'miles';
-$withSafeArea = 0;
+$distanceUnit = null;
 
 if ($isNewUser) {
     try {
-        $stmt = $pdo->prepare(
-            "INSERT INTO `mario-kart-world-users` (id_google, username, email, locale, distance_unit)
-            VALUES (:idGoogle, :username, :email, :locale, :distanceUnit)");
-
+        $stmt = $pdo->prepare("INSERT INTO `mario-kart-world-users` (id_google, username, email) VALUES (:idGoogle, :username, :email)");
+        
         $stmt->bindParam(':idGoogle', $payload['sub'], PDO::PARAM_STR);
         $stmt->bindParam(':username', $payload['name'], PDO::PARAM_STR);
         $stmt->bindParam(':email', $payload['email'], PDO::PARAM_STR);
-        $stmt->bindParam(':locale', $locale, PDO::PARAM_STR);
-        $stmt->bindParam(':distanceUnit', $distanceUnit, PDO::PARAM_STR);
-
+        
         $stmt->execute();
         
         $userId = $pdo->lastInsertId();
@@ -183,9 +177,7 @@ if ($isNewUser) {
     $email = $user['email'];
     $name = $user['username'];
     $marioCharacter = $user['marioCharacter'];
-    $locale = $user['locale'];
     $distanceUnit = $user['distanceUnit'];
-    $withSafeArea = (int) $user['withSafeArea'];
 }
 
 require_once __DIR__ . '/___auth_response.php';

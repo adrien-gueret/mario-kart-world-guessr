@@ -10,7 +10,7 @@
      
     if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
         header("Access-Control-Allow-Origin: " . $origin);
-        header("Access-Control-Allow-Methods: OPTIONS, GET, POST, PUT, PATCH, DELETE");
+        header("Access-Control-Allow-Methods: OPTIONS, GET, POST, PUT, DELETE");
         http_response_code(204);
         die('{"success":true}');
     }
@@ -39,7 +39,7 @@
            
             if ($accessToken) {
                 $stmt = $pdo->prepare("SELECT u.id, u.email, u.username, u.mario_character as marioCharacter,
-                                        u.locale, u.distance_unit as distanceUnit, u.with_safe_area as withSafeArea,
+                                        u.locale, u.distance_unit as distanceUnit,
                                         t.token as accessToken, t.refresh_token as refreshToken,
                                         t.expired_at as expiredAt
                                         FROM `mario-kart-world-users` u
@@ -88,7 +88,6 @@
 
         switch ($method) {
             case 'PUT':
-            case 'PATCH':
             case 'DELETE':
                 $input = file_get_contents("php://input");
                 $bodyParams = [];

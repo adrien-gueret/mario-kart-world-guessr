@@ -1,4 +1,3 @@
-import useNavigate from "@/services/useNavigate";
 import { useTranslations } from "@/i18n";
 
 import Button from "@/components/Button";
@@ -6,9 +5,11 @@ import ConstraintContainer from "@/components/ConstraintContainer";
 import Surface from "@/components/Surface";
 import Text from "@/components/Text";
 
+import { useScreen } from "@/screens/ScreensProvider";
+
 function TermsServices() {
   const { currentLocale, translate } = useTranslations();
-  const navigate = useNavigate();
+  const { setCurrentScreenName } = useScreen();
 
   return (
     <ConstraintContainer>
@@ -231,7 +232,7 @@ function TermsServices() {
       )}
 
       <div className="back-button">
-        <Button onClick={() => navigate("/")}>
+        <Button onClick={() => setCurrentScreenName("Home")}>
           {translate("home.button")}
         </Button>
       </div>

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 
 import { useCurrentUser } from "@/auth/CurrentUserProvider";
 
@@ -17,23 +16,21 @@ import fetchApi from "@/services/api";
 
 import type { LeaderboardsResponse, GameMode, Difficulty } from "@/types/game";
 
+import { useScreen } from "../ScreensProvider";
+
 import "./Leaderboards.css";
 import Button from "@/components/Button";
 
-// TODO: add chrono mode
-const allGameModes: GameMode[] = ["goal", "survival"];
-
-const allDifficulties: Difficulty[] = ["50cc", "100cc", "150cc", "mirror"];
-
 function Leaderboards() {
-  const { mode: gameMode, difficulty: gameDifficulty } = useParams<{
-    mode: GameMode;
-    difficulty: Difficulty;
-  }>();
-  const navigate = useNavigate();
+  const { setCurrentScreenName, state } = useScreen();
 
   const [leaderboard, setLeaderboard] = useState<LeaderboardsResponse>([]);
-
+  const [gameMode, setGameMode] = useState<GameMode>(
+    () => state.gameMode || "survival"
+  );
+  const [gameDifficulty, setGameDifficulty] = useState<Difficulty>(
+    () => state.gameDifficulty || "50cc"
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [shouldHideAnonymous, setShouldHideAnonymous] = useState(false);
   const [currentUserLeaderboardData, setCurrentUserLeaderboardData] = useState<{
@@ -46,16 +43,6 @@ function Leaderboards() {
   const { translate } = useTranslations();
 
   useEffect(() => {
-    if (!allDifficulties.includes(gameDifficulty as Difficulty)) {
-      navigate(`/leaderboards/${gameMode}`);
-      return;
-    }
-
-    if (!allGameModes.includes(gameMode as GameMode)) {
-      navigate(`/leaderboards/survival/${gameDifficulty}`);
-      return;
-    }
-
     setIsLoading(true);
 
     fetchApi(
@@ -78,7 +65,7 @@ function Leaderboards() {
         );
       })
       .finally(() => setIsLoading(false));
-  }, [gameMode, gameDifficulty, currentUser.id, navigate]);
+  }, [gameMode, gameDifficulty, currentUser.id]);
 
   return (
     <div className="leaderboards-screen">
@@ -87,8 +74,8 @@ function Leaderboards() {
       <Text>{translate("leaderboards.description")}</Text>
 
       <h3>{translate("leaderboards.mode")}</h3>
-
-      {allGameModes.map((mode) => (
+      {/* TODO: add chrono */}
+      {(["goal", "survival"] as GameMode[]).map((mode) => (
         <span key={mode} className="checkbox-large">
           <Checkbox
             name="game-mode"
@@ -98,11 +85,7 @@ function Leaderboards() {
               </span>
             }
             checked={gameMode === mode}
-            onChange={() =>
-              navigate(`/leaderboards/${mode}/${gameDifficulty}`, {
-                preventScrollReset: true,
-              })
-            }
+            onChange={() => setGameMode(mode)}
             isRadio
           />
         </span>
@@ -110,26 +93,24 @@ function Leaderboards() {
 
       <h3>{translate("leaderboards.difficulty")}</h3>
 
-      {allDifficulties.map((difficulty) => (
-        <span key={difficulty} className="checkbox-large">
-          <Checkbox
-            name="game-difficulty"
-            label={
-              <span className="leaderboards-label-with-icon">
-                {translate(`difficulty.${difficulty}.title`)}{" "}
-                <DifficultyIcon difficulty={difficulty} />
-              </span>
-            }
-            checked={gameDifficulty === difficulty}
-            onChange={() =>
-              navigate(`/leaderboards/${gameMode}/${difficulty}`, {
-                preventScrollReset: true,
-              })
-            }
-            isRadio
-          />
-        </span>
-      ))}
+      {(["50cc", "100cc", "150cc", "mirror"] as Difficulty[]).map(
+        (difficulty) => (
+          <span key={difficulty} className="checkbox-large">
+            <Checkbox
+              name="game-difficulty"
+              label={
+                <span className="leaderboards-label-with-icon">
+                  {translate(`difficulty.${difficulty}.title`)}{" "}
+                  <DifficultyIcon difficulty={difficulty} />
+                </span>
+              }
+              checked={gameDifficulty === difficulty}
+              onChange={() => setGameDifficulty(difficulty)}
+              isRadio
+            />
+          </span>
+        )
+      )}
 
       {isLoading && leaderboard.length === 0 ? (
         <Loader />
@@ -140,14 +121,14 @@ function Leaderboards() {
               ? translate("leaderboards.not-logged-in")
               : currentUserLeaderboardData
               ? translate("leaderboards.currentUserScore")(
-                  gameMode!,
-                  gameDifficulty!,
+                  gameMode,
+                  gameDifficulty,
                   currentUserLeaderboardData.photoCount,
                   currentUserLeaderboardData.rank
                 )
               : translate("leaderboards.not-played-yet")(
-                  gameMode!,
-                  gameDifficulty!
+                  gameMode,
+                  gameDifficulty
                 )}
           </Text>
 
@@ -183,7 +164,7 @@ function Leaderboards() {
         </div>
       )}
 
-      <Button variant="primary" onClick={() => navigate("/")}>
+      <Button variant="primary" onClick={() => setCurrentScreenName("Home")}>
         {translate("home.button")}
       </Button>
     </div>
