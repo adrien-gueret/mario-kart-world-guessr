@@ -26,7 +26,7 @@ const fr: Texts = {
     "Continuez à jouer tant que vous marquez assez de points !",
   "mode.daily.label": "Photos du jour",
   "mode.daily.description":
-    "Chaque jour, une nouvelle sélection de cinq photos : faites un meilleur score que vos amis !",
+    "Chaque jour, une nouvelle sélection de cinq photos : faites un meilleur score que vos amis&nbsp;!",
   "choose.difficulty": "Choisissez la difficulté",
   "difficulty.label": "Difficulté : ",
   "difficulty.50cc.title": "50cc",
@@ -376,6 +376,7 @@ const fr: Texts = {
   "photos.showMap": "Afficher la carte",
   "photo.details.title": "Suggestions des joueurs",
   "photo.by": "Photo par",
+  "album.by": "Un album par",
   "login.screen.title": "Se connecter",
   "login.screen.description": (
     <>
@@ -391,6 +392,8 @@ const fr: Texts = {
   "see-release-notes.label": "Voir toutes les notes de version",
   "release-notes.title": "Notes de version",
   "form.submit": "Envoyer",
+  "form.confirm": "Confirmer",
+  "form.cancel": "Annuler",
   "account.title": "Mon compte",
   "account.username.label": "Pseudo",
   "account.username.helper":
@@ -403,6 +406,8 @@ const fr: Texts = {
   "account.distanceUnit.miles": "Miles",
   "account.distanceUnit.helper":
     "Unité utilisée pour l'affichage des distances sur la carte.",
+  "account.withSafeArea.label": "Zone de sécurité",
+  "account.withSafeArea.helper": `Cette option ajoute une zone non clicable autour du bouton "Deviner", permettant d'éviter des clics accidentels.`,
   "account.save.success": "Modifications enregistrées avec succès",
   "play.label": "Jouer",
   "account.marioCharacter.label": "Sélectionnez votre personnage favori",
@@ -557,7 +562,32 @@ const fr: Texts = {
     "Créez des albums avec vos photos et partagez-les !",
   "account.albums.create.title": "Créer un nouvel album",
   "account.albums.create.name": "Nom de l'album",
-  "account.albums.create.success": "Album créé avec succès !",
+  "account.albums.create.defaultName": "Mon album",
+  "account.albums.create.success": "Album créé avec succès.",
+  "account.albums.delete.title": "Supprimer l'album",
+  "account.albums.delete.warning": (
+    <>
+      Êtes-vous sûr de vouloir supprimer cet album&nbsp;?
+      <br />
+      Les photos qu'il contient ne seront <b>pas</b> supprimées, mais l'album
+      lui-même ne pourra pas être récupéré.
+    </>
+  ),
+  "account.albums.delete.success": "Album supprimé avec succès.",
+  "account.albums.delete.photo": "Supprimer cette photo de l'album",
+  "account.albums.photo.select.title": "Sélectionner une photo",
+  "account.albums.photo.select.description":
+    "Seules vos photos validées peuvent être ajoutées dans un album.",
+  "album.edit.name.success": "Nom de l'album mis à jour.",
+  "album.edit.photos.success": "Photos de l'album mises à jour.",
+  "error.title": "Oups ! Une erreur est survenue.",
+  "error.description":
+    "Une erreur inattendue s'est produite... Tout est cassé !",
+  "error.button": "Retour à l'accueil",
+  "error.logoutWarning.title": "Vous avez été déconnecté(e)",
+  "error.logoutWarning.description":
+    "Une erreur est survenue sur votre session : par sécurité, elle a été expirée et vous avez été déconnecté(e). Veuillez vous reconnecter.",
+  "error.logoutWarning.button": "Se reconnecter",
 
   //////
   "gold_50cc_survival.description":
@@ -607,11 +637,16 @@ const fr: Texts = {
   "4000_three_in_a_row.description":
     "Vous avez fait au moins 4000 points trois fois de suite !",
   "4000_three_in_a_row.unlockedItem": "Lakitu est débloqué !",
-  "lakitu.unlockClue": "Faire au moins 4000 points trois fois de suite.",
+  "lakitu.unlockClue": "Faites au moins 4000 points trois fois de suite.",
 
   "photo_validated.description": "Une de vos photos a été validée !",
   "photo_validated.unlockedItem": "Toadette est débloquée !",
   "toadette.unlockClue": "Ayez une photo publiée dans le jeu.",
+
+  "break_everything.description": "Vous avez cassé le jeu !",
+  "break_everything.unlockedItem": "Waluigi est débloqué !",
+  "waluigi.unlockClue":
+    "Cassez le jeu en accédant à quelque chose d'inhabituel.",
 };
 
 export default fr;

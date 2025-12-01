@@ -20,6 +20,12 @@
   animation-delay: 0s;
 }
 
+.modal-overlay.drawer {
+  justify-content: flex-end;
+  padding: 0;
+  align-items: stretch;
+}
+
 @keyframes opacityFadeIn {
   from {
     opacity: 0;
@@ -31,7 +37,7 @@
 
 .modal-box {
   --skew: -10deg;
-  animation: slideModal 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  animation: slideModalY 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
   animation-delay: 1s;
   opacity: 0;
   overflow: auto;
@@ -48,6 +54,18 @@
 .modal-box.no-skew {
   --skew: -0;
 }
+.drawer .modal-box {
+  border-radius: 0;
+  animation: slideModalX 0.3s ease-in forwards;
+  width: 50%;
+  max-height: 100vh;
+}
+
+@media screen and (max-width: 600px) {
+  .drawer .modal-box {
+    width: 100%;
+  }
+}
 
 .modal-overlay.no-delay .modal-box {
   animation-delay: 0s;
@@ -57,13 +75,24 @@
   margin-bottom: 0;
 }
 
-@keyframes slideModal {
+@keyframes slideModalY {
   from {
     transform: translateY(-100%) skewX(var(--skew));
     opacity: 0;
   }
   to {
     transform: translateY(0) skewX(var(--skew));
+    opacity: 1;
+  }
+}
+
+@keyframes slideModalX {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
     opacity: 1;
   }
 }

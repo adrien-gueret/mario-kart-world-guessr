@@ -1,11 +1,13 @@
 import { GoogleLogin } from "@react-oauth/google";
 
+import { useTranslations } from "@/i18n";
 import fetchApi from "@/services/api";
 
 import { useCurrentUser } from "./CurrentUserProvider";
 
 export default function GoogleLoginButton() {
   const { setCurrentUser } = useCurrentUser();
+  const { setCurrentLocale } = useTranslations();
 
   return (
     <GoogleLogin
@@ -19,6 +21,7 @@ export default function GoogleLoginButton() {
         delete user.isNewUser;
 
         setCurrentUser(user);
+        setCurrentLocale(user.locale ?? "en");
       }}
       onError={() => {
         console.log("Login Failed");
