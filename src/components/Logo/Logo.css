@@ -7,8 +7,15 @@
   view-transition-name: logo;
 }
 
-.app-Home .logo {
+.logo.logo-big {
   max-width: 50vw;
+}
+
+.logo.logo-corner {
+  max-width: 10vw;
+  position: absolute;
+  top: 16px;
+  left: 16px;
 }
 
 .logo > img {

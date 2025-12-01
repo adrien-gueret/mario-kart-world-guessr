@@ -1,21 +1,24 @@
 import { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { useCurrentUser } from "@/auth/CurrentUserProvider";
-import { useScreen } from "@/screens/ScreensProvider";
 
 export default function useRequiredAuth() {
   const { isAnonymous } = useCurrentUser();
-  const { currentScreenName, setCurrentScreenName } = useScreen();
+
+  const location = useLocation();
+  // TODO: check location
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isAnonymous) {
-      setCurrentScreenName("Login", {
+      navigate("/login", {
         state: {
-          targetScreenName: currentScreenName,
+          targetUrl: location.pathname,
         },
       });
     }
-  }, [isAnonymous, setCurrentScreenName, currentScreenName]);
+  }, [isAnonymous, navigate, location.pathname]);
 
   return isAnonymous;
 }

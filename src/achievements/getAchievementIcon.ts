@@ -15,6 +15,7 @@ export default function getAchievementIcon(
     "5000_points": "./ui/characters/shyguy.png",
     "4000_three_in_a_row": "./ui/characters/lakitu.png",
     photo_validated: "./ui/characters/toadette.png",
+    break_everything: "./ui/characters/waluigi.png",
   };
 
   return iconMap[achievementId];

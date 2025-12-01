@@ -1,4 +1,5 @@
 import { useState } from "react";
+import useNavigate from "@/services/useNavigate";
 
 import Button from "@/components/Button";
 import Loader from "@/components/Loader";
@@ -14,8 +15,6 @@ import { useCurrentUser } from "@/auth/CurrentUserProvider";
 import fetchApi from "@/services/api";
 import useRequiredAuth from "@/services/useRequiredAuth";
 
-import { useScreen } from "@/screens/ScreensProvider";
-
 import { type Coordinates } from "@/types/location";
 
 import { useTranslations } from "@/i18n";
@@ -26,7 +25,7 @@ import "./Upload.css";
 
 function Upload() {
   const { user } = useCurrentUser();
-  const { setCurrentScreenName } = useScreen();
+  const navigate = useNavigate();
 
   const [locationCoordinates, setLocationCoordinates] =
     useState<Coordinates | null>(null);
@@ -96,7 +95,7 @@ function Upload() {
             <div className="upload-helper">
               <img src="./ui/upload/need-help.png" draggable={false} alt="" />
               <Button
-                onClick={() => setCurrentScreenName("UploadHelp")}
+                onClick={() => navigate("/uploadhelp")}
                 variant="secondary"
               >
                 {translate("need.help")}
