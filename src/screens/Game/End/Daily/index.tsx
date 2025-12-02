@@ -114,7 +114,7 @@ export default function DailyEnd({
       textToShare += `${numberToEmoji(index + 1)} - ${score}\n`;
     });
 
-    textToShare += `🏁 - ${totalScore}\n\nhttps://www.mariouniversalis.fr/mario-kart-world-guessr/#/dailygame`;
+    textToShare += `🏁 - ${totalScore}\n\nhttps://www.mariouniversalis.fr/mario-kart-world-guessr/dailygame`;
 
     return textToShare;
   };

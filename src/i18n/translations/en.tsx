@@ -423,7 +423,7 @@ const en: Texts = {
   "leaderboards.hide-anonymous": "Hide anonymous players",
   "leaderboards.not-logged-in": (
     <>
-      You are not logged in. <a href="#/login">Log in</a> to see your score in
+      You are not logged in. <a href="./login">Log in</a> to see your score in
       the leaderboard.
     </>
   ),

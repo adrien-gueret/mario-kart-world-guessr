@@ -57,7 +57,7 @@ export default function Account({ activeTab = "/account/preferences" }: Props) {
                 </div>
               ),
               value: "Account/Preferences",
-              href: "#/account/preferences",
+              href: "./account/preferences",
             },
             {
               children: (
@@ -67,7 +67,7 @@ export default function Account({ activeTab = "/account/preferences" }: Props) {
                 </div>
               ),
               value: "Account/Photos",
-              href: "#/account/photos",
+              href: "./account/photos",
             },
             {
               children: (
@@ -79,7 +79,7 @@ export default function Account({ activeTab = "/account/preferences" }: Props) {
                 </div>
               ),
               value: "Account/Notifications",
-              href: "#/account/notifications",
+              href: "./account/notifications",
             },
           ]}
           tabComponent="a"
