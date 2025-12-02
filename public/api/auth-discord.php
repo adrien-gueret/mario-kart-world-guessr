@@ -16,7 +16,7 @@ $code = $_POST['token'];
 
 $client_id = getenv('DISCORD_CLIENT_ID');
 $client_secret = getenv('DISCORD_CLIENT_SECRET');
-$redirect_uri = $isDev ? 'https://localhost:5173/' : 'https://www.mariouniversalis.fr/mario-kart-world-guessr/';
+$redirect_uri = $isDev ? 'https://localhost:5173/mario-kart-world-guessr/' : 'https://www.mariouniversalis.fr/mario-kart-world-guessr/';
 
 $data = [
     'client_id' => $client_id,
