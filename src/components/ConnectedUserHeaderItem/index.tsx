@@ -15,7 +15,7 @@ export default function ConnectedUserHeaderItem() {
       {unreadNotificationCount > 0 && (
         <a
           className="notification-badge"
-          href="/account/notifications"
+          href="./account/notifications"
           title={translate("notifications.title")}
         >
           <b>{unreadNotificationCount}</b>
