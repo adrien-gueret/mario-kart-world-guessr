@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import { AchievementsProvider } from "./achievements/AchievementsProvider.tsx";
-import { NotificationsProvider } from "./notifications/NotificationsProvider";
+
 import { TranslationsProvider } from "./i18n";
 import { SnackbarsProvider } from "./snackbars/SnackbarsProvider";
 
@@ -27,11 +27,9 @@ createRoot(document.getElementById("root")!).render(
     <TranslationsProvider>
       <GoogleOAuthProvider clientId="1063543539522-m89mibo9kp0esu299c8jgj2bali17ltl.apps.googleusercontent.com">
         <AchievementsProvider>
-          <NotificationsProvider>
-            <SnackbarsProvider>
-              <Router />
-            </SnackbarsProvider>
-          </NotificationsProvider>
+          <SnackbarsProvider>
+            <Router />
+          </SnackbarsProvider>
         </AchievementsProvider>
       </GoogleOAuthProvider>
     </TranslationsProvider>

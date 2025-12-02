@@ -19,6 +19,7 @@ import { storeKey } from "@/services/store";
 import type { User } from "@/types/user";
 import fetchApi from "@/services/api";
 import Loader from "@/components/Loader";
+import { NotificationsProvider } from "@/notifications/NotificationsProvider";
 
 type CurrentUserContextType = {
   user: User;
@@ -153,7 +154,7 @@ export function CurrentUserProvider({ children }: { children: ReactNode }) {
         logout,
       }}
     >
-      {children}
+      <NotificationsProvider>{children}</NotificationsProvider>
     </CurrentUserContext>
   );
 }
