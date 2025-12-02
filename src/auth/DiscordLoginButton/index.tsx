@@ -3,7 +3,7 @@ import { useTranslations } from "@/i18n";
 import "./DiscordLoginButton.css";
 
 const DISCORD_APP_ID = "1393924724299530331";
-const redirectUri = `${window.location.origin}${window.location.pathname}`;
+const redirectUri = `${window.location.origin}/mario-kart-world-guessr/`;
 
 export default function DiscordLoginButton({
   targetUrl = "/account",
