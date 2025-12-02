@@ -6,7 +6,7 @@ import "./ConnectedUserHeaderItem.css";
 
 export default function ConnectedUserHeaderItem() {
   const { unreadNotificationCount } = useNotifications();
-  
+
   const { user, logout } = useCurrentUser();
   const { translate } = useTranslations();
 
@@ -15,7 +15,7 @@ export default function ConnectedUserHeaderItem() {
       {unreadNotificationCount > 0 && (
         <a
           className="notification-badge"
-          href="#/account/notifications"
+          href="/account/notifications"
           title={translate("notifications.title")}
         >
           <b>{unreadNotificationCount}</b>
@@ -28,7 +28,7 @@ export default function ConnectedUserHeaderItem() {
           alt=""
         />
       )}
-      <a href="#/account">
+      <a href="./account">
         <b>{user.username}</b>
       </a>
       &bull;

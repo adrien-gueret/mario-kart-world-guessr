@@ -433,7 +433,7 @@ const fr: Texts = {
   "leaderboards.hide-anonymous": "Masquer les joueurs anonymes",
   "leaderboards.not-logged-in": (
     <>
-      Vous n'êtes pas connecté. <a href="#/login">Connectez-vous</a> pour voir
+      Vous n'êtes pas connecté. <a href="./login">Connectez-vous</a> pour voir
       votre score dans le classement.
     </>
   ),
