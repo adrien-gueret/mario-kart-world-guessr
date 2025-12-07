@@ -44,7 +44,10 @@ export function NotificationsProvider({ children }: { children: ReactNode }) {
       formData.append("notificationId", String(notificationId));
       const response = await fetchApi("/notification", "DELETE", formData);
       const newNotifications = await response.json();
-      setAllNotifications(newNotifications);
+
+      if (Array.isArray(newNotifications)) {
+        setAllNotifications(newNotifications);
+      }
     },
     [isAnonymous]
   );
@@ -56,7 +59,9 @@ export function NotificationsProvider({ children }: { children: ReactNode }) {
 
     const response = await fetchApi("/clear-notifications", "DELETE");
     const newNotifications = await response.json();
-    setAllNotifications(newNotifications);
+    setAllNotifications(
+      Array.isArray(newNotifications) ? newNotifications : []
+    );
   }, [isAnonymous]);
 
   const fetchNotifications = useCallback(async () => {
@@ -67,7 +72,10 @@ export function NotificationsProvider({ children }: { children: ReactNode }) {
     setIsLoading(true);
     const response = await fetchApi("/notifications");
     const notifications = await response.json();
-    setAllNotifications(notifications);
+    if (Array.isArray(notifications)) {
+      setAllNotifications(notifications);
+    }
+
     setIsLoading(false);
   }, [isAnonymous]);
 

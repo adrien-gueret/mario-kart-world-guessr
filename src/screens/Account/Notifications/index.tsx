@@ -31,7 +31,11 @@ export default function Notifications() {
               }}
             >
               <Button
-                onClick={clearNotifications}
+                onClick={async () => {
+                  setIsDeletingAll(true);
+                  await clearNotifications();
+                  setIsDeletingAll(false);
+                }}
                 variant="tertiary"
                 disabled={isDeletingAll}
               >
