@@ -82,7 +82,7 @@ export default async function fetchApi(
       });
     } catch (e) {
       storeKey("currentUser", null);
-      window.location.hash = "./logout-warning";
+      window.location.href = "./logout-warning";
     }
   }
 
