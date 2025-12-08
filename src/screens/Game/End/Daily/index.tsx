@@ -108,7 +108,7 @@ export default function DailyEnd({
   const canShare = Boolean(navigator.share);
 
   const getTextToShare = () => {
-    let textToShare = `${translate("share.text.title")}\n\n`;
+    let textToShare = `${translate("share.daily.title")}\n\n`;
 
     gameHistory.forEach((score, index) => {
       textToShare += `${numberToEmoji(index + 1)} - ${score}\n`;

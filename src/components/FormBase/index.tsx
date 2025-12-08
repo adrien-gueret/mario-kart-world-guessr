@@ -15,6 +15,7 @@ type Props = {
   children?: ReactNode;
   id?: string;
   successMessage: string;
+  onProcessingChange?: (isProcessing: boolean) => void;
   onSuccess?: (response: any) => void;
   onError?: (error: { message: string }) => void;
 };
@@ -52,6 +53,7 @@ export default function FormBase({
   id,
   successMessage,
   method = "POST",
+  onProcessingChange = () => {},
   onSuccess = () => {},
   onError = (error) => {
     console.error("Form submission error:", error);
@@ -69,8 +71,10 @@ export default function FormBase({
       }
 
       setIsProcessing(true);
+      onProcessingChange(true);
       const { success, data } = await submitFormAndCallAPI(event, method);
       setIsProcessing(false);
+      onProcessingChange(false);
 
       if (success) {
         onSuccess(data);
