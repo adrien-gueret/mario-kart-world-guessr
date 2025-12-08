@@ -318,12 +318,17 @@ const fr: Texts = {
   "endGame.daily.next": "Prochaines photos du jour dans : ",
   "endGame.next-button.label": "Suivant",
   "endGame.see-leaderboards": "Voir tout le classement",
-  "share.text.title": "Mario Kart World Guessr - Photos du jour",
+  "share.daily.title": "Mario Kart World Guessr - Photos du jour",
+  "share.album.description.myself": `Découvrez cet album de photos de "Mario Kart World" que j'ai créé via "Mario Kart World Guessr".`,
+  "share.album.description.other": (authorName: string) =>
+    `Découvrez cet album de photos de "Mario Kart World", créé par ${authorName} via "Mario Kart World Guessr".`,
   "share.copy.button.label": "Copier",
   "share.copy.success": "Copié dans le presse-papiers",
   "share.share.button.label": "Partager",
   "credits.by": "Un jeu par ",
   "credits.followOn": (platform: string) => `Suivre sur ${platform}`,
+  "global.see": "Voir",
+  "global.edit": "Modifier",
   "game.globalScore": "Score : ",
   "game.globalScore.photoIndex": "Photo n° ",
   "game.globalScore.showOtherPlayers":
@@ -580,6 +585,21 @@ const fr: Texts = {
     "Seules vos photos validées peuvent être ajoutées dans un album.",
   "album.edit.name.success": "Nom de l'album mis à jour.",
   "album.edit.photos.success": "Photos de l'album mises à jour.",
+  "album.edit.photo.processing": "Traitement en cours...",
+  "album.edit.back": "Tous mes albums",
+  "album.edit.this": "Modifier cet album",
+  "album.edit.publish": "Publier",
+  "album.edit.unpublish": "Dépublier",
+  "album.edit.publish.success": "Album publié avec succès.",
+  "album.edit.unpublish.success": "Album dépublié avec succès.",
+  "album.status.published": (
+    <>
+      Cet album est publié et visible par tout le monde : partagez son
+      lien&nbsp;!
+    </>
+  ),
+  "album.status.unpublished":
+    "Cet album est privé et n'est visible que par vous.",
   "error.title": "Oups ! Une erreur est survenue.",
   "error.description":
     "Une erreur inattendue s'est produite... Tout est cassé !",

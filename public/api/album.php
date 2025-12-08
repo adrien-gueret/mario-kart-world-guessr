@@ -8,12 +8,6 @@ require_once __DIR__ . '/___album.php';
 
 allowMethod('GET');
 
-if (empty($currentUser)) {
-    http_response_code(401);
-    echo json_encode(['error' => true, 'message' => 'Unauthorized']);
-    exit;
-}
-
 $albumId = $_GET['id'];
 
 if (!isset($albumId) || !is_numeric($albumId)) {
@@ -22,7 +16,7 @@ if (!isset($albumId) || !is_numeric($albumId)) {
 }
 
 try {
-    $albumData = getAlbumById($pdo, $albumId, $currentUser['id']);
+    $albumData = getAlbumById($pdo, $albumId, empty($currentUser) ? 0 :$currentUser['id']);
 
     if (empty($albumData)) {
         http_response_code(404);

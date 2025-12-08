@@ -83,6 +83,10 @@ h3 {
   gap: 64px;
 }
 
+.app-container.corner {
+  padding-top: 64px;
+}
+
 .app-header {
   display: flex;
   flex-direction: row;

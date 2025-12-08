@@ -25,7 +25,7 @@
 }
 
 .card__icon {
-  border: 5px solid #0f5397;
+  border: 5px solid;
   border-color: #0094ff;
   background: #1366b7;
   background-image: url(./backgrounds/dirt.webp);

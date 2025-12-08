@@ -1,10 +1,4 @@
-import {
-  Outlet,
-  ScrollRestoration,
-  useNavigation,
-  useOutlet,
-  useOutletContext,
-} from "react-router-dom";
+import { Outlet, ScrollRestoration, useNavigation } from "react-router-dom";
 
 import { CurrentUserProvider } from "@/auth/CurrentUserProvider";
 
@@ -34,7 +28,7 @@ function MainLayout({
     <CurrentUserProvider>
       <ScrollRestoration />
       {!shouldHideHeader && <Header showHomeButton={!shouldHideHomeButton} />}
-      <div className="app-container">
+      <div className={`app-container ${logoVariant}`}>
         <Logo variant={logoVariant} />
 
         {enableLoader && state === "loading" ? <Loader /> : <Outlet />}

@@ -1,5 +1,4 @@
 .album-container {
-  margin-top: 64px;
   background-color: #e3e3e3;
   box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.15);
   border: 3px solid #213547;
@@ -131,6 +130,19 @@ button.album-item:focus svg {
   transform: scale(1.1);
 }
 
+button.album-item.zoomable {
+  cursor: zoom-in;
+  transition: transform 0.2s ease;
+  z-index: 0;
+  position: relative;
+}
+
+button.album-item.zoomable:hover,
+button.album-item.zoomable:focus-visible {
+  transform: scale(1.05);
+  z-index: 9000;
+}
+
 .album-select-photo-button {
   padding: 0;
   border: 0;
@@ -191,4 +203,23 @@ button.album-item:focus svg {
   right: 8px;
   background-color: #fff;
   border-radius: 50%;
+}
+
+.zoomed-photo-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9000;
+}
+
+.zoomed-photo-container input {
+  cursor: zoom-out;
+  max-width: 90vw;
+  z-index: 9000;
 }

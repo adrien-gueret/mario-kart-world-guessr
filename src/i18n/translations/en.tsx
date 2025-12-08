@@ -189,22 +189,19 @@ const en: Texts = {
   "difficulty.chrono.50cc.short": (
     <>
       Score the most points in <b>5 minutes</b>.<br />
-      Increase this time by <b>15 seconds</b> each time you score 4000
-      points&nbsp;!
+      Increase this time by <b>15 seconds</b> each time you score 4000 points!
     </>
   ),
   "difficulty.chrono.100cc.short": (
     <>
       Score the most points in <b>4 minutes</b>.<br />
-      Increase this time by <b>10 seconds</b> each time you score 4000
-      points&nbsp;!
+      Increase this time by <b>10 seconds</b> each time you score 4000 points!
     </>
   ),
   "difficulty.chrono.150cc.short": (
     <>
       Score the most points in <b>3 minutes</b>.<br />
-      Increase this time by <b>5 seconds</b> each time you score 4000
-      points&nbsp;!
+      Increase this time by <b>5 seconds</b> each time you score 4000 points!
     </>
   ),
   "difficulty.goal.50cc.short": (
@@ -233,8 +230,7 @@ const en: Texts = {
   "difficulty.chrono.mirror.short": (
     <>
       Score the most points in <b>3 minutes</b>.<br />
-      Increase this time by <b>5 seconds</b> each time you score 4000
-      points&nbsp;!
+      Increase this time by <b>5 seconds</b> each time you score 4000 points!
     </>
   ),
   "survival.harderGame.title": "Increased difficulty!",
@@ -247,7 +243,7 @@ const en: Texts = {
         From now on, the game continues as long as you score {minimumScore}{" "}
         points
       </b>
-      &nbsp;!
+      !
     </p>
   ),
   "survival.harderGame.okButton": "OK",
@@ -312,12 +308,17 @@ const en: Texts = {
   "endGame.daily.next": "Next daily photos in: ",
   "endGame.next-button.label": "Next",
   "endGame.see-leaderboards": "See whole leaderboard",
-  "share.text.title": "Mario Kart World Guessr - Daily Photos",
+  "share.daily.title": "Mario Kart World Guessr - Daily Photos",
+  "share.album.description.myself": `Check out this "Mario Kart World" photo album I created via "Mario Kart World Guessr".`,
+  "share.album.description.other": (authorName: string) =>
+    `Check out this "Mario Kart World" photo album created by ${authorName} via "Mario Kart World Guessr".`,
   "share.copy.button.label": "Copy",
   "share.copy.success": "Copied to clipboard",
   "share.share.button.label": "Share",
   "credits.by": "A game by ",
   "credits.followOn": (platform: string) => `Follow on ${platform}`,
+  "global.see": "See",
+  "global.edit": "Edit",
   "game.globalScore": "Score: ",
   "game.globalScore.photoIndex": "Photo #",
   "game.globalScore.showOtherPlayers":
@@ -557,6 +558,16 @@ const en: Texts = {
   "account.albums.create.success": "Album created successfully.",
   "album.edit.name.success": "Album name updated successfully.",
   "album.edit.photos.success": "Album photos updated successfully.",
+  "album.edit.photo.processing": "Processing...",
+  "album.edit.back": "Back to my albums",
+  "album.edit.this": "Edit this album",
+  "album.edit.publish": "Publish",
+  "album.edit.unpublish": "Unpublish",
+  "album.edit.publish.success": "Album published successfully.",
+  "album.edit.unpublish.success": "Album unpublished successfully.",
+  "album.status.published":
+    "This album is published and visible to everyone — share its link!",
+  "album.status.unpublished": "This album is private and visible only to you.",
   "account.albums.delete.title": "Delete album",
   "account.albums.delete.warning": (
     <>

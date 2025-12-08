@@ -8,6 +8,6 @@ export default function AlbumId() {
   const { album } = useLoaderData<{
     album: Album;
   }>();
-  console.log(album);
+
   return <AlbumComponent {...album} />;
 }

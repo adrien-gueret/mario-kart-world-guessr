@@ -4,8 +4,7 @@ function getAlbumById(PDO $pdo, string $albumId, int $currentUserId = 0): ?array
     $stmt = $pdo->prepare(
         "SELECT
             a.id, a.album_name, a.author_id, a.is_published, a.created_at,
-            u.username AS author_name,
-            u.mario_character
+            u.username AS author_name, u.locale, u.mario_character
         FROM `mario-kart-world-albums` AS a
         LEFT JOIN `mario-kart-world-users` AS u ON a.author_id = u.id
         WHERE a.id = :albumId AND (a.author_id = :authorId OR a.is_published = 1)");
@@ -48,6 +47,7 @@ function getAlbumById(PDO $pdo, string $albumId, int $currentUserId = 0): ?array
         'author' => [
             'id' => (int) $albumData['author_id'],
             'name' => $albumData['author_name'],
+            'locale' => $albumData['locale'],
             'character' => $albumData['mario_character'],
         ],
         'photos' => array_map(fn($photo) => [
