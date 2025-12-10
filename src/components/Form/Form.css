@@ -24,7 +24,7 @@
   cursor: pointer;
 }
 
-.form input {
+.form input:not(.no-form-style) {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;

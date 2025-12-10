@@ -2,7 +2,6 @@ import { useState, useMemo, type CSSProperties } from "react";
 import { flushSync, createPortal } from "react-dom";
 
 import { useTranslations } from "@/i18n";
-import useNavigate from "@/services/useNavigate";
 import type { Album, AlbumPhoto } from "@/types/photos";
 
 import getPositionedAlbumPhotos from "./getPositionedAlbumPhotos";
@@ -23,13 +22,15 @@ type MinimalPhoto = {
 
 export default function AlbumReadOnly({
   id,
+  coverUrl,
   name,
   author,
   photos,
   isPublished,
+  backgroundColor,
+  backgroundImage,
   isCurrentUserTheAuthor,
 }: Props) {
-  const navigate = useNavigate();
   const { translate } = useTranslations();
   const [zoomedPhoto, setZoomedPhoto] = useState<MinimalPhoto | null>(null);
   const [hoveredPhoto, setHoveredPhoto] = useState<MinimalPhoto | null>(null);
@@ -40,6 +41,11 @@ export default function AlbumReadOnly({
       photo: AlbumPhoto | undefined;
     }>
   >(() => getPositionedAlbumPhotos(photos), [photos]);
+
+  const albumStyle: CSSProperties & Record<`--${string}`, string> = {
+    ["--album-color"]: backgroundColor,
+    ["--album-image"]: `url("./backgrounds/albums/${backgroundImage}.jpg")`,
+  };
 
   const publishCallout = isCurrentUserTheAuthor ? (
     <AlbumPublicationCallout
@@ -64,9 +70,19 @@ export default function AlbumReadOnly({
 
   return (
     <>
+      <img
+        style={{
+          width: "80%",
+          maxWidth: "768px",
+          margin: "auto",
+        }}
+        src={coverUrl}
+        alt=""
+      />
+
       {publishCallout}
 
-      <article className="album-container">
+      <article className="album-container" style={albumStyle}>
         <header className="album-header">
           <h2 className="album-name">{name}</h2>
         </header>

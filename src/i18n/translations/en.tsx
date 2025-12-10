@@ -319,6 +319,8 @@ const en: Texts = {
   "credits.followOn": (platform: string) => `Follow on ${platform}`,
   "global.see": "See",
   "global.edit": "Edit",
+  "global.apply": "Apply",
+  "global.alpha": "Opacity",
   "game.globalScore": "Score: ",
   "game.globalScore.photoIndex": "Photo #",
   "game.globalScore.showOtherPlayers":
@@ -565,6 +567,10 @@ const en: Texts = {
   "album.edit.unpublish": "Unpublish",
   "album.edit.publish.success": "Album published successfully.",
   "album.edit.unpublish.success": "Album unpublished successfully.",
+  "album.edit.background.pattern": "Pattern",
+  "album.edit.background.color": "Color",
+  "album.edit.background.preview": "Preview",
+  "album.edit.background.success": "Album background updated.",
   "album.status.published":
     "This album is published and visible to everyone — share its link!",
   "album.status.unpublished": "This album is private and visible only to you.",
@@ -578,9 +584,13 @@ const en: Texts = {
     </>
   ),
   "account.albums.delete.success": "Album deleted successfully.",
+  "account.albums.background.title": "Change album background",
+  "account.albums.background.color": "Background color",
   "account.albums.photo.select.title": "Select a photo",
   "account.albums.photo.select.description":
     "Only your validated photos can be added to an album.",
+  "account.albums.photo.select.none":
+    "You don't have any validated photos yet, so you can't fill this album...",
   "account.albums.delete.photo": "Delete this photo from the album",
   "error.title": "Oops! Something went wrong.",
   "error.description": "An unexpected error occurred... Everything is broken!",

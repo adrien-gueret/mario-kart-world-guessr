@@ -12,21 +12,45 @@ if (empty($currentUser) || empty($currentUser['email'])) {
     die;
 }
 
-if (!isset($_PATCH['albumName']) || empty($_PATCH['albumId'])) {
+if (!isset($_PATCH['albumBackgroundImage']) || !isset($_PATCH['albumBackgroundColor']) || empty($_PATCH['albumId'])) {
     http_response_code(400);
-    echo json_encode(['error' => true, 'message' => 'Album name and ID are required']);
+    echo json_encode(['error' => true, 'message' => 'Album background info and ID are required']);
     die;
 }
 
-$albumName = trim($_PATCH['albumName']);
-if (mb_strlen($albumName) < 2 || mb_strlen($albumName) > 100) {
+$albumBackgroundColor = trim($_PATCH['albumBackgroundColor']);
+if (mb_strlen($albumBackgroundColor) != 9 && !preg_match('/^#([A-Fa-f0-9]{8})$/', $albumBackgroundColor)) {
     http_response_code(400);
 
     echo json_encode([
         'error' => true,
         'message' => $headers['accept-language'] === 'fr'
-            ? "Le nom de l'album doit faire entre 2 et 100 caractères."
-            : 'Album name must be between 2 and 100 characters.'
+            ? "La couleur doit être au format hexadécimal (#RRGGBBAA)."
+            : 'Album background color must be in hex format (#RRGGBBAA).'
+    ]);
+    die;
+}
+
+$albumBackgroundImage = trim($_PATCH['albumBackgroundImage']);
+$validBackgroundImages = [
+    "debris",
+    "squares",
+    "wood",
+    "stickers",
+    "food",
+    "checkerboard",
+    "dots",
+    "waves",
+    "tires"
+];
+if (!in_array($albumBackgroundImage, $validBackgroundImages, true)) {
+    http_response_code(400);
+
+    echo json_encode([
+        'error' => true,
+        'message' => $headers['accept-language'] === 'fr'
+            ? "L'image de fond de l'album n'est pas valide."
+            : 'Album background image is not valid.'
     ]);
     die;
 }
@@ -36,9 +60,10 @@ try {
     
     $stmt = $pdo->prepare(
         "UPDATE `mario-kart-world-albums`
-        SET album_name = :albumName
+        SET background_image = :albumBackgroundImage, background_color = :albumBackgroundColor
         WHERE id = :id AND author_id = :authorId");
-    $stmt->bindParam(':albumName', $albumName, PDO::PARAM_STR);
+    $stmt->bindParam(':albumBackgroundImage', $albumBackgroundImage, PDO::PARAM_STR);
+    $stmt->bindParam(':albumBackgroundColor', $albumBackgroundColor, PDO::PARAM_STR);   
     $stmt->bindParam(':id', $_PATCH['albumId'], PDO::PARAM_INT);
     $stmt->bindParam(':authorId', $currentUser['id'], PDO::PARAM_INT);
 
@@ -61,9 +86,9 @@ try {
    echo json_encode(["success" => true, "album" => [
         'id' => (int) $albumData['id'],
         'name' => $albumData['album_name'],
-        'isPublished' => (bool) $albumData['is_published'],
         'backgroundImage' => $albumData['background_image'],
         'backgroundColor' => $albumData['background_color'],
+        'isPublished' => (bool) $albumData['is_published'],
         'createdAt' => $albumData['created_at'],
         'author' => [
             'id' => (int) $albumData['author_id'],

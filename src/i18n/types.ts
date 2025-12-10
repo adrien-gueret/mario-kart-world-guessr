@@ -98,6 +98,8 @@ export type Texts = {
   "credits.followOn": (platform: string) => string;
   "global.see": string;
   "global.edit": string;
+  "global.apply": string;
+  "global.alpha": string;
   "game.globalScore": string;
   "game.globalScore.photoIndex": string;
   "game.globalScore.showOtherPlayers": string;
@@ -219,6 +221,8 @@ export type Texts = {
   "account.albums.delete.title": string;
   "account.albums.delete.warning": ReactNode;
   "account.albums.delete.success": string;
+  "account.albums.background.title": string;
+  "account.albums.background.color": string;
   "album.edit.name.success": string;
   "album.edit.photos.success": string;
   "album.edit.photo.processing": string;
@@ -228,11 +232,16 @@ export type Texts = {
   "album.edit.unpublish": string;
   "album.edit.publish.success": string;
   "album.edit.unpublish.success": string;
+  "album.edit.background.pattern": string;
+  "album.edit.background.color": string;
+  "album.edit.background.preview": string;
+  "album.edit.background.success": string;
   "album.status.published": ReactNode;
   "album.status.unpublished": string;
   "account.albums.delete.photo": string;
   "account.albums.photo.select.title": string;
   "account.albums.photo.select.description": string;
+  "account.albums.photo.select.none": string;
   "error.title": string;
   "error.description": string;
   "error.button": string;
