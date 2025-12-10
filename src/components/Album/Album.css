@@ -1,9 +1,17 @@
 .album-container {
-  background-color: #e3e3e3;
   box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.15);
   border: 3px solid #213547;
   text-align: left;
   position: relative;
+
+  background-image: linear-gradient(
+      0,
+      var(--album-color, transparent),
+      var(--album-color, transparent)
+    ),
+    var(--album-image, url("./backgrounds/albums/stains.jpg"));
+  background-repeat: repeat;
+  background-color: var(--main-bgcolor);
 }
 
 .album-header {
@@ -100,7 +108,7 @@
 
 .album-photos .album-placeholder {
   background-color: rgba(0, 0, 0, 0.04);
-  border: 2px dashed rgba(33, 53, 71, 0.08);
+  border: 2px dashed rgba(33, 53, 71, 0.5);
   color: #213547;
   font-weight: 600;
   visibility: visible;
@@ -122,6 +130,11 @@ button.album-item:hover,
 button.album-item:focus-visible {
   background-color: rgba(0, 0, 0, 0.08);
   border-color: rgba(33, 53, 71, 0.16);
+}
+
+button.album-item.album-placeholder:hover,
+button.album-item.album-placeholder:focus-visible {
+  border-color: rgba(33, 53, 71, 1);
 }
 
 button.album-item:hover svg,
@@ -222,4 +235,45 @@ button.album-item.zoomable:focus-visible {
   cursor: zoom-out;
   max-width: 90vw;
   z-index: 9000;
+}
+
+.background-preview {
+  width: 100%;
+  height: 200px;
+}
+
+.pattern-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.album-background-button {
+  width: 124px;
+  height: 124px;
+  background-size: contain;
+  cursor: pointer;
+  border: 3px solid #213547;
+  position: relative;
+}
+
+.album-background-button.selected {
+  pointer-events: none;
+}
+
+.album-background-button.selected .album-photo-selected-badge {
+  bottom: initial;
+}
+
+.album-background-button:hover,
+.album-background-button:focus-visible {
+  outline: rgba(0, 0, 255, 0.5) solid 2px;
+}
+
+.album-background-button.waves,
+.album-background-button.dots,
+.album-background-button.checkerboard,
+.album-background-button.wood {
+  background-size: auto;
 }

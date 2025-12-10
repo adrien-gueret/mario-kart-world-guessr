@@ -1,9 +1,12 @@
 <?php
 
+require_once __DIR__ . '/___album-cover.php';
+
 function getAlbumById(PDO $pdo, string $albumId, int $currentUserId = 0): ?array {
     $stmt = $pdo->prepare(
         "SELECT
             a.id, a.album_name, a.author_id, a.is_published, a.created_at,
+            a.background_color, a.background_image,
             u.username AS author_name, u.locale, u.mario_character
         FROM `mario-kart-world-albums` AS a
         LEFT JOIN `mario-kart-world-users` AS u ON a.author_id = u.id
@@ -43,6 +46,9 @@ function getAlbumById(PDO $pdo, string $albumId, int $currentUserId = 0): ?array
         'id' => (int) $albumData['id'],
         'name' => $albumData['album_name'],
         'isPublished' => (bool) $albumData['is_published'],
+        'backgroundImage' => $albumData['background_image'],
+        'backgroundColor' => $albumData['background_color'],
+        'coverUrl' => getPublicAlbumCoverFromDisk((int) $albumData['id']),
         'createdAt' => $albumData['created_at'],
         'author' => [
             'id' => (int) $albumData['author_id'],

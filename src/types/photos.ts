@@ -15,12 +15,25 @@ export type AlbumPhoto = Pick<Photo, "id" | "difficulty" | "photoUrl"> & {
   position: number;
 };
 
+export type AlbumBackgroundImage =
+  | "debris"
+  | "squares"
+  | "wood"
+  | "stickers"
+  | "food"
+  | "checkerboard"
+  | "dots"
+  | "waves"
+  | "tires";
+
 export type Album = {
   id: number;
   name: string;
   coverUrl: string;
   isPublished: boolean;
   createdAt: string;
+  backgroundImage: AlbumBackgroundImage;
+  backgroundColor: string;
   author: {
     id: number;
     name: string;

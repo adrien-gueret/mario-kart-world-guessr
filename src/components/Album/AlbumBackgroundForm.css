@@ -1,0 +1,41 @@
+.background-preview {
+  width: 100%;
+  height: 200px;
+}
+
+.pattern-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.album-background-button {
+  width: 124px;
+  height: 124px;
+  background-size: contain;
+  cursor: pointer;
+  border: 3px solid #213547;
+  position: relative;
+}
+
+.album-background-button.selected {
+  pointer-events: none;
+}
+
+.album-background-button.selected .album-photo-selected-badge {
+  bottom: initial;
+}
+
+.album-background-button:hover,
+.album-background-button:focus-visible {
+  outline: rgba(0, 0, 255, 0.5) solid 2px;
+}
+
+.album-background-button.waves,
+.album-background-button.dots,
+.album-background-button.checkerboard,
+.album-background-button.wood {
+  background-size: auto;
+}

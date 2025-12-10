@@ -329,6 +329,8 @@ const fr: Texts = {
   "credits.followOn": (platform: string) => `Suivre sur ${platform}`,
   "global.see": "Voir",
   "global.edit": "Modifier",
+  "global.apply": "Appliquer",
+  "global.alpha": "Intensité",
   "game.globalScore": "Score : ",
   "game.globalScore.photoIndex": "Photo n° ",
   "game.globalScore.showOtherPlayers":
@@ -579,19 +581,27 @@ const fr: Texts = {
     </>
   ),
   "account.albums.delete.success": "Album supprimé avec succès.",
+  "account.albums.background.title": "Modifier le fond de l'album",
+  "account.albums.background.color": "Couleur du fond",
   "account.albums.delete.photo": "Supprimer cette photo de l'album",
   "account.albums.photo.select.title": "Sélectionner une photo",
   "account.albums.photo.select.description":
     "Seules vos photos validées peuvent être ajoutées dans un album.",
+  "account.albums.photo.select.none":
+    "Vous n'avez pas encore de photo validée, vous ne pouvez donc pas remplir cet album...",
   "album.edit.name.success": "Nom de l'album mis à jour.",
   "album.edit.photos.success": "Photos de l'album mises à jour.",
-  "album.edit.photo.processing": "Traitement en cours...",
+  "album.edit.photo.processing": "Sauvegarde...",
   "album.edit.back": "Tous mes albums",
   "album.edit.this": "Modifier cet album",
   "album.edit.publish": "Publier",
   "album.edit.unpublish": "Dépublier",
   "album.edit.publish.success": "Album publié avec succès.",
   "album.edit.unpublish.success": "Album dépublié avec succès.",
+  "album.edit.background.pattern": "Motif",
+  "album.edit.background.color": "Couleur",
+  "album.edit.background.preview": "Aperçu",
+  "album.edit.background.success": "Fond de l'album mis à jour.",
   "album.status.published": (
     <>
       Cet album est publié et visible par tout le monde : partagez son
