@@ -365,9 +365,7 @@ export default function AlbumEdit({
       <div style={{ alignSelf: "center" }}>
         <Button
           variant="secondary"
-          onClick={() =>
-            navigate("../", { relative: "path", viewTransition: true })
-          }
+          onClick={() => navigate("/account/albums", { viewTransition: true })}
         >
           {translate("album.edit.back")}
         </Button>

@@ -56,6 +56,17 @@ export default function AccountLayout() {
             {
               children: (
                 <div>
+                  <img src="./ui/my-albums.png" alt="" />{" "}
+                  {translate("account.tab.albums")}
+                </div>
+              ),
+              value: "/account/albums",
+              to: "/account/albums",
+              preventScrollReset: true,
+            },
+            {
+              children: (
+                <div>
                   <img src="./ui/notifications.avif" alt="" />{" "}
                   {translate("account.tab.notifications")}
                   {unreadNotificationCount > 0 &&

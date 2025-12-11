@@ -30,6 +30,14 @@ import fetchApi from "@/services/api";
 
 import type { Photo } from "@/types/photos";
 
+const getReponseJsonGetter =
+  (errorMessage: string) => async (response: Response) => {
+    if (!response.ok) {
+      throw new Error(errorMessage);
+    }
+    return response.json();
+  };
+
 const router = createBrowserRouter(
   [
     {
@@ -55,12 +63,9 @@ const router = createBrowserRouter(
           path: "/account/albums/:id",
           Component: AccountAlbumId,
           loader: async ({ params }) => {
-            const getReponseJson = async (response: Response) => {
-              if (!response.ok) {
-                throw new Error(`Cannot fetch album ${params.id}`);
-              }
-              return response.json();
-            };
+            const getReponseJson = getReponseJsonGetter(
+              `Cannot fetch album ${params.id}`
+            );
 
             const responses = await Promise.all([
               fetchApi(`/album?id=${params.id}`, "GET").then(getReponseJson),
@@ -125,13 +130,24 @@ const router = createBrowserRouter(
               path: "/account/albums",
               Component: AccountAlbums,
               loader: async () => {
-                const response = await fetchApi(`/my-albums`, "GET");
+                const getReponseJson =
+                  getReponseJsonGetter(`Cannot fetch albums`);
 
-                if (!response.ok) {
-                  throw new Error(`Cannot fetch albums`);
-                }
+                const responses = await Promise.all([
+                  fetchApi("/my-albums", "GET").then(getReponseJson),
+                  fetchApi("/my-photos", "GET")
+                    .then(getReponseJson)
+                    .then(
+                      (photos: Photo[]) =>
+                        photos.filter((photo) => Boolean(photo.validatedAt))
+                          .length
+                    ),
+                ]);
 
-                return response.json();
+                return {
+                  albums: responses[0],
+                  canCreateAlbum: responses[1] > 0,
+                };
               },
             },
           ],

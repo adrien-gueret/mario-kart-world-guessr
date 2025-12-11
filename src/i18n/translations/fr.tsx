@@ -423,6 +423,7 @@ const fr: Texts = {
   "account.tab.preferences": "Préférences",
   "account.tab.notifications": "Notifications",
   "account.tab.photos": "Mes photos",
+  "account.tab.albums": "Mes albums",
   "giveUp.label": "Abandonner",
   "giveUp.title": "Abandonner la partie ?",
   "giveUp.description":
@@ -589,6 +590,8 @@ const fr: Texts = {
     "Seules vos photos validées peuvent être ajoutées dans un album.",
   "account.albums.photo.select.none":
     "Vous n'avez pas encore de photo validée, vous ne pouvez donc pas remplir cet album...",
+  "account.albums.no_photos":
+    "Vous n'avez pas encore de photo validée, vous ne pouvez donc pas créer d'album.",
   "album.edit.name.success": "Nom de l'album mis à jour.",
   "album.edit.photos.success": "Photos de l'album mises à jour.",
   "album.edit.photo.processing": "Sauvegarde...",

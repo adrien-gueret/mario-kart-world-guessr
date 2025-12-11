@@ -409,6 +409,7 @@ const en: Texts = {
   "account.tab.preferences": "Preferences",
   "account.tab.notifications": "Notifications",
   "account.tab.photos": "My photos",
+  "account.tab.albums": "My albums",
   "giveUp.label": "Give up",
   "giveUp.title": "Give up the game?",
   "giveUp.description":
@@ -591,6 +592,8 @@ const en: Texts = {
     "Only your validated photos can be added to an album.",
   "account.albums.photo.select.none":
     "You don't have any validated photos yet, so you can't fill this album...",
+  "account.albums.no_photos":
+    "You don't have any validated photos yet, so you can't create an album.",
   "account.albums.delete.photo": "Delete this photo from the album",
   "error.title": "Oops! Something went wrong.",
   "error.description": "An unexpected error occurred... Everything is broken!",
