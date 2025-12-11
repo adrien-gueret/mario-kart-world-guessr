@@ -159,6 +159,7 @@ export type Texts = {
   "account.tab.preferences": string;
   "account.tab.notifications": string;
   "account.tab.photos": string;
+  "account.tab.albums": string;
   "play.label": string;
   "account.marioCharacter.label": string;
   "account.marioCharacter.helper": string;
@@ -242,6 +243,7 @@ export type Texts = {
   "account.albums.photo.select.title": string;
   "account.albums.photo.select.description": string;
   "account.albums.photo.select.none": string;
+  "account.albums.no_photos": string;
   "error.title": string;
   "error.description": string;
   "error.button": string;
