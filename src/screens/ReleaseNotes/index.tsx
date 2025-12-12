@@ -21,7 +21,9 @@ export default function ReleaseNotes() {
 
           <Surface disableSkew>
             <Date date={releaseNote.publishedAt} />
-            {releaseNote.notes[currentLocale]}
+            <div style={{ textAlign: "left" }}>
+              {releaseNote.notes[currentLocale]}
+            </div>
           </Surface>
         </div>
       ))}
