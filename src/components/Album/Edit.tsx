@@ -11,6 +11,7 @@ import Button from "../Button";
 import PlusIcon from "../Icon/Plus";
 import Icon from "../Icon";
 import ChangeIcon from "../Icon/Change";
+import DropIcon from "../Icon/Drop";
 import TrashIcon from "../Icon/Trash";
 import ValidIcon from "../Icon/Valid";
 import FormBase from "../FormBase";
@@ -45,8 +46,14 @@ export default function AlbumEdit({
   const [isDeleteAlbumModalOpen, setIsDeleteAlbumModalOpen] = useState(false);
   const [isBackgroundModalOpen, setIsBackgroundModalOpen] = useState(false);
   const [editedPosition, setEditedPosition] = useState<number | null>(null);
+  const [movingPhoto, setMovingPhoto] = useState<{
+    photo: AlbumPhoto;
+    position: number;
+  } | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const navigate = useNavigate();
+
+  const isMovingPhoto = movingPhoto !== null;
 
   const albumStyle: CSSProperties & Record<`--${string}`, string> = {
     ["--album-color"]: albumBackgroundColor,
@@ -73,7 +80,10 @@ export default function AlbumEdit({
     [selectedPhotoIds]
   );
 
-  const setPhotoAtPosition = (position: number, photo?: Photo | undefined) => {
+  const setPhotoAtPosition = (
+    position: number,
+    photo?: (Omit<AlbumPhoto, "position"> & { position?: number }) | undefined
+  ) => {
     setAlbumPhotos((prev) =>
       prev.map((item) =>
         item.position === position
@@ -184,6 +194,7 @@ export default function AlbumEdit({
         <div className="album-photos">
           {albumPhotos.map(({ position, photo }) => {
             const hasPhoto = Boolean(photo);
+
             let containerClassName = "album-item";
             let UpdateIcon = PlusIcon;
             let containerStyle: CSSProperties = {};
@@ -199,19 +210,34 @@ export default function AlbumEdit({
               containerClassName += " album-placeholder";
             }
 
+            if (isMovingPhoto) {
+              UpdateIcon = DropIcon;
+              containerClassName += " album-photo-move-target";
+            }
+
             return (
               <div className="album-photo-edit-container" key={position}>
                 <button
                   type="button"
                   className={containerClassName}
                   onClick={() => {
-                    setEditedPosition(position);
+                    if (isMovingPhoto) {
+                      document.startViewTransition(() => {
+                        flushSync(() => {
+                          setPhotoAtPosition(position, movingPhoto!.photo);
+                          setPhotoAtPosition(movingPhoto.position, photo);
+                          setMovingPhoto(null);
+                        });
+                      });
+                    } else {
+                      setEditedPosition(position);
+                    }
                   }}
                   style={containerStyle}
                 >
                   <UpdateIcon width="64px" />
                 </button>
-                {photo && (
+                {photo && !isMovingPhoto && (
                   <>
                     <input
                       type="hidden"
@@ -219,6 +245,21 @@ export default function AlbumEdit({
                       value={photo.id}
                       form="edit-album-photos"
                     />
+                    <span className="album-photo-move-container">
+                      <IconButton
+                        color="#007ae1"
+                        aria-label={translate("account.albums.move.photo")}
+                        title={translate("account.albums.move.photo")}
+                        onClick={() => {
+                          setMovingPhoto({ photo, position });
+                        }}
+                      >
+                        <Icon>
+                          <path d="M9.01 14H2v2h7.01v3L13 15l-3.99-4zm5.98-1v-3H22V8h-7.01V5L11 9z" />
+                        </Icon>
+                      </IconButton>
+                    </span>
+
                     <span className="album-photo-delete-container">
                       <IconButton
                         color="#e03300"
@@ -245,17 +286,20 @@ export default function AlbumEdit({
         >
           <input type="hidden" name="albumId" value={id} />
         </FormBase>
-        <StickyButtonContainer>
-          <Button
-            disabled={isProcessing}
-            form="edit-album-photos"
-            type="submit"
-          >
-            {translate(
-              isProcessing ? "album.edit.photo.processing" : "global.apply"
-            )}
-          </Button>
-        </StickyButtonContainer>
+
+        {!isMovingPhoto && (
+          <StickyButtonContainer>
+            <Button
+              disabled={isProcessing}
+              form="edit-album-photos"
+              type="submit"
+            >
+              {translate(
+                isProcessing ? "album.edit.photo.processing" : "global.apply"
+              )}
+            </Button>
+          </StickyButtonContainer>
+        )}
 
         <p className="album-author">
           <span>
