@@ -1,8 +1,42 @@
+import { Link } from "react-router-dom";
 import Text from "@/components/Text";
 
 import type { ReleaseNotes } from "./types";
 
 const releaseNotes: ReleaseNotes = [
+  {
+    version: "v4.1.0",
+    publishedAt: new Date("2025-12-12T00:00:00Z"),
+    notes: {
+      fr: (
+        <Text>
+          Les photographes peuvent désormais créer des albums pour partager
+          leurs photos&nbsp;!
+          <br />
+          Un onglet{" "}
+          <Link to="/account/albums" viewTransition>
+            "Mes albums"
+          </Link>{" "}
+          a été ajouté sur la page "Mon compte", dans lequel vous pouvez créer
+          et gérer vos albums. Sélectionnez vos meilleures photos, configurez le
+          fond de votre album, donnez-lui un nom, publiez-le et
+          partagez-le&nbsp;!
+        </Text>
+      ),
+      en: (
+        <Text>
+          Photographers can now create albums to share their photos!
+          <br />A{" "}
+          <Link to="/account/albums" viewTransition>
+            "My albums"
+          </Link>{" "}
+          tab has been added to the "My account" page where you can create and
+          manage your albums. Select your best photos, set your album's
+          background, give it a name, publish it, and share it!
+        </Text>
+      ),
+    },
+  },
   {
     version: "v4.0.0",
     publishedAt: new Date("2025-12-01T00:00:00Z"),

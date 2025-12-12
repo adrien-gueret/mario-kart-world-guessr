@@ -31,7 +31,15 @@ export default function NewVersionModal() {
     >
       <div className="new-version-modal-content">
         <Date date={currentVersion.publishedAt} />
-        <div>{releaseNotes}</div>
+        <div
+          onClick={(e) => {
+            if (e.target instanceof HTMLAnchorElement) {
+              setIsOpen(false);
+            }
+          }}
+        >
+          {releaseNotes}
+        </div>
 
         <div className="new-version-modal-actions">
           {location.pathname !== "/releaseNotes" && (
