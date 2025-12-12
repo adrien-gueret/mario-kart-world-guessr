@@ -156,6 +156,16 @@ button.album-item.zoomable:focus-visible {
   z-index: 9000;
 }
 
+button.album-item.album-photo-move-target {
+  border: 3px dashed rgba(33, 53, 71, 0.8);
+  box-shadow: inset 0 0 210px #fff, inset 0 0 210px #fff;
+}
+
+button.album-item.album-photo-move-target:hover,
+button.album-item.album-photo-move-target:focus-visible {
+  border-style: solid;
+}
+
 .album-select-photo-button {
   padding: 0;
   border: 0;
@@ -204,18 +214,36 @@ button.album-item.zoomable:focus-visible {
   position: relative;
 }
 
-.album-photo-delete-container {
+.album-photo-delete-container,
+.album-photo-move-container {
   position: absolute;
   top: 8px;
   right: 8px;
 }
 
-.album-photo-delete-container button {
-  position: absolute;
-  top: 8px;
-  right: 8px;
+.album-photo-move-container {
+  top: initial;
+  bottom: 8px;
+}
+
+.album-photo-delete-container button,
+.album-photo-move-container button {
   background-color: #fff;
   border-radius: 50%;
+}
+
+.album-photo-delete-container button:hover,
+.album-photo-move-container button:hover,
+.album-photo-delete-container button:focus-visible,
+.album-photo-move-container button:focus-visible {
+  background-color: currentColor;
+}
+
+.album-photo-delete-container button:hover svg,
+.album-photo-move-container button:hover svg,
+.album-photo-delete-container button:focus-visible svg,
+.album-photo-move-container button:focus-visible svg {
+  fill: #fff;
 }
 
 .zoomed-photo-container {

@@ -1,7 +1,9 @@
 import { useState, useMemo, type CSSProperties } from "react";
 import { flushSync, createPortal } from "react-dom";
 
+import Button from "@/components/Button";
 import { useTranslations } from "@/i18n";
+import useNavigate from "@/services/useNavigate";
 import type { Album, AlbumPhoto } from "@/types/photos";
 
 import getPositionedAlbumPhotos from "./getPositionedAlbumPhotos";
@@ -34,6 +36,7 @@ export default function AlbumReadOnly({
   const { translate } = useTranslations();
   const [zoomedPhoto, setZoomedPhoto] = useState<MinimalPhoto | null>(null);
   const [hoveredPhoto, setHoveredPhoto] = useState<MinimalPhoto | null>(null);
+  const navigate = useNavigate();
 
   const albumPhotos = useMemo<
     Array<{
@@ -155,6 +158,16 @@ export default function AlbumReadOnly({
           )}
         </p>
       </article>
+
+      <div>
+        <Button
+          onClick={() => {
+            navigate("/account/albums");
+          }}
+        >
+          {isCurrentUserTheAuthor ? "Mes albums" : "Créer mon propre album"}
+        </Button>
+      </div>
 
       {zoomedPhoto &&
         createPortal(
