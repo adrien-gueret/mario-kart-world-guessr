@@ -585,6 +585,7 @@ const fr: Texts = {
   "account.albums.background.title": "Modifier le fond de l'album",
   "account.albums.background.color": "Couleur du fond",
   "account.albums.delete.photo": "Supprimer cette photo de l'album",
+  "account.albums.move.photo": "Bouger cette photo dans l'album",
   "account.albums.photo.select.title": "Sélectionner une photo",
   "account.albums.photo.select.description":
     "Seules vos photos validées peuvent être ajoutées dans un album.",
