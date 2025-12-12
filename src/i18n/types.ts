@@ -240,6 +240,7 @@ export type Texts = {
   "album.status.published": ReactNode;
   "album.status.unpublished": string;
   "account.albums.delete.photo": string;
+  "account.albums.move.photo": string;
   "account.albums.photo.select.title": string;
   "account.albums.photo.select.description": string;
   "account.albums.photo.select.none": string;
