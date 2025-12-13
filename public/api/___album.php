@@ -3,6 +3,8 @@
 require_once __DIR__ . '/___album-cover.php';
 
 function getAlbumById(PDO $pdo, string $albumId, int $currentUserId = 0): ?array {
+    $isAdmin = $currentUserId === 1;
+
     $stmt = $pdo->prepare(
         "SELECT
             a.id, a.album_name, a.author_id, a.is_published, a.created_at,
@@ -10,10 +12,13 @@ function getAlbumById(PDO $pdo, string $albumId, int $currentUserId = 0): ?array
             u.username AS author_name, u.locale, u.mario_character
         FROM `mario-kart-world-albums` AS a
         LEFT JOIN `mario-kart-world-users` AS u ON a.author_id = u.id
-        WHERE a.id = :albumId AND (a.author_id = :authorId OR a.is_published = 1 OR a.author_id = 1)");
+        WHERE a.id = :albumId ".($isAdmin ? "" : "AND (a.author_id = :authorId OR a.is_published = 1)"));
 
     $stmt->bindValue(':albumId', $albumId, PDO::PARAM_INT);
-    $stmt->bindValue(':authorId', $currentUserId, PDO::PARAM_INT);
+
+    if (!$isAdmin) {
+        $stmt->bindValue(':authorId', $currentUserId, PDO::PARAM_INT);
+    }
 
     $stmt->execute();
     
