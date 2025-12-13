@@ -165,7 +165,9 @@ export default function AlbumReadOnly({
             navigate("/account/albums");
           }}
         >
-          {isCurrentUserTheAuthor ? "Mes albums" : "Créer mon propre album"}
+          {isCurrentUserTheAuthor
+            ? translate("account.tab.albums")
+            : translate("album.create.myOwn")}
         </Button>
       </div>
 

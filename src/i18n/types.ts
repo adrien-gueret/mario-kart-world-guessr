@@ -245,6 +245,7 @@ export type Texts = {
   "account.albums.photo.select.description": string;
   "account.albums.photo.select.none": string;
   "account.albums.no_photos": string;
+  "album.create.myOwn": string;
   "error.title": string;
   "error.description": string;
   "error.button": string;

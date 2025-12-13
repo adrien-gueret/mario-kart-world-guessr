@@ -596,6 +596,7 @@ const en: Texts = {
     "You don't have any validated photos yet, so you can't create an album.",
   "account.albums.delete.photo": "Delete this photo from the album",
   "account.albums.move.photo": "Move this photo in the album",
+  "album.create.myOwn": "Create my own album",
   "error.title": "Oops! Something went wrong.",
   "error.description": "An unexpected error occurred... Everything is broken!",
   "error.button": "Back to home",
