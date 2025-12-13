@@ -614,6 +614,7 @@ const fr: Texts = {
   ),
   "album.status.unpublished":
     "Cet album est privé et n'est visible que par vous.",
+  "album.create.myOwn": "Créer mon propre album",
   "error.title": "Oups ! Une erreur est survenue.",
   "error.description":
     "Une erreur inattendue s'est produite... Tout est cassé !",
