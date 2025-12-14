@@ -40,7 +40,7 @@ $stmt = $pdo->prepare(
     LEFT JOIN `mario-kart-world-users-unlocked-achievements` ua
     ON c.id_achievement = ua.id_achievement AND ua.id_user = :userId
     LEFT JOIN `mario-kart-world-achievements` a ON a.id = c.id_achievement
-    WHERE c.id_achievement IS NULL OR ua.id_achievement IS NOT NULL
+    WHERE c.is_usable = 1 AND (c.id_achievement IS NULL OR ua.id_achievement IS NOT NULL)
 ");
     
 $stmt->bindValue(':userId', $currentUser['id'], PDO::PARAM_INT);

@@ -16,7 +16,7 @@ if (empty($currentUser)) {
 
 try {
     $stmt = $pdo->prepare(
-        "SELECT c.id, c.position,
+        "SELECT c.id, c.position, c.is_usable,
         CASE
             WHEN c.id_achievement IS NULL THEN TRUE
             WHEN ua.id_achievement IS NOT NULL THEN TRUE
@@ -26,6 +26,7 @@ try {
         LEFT JOIN `mario-kart-world-users-unlocked-achievements` ua
         ON c.id_achievement = ua.id_achievement AND ua.id_user = :userId
         LEFT JOIN `mario-kart-world-achievements` a ON a.id = c.id_achievement
+        WHERE c.is_usable = 1
         ORDER BY c.position
       ");
         
