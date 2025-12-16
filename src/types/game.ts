@@ -1,6 +1,6 @@
 import type { Coordinates } from "./location";
 
-import type { MarioCharacter } from "./characters";
+import type { UsableMarioCharacter } from "@/characters";
 
 export type GameMode = "survival" | "goal" | "chrono" | "daily";
 
@@ -17,7 +17,7 @@ type GamePhoto = {
   author: {
     id: number;
     name: string;
-    character: MarioCharacter | null;
+    character: UsableMarioCharacter | null;
   };
 };
 
@@ -53,7 +53,7 @@ export type StartGameResponse = {
 type LeaderboardRank = {
   playerId: number;
   playerName: string;
-  marioCharacter: MarioCharacter | null;
+  marioCharacter: UsableMarioCharacter | null;
   score: number;
   photoCount?: number;
   rank: number;

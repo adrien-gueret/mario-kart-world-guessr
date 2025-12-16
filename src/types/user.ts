@@ -1,4 +1,4 @@
-import type { MarioCharacter } from "@/types/characters";
+import type { UsableMarioCharacter } from "@/characters";
 
 export type User = {
   id: number;
@@ -7,7 +7,7 @@ export type User = {
   accessToken: string;
   refreshToken: string;
   expiredAt: string;
-  marioCharacter: MarioCharacter | null;
+  marioCharacter: UsableMarioCharacter | null;
   locale: "fr" | "en" | null;
   distanceUnit: "km" | "miles" | null;
   withSafeArea: boolean;

@@ -1,28 +1,23 @@
 import { useState, useEffect, useRef } from "react";
 
-import { useTranslations } from "@/i18n";
-
 import fetchApi from "@/services/api";
 
 import type { Coordinates } from "@/types/location";
 
-import Button from "../Button";
 import Map from "../Map";
 import Pin from "../Pin";
 import Loader from "../Loader";
 
 type Props = {
   photoId: string;
-  onClose: () => void;
 };
 
 type Guess = Coordinates & { id: number; isAnswer: 0 | 1 };
 
-export default function PhotoGuesses({ photoId, onClose }: Props) {
+export default function PhotoGuesses({ photoId }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const [guesses, setGuesses] = useState<Guess[]>([]);
   const lastPhotoFetched = useRef<string | null>(null);
-  const { translate } = useTranslations();
 
   useEffect(() => {
     if (lastPhotoFetched.current === photoId) {
@@ -51,6 +46,7 @@ export default function PhotoGuesses({ photoId, onClose }: Props) {
           shouldZoomOnDoubleClick
           size={{
             height: "60vh",
+            width: "45vw",
           }}
         >
           {isLoading ? (
@@ -68,8 +64,6 @@ export default function PhotoGuesses({ photoId, onClose }: Props) {
           )}
         </Map>
       </div>
-
-      <Button onClick={onClose}>{translate("close.label")}</Button>
     </div>
   );
 }

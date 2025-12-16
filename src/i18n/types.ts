@@ -1,4 +1,4 @@
-import type { LockedCharacter } from "@/types/characters";
+import type { LockedMarioCharacter, MarioCharacter } from "@/characters";
 import type { GameMode, Difficulty } from "@/types/game";
 import type { Achievement } from "@/types/achievements";
 import type { PhotoFilter } from "@/types/photos";
@@ -203,6 +203,8 @@ export type Texts = {
   "photo.difficulty.waiting": string;
   "photo.difficulty.waiting.tooltip": string;
   "photo.validation.pending": string;
+  "photo.editCharacters.title": ReactNode;
+  "photo.editCharacters.success": string;
   "account.photos.description": string;
   "account.photos.filter": string;
   "account.photos.stats.suggestions": (
@@ -257,7 +259,9 @@ export type Texts = {
 } & {
   [K in Achievement as `${K}.description`]: string;
 } & {
-  [K in LockedCharacter as `${K}.unlockClue`]: string;
+  [K in LockedMarioCharacter as `${K}.unlockClue`]: string;
+} & {
+  [K in MarioCharacter as `${K}.name`]: string;
 };
 
 export type TranslationKey = keyof Texts;

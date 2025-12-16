@@ -4,12 +4,12 @@ import L from "leaflet";
 import { MAP_SIZE_IN_PIXELS } from "@/services/coordinates";
 
 import type { Coordinates } from "@/types/location";
-import type { MarioCharacter } from "@/types/characters";
+import type { UsableMarioCharacter } from "@/characters";
 
 import "./Pin.css";
 
 type BaseProps = Coordinates & {
-  variant?: MarioCharacter | "star" | "image" | null;
+  variant?: UsableMarioCharacter | "star" | "image" | null;
   onlyHead?: boolean;
   imageUrl?: string;
   zIndex?: number;

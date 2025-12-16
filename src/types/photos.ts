@@ -1,4 +1,4 @@
-import type { MarioCharacter } from "./characters";
+import type { UsableMarioCharacter } from "@/characters";
 import type { Coordinates } from "./location";
 
 export type Photo = {
@@ -37,7 +37,7 @@ export type Album = {
   author: {
     id: number;
     name: string;
-    character: MarioCharacter | null;
+    character: UsableMarioCharacter | null;
   };
   photos: AlbumPhoto[];
 };

@@ -14,6 +14,7 @@ import "./PhotoListContainer.css";
 type Props = {
   photos: Photo[];
   canOpenDetailsOfNoValidatedPhotos?: boolean;
+  canEditPhotoCharacters?: boolean;
   suggestionLabelKey?:
     | "account.photos.stats.suggestions"
     | "all-photos.stats.suggestions";
@@ -22,6 +23,7 @@ type Props = {
 export default function PhotoListContainer({
   photos,
   canOpenDetailsOfNoValidatedPhotos = false,
+  canEditPhotoCharacters = false,
   suggestionLabelKey = "all-photos.stats.suggestions",
 }: Props) {
   const { translate, currentLocale } = useTranslations();
@@ -148,6 +150,7 @@ export default function PhotoListContainer({
       <PhotoList
         photos={filteredPhotos}
         canOpenDetailsOfNoValidatedPhotos={canOpenDetailsOfNoValidatedPhotos}
+        canEditPhotoCharacters={canEditPhotoCharacters}
       />
     </>
   );

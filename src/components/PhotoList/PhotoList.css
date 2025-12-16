@@ -74,3 +74,66 @@
   font-weight: bold;
   font-size: 1.2rem;
 }
+
+.photo-details-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-details-image {
+  max-width: 90%;
+  border: 2px solid rgba(0, 0, 0, 0.8);
+}
+
+.photo-character-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.photo-character-checkboxes {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.photo-character-real-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.photo-character-real-input:focus-visible + .photo-character-checkbox,
+.photo-character-checkbox:hover {
+  outline: rgba(0, 0, 255, 0.5) solid 2px;
+}
+
+.photo-character-real-input:checked + .photo-character-checkbox {
+  background-color: #bdd7ff;
+}
+
+.photo-character-checkbox {
+  display: flex;
+  padding: 4px 8px;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 4px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.photo-character-image {
+  width: 32px;
+}

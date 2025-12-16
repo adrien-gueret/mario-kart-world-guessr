@@ -67,6 +67,7 @@ export default function Photos() {
           <PhotoListContainer
             photos={photos}
             canOpenDetailsOfNoValidatedPhotos
+            canEditPhotoCharacters
           />
         </>
       )}
