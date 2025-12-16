@@ -2,20 +2,20 @@ import { useEffect, useRef, useState } from "react";
 
 import Snackbar from "@/components/Snackbar";
 import { useTranslations } from "@/i18n";
-import type { MarioCharacter, LockedCharacter } from "@/types/characters";
+import type { UsableMarioCharacter, LockedMarioCharacter } from "@/characters";
 import fetchApi from "@/services/api";
 
 import "./CharacterSelect.css";
 
 type Props = {
-  defaultValue?: MarioCharacter | null;
+  defaultValue?: UsableMarioCharacter | null;
 };
 
 export default function CharacterSelect({ defaultValue }: Props) {
   const hasCalledApi = useRef(false);
   const [charactersData, setCharactersData] = useState<
     Array<{
-      id: MarioCharacter;
+      id: UsableMarioCharacter;
       isUnlocked: boolean;
     }>
   >([
@@ -51,7 +51,9 @@ export default function CharacterSelect({ defaultValue }: Props) {
               ? void 0
               : () => {
                   setInfoMessage(
-                    translate(`${characterId as LockedCharacter}.unlockClue`)
+                    translate(
+                      `${characterId as LockedMarioCharacter}.unlockClue`
+                    )
                   );
                   setIsInfoOpen(true);
                 };

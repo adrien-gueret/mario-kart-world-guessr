@@ -2,7 +2,7 @@ import { useState, useLayoutEffect } from "react";
 
 import { useTranslations } from "@/i18n";
 
-import type { MarioCharacter } from "@/types/characters";
+import type { UsableMarioCharacter } from "@/characters";
 
 import Loader from "../Loader";
 
@@ -18,7 +18,7 @@ export default function Photo({
   author?: {
     id: number;
     name: string;
-    character: MarioCharacter | null;
+    character: UsableMarioCharacter | null;
   } | null;
 }) {
   const [isComplete, setIsComplete] = useState(false);
