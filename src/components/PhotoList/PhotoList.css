@@ -137,3 +137,18 @@
 .photo-character-image {
   width: 32px;
 }
+
+.photo-edit-characters {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 4px;
+  border: 2px solid #222;
+  border-left: 0;
+  border-top: 0;
+}
+
+.photo-edit-characters .photo-character-image {
+  width: 16px;
+}

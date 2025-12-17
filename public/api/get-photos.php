@@ -12,36 +12,63 @@ try {
             p.validated_at AS validatedAt,
             p.x,
             p.y,
-             CAST(
-                COALESCE(
-                    SUM(
-                        CASE
-                            WHEN (s.id IS NOT NULL AND g.player_id IS NULL) THEN 1
-                            WHEN g.player_id <> p.author_id THEN 1
-                            ELSE 0
-                        END),
-                    0
-                ) AS UNSIGNED
-            ) AS suggestionCount,
+
+            COALESCE(ch.characters, JSON_ARRAY()) AS characters,
+            CAST(COALESCE(sug.suggestionCount, 0) AS UNSIGNED) AS suggestionCount,
+
             CASE
                 WHEN p.validated_at IS NOT NULL 
                     AND p.validated_at <= NOW() - INTERVAL 5 MINUTE
                 THEN CONCAT('https://www.mariouniversalis.fr/mario-kart-world-guessr/photos/', p.id, '.jpg')
                 ELSE CONCAT('https://www.mariouniversalis.fr/mario-kart-world-guessr/api/photo-proxy?pr_id=', p.github_pr_number)
             END AS photoUrl
+
         FROM `mario-kart-world-photos` p
-        LEFT JOIN `mario-kart-world-suggestions` s 
-            ON s.photo_id = p.id
-        LEFT JOIN `mario-kart-world-games` g
-            ON g.id = s.game_id
-        GROUP BY p.id, p.difficulty, p.validated_at, p.github_pr_number
-        ORDER BY (p.validated_at IS NULL) DESC,
+
+        /* Agrégation des personnages par photo */
+        LEFT JOIN (
+            SELECT
+                cp.id_photo,
+                JSON_ARRAYAGG(DISTINCT cp.id_character) AS characters
+            FROM `mario-kart-world-characters-photos` cp
+            GROUP BY cp.id_photo
+        ) ch ON ch.id_photo = p.id
+
+        /* Agrégation du compteur de suggestions par photo */
+        LEFT JOIN (
+            SELECT
+                s.photo_id,
+                CAST(
+                COUNT(DISTINCT CASE
+                    WHEN (s.id IS NOT NULL AND g.player_id IS NULL) THEN s.id
+                    WHEN (g.player_id <> p2.author_id) THEN s.id
+                    ELSE NULL
+                END) AS UNSIGNED
+                ) AS suggestionCount
+            FROM `mario-kart-world-suggestions` s
+            LEFT JOIN `mario-kart-world-games` g
+                ON g.id = s.game_id
+            INNER JOIN `mario-kart-world-photos` p2
+                ON p2.id = s.photo_id
+            GROUP BY s.photo_id
+        ) sug ON sug.photo_id = p.id
+
+        ORDER BY
+            (p.validated_at IS NULL) DESC,
             CASE WHEN p.validated_at IS NULL THEN p.github_pr_number ELSE NULL END ASC,
-            p.validated_at DESC"
+            p.validated_at DESC;"
     );
     $stmt->execute();
     
     $photos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($photos as &$photo) {
+        if (isset($photo['characters']) && $photo['characters'] !== null) {
+            $photo['characters'] = json_decode($photo['characters'], true);
+        } else {
+            $photo['characters'] = [];
+        }
+    }
     
     echo json_encode($photos);    
 } catch (PDOException $e) {

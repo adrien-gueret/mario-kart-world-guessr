@@ -1,6 +1,6 @@
 import { useState, type MouseEventHandler } from "react";
 
-import { allCharacters } from "@/characters";
+import { allCharacters, type MarioCharacter } from "@/characters";
 import { useTranslations } from "@/i18n";
 import type { Photo } from "@/types/photos";
 
@@ -27,6 +27,7 @@ export default function PhotoList({
   const { translate } = useTranslations();
   const [areDetailsOpen, setAreDetailsOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
+  const [currentPhotos, setCurrentPhotos] = useState(photos);
 
   const selectPhoto = (photo: Photo) => {
     setSelectedPhoto(photo);
@@ -50,7 +51,7 @@ export default function PhotoList({
   return (
     <>
       <ul className="photo-list">
-        {photos.map((photo) => {
+        {currentPhotos.map((photo) => {
           const { id, photoUrl, difficulty, suggestionCount, validatedAt } =
             photo;
           const isInteractive =
@@ -66,6 +67,20 @@ export default function PhotoList({
               className={!isInteractive ? "not-validated" : ""}
             >
               <img draggable={false} src={photoUrl} alt="" loading="lazy" />
+
+              {canEditPhotoCharacters && Boolean(photo.characters.length) && (
+                <div className="photo-edit-characters">
+                  {photo.characters.map((character) => (
+                    <img
+                      className="photo-character-image"
+                      key={character}
+                      src={`./ui/pins/icon-${character}.png`}
+                      alt=""
+                      loading="lazy"
+                    />
+                  ))}
+                </div>
+              )}
 
               {validatedAt ? (
                 <>
@@ -122,12 +137,25 @@ export default function PhotoList({
               draggable={false}
             />
 
-            {canEditPhotoCharacters && Boolean(selectedPhoto.validatedAt) && (
+            {canEditPhotoCharacters && (
               <div className="photo-character-edit">
                 <FormBase
                   action="/update-photo-characters"
                   method="POST"
                   successMessage={translate("photo.editCharacters.success")}
+                  onSuccess={(_, formData) => {
+                    const characters: MarioCharacter[] =
+                      (formData.getAll("characters[]") as MarioCharacter[]) ??
+                      [];
+                    setCurrentPhotos((prevPhotos) =>
+                      prevPhotos.map((photo) =>
+                        photo.id === selectedPhoto.id
+                          ? { ...photo, characters }
+                          : photo
+                      )
+                    );
+                    setAreDetailsOpen(false);
+                  }}
                 >
                   <div className="photo-character-edit-form">
                     <p>{translate("photo.editCharacters.title")}</p>
@@ -145,7 +173,9 @@ export default function PhotoList({
                             value={character}
                             className="photo-character-real-input"
                             type="checkbox"
-                            defaultChecked={false} // TODO
+                            defaultChecked={selectedPhoto.characters.includes(
+                              character
+                            )}
                           />
                           <label
                             key={character}
