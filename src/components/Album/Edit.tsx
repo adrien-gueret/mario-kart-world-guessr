@@ -2,6 +2,7 @@ import { useState, useMemo, useCallback, type CSSProperties } from "react";
 import { flushSync } from "react-dom";
 
 import { useTranslations } from "@/i18n";
+import { getCDNPhotoUrl } from "@/services/images";
 import type { Album, Photo, AlbumPhoto } from "@/types/photos";
 import ErrorScreen from "@/screens/Error";
 import useNavigate from "@/services/useNavigate";
@@ -203,7 +204,9 @@ export default function AlbumEdit({
               containerClassName += " album-photo";
               UpdateIcon = ChangeIcon;
               containerStyle = {
-                backgroundImage: `url(${photo!.photoUrl})`,
+                backgroundImage: `url(${getCDNPhotoUrl(photo!.photoUrl, {
+                  h: 450,
+                })})`,
                 viewTransitionName: `album-photo-${photo!.id}`,
               };
             } else {
@@ -361,7 +364,11 @@ export default function AlbumEdit({
                           });
                         }}
                       >
-                        <img src={photo.photoUrl} alt="" loading="lazy" />
+                        <img
+                          src={getCDNPhotoUrl(photo.photoUrl, { h: 225 })}
+                          alt=""
+                          loading="lazy"
+                        />
                       </button>
                       {isSelected && (
                         <span className="album-photo-selected-badge">

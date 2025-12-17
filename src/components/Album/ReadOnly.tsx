@@ -3,6 +3,7 @@ import { flushSync, createPortal } from "react-dom";
 
 import Button from "@/components/Button";
 import { useTranslations } from "@/i18n";
+import { getCDNPhotoUrl } from "@/services/images";
 import useNavigate from "@/services/useNavigate";
 import type { Album, AlbumPhoto } from "@/types/photos";
 
@@ -101,7 +102,9 @@ export default function AlbumReadOnly({
               containerClassName += " album-photo";
 
               containerStyle = {
-                backgroundImage: `url(${photo!.photoUrl})`,
+                backgroundImage: `url(${getCDNPhotoUrl(photo!.photoUrl, {
+                  h: 450,
+                })})`,
                 viewTransitionName:
                   hoveredPhoto?.id === photo!.id
                     ? getTransitionName(photo!.id)
