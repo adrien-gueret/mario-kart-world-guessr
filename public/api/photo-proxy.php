@@ -29,7 +29,7 @@ function getPhotoURLByPhotoId($photoId, $pdo) {
   }
 
   return $photo['is_available']
-    ? "https://www.mariouniversalis.fr/mario-kart-world-guessr/photos/{$photo['id']}.jpg"
+    ? "https://ik.imagekit.io/mkwg/{$photo['id']}.jpg"
     : getPhotoURLByPRId($photo['github_pr_number']);
 }
 

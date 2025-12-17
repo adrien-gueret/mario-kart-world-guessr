@@ -32,7 +32,7 @@ try {
             CASE
                 WHEN p.validated_at IS NOT NULL 
                     AND p.validated_at <= NOW() - INTERVAL 5 MINUTE
-                THEN CONCAT('https://www.mariouniversalis.fr/mario-kart-world-guessr/photos/', p.id, '.jpg')
+                THEN CONCAT('https://ik.imagekit.io/mkwg/', p.id, '.jpg')
                 ELSE CONCAT('https://www.mariouniversalis.fr/mario-kart-world-guessr/api/photo-proxy?pr_id=', p.github_pr_number)
             END AS photoUrl
         FROM `mario-kart-world-photos` p

@@ -26,7 +26,9 @@ export default function Photo({
   const [height, setHeight] = useState<number>(0);
   const { translate } = useTranslations();
 
-  const photoUrl = photoName ? `./photos/${photoName}.jpg` : null;
+  const photoUrl = photoName
+    ? `https://ik.imagekit.io/mkwg/${photoName}.jpg`
+    : null;
 
   useLayoutEffect(() => {
     const onResize = () => {
