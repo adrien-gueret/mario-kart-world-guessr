@@ -2,6 +2,7 @@ import { useState, type MouseEventHandler } from "react";
 
 import { allCharacters, type MarioCharacter } from "@/characters";
 import { useTranslations } from "@/i18n";
+import { getCDNPhotoUrl } from "@/services/images";
 import type { Photo } from "@/types/photos";
 
 import Button from "../Button";
@@ -66,7 +67,12 @@ export default function PhotoList({
               onKeyDown={getHandleKeyDown(photo)}
               className={!isInteractive ? "not-validated" : ""}
             >
-              <img draggable={false} src={photoUrl} alt="" loading="lazy" />
+              <img
+                draggable={false}
+                src={getCDNPhotoUrl(photoUrl, { h: 225 })}
+                alt=""
+                loading="lazy"
+              />
 
               {canEditPhotoCharacters && Boolean(photo.characters.length) && (
                 <div className="photo-edit-characters">

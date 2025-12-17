@@ -32,7 +32,7 @@ export default function PhotosMap({ photos }: Props) {
               y={photo.y}
               onlyHead
               variant="image"
-              imageUrl={photo.photoUrl}
+              imageUrl={`${photo.photoUrl}?tr=h-80`}
             />
           ))}
         </Map>

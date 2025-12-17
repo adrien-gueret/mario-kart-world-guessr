@@ -62,7 +62,11 @@ export default function Photos() {
               checked={showMap}
               onChange={setShowMap}
             />
-            {showMap && <PhotosMap photos={photos} />}
+            {showMap && (
+              <PhotosMap
+                photos={photos.filter((photo) => Boolean(photo.validatedAt))}
+              />
+            )}
           </div>
           <PhotoListContainer
             photos={photos}
