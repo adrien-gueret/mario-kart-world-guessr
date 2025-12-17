@@ -1,4 +1,4 @@
-import type { UsableMarioCharacter } from "@/characters";
+import type { UsableMarioCharacter, MarioCharacter } from "@/characters";
 import type { Coordinates } from "./location";
 
 export type Photo = {
@@ -7,6 +7,7 @@ export type Photo = {
   validatedAt: string | null;
   photoUrl: string;
   suggestionCount: number;
+  characters: MarioCharacter[];
 } & Coordinates;
 
 export type PhotoFilter = NonNullable<Photo["difficulty"]> | "all";

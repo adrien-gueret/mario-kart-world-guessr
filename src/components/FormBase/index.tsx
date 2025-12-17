@@ -16,21 +16,21 @@ type Props = {
   id?: string;
   successMessage: string;
   onProcessingChange?: (isProcessing: boolean) => void;
-  onSuccess?: (response: any) => void;
-  onError?: (error: { message: string }) => void;
+  onSuccess?: (response: any, formData: FormData) => void;
+  onError?: (error: { message: string }, formData: FormData) => void;
 };
 
 async function submitFormAndCallAPI(
   event: React.FormEvent<HTMLFormElement>,
   method: FetchMethod
-): Promise<{ success: boolean; data: any }> {
+): Promise<{ success: boolean; data: any; formData: FormData }> {
   const form = event.currentTarget;
   const formData = new FormData(form);
   const action = form.getAttribute("action") as ApiEndPoint | null;
 
   if (!action) {
     console.error("Form action is not defined.");
-    return { success: false, data: null };
+    return { success: false, data: null, formData };
   }
 
   try {
@@ -39,11 +39,11 @@ async function submitFormAndCallAPI(
     const responseJson = await response.json();
 
     if (response.ok) {
-      return { success: true, data: responseJson };
+      return { success: true, data: responseJson, formData };
     }
-    return { success: false, data: responseJson };
+    return { success: false, data: responseJson, formData };
   } catch (error: any) {
-    return { success: false, data: error };
+    return { success: false, data: error, formData };
   }
 }
 
@@ -72,15 +72,18 @@ export default function FormBase({
 
       setIsProcessing(true);
       onProcessingChange(true);
-      const { success, data } = await submitFormAndCallAPI(event, method);
+      const { success, data, formData } = await submitFormAndCallAPI(
+        event,
+        method
+      );
       setIsProcessing(false);
       onProcessingChange(false);
 
       if (success) {
-        onSuccess(data);
+        onSuccess(data, formData);
         showSuccess(successMessage);
       } else {
-        onError(data);
+        onError(data, formData);
         showError(data.message || "An error occurred during form submission.");
       }
     },
