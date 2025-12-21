@@ -13,6 +13,7 @@ import Snackbar from "@/components/Snackbar";
 import Table from "@/components/Table";
 
 import fetchApi from "@/services/api";
+import useNavigate from "@/services/useNavigate";
 
 import "./Daily.css";
 import EndGameContent from "../EndGameContent";
@@ -33,6 +34,7 @@ export default function DailyEnd({
   onLeaderboardShow,
 }: Props) {
   const { translate, currentLocale } = useTranslations();
+  const navigate = useNavigate();
   const [hasCopySuccess, setHasCopySuccess] = useState(false);
   const [nextDailyDateTimestamp, setNextDailyDateTimestamp] = useState<
     number | null
@@ -226,6 +228,15 @@ export default function DailyEnd({
                     />
                   ))}
                 </Table>
+
+                <div className="leaderboard-actions" style={{ marginTop: 16 }}>
+                  <Button
+                    variant="secondary"
+                    onClick={() => navigate(`/leaderboards/daily/today`)}
+                  >
+                    {translate("endGame.see-leaderboards")}
+                  </Button>
+                </div>
               </div>
             )}
           </>

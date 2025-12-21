@@ -55,6 +55,13 @@ function Leaderboards() {
   const { translate } = useTranslations();
 
   const isDailyMode = gameMode === "daily";
+  const currentDateToCheck = isDailyMode
+    ? gameDifficulty === "today"
+      ? new Date()
+      : isDailyDate(gameDifficulty as string)
+      ? new Date(gameDifficulty as string)
+      : undefined
+    : undefined;
 
   useEffect(() => {
     if (isDailyMode) {
@@ -144,11 +151,7 @@ function Leaderboards() {
 
           {isDailyDate(gameDifficulty ?? "") && (
             <Calendar
-              defaultValue={
-                gameDifficulty === "today"
-                  ? new Date()
-                  : new Date(gameDifficulty as string)
-              }
+              defaultValue={currentDateToCheck}
               onClickDay={(day) => {
                 const isoDay = [
                   day.getFullYear(),
@@ -199,11 +202,13 @@ function Leaderboards() {
               ? translate("leaderboards.not-logged-in")
               : currentUserLeaderboardData
               ? isDailyMode
-                ? translate("leaderboards.daily.currentUserScore")(
-                    new Date(gameDifficulty as IsoDate),
-                    currentUserLeaderboardData.score,
-                    currentUserLeaderboardData.rank
-                  )
+                ? currentDateToCheck
+                  ? translate("leaderboards.daily.currentUserScore")(
+                      currentDateToCheck,
+                      currentUserLeaderboardData.score,
+                      currentUserLeaderboardData.rank
+                    )
+                  : null
                 : translate("leaderboards.currentUserScore")(
                     gameMode!,
                     gameDifficulty as Difficulty,
@@ -211,9 +216,11 @@ function Leaderboards() {
                     currentUserLeaderboardData.rank
                   )
               : isDailyMode
-              ? translate("leaderboards.daily.not-played-yet")(
-                  new Date(gameDifficulty as IsoDate)
-                )
+              ? currentDateToCheck
+                ? translate("leaderboards.daily.not-played-yet")(
+                    currentDateToCheck
+                  )
+                : null
               : translate("leaderboards.not-played-yet")(
                   gameMode!,
                   gameDifficulty as Difficulty
