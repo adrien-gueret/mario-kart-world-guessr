@@ -67,18 +67,12 @@ const router = createBrowserRouter(
               `Cannot fetch album ${params.id}`
             );
 
-            const responses = await Promise.all([
-              fetchApi(`/album?id=${params.id}`, "GET").then(getReponseJson),
-              fetchApi("/my-photos", "GET")
-                .then(getReponseJson)
-                .then((photos: Photo[]) =>
-                  photos.filter((photo) => Boolean(photo.validatedAt))
-                ),
-            ]);
-
+            const response = await fetchApi(
+              `/album?id=${params.id}`,
+              "GET"
+            ).then(getReponseJson);
             return {
-              album: responses[0],
-              availablePhotos: responses[1],
+              album: response,
             };
           },
         },

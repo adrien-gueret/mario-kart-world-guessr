@@ -129,6 +129,9 @@ export type Texts = {
   "photos.title": string;
   "photos.description": ReactNode;
   "photos.showMap": string;
+  "photos.filter.by_characters": string;
+  "photos.filter.more_characters": string;
+  "photos.filter.less_characters": string;
   "photo.details.title": string;
   "photo.by": string;
   "album.by": string;

@@ -369,6 +369,9 @@ const en: Texts = {
     </>
   ),
   "photos.showMap": "Show map",
+  "photos.filter.by_characters": "Filter by characters appearing in photos",
+  "photos.filter.more_characters": "Show more characters",
+  "photos.filter.less_characters": "Show less characters",
   "photo.details.title": "Players' guesses",
   "photo.by": "Photo by",
   "album.by": "An album by",

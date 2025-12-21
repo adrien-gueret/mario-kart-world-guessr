@@ -26,6 +26,10 @@
   align-items: stretch;
 }
 
+.modal-overlay.modal-closed {
+  display: none;
+}
+
 @keyframes opacityFadeIn {
   from {
     opacity: 0;

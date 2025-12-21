@@ -12,7 +12,7 @@ export type Photo = {
 
 export type PhotoFilter = NonNullable<Photo["difficulty"]> | "all";
 
-export type AlbumPhoto = Pick<Photo, "id" | "difficulty" | "photoUrl"> & {
+export type AlbumPhoto = Pick<Photo, "id" | "photoUrl"> & {
   position: number;
 };
 

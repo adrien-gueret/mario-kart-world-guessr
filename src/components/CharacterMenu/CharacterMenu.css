@@ -1,0 +1,20 @@
+.character-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+}
+
+.character-menu__show-more {
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.character-menu__show-more:hover,
+.character-menu__show-more:focus-visible {
+  text-decoration: wavy underline;
+}

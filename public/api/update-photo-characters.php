@@ -6,6 +6,8 @@ require_once __DIR__ . '/___check-album-author.php';
 
 require_once __DIR__ . '/___album-cover.php';
 
+require_once __DIR__ . '/___algolia.php';
+
 $_POST = allowMethod('POST');
 
 if (empty($currentUser) || $currentUser['id'] > 1) {
@@ -47,6 +49,8 @@ try {
 
         $stmt->execute($params);
     }
+
+    indexPhotosIntoAlgolia([$_POST['photoId']]);
     
     echo json_encode(["success" => true]);
 } catch (PDOException $e) {
