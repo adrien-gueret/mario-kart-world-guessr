@@ -385,6 +385,7 @@ const fr: Texts = {
     "Filtrer par personnages présents sur les photos",
   "photos.filter.more_characters": "Afficher plus de personnages",
   "photos.filter.less_characters": "Afficher moins de personnages",
+  "photos.filter.clear_characters": "Effacer les filtres de personnages",
   "photo.details.title": "Suggestions des joueurs",
   "photo.by": "Photo par",
   "album.by": "Un album par",

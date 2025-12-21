@@ -1,4 +1,4 @@
-import { useRefinementList } from "react-instantsearch";
+import { useRefinementList, useClearRefinements } from "react-instantsearch";
 
 import type { MarioCharacter } from "@/characters";
 import { useTranslations } from "@/i18n";
@@ -19,6 +19,10 @@ export default function CharacterMenu() {
       sortBy: ["count:desc", "name:asc"],
     });
 
+  const { canRefine: canClear, refine: clear } = useClearRefinements({
+    includedAttributes: ["characters"],
+  });
+
   return (
     <div className="character-menu">
       <div className="characters-checkboxes">
@@ -26,7 +30,7 @@ export default function CharacterMenu() {
           <CharacterCheckbox
             key={item.value}
             character={item.value as MarioCharacter}
-            defaultChecked={item.isRefined}
+            checked={item.isRefined}
             onChange={() => refine(item.value)}
             count={item.count}
           />
@@ -34,16 +38,18 @@ export default function CharacterMenu() {
       </div>
 
       {canToggleShowMore && (
-        <button
-          className="character-menu__show-more"
-          disabled={!canToggleShowMore}
-          onClick={toggleShowMore}
-        >
+        <button className="character-menu__show-more" onClick={toggleShowMore}>
           {translate(
             isShowingMore
               ? "photos.filter.less_characters"
               : "photos.filter.more_characters"
           )}
+        </button>
+      )}
+
+      {canClear && (
+        <button className="character-menu__show-more" onClick={() => clear()}>
+          {translate("photos.filter.clear_characters")}
         </button>
       )}
     </div>

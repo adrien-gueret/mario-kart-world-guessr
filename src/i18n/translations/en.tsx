@@ -372,6 +372,7 @@ const en: Texts = {
   "photos.filter.by_characters": "Filter by characters appearing in photos",
   "photos.filter.more_characters": "Show more characters",
   "photos.filter.less_characters": "Show less characters",
+  "photos.filter.clear_characters": "Clear character filters",
   "photo.details.title": "Players' guesses",
   "photo.by": "Photo by",
   "album.by": "An album by",

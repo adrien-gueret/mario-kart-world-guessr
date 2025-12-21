@@ -7,13 +7,15 @@ import "./CharacterCheckbox.css";
 type Props = {
   character: MarioCharacter;
   defaultChecked?: boolean;
+  checked?: boolean;
   onChange?: (checked: boolean) => void;
   count?: number;
 };
 
 export default function CharacterCheckbox({
   character,
-  defaultChecked = false,
+  defaultChecked,
+  checked,
   onChange,
   count,
 }: Props) {
@@ -29,6 +31,7 @@ export default function CharacterCheckbox({
         className="character-checkbox-real-input"
         type="checkbox"
         defaultChecked={defaultChecked}
+        checked={checked}
         onChange={onChange ? (e) => onChange(e.target.checked) : undefined}
       />
       <label className="character-checkbox-container" htmlFor={domId}>
