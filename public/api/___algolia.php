@@ -52,7 +52,11 @@ function indexPhotosIntoAlgolia($idsPhotos = []) {
 
         if (isset($photo['characters']) && $photo['characters'] !== null) {
             $characters = json_decode($photo['characters'], true);
-        } 
+        }
+
+        if (empty($characters)) {
+            $characters = ["none"];
+        }
 
         $objectsToIndex[] = [
             'objectID' => $id,

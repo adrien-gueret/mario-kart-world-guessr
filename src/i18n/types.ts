@@ -100,6 +100,7 @@ export type Texts = {
   "global.edit": string;
   "global.apply": string;
   "global.alpha": string;
+  "global.none": string;
   "game.globalScore": string;
   "game.globalScore.photoIndex": string;
   "game.globalScore.showOtherPlayers": string;

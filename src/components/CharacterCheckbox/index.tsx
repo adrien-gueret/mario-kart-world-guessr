@@ -5,7 +5,7 @@ import { useTranslations } from "@/i18n";
 import "./CharacterCheckbox.css";
 
 type Props = {
-  character: MarioCharacter;
+  character: MarioCharacter | "none";
   defaultChecked?: boolean;
   checked?: boolean;
   onChange?: (checked: boolean) => void;
@@ -22,6 +22,8 @@ export default function CharacterCheckbox({
   const domId = useId();
   const { translate } = useTranslations();
 
+  const isNone = character === "none";
+
   return (
     <>
       <input
@@ -37,10 +39,14 @@ export default function CharacterCheckbox({
       <label className="character-checkbox-container" htmlFor={domId}>
         <img
           className="character-checkbox-image"
-          src={`./ui/pins/icon-${character}.png`}
+          src={
+            isNone
+              ? "./ui/characters/none.png"
+              : `./ui/pins/icon-${character}.png`
+          }
           alt=""
         />
-        {translate(`${character}.name`)}
+        {isNone ? translate("global.none") : translate(`${character}.name`)}
         {count !== undefined && (
           <span className="character-checkbox-count">
             <span>{count}</span>
