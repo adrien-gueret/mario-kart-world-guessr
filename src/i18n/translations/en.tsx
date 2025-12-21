@@ -321,6 +321,7 @@ const en: Texts = {
   "global.edit": "Edit",
   "global.apply": "Apply",
   "global.alpha": "Opacity",
+  "global.none": "None",
   "game.globalScore": "Score: ",
   "game.globalScore.photoIndex": "Photo #",
   "game.globalScore.showOtherPlayers":

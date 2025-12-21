@@ -331,6 +331,7 @@ const fr: Texts = {
   "global.edit": "Modifier",
   "global.apply": "Appliquer",
   "global.alpha": "Intensité",
+  "global.none": "Aucun",
   "game.globalScore": "Score : ",
   "game.globalScore.photoIndex": "Photo n° ",
   "game.globalScore.showOtherPlayers":
