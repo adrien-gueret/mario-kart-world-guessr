@@ -132,6 +132,7 @@ export type Texts = {
   "photos.filter.by_characters": string;
   "photos.filter.more_characters": string;
   "photos.filter.less_characters": string;
+  "photos.filter.clear_characters": string;
   "photo.details.title": string;
   "photo.by": string;
   "album.by": string;
