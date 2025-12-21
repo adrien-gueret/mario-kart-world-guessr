@@ -446,6 +446,7 @@ const fr: Texts = {
   "leaderboards.difficulty": "Sélectionnez une difficulté",
   "leaderboards.calendar": "Sélectionnez une date",
   "leaderboards.hide-anonymous": "Masquer les joueurs anonymes",
+  "leaderboards.no_data": "Pas encore de données pour cette sélection.",
   "leaderboards.not-logged-in": (
     <>
       Vous n'êtes pas connecté. <a href="./login">Connectez-vous</a> pour voir

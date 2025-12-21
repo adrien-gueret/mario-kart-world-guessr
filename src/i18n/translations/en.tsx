@@ -431,6 +431,7 @@ const en: Texts = {
   "leaderboards.difficulty": "Select a difficulty",
   "leaderboards.calendar": "Select a date",
   "leaderboards.hide-anonymous": "Hide anonymous players",
+  "leaderboards.no_data": "No data yet for this selection.",
   "leaderboards.not-logged-in": (
     <>
       You are not logged in. <a href="./login">Log in</a> to see your score in

@@ -182,6 +182,7 @@ export type Texts = {
   "leaderboards.difficulty": string;
   "leaderboards.calendar": string;
   "leaderboards.hide-anonymous": string;
+  "leaderboards.no_data": string;
   "leaderboards.not-logged-in": ReactNode;
   "leaderboards.currentUserScore": (
     gameMode: GameMode,

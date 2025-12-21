@@ -237,24 +237,30 @@ function Leaderboards() {
           </div>
 
           <div className="leaderboards-table">
-            <Table>
-              {(shouldHideAnonymous
-                ? leaderboard.filter((player) => !player.isAnonymous)
-                : leaderboard
-              ).map((player) => (
-                <LeaderboardRow
-                  key={player.rank}
-                  rank={player.rank}
-                  username={player.playerName}
-                  marioCharacter={player.marioCharacter ?? void 0}
-                  score={isDailyMode ? player.score : player.photoCount!}
-                  secondaryScore={isDailyMode ? void 0 : player.score}
-                  isHighlighted={
-                    !isAnonymous && currentUser.id === player.playerId
-                  }
-                />
-              ))}
-            </Table>
+            {leaderboard.length === 0 ? (
+              <Text>
+                <i>{translate("leaderboards.no_data")}</i>
+              </Text>
+            ) : (
+              <Table>
+                {(shouldHideAnonymous
+                  ? leaderboard.filter((player) => !player.isAnonymous)
+                  : leaderboard
+                ).map((player) => (
+                  <LeaderboardRow
+                    key={player.rank}
+                    rank={player.rank}
+                    username={player.playerName}
+                    marioCharacter={player.marioCharacter ?? void 0}
+                    score={isDailyMode ? player.score : player.photoCount!}
+                    secondaryScore={isDailyMode ? void 0 : player.score}
+                    isHighlighted={
+                      !isAnonymous && currentUser.id === player.playerId
+                    }
+                  />
+                ))}
+              </Table>
+            )}
           </div>
         </div>
       )}
