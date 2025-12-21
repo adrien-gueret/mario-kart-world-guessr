@@ -1,10 +1,10 @@
 import { useState, useMemo, useCallback, type CSSProperties } from "react";
 import { flushSync } from "react-dom";
 
+import CharacterMenu from "@/components/CharacterMenu";
 import { useTranslations } from "@/i18n";
 import { getCDNPhotoUrl } from "@/services/images";
 import type { Album, Photo, AlbumPhoto } from "@/types/photos";
-import ErrorScreen from "@/screens/Error";
 import useNavigate from "@/services/useNavigate";
 
 import AlbumPublicationCallout from "../AlbumPublicationCallout";
@@ -23,10 +23,10 @@ import StickyButtonContainer from "../StickyButtonContainer";
 
 import getPositionedAlbumPhotos from "./getPositionedAlbumPhotos";
 import AlbumBackgroundForm from "./AlbumBackgroundForm";
+import SearchProvider from "@/search/SearchProvider";
+import AlbumEditPhotoList from "./AlbumEditPhotoList";
 
-type Props = Album & {
-  availablePhotos?: Photo[];
-};
+type Props = Album;
 
 export default function AlbumEdit({
   id,
@@ -36,7 +36,6 @@ export default function AlbumEdit({
   isPublished,
   backgroundColor,
   backgroundImage,
-  availablePhotos = [],
 }: Props) {
   const [isEditingName, setIsEditingName] = useState(false);
   const [albumName, setAlbumName] = useState(name);
@@ -83,7 +82,9 @@ export default function AlbumEdit({
 
   const setPhotoAtPosition = (
     position: number,
-    photo?: (Omit<AlbumPhoto, "position"> & { position?: number }) | undefined
+    photo?:
+      | (Omit<AlbumPhoto, "position" | "difficulty"> & { position?: number })
+      | undefined
   ) => {
     setAlbumPhotos((prev) =>
       prev.map((item) =>
@@ -322,65 +323,25 @@ export default function AlbumEdit({
           title={translate("account.albums.photo.select.title")}
           isDrawer
           noDelay
+          keepMounted
           onClose={() => {
             setEditedPosition(null);
           }}
         >
-          {availablePhotos.length === 0 ? (
-            <ErrorScreen
-              title={translate("account.albums.photo.select.description")}
-              description={translate("account.albums.photo.select.none")}
+          <p>{translate("account.albums.photo.select.description")}</p>
+          <p style={{ fontSize: "0.8rem", color: "#666" }}>
+            {translate("photos.filter.by_characters")}
+          </p>
+          <SearchProvider authorId={author.id}>
+            <CharacterMenu />
+            <AlbumEditPhotoList
+              isPhotoSelected={isPhotoSelected}
+              onPhotoSelected={(selectedPhoto) => {
+                setPhotoAtPosition(editedPosition!, selectedPhoto);
+                setEditedPosition(null);
+              }}
             />
-          ) : (
-            <>
-              <p>{translate("account.albums.photo.select.description")}</p>
-              <ul className="album-photos">
-                {availablePhotos.map((photo) => {
-                  const isSelected = isPhotoSelected(photo.id);
-                  return (
-                    <li
-                      key={photo.id}
-                      className={`album-item album-photo ${
-                        isSelected ? "selected" : ""
-                      }`}
-                    >
-                      <button
-                        type="button"
-                        className="album-select-photo-button"
-                        disabled={isSelected}
-                        tabIndex={isSelected ? -1 : 0}
-                        onClick={(e) => {
-                          const img = e.currentTarget.querySelector("img");
-
-                          if (img) {
-                            img.style.viewTransitionName = `album-photo-${photo.id}`;
-                          }
-
-                          document.startViewTransition(() => {
-                            flushSync(() => {
-                              setPhotoAtPosition(editedPosition!, photo);
-                              setEditedPosition(null);
-                            });
-                          });
-                        }}
-                      >
-                        <img
-                          src={getCDNPhotoUrl(photo.photoUrl, { h: 225 })}
-                          alt=""
-                          loading="lazy"
-                        />
-                      </button>
-                      {isSelected && (
-                        <span className="album-photo-selected-badge">
-                          <ValidIcon width="48px" />
-                        </span>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-            </>
-          )}
+          </SearchProvider>
         </Modal>
 
         <Modal

@@ -13,6 +13,7 @@ type Props = {
   disableSkew?: boolean;
   imageUrl?: string;
   isDrawer?: boolean;
+  keepMounted?: boolean;
   onClose?: () => void;
 };
 
@@ -25,6 +26,7 @@ export default function Modal({
   noDelay = false,
   disableSkew = false,
   isDrawer = false,
+  keepMounted = false,
 }: Props) {
   useLayoutEffect(() => {
     if (isOpen && isDrawer) {
@@ -47,32 +49,31 @@ export default function Modal({
       }
     : undefined;
 
-  return isOpen
-    ? createPortal(
+  const modalContent = (
+    <div
+      className={`modal-overlay ${noDelay ? "no-delay" : ""}  ${
+        isDrawer ? "drawer" : ""
+      } ${isOpen ? "modal-open" : "modal-closed"}`}
+      onClick={onOverlayClick}
+    >
+      {imageUrl && (
         <div
-          className={`modal-overlay ${noDelay ? "no-delay" : ""}  ${
-            isDrawer ? "drawer" : ""
-          }`}
-          onClick={onOverlayClick}
-        >
-          {imageUrl && (
-            <div
-              className="modal-image"
-              style={{ backgroundImage: `url(${imageUrl})` }}
-            />
-          )}
-          <div
-            className={`modal-box ${disableSkew || isDrawer ? "no-skew" : ""}`}
-          >
-            <div className="modal-inner">
-              <h2>{title}</h2>
-              <Text component="div" display="block">
-                {children}
-              </Text>
-            </div>
-          </div>
-        </div>,
-        document.body
-      )
+          className="modal-image"
+          style={{ backgroundImage: `url(${imageUrl})` }}
+        />
+      )}
+      <div className={`modal-box ${disableSkew || isDrawer ? "no-skew" : ""}`}>
+        <div className="modal-inner">
+          <h2>{title}</h2>
+          <Text component="div" display="block">
+            {children}
+          </Text>
+        </div>
+      </div>
+    </div>
+  );
+
+  return isOpen || keepMounted
+    ? createPortal(modalContent, document.body)
     : null;
 }

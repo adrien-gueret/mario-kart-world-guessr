@@ -2,15 +2,12 @@ import { useLoaderData } from "react-router-dom";
 
 import AlbumComponent from "@/components/Album";
 
-import type { Album, Photo } from "@/types/photos";
+import type { Album } from "@/types/photos";
 
 export default function AlbumId() {
-  const { album, availablePhotos } = useLoaderData<{
+  const { album } = useLoaderData<{
     album: Album;
-    availablePhotos: Photo[];
   }>();
 
-  return (
-    <AlbumComponent {...album} isEditing availablePhotos={availablePhotos} />
-  );
+  return <AlbumComponent {...album} isEditing />;
 }

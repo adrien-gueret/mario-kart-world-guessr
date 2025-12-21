@@ -1,6 +1,7 @@
 import { useState, type MouseEventHandler } from "react";
 
-import { allCharacters, type MarioCharacter } from "@/characters";
+import { type MarioCharacter } from "@/characters";
+import AllCharactersCheckboxes from "@/components/AllCharactersCheckboxes";
 import { useTranslations } from "@/i18n";
 import { getCDNPhotoUrl } from "@/services/images";
 import type { Photo } from "@/types/photos";
@@ -78,7 +79,7 @@ export default function PhotoList({
                 <div className="photo-edit-characters">
                   {photo.characters.map((character) => (
                     <img
-                      className="photo-character-image"
+                      className="photo-characters-image"
                       key={character}
                       src={`./ui/pins/icon-${character}.png`}
                       alt=""
@@ -170,34 +171,9 @@ export default function PhotoList({
                       name="photoId"
                       value={selectedPhoto.id}
                     />
-                    <div className="photo-character-checkboxes">
-                      {allCharacters.map((character) => (
-                        <>
-                          <input
-                            id={`check-box-photo-character-${character}`}
-                            name="characters[]"
-                            value={character}
-                            className="photo-character-real-input"
-                            type="checkbox"
-                            defaultChecked={selectedPhoto.characters.includes(
-                              character
-                            )}
-                          />
-                          <label
-                            key={character}
-                            className="photo-character-checkbox"
-                            htmlFor={`check-box-photo-character-${character}`}
-                          >
-                            <img
-                              className="photo-character-image"
-                              src={`./ui/pins/icon-${character}.png`}
-                              alt=""
-                            />
-                            {translate(`${character}.name`)}
-                          </label>
-                        </>
-                      ))}
-                    </div>
+                    <AllCharactersCheckboxes
+                      defaultSelectedCharacters={selectedPhoto.characters}
+                    />
 
                     <Button variant="secondary" type="submit">
                       {translate("global.apply")}

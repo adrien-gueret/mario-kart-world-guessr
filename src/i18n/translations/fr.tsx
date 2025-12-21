@@ -381,6 +381,10 @@ const fr: Texts = {
     </>
   ),
   "photos.showMap": "Afficher la carte",
+  "photos.filter.by_characters":
+    "Filtrer par personnages présents sur les photos",
+  "photos.filter.more_characters": "Afficher plus de personnages",
+  "photos.filter.less_characters": "Afficher moins de personnages",
   "photo.details.title": "Suggestions des joueurs",
   "photo.by": "Photo par",
   "album.by": "Un album par",

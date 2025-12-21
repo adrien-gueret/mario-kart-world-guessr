@@ -1,0 +1,10 @@
+{
+  "require": {
+    "algolia/algoliasearch-client-php": "^4.0"
+  },
+  "config": {
+    "platform": {
+      "php": "8.4.0"
+    }
+  }
+}

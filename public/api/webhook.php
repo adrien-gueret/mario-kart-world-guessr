@@ -6,6 +6,8 @@ require_once __DIR__ . '/___database.php';
 
 require_once __DIR__ . '/___github.php';
 
+require_once __DIR__ . '/___algolia.php';
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     exit('Method Not Allowed');
@@ -50,6 +52,8 @@ if ($event['pull_request']['merged'] === true) {
     $insertStmt->bindParam(':id_user', $photo['author_id'], PDO::PARAM_INT);
     $insertStmt->bindValue(':specific_data', json_encode(['photo_id' => $photo['id']]), PDO::PARAM_STR);
     $insertStmt->execute();
+
+    indexPhotosIntoAlgolia([$photo['id']]);
 
     http_response_code(200);
     echo 'Photo correctly validated';

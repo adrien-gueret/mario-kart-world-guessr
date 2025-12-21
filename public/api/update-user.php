@@ -2,6 +2,8 @@
 
 require_once __DIR__ . '/___middleware.php';
 
+require_once __DIR__ . '/___algolia.php';
+
 $_PUT = allowMethod('PUT');
 
 if (empty($currentUser) || empty($currentUser['email'])) {
@@ -97,6 +99,8 @@ try {
     $stmt->bindParam(':userId', $currentUser['id'], PDO::PARAM_INT);
     $stmt->execute();
     $currentUser = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+
+    indexAuthorPhotosIntoAlgolia($currentUser['id']);
 
    echo json_encode(["success" => true, "user" => $currentUser]);
 } catch (PDOException $e) {
