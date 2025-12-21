@@ -5,6 +5,50 @@ import type { ReleaseNotes } from "./types";
 
 const releaseNotes: ReleaseNotes = [
   {
+    version: "v4.2.0",
+    publishedAt: new Date("2025-12-21T00:00:00Z"),
+    notes: {
+      fr: (
+        <ul>
+          <Text component="li">
+            Le mode <i>Photos du jour</i> dispose désormais d'un classement{" "}
+            <b>complet</b> des meilleurs joueurs&nbsp;!
+            <br />
+            Rendez-vous sur la page{" "}
+            <Link to="/leaderboards/daily/today" viewTransition>
+              des classements
+            </Link>{" "}
+            pour consulter le classement du jour, ainsi que ceux des jours
+            précédents via un calendrier.
+          </Text>
+          <Text component="li">
+            Lors de la création d'un album, vous pouvez maintenant filtrer vos
+            photos en fonction des personnages présents dessus.
+          </Text>
+        </ul>
+      ),
+      en: (
+        <ul>
+          <Text component="li">
+            The <i>Daily Photos</i> mode now features a <b>complete</b> ranking
+            of the best players!
+            <br />
+            Visit the{" "}
+            <Link to="/leaderboards/daily/today" viewTransition>
+              leaderboards page
+            </Link>{" "}
+            to view the daily ranking, as well as those from previous days via a
+            calendar.
+          </Text>
+          <Text component="li">
+            When creating an album, you can now filter your photos based on the
+            characters present in them.
+          </Text>
+        </ul>
+      ),
+    },
+  },
+  {
     version: "v4.1.0",
     publishedAt: new Date("2025-12-12T00:00:00Z"),
     notes: {
