@@ -154,17 +154,8 @@ const router = createBrowserRouter(
               element: <Navigate to="survival/150cc" replace />,
             },
             {
-              path: ":mode",
-              children: [
-                {
-                  index: true,
-                  element: <Navigate to="150cc" replace />,
-                },
-                {
-                  path: ":difficulty",
-                  Component: Leaderboards,
-                },
-              ],
+              path: ":mode/:gameDifficulty?",
+              Component: Leaderboards,
             },
           ],
         },

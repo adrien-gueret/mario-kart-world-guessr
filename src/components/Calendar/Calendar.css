@@ -1,0 +1,39 @@
+.react-calendar {
+  margin: auto;
+  background-image: url(./backgrounds/dialog.jpg);
+  border: 1px solid #213547;
+  border-radius: 27px;
+  overflow: hidden;
+  color: #213547;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: #213547;
+}
+
+.react-calendar__navigation {
+  background-color: #fff;
+  border-bottom: 1px solid #213547;
+  margin: 0;
+}
+
+.react-calendar__navigation__label {
+  font-weight: bold;
+  text-transform: capitalize;
+  pointer-events: none;
+  cursor: default;
+}
+
+.react-calendar__tile--active {
+  background-color: #bdd7ff !important;
+  color: inherit;
+  pointer-events: none;
+  cursor: default;
+}
+
+.react-calendar__tile,
+.react-calendar__tile--now,
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+  background: #fff;
+}

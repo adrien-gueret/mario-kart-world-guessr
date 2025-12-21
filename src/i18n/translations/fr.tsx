@@ -444,6 +444,7 @@ const fr: Texts = {
     "Consultez les classements des joueurs pour tous les modes et difficultés ! Arriverez-vous à être parmi les meilleurs ?",
   "leaderboards.mode": "Sélectionnez un mode de jeu",
   "leaderboards.difficulty": "Sélectionnez une difficulté",
+  "leaderboards.calendar": "Sélectionnez une date",
   "leaderboards.hide-anonymous": "Masquer les joueurs anonymes",
   "leaderboards.not-logged-in": (
     <>
@@ -473,6 +474,34 @@ const fr: Texts = {
       <b>{fr[`difficulty.${gameDifficulty}.title`]} !</b>
     </>
   ),
+  "leaderboards.daily.currentUserScore": (
+    date: Date,
+    score: number,
+    rank: number
+  ) => (
+    <>
+      Avec votre score de <b>{score}</b> point{score > 1 ? "s" : ""}, vous êtes
+      à la{" "}
+      {rank === 1 ? (
+        <>
+          <b>première</b> place
+        </>
+      ) : (
+        <>
+          place <Anchor href={`#leaderboard-row-${rank}`}>#{rank}</Anchor>
+        </>
+      )}{" "}
+      du mode <i>Photos du jour</i> du{" "}
+      <b>
+        {new Intl.DateTimeFormat("fr-FR", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }).format(date)}
+      </b>{" "}
+      !
+    </>
+  ),
   "leaderboards.not-played-yet": (
     gameMode: GameMode,
     gameDifficulty: Difficulty
@@ -480,6 +509,19 @@ const fr: Texts = {
     <>
       Vous n'avez pas encore joué au mode <i>{fr[`mode.${gameMode}.label`]}</i>{" "}
       en <b>{fr[`difficulty.${gameDifficulty}.title`]}.</b>
+    </>
+  ),
+  "leaderboards.daily.not-played-yet": (date: Date) => (
+    <>
+      Vous n'avez pas joué au mode <i>Photos du jour</i> du{" "}
+      <b>
+        {new Intl.DateTimeFormat("fr-FR", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }).format(date)}
+      </b>
+      .
     </>
   ),
   "notifications.none":

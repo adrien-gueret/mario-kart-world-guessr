@@ -180,6 +180,7 @@ export type Texts = {
   "leaderboards.description": string;
   "leaderboards.mode": string;
   "leaderboards.difficulty": string;
+  "leaderboards.calendar": string;
   "leaderboards.hide-anonymous": string;
   "leaderboards.not-logged-in": ReactNode;
   "leaderboards.currentUserScore": (
@@ -188,10 +189,16 @@ export type Texts = {
     photoCount: number,
     rank: number
   ) => ReactNode;
+  "leaderboards.daily.currentUserScore": (
+    date: Date,
+    score: number,
+    rank: number
+  ) => ReactNode;
   "leaderboards.not-played-yet": (
     gameMode: GameMode,
     gameDifficulty: Difficulty
   ) => ReactNode;
+  "leaderboards.daily.not-played-yet": (date: Date) => ReactNode;
   "notifications.none": string;
   "notifications.title": string;
   "notifications.photo_validated.title": string;
