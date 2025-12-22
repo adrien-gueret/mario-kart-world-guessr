@@ -7,6 +7,7 @@
   color: #213547;
 }
 
+.react-calendar__tile,
 .react-calendar__month-view__days__day--weekend {
   color: #213547;
 }
