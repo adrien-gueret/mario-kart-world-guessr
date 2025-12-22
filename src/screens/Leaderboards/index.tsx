@@ -29,8 +29,27 @@ const allGameModes: GameMode[] = ["goal", "survival", "daily"];
 
 const allDifficulties: Difficulty[] = ["50cc", "100cc", "150cc", "mirror"];
 
-const isDailyDate = (dateString: string): dateString is IsoDate => {
+const isDailyDate = (dateString?: string): dateString is IsoDate => {
+  if (!dateString) {
+    return false;
+  }
+
   return dateString === "today" || /^\d{4}-\d{2}-\d{2}$/.test(dateString);
+};
+
+const parseIsoDateToLocal = (iso: IsoDate) => {
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(y, m - 1, d);
+};
+
+const getIsoDate = (date: Date): IsoDate => {
+  const isoDay = [
+    date.getFullYear(),
+    String(date.getMonth() + 1).padStart(2, "0"),
+    String(date.getDate()).padStart(2, "0"),
+  ].join("-");
+
+  return isoDay as IsoDate;
 };
 
 function Leaderboards() {
@@ -58,8 +77,8 @@ function Leaderboards() {
   const currentDateToCheck = isDailyMode
     ? gameDifficulty === "today"
       ? new Date()
-      : isDailyDate(gameDifficulty as string)
-      ? new Date(gameDifficulty as string)
+      : isDailyDate(gameDifficulty)
+      ? parseIsoDateToLocal(gameDifficulty)
       : undefined
     : undefined;
 
@@ -94,7 +113,9 @@ function Leaderboards() {
 
     const apiEndpoint: `/${string}` =
       gameMode === "daily"
-        ? `/leaderboards?mode=daily&date=${gameDifficulty}`
+        ? `/leaderboards?mode=daily&date=${
+            gameDifficulty === "today" ? getIsoDate(new Date()) : gameDifficulty
+          }`
         : `/leaderboards?mode=${gameMode}&difficulty=${gameDifficulty}`;
 
     fetchApi(apiEndpoint, "GET")
@@ -153,11 +174,7 @@ function Leaderboards() {
             <Calendar
               defaultValue={currentDateToCheck}
               onClickDay={(day) => {
-                const isoDay = [
-                  day.getFullYear(),
-                  String(day.getMonth() + 1).padStart(2, "0"),
-                  String(day.getDate()).padStart(2, "0"),
-                ].join("-");
+                const isoDay = getIsoDate(day);
 
                 navigate(`/leaderboards/daily/${isoDay}`, {
                   preventScrollReset: true,
