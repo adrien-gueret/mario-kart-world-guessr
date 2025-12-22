@@ -1,4 +1,4 @@
-import ReactCalendar from "react-calendar";
+import ReactCalendar, { type CalendarProps } from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
 import { useTranslations } from "@/i18n";
@@ -7,12 +7,16 @@ import Icon from "../Icon";
 
 import "./Calendar.css";
 
-type Props = {
-  onClickDay: (date: Date) => void;
-  defaultValue?: Date;
-};
+type Props = Pick<
+  CalendarProps,
+  "onClickDay" | "defaultValue" | "tileClassName"
+>;
 
-export default function Calendar({ onClickDay, defaultValue }: Props) {
+export default function Calendar({
+  onClickDay,
+  defaultValue,
+  tileClassName,
+}: Props) {
   const { currentLocale } = useTranslations();
 
   return (
@@ -20,6 +24,7 @@ export default function Calendar({ onClickDay, defaultValue }: Props) {
       locale={currentLocale}
       onClickDay={onClickDay}
       defaultValue={defaultValue}
+      tileClassName={tileClassName}
       minDate={new Date("2025-07-10")}
       maxDate={new Date()}
       prevLabel={

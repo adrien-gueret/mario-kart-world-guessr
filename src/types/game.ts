@@ -2,6 +2,8 @@ import type { Coordinates } from "./location";
 
 import type { UsableMarioCharacter } from "@/characters";
 
+import type { IsoDate } from "@/services/daily";
+
 export type GameMode = "survival" | "goal" | "chrono" | "daily";
 
 export type GameHistory = number[];
@@ -61,3 +63,8 @@ type LeaderboardRank = {
 };
 
 export type LeaderboardsResponse = LeaderboardRank[];
+
+export type DailiesResponse = Array<{
+  id: number;
+  dailyDate: IsoDate;
+}>;

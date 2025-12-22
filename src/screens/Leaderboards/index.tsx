@@ -16,41 +16,26 @@ import Text from "@/components/Text";
 import { useTranslations } from "@/i18n";
 
 import fetchApi from "@/services/api";
+import {
+  type IsoDate,
+  isDailyDate,
+  parseIsoDateToLocal,
+  getIsoDate,
+} from "@/services/daily";
 
-import type { LeaderboardsResponse, GameMode, Difficulty } from "@/types/game";
+import type {
+  LeaderboardsResponse,
+  GameMode,
+  Difficulty,
+  DailiesResponse,
+} from "@/types/game";
 
 import "./Leaderboards.css";
-
-type IsoDate =
-  `${number}${number}${number}${number}-${number}${number}-${number}${number}`;
 
 // TODO: add chrono mode
 const allGameModes: GameMode[] = ["goal", "survival", "daily"];
 
 const allDifficulties: Difficulty[] = ["50cc", "100cc", "150cc", "mirror"];
-
-const isDailyDate = (dateString?: string): dateString is IsoDate => {
-  if (!dateString) {
-    return false;
-  }
-
-  return dateString === "today" || /^\d{4}-\d{2}-\d{2}$/.test(dateString);
-};
-
-const parseIsoDateToLocal = (iso: IsoDate) => {
-  const [y, m, d] = iso.split("-").map(Number);
-  return new Date(y, m - 1, d);
-};
-
-const getIsoDate = (date: Date): IsoDate => {
-  const isoDay = [
-    date.getFullYear(),
-    String(date.getMonth() + 1).padStart(2, "0"),
-    String(date.getDate()).padStart(2, "0"),
-  ].join("-");
-
-  return isoDay as IsoDate;
-};
 
 function Leaderboards() {
   const { mode: gameMode, gameDifficulty } = useParams<{
@@ -68,6 +53,9 @@ function Leaderboards() {
     photoCount: number;
     score: number;
   } | null>(null);
+  const [currentUserDailies, setCurrentUserDailies] = useState<DailiesResponse>(
+    []
+  );
 
   const { user: currentUser, isAnonymous } = useCurrentUser();
 
@@ -136,6 +124,12 @@ function Leaderboards() {
         );
       })
       .finally(() => setIsLoading(false));
+
+    if (isDailyMode) {
+      fetchApi("/my-dailies", "GET")
+        .then((response) => response.json())
+        .then(setCurrentUserDailies);
+    }
   }, [gameMode, gameDifficulty, currentUser.id, isDailyMode, navigate]);
 
   return (
@@ -179,6 +173,13 @@ function Leaderboards() {
                 navigate(`/leaderboards/daily/${isoDay}`, {
                   preventScrollReset: true,
                 });
+              }}
+              tileClassName={({ date }) => {
+                const isoDate = getIsoDate(date);
+                const hasPlayedThisDay = currentUserDailies.some(
+                  ({ dailyDate }) => dailyDate === isoDate
+                );
+                return hasPlayedThisDay ? "with-check-mark" : undefined;
               }}
             />
           )}
