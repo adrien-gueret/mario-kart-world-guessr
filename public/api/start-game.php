@@ -18,7 +18,12 @@ if (empty($currentUser)) {
 
 $possibleModes = ['daily', 'survival', 'goal', 'chrono'];
 
-if (!isset($_POST['mode']) || !in_array($_POST['mode'], $possibleModes)) {
+// TODO: remove check on user id
+if (
+    !isset($_POST['mode']) ||
+    !in_array($_POST['mode'], $possibleModes) ||
+    ($_POST['mode'] === 'chrono' && $currentUser['id'] !== 1)
+) {
     http_response_code(400);
     die('{"error":true,"message":"Invalid mode"}');
 }
