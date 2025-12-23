@@ -64,7 +64,7 @@
   gap: 2px;
   justify-content: center;
   align-items: center;
-  justify-self: flex-end;
+  justify-self: stretch;
   color: #213547;
   padding: 2px 4px;
   background-color: rgba(255, 255, 255, 0.6);

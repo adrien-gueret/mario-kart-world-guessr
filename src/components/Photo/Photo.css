@@ -10,7 +10,7 @@
 .game-photo-author {
   margin: 0;
   text-align: right;
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
   gap: 2px;
   justify-content: center;
