@@ -100,7 +100,8 @@ try {
     $insertSuggestionStmt->bindParam(':gameId', $_POST['gameId'], PDO::PARAM_INT);
 
     $mode = $game['mode'];
-    if (!in_array($mode, ['goal', 'daily', 'survival', 'chrono'])) {
+    // TODO: remove check on user id
+    if (!in_array($mode, ['goal', 'daily', 'survival', 'chrono']) || ($mode === 'chrono' && $currentUser['id'] !== 1)) {
         http_response_code(400);
         die('{"error":true,"message":"Invalid game mode."}');
     }
