@@ -128,7 +128,13 @@ function Leaderboards() {
     if (isDailyMode) {
       fetchApi("/my-dailies", "GET")
         .then((response) => response.json())
-        .then(setCurrentUserDailies);
+        .then((response) => {
+          if (Array.isArray(response)) {
+            setCurrentUserDailies(response);
+          } else {
+            setCurrentUserDailies([]);
+          }
+        });
     }
   }, [gameMode, gameDifficulty, currentUser.id, isDailyMode, navigate]);
 
