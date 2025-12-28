@@ -50,6 +50,11 @@ export default function Photo({
         minWidth: `${width}px`,
         minHeight: `${height}px`,
         textAlign: "center",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 8,
+        flexDirection: "column",
       }}
     >
       <div
