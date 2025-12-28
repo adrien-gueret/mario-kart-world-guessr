@@ -1,4 +1,4 @@
-import { useState, type MouseEventHandler } from "react";
+import { useState, useEffect, type MouseEventHandler } from "react";
 
 import { type MarioCharacter } from "@/characters";
 import AllCharactersCheckboxes from "@/components/AllCharactersCheckboxes";
@@ -30,6 +30,10 @@ export default function PhotoList({
   const [areDetailsOpen, setAreDetailsOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [currentPhotos, setCurrentPhotos] = useState(photos);
+
+  useEffect(() => {
+    setCurrentPhotos(photos);
+  }, [photos]);
 
   const selectPhoto = (photo: Photo) => {
     setSelectedPhoto(photo);
