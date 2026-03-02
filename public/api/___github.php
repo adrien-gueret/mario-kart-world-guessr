@@ -96,11 +96,11 @@ function getPhotoURLByPRId($prId) {
 
     $photo = githubApi("GET", $pr[0]['contents_url'], $githubToken);
  
-    if (empty($photo['content'])) {
-      return false;
+    if (!empty($photo['content'])) {
+      return 'data:image/jpeg;base64,' . $photo['content'];
     }
 
-    return 'data:image/jpeg;base64,' . $photo['content'];
+    return empty($photo['download_url']) ? false : $photo['download_url'];
   } catch (Exception $e) {
     return false;
   }
