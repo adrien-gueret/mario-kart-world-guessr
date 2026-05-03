@@ -72,7 +72,7 @@ $mimeType = finfo_file($finfo, $photo['tmp_name']);
 finfo_close($finfo);
 [$width, $height] = getimagesize($photo['tmp_name']);
 
-$isJpgExtension = $extension === 'jpg';
+$isJpgExtension = $extension === 'jpg' || $extension === 'jpeg';
 $isJpgMimeType = $mimeType === 'image/jpeg';
 
 $isSizeValid = true;
