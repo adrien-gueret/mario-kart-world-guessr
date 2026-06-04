@@ -84,28 +84,5 @@ function githubApi($method, $endpoint, $token, $data = null) {
   return json_decode($response, true);
 }
 
-function getPhotoURLByPRId($prId) {
-  global $owner, $repo, $githubToken;
-
-  try {
-    $pr = githubApi("GET", "/repos/$owner/$repo/pulls/$prId/files", $githubToken);
-
-    if (empty($pr)) {
-      return false;
-    }
-
-    $photo = githubApi("GET", $pr[0]['contents_url'], $githubToken);
- 
-    if (!empty($photo['content'])) {
-      return 'data:image/jpeg;base64,' . $photo['content'];
-    }
-
-    return empty($photo['download_url']) ? false : $photo['download_url'];
-  } catch (Exception $e) {
-    return false;
-  }
-
-}
-
 $jwt = generateGitHubAppJWT($githubAppId);
 $githubToken = getGitHubInstallationToken($jwt, $installationId);

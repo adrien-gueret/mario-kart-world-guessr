@@ -33,7 +33,7 @@ try {
                 WHEN p.validated_at IS NOT NULL 
                     AND p.validated_at <= NOW() - INTERVAL 5 MINUTE
                 THEN CONCAT('https://ik.imagekit.io/mkwg/', p.id, '.jpg')
-                ELSE CONCAT('https://www.mariouniversalis.fr/mario-kart-world-guessr/api/photo-proxy?pr_id=', p.github_pr_number)
+                ELSE CONCAT('https://www.mariouniversalis.fr/mario-kart-world-guessr/api/photo-proxy?id=', p.id)
             END AS photoUrl
         FROM `mario-kart-world-photos` p
         LEFT JOIN `mario-kart-world-suggestions` s 
@@ -41,7 +41,7 @@ try {
         LEFT JOIN `mario-kart-world-games` g
             ON g.id = s.game_id
         WHERE p.author_id = :authorId
-        GROUP BY p.id, p.difficulty, p.validated_at, p.github_pr_number
+        GROUP BY p.id, p.difficulty, p.validated_at
         ORDER BY (p.validated_at IS NULL) DESC, p.validated_at DESC"
     );
 

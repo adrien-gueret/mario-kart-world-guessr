@@ -1,0 +1,54 @@
+name: Handle photo issue closed
+on:
+  issues:
+    types: [closed]
+
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    if: contains(github.event.issue.labels.*.name, 'pending-photo')
+    steps:
+      - name: Extract photo id from issue body
+        id: extract
+        env:
+          BODY: ${{ github.event.issue.body }}
+        run: |
+          PHOTO_ID=$(echo "$BODY" | grep -oE 'photo-id: [a-f0-9-]{36}' | head -n1 | awk '{print $2}')
+          echo "photo_id=$PHOTO_ID" >> "$GITHUB_OUTPUT"
+
+      - name: Validate photo
+        if: github.event.issue.state_reason == 'completed'
+        run: |
+          curl -fsS -X POST \
+            -H "Authorization: Bearer ${{ secrets.MU_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -d '{"photo_id":"${{ steps.extract.outputs.photo_id }}","issue_number":${{ github.event.issue.number }}}' \
+            https://www.mariouniversalis.fr/mario-kart-world-guessr/api/validate-photo.php
+
+      - name: Fetch rejection reason
+        if: github.event.issue.state_reason == 'not_planned'
+        id: reason
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          REASON=$(gh api "repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments" \
+            --jq 'sort_by(.created_at) | reverse | .[0].body // ""')
+          {
+            echo 'reason<<EOF'
+            echo "$REASON"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Reject photo
+        if: github.event.issue.state_reason == 'not_planned'
+        run: |
+          jq -n \
+            --arg pid "${{ steps.extract.outputs.photo_id }}" \
+            --argjson issue ${{ github.event.issue.number }} \
+            --arg reason "${{ steps.reason.outputs.reason }}" \
+            '{photo_id:$pid, issue_number:$issue, reason:$reason}' \
+          | curl -fsS -X POST \
+              -H "Authorization: Bearer ${{ secrets.MU_SECRET }}" \
+              -H "Content-Type: application/json" \
+              --data-binary @- \
+              https://www.mariouniversalis.fr/mario-kart-world-guessr/api/reject-photo.php

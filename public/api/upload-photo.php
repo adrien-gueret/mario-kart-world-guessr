@@ -87,72 +87,61 @@ if (!$isJpgExtension || !$isJpgMimeType  || !$isSizeValid) {
     ]));
 }
 
-$branchName = "add-photo-" . time();
-
-$refData = githubApi("GET", "/repos/$owner/$repo/git/ref/heads/$baseBranch", $githubToken);
-
-$baseSha = $refData['object']['sha'];
-
-githubApi("POST", "/repos/$owner/$repo/git/refs", $githubToken, [
-  "ref" => "refs/heads/$branchName",
-  "sha" => $baseSha
-]);
-
 $authorName = empty($currentUser['username']) ? "Anonymous" : $currentUser['username'];
-$authorEmail =  empty($currentUser['email']) ? "anoynmous@mariouniversalis.fr" : $currentUser['email'];
 $authorLocale = empty($currentUser['locale']) ? "en" : $currentUser['locale'];
 
-$photoContent = base64_encode(file_get_contents($photo['tmp_name']));
+$photoName = getUuidVersion($originalName) !== null ? $originalName : uuidv4();
+$photoFileName = "$photoName.jpg";
 
-$uploadOK = false;
-$triesCount = 0;
+$pendingDir = __DIR__ . '/../photos/pending';
+if (!is_dir($pendingDir)) {
+    @mkdir($pendingDir, 0755, true);
+}
+$pendingPath = "$pendingDir/$photoFileName";
 
-while(!$uploadOK && $triesCount < 5) {
-  try {
-    $photoName = ($triesCount > 0 || getUuidVersion($originalName) === null) ? uuidv4() : $originalName;
-    $photoFileName = "$photoName.jpg";
-
-    githubApi("PUT", "/repos/$owner/$repo/contents/public/photos/$photoFileName", $githubToken, [
-      "message" => "Add photo $photoName",
-      "content" => $photoContent,
-      "branch" => $branchName,
-      "author" => [
-        "name" => $authorName,
-        "email" => $authorEmail
-      ],
-    ]);
-
-    $uploadOK = true;
-  } catch (Exception $e) {
-    $triesCount++;
-
-    if ($triesCount >= 5) {
-      http_response_code(500);
-      die(json_encode([
+if (!move_uploaded_file($photo['tmp_name'], $pendingPath)) {
+    http_response_code(500);
+    die(json_encode([
         'error' => true,
         'message' => $headers['accept-language'] === 'fr'
             ? 'Impossible de sauvegarder votre photo : veuillez réessayer plus tard.'
             : 'Unable to save your photo: please try again later.'
-      ]));
-    }
-  } 
+    ]));
 }
 
-$pr = githubApi("POST", "/repos/$owner/$repo/pulls", $githubToken, [
-  "title" => "Ajout photo ($authorName)",
-  "head" => $branchName,
-  "base" => $baseBranch,
-  "body" => "$authorName ($authorLocale) veut ajouter une nouvelle photo en ($x, $y)"
-]);
+$pendingUrl = "https://www.mariouniversalis.fr/mario-kart-world-guessr/photos/pending/$photoFileName";
 
+$issueBody = "<!-- photo-id: $photoName -->\n\n"
+    . "**Author:** $authorName ($authorLocale)\n"
+    . "**Coordinates:** ($x, $y)\n\n"
+    . "![preview]($pendingUrl)\n\n"
+    . "---\n"
+    . "_Close as **completed** to validate, or as **not planned** with a comment explaining why to reject._";
 
-$stmt = $pdo->prepare("INSERT INTO `mario-kart-world-photos` (id, x, y, github_pr_number, author_id)
-  VALUES (:id, :x, :y, :github_pr_number, :author_id)
+try {
+    $issue = githubApi("POST", "/repos/$owner/$repo/issues", $githubToken, [
+        "title" => "Photo à valider ($authorName)",
+        "body" => $issueBody,
+        "labels" => ["pending-photo"],
+    ]);
+} catch (Exception $e) {
+    @unlink($pendingPath);
+    http_response_code(500);
+    die(json_encode([
+        'error' => true,
+        'message' => $headers['accept-language'] === 'fr'
+            ? 'Impossible de soumettre votre photo : veuillez réessayer plus tard.'
+            : 'Unable to submit your photo: please try again later.'
+    ]));
+}
+
+$stmt = $pdo->prepare("INSERT INTO `mario-kart-world-photos` (id, x, y, github_issue_number, author_id)
+  VALUES (:id, :x, :y, :github_issue_number, :author_id)
 ");
 $stmt->bindParam(':id', $photoName, PDO::PARAM_STR);
 $stmt->bindParam(':x', $x, PDO::PARAM_INT);
 $stmt->bindParam(':y', $y, PDO::PARAM_INT);
-$stmt->bindParam(':github_pr_number', $pr['number'], PDO::PARAM_INT);
+$stmt->bindParam(':github_issue_number', $issue['number'], PDO::PARAM_INT);
 $authorId = empty($currentUser['id']) ? 1 : $currentUser['id'];
 $stmt->bindParam(':author_id', $authorId, PDO::PARAM_INT);
 $stmt->execute();
@@ -165,5 +154,6 @@ http_response_code(201);
 
 echo json_encode([
   "error" => false,
-  "photo_number" => $pr["number"]
+  "photo_id" => $photoName,
+  "issue_number" => $issue["number"]
 ]);

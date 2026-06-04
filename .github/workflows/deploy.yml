@@ -29,3 +29,6 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: "httpdocs/mario-kart-world-guessr/"
           local-dir: dist/
+          exclude: |
+            **/photos/pending/**
+            **/photos/rejected/**

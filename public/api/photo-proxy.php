@@ -2,47 +2,40 @@
 
 require_once __DIR__ . '/___middleware.php';
 
-require_once __DIR__ . '/___github.php';
-
 allowMethod('GET');
 
-$photoUrl = "";
-
-function getPhotoURLByPhotoId($photoId, $pdo) {
-  $stmt = $pdo->prepare(
-    "SELECT id, github_pr_number,
-    CASE
-        WHEN validated_at IS NOT NULL AND validated_at <= NOW() - INTERVAL 5 MINUTE
-            THEN 1
-        ELSE 0
-    END AS is_available
-    FROM `mario-kart-world-photos`
-    WHERE id = :photoId"
-  );
-  $stmt->bindParam(':photoId', $photoId, PDO::PARAM_STR);
-  $stmt->execute();
-
-  $photo = $stmt->fetch(PDO::FETCH_ASSOC);
-
-  if (empty($photo)) {
-    return false;
-  }
-
-  return $photo['is_available']
-    ? "https://ik.imagekit.io/mkwg/{$photo['id']}.jpg"
-    : getPhotoURLByPRId($photo['github_pr_number']);
+if (empty($_GET['id'])) {
+    http_response_code(400);
+    echo json_encode(["error" => "Missing id"]);
+    exit;
 }
 
-if (!empty($_GET['id'])) {
-    $photoUrl = getPhotoURLByPhotoId($_GET['id'], $pdo);
-} else if (!empty($_GET['pr_id'])) {
-    $photoUrl = getPhotoURLByPRId($_GET['pr_id'], $pdo);
-}
+$photoId = $_GET['id'];
 
-if (empty($photoUrl)) {
+$stmt = $pdo->prepare(
+    "SELECT id, validated_at, rejected_at
+     FROM `mario-kart-world-photos`
+     WHERE id = :id"
+);
+$stmt->bindParam(':id', $photoId, PDO::PARAM_STR);
+$stmt->execute();
+$photo = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$photo) {
     http_response_code(404);
     echo json_encode(["error" => "Photo not found"]);
     exit;
+}
+
+$isAvailableOnCDN = $photo['validated_at'] !== null
+    && strtotime($photo['validated_at']) <= time() - 5 * 60;
+
+if ($isAvailableOnCDN) {
+    $photoUrl = "https://ik.imagekit.io/mkwg/{$photo['id']}.jpg";
+} elseif ($photo['rejected_at'] !== null) {
+    $photoUrl = "https://www.mariouniversalis.fr/mario-kart-world-guessr/photos/rejected/{$photo['id']}.jpg";
+} else {
+    $photoUrl = "https://www.mariouniversalis.fr/mario-kart-world-guessr/photos/pending/{$photo['id']}.jpg";
 }
 
 header('Content-Type: image/jpeg');

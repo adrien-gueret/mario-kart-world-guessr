@@ -18,13 +18,13 @@ export default function PhotoRefused({ notification }: Props) {
       dateTime={notification.createdAt}
       image={
         <img
-          src={`https://www.mariouniversalis.fr/mario-kart-world-guessr/api/photo-proxy?pr_id=${notification.specificData.pr_id}`}
+          src={`https://www.mariouniversalis.fr/mario-kart-world-guessr/api/photo-proxy?id=${notification.specificData.photo_id}`}
           alt=""
         />
       }
     >
       {translate("notifications.photo_refused.description")(
-        notification.specificData.reason
+        notification.specificData.reason,
       )}
     </NotificationItem>
   );

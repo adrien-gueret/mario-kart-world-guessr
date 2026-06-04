@@ -20,7 +20,7 @@ try {
                 WHEN p.validated_at IS NOT NULL 
                     AND p.validated_at <= NOW() - INTERVAL 5 MINUTE
                 THEN CONCAT('https://ik.imagekit.io/mkwg/', p.id, '.jpg')
-                ELSE CONCAT('https://www.mariouniversalis.fr/mario-kart-world-guessr/api/photo-proxy?pr_id=', p.github_pr_number)
+                ELSE CONCAT('https://www.mariouniversalis.fr/mario-kart-world-guessr/api/photo-proxy?id=', p.id)
             END AS photoUrl
 
         FROM `mario-kart-world-photos` p
@@ -55,7 +55,7 @@ try {
 
         ORDER BY
             (p.validated_at IS NULL) DESC,
-            CASE WHEN p.validated_at IS NULL THEN p.github_pr_number ELSE NULL END ASC,
+            CASE WHEN p.validated_at IS NULL THEN p.github_issue_number ELSE NULL END ASC,
             p.validated_at DESC;"
     );
     $stmt->execute();
