@@ -13,6 +13,7 @@ import AccountAlbums from "@/screens/Account/Albums";
 import AccountAlbumId from "@/screens/Account/Albums/ID";
 import AccountPreferences from "@/screens/Account/Preferences";
 import AlbumId from "@/screens/Albums/ID";
+import Gallery from "@/screens/Gallery";
 import ErrorBoundary from "@/screens/Error";
 import LogoutWarning from "@/screens/Error/LogoutWarning";
 import { SurvivalGame, GoalGame, DailyGame, ChronoGame } from "@/screens/Game";
@@ -64,12 +65,12 @@ const router = createBrowserRouter(
           Component: AccountAlbumId,
           loader: async ({ params }) => {
             const getReponseJson = getReponseJsonGetter(
-              `Cannot fetch album ${params.id}`
+              `Cannot fetch album ${params.id}`,
             );
 
             const response = await fetchApi(
               `/album?id=${params.id}`,
-              "GET"
+              "GET",
             ).then(getReponseJson);
             return {
               album: response,
@@ -88,7 +89,7 @@ const router = createBrowserRouter(
             };
 
             const album = await fetchApi(`/album?id=${params.id}`, "GET").then(
-              getReponseJson
+              getReponseJson,
             );
 
             return { album };
@@ -134,7 +135,7 @@ const router = createBrowserRouter(
                     .then(
                       (photos: Photo[]) =>
                         photos.filter((photo) => Boolean(photo.validatedAt))
-                          .length
+                          .length,
                     ),
                 ]);
 
@@ -162,6 +163,10 @@ const router = createBrowserRouter(
         {
           path: "/login",
           Component: Login,
+        },
+        {
+          path: "/gallery",
+          Component: Gallery,
         },
         {
           path: "/photos",
@@ -210,7 +215,7 @@ const router = createBrowserRouter(
       ],
     },
   ],
-  { basename: import.meta.env.BASE_URL || "/" }
+  { basename: import.meta.env.BASE_URL || "/" },
 );
 
 export default function Router() {

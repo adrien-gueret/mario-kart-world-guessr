@@ -12,6 +12,8 @@ export default function Photo({
   photoName,
   isMirrored,
   author,
+  minWidth = 0,
+  minHeight = 0,
 }: {
   photoName?: string;
   isMirrored?: boolean;
@@ -20,6 +22,8 @@ export default function Photo({
     name: string;
     character: UsableMarioCharacter | null;
   } | null;
+  minWidth?: number;
+  minHeight?: number;
 }) {
   const [isComplete, setIsComplete] = useState(false);
   const [width, setWidth] = useState<number>(0);
@@ -47,8 +51,8 @@ export default function Photo({
     <div
       style={{
         position: "relative",
-        minWidth: `${width}px`,
-        minHeight: `${height}px`,
+        minWidth: `${width || minWidth}px`,
+        minHeight: `${height || minHeight}px`,
         textAlign: "center",
         display: "flex",
         alignItems: "center",
@@ -88,7 +92,7 @@ export default function Photo({
             alt=""
           />
 
-          {author && (
+          {author && isComplete && (
             <p className="game-photo-author">
               <span>
                 {translate("photo.by")} <b>{author?.name}</b>

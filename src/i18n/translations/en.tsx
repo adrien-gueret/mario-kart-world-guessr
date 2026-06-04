@@ -274,7 +274,7 @@ const en: Texts = {
   "endGame.survival.description": (
     lastGuess: number,
     photoCount: number,
-    totalScore: number
+    totalScore: number,
   ) => (
     <>
       <p>
@@ -374,6 +374,21 @@ const en: Texts = {
   "photos.filter.more_characters": "Show more characters",
   "photos.filter.less_characters": "Show less characters",
   "photos.filter.clear_characters": "Clear character filters",
+  "all-photos.title": "Photo gallery",
+  "all-photos.description": (
+    <>
+      Browse every photo of <b>Mario Kart World Guessr</b>!
+    </>
+  ),
+  "all-photos.empty":
+    "No photo matches the selected characters. Try removing some filters!",
+  "all-photos.load_more": "Show more photos",
+  "all-photos.loading": "Loading…",
+  "all-photos.photo_count": (count) =>
+    `${count.toLocaleString("en-US")} ${count <= 1 ? "photo" : "photos"}`,
+  "all-photos.details.title": "Photo details",
+  "all-photos.details.characters": "Characters in this photo",
+  "all-photos.details.no_characters": "No character identified yet.",
   "photo.details.title": "Players' guesses",
   "photo.by": "Photo by",
   "album.by": "An album by",
@@ -442,7 +457,7 @@ const en: Texts = {
     gameMode: GameMode,
     gameDifficulty: Difficulty,
     photoCount: number,
-    rank: number
+    rank: number,
   ) => (
     <>
       With your score of <b>{photoCount}</b> photo{photoCount > 1 ? "s" : ""},
@@ -463,7 +478,7 @@ const en: Texts = {
   "leaderboards.daily.currentUserScore": (
     date: Date,
     score: number,
-    rank: number
+    rank: number,
   ) => (
     <>
       With your score of <b>{score}</b> point{score > 1 ? "s" : ""}, you are in{" "}
@@ -489,7 +504,7 @@ const en: Texts = {
   ),
   "leaderboards.not-played-yet": (
     gameMode: GameMode,
-    gameDifficulty: Difficulty
+    gameDifficulty: Difficulty,
   ) => (
     <>
       You haven't played the <i>{en[`mode.${gameMode}.label`]}</i> mode at{" "}

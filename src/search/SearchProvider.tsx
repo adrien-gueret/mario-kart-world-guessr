@@ -4,17 +4,22 @@ import { InstantSearch, Configure, PoweredBy } from "react-instantsearch";
 
 const searchClient = liteClient(
   "B11OT59J0Z",
-  "f6b7b7c5a7058b85589ad5d2120f61de"
+  "f6b7b7c5a7058b85589ad5d2120f61de",
 );
 
 type Props = {
   children: ReactNode;
   authorId?: number;
+  hitsPerPage?: number;
 };
 
 const getFiveMinutesAgo = () => Math.floor(Date.now() / 1000) - 5 * 60;
 
-export default function SearchProvider({ children, authorId }: Props) {
+export default function SearchProvider({
+  children,
+  authorId,
+  hitsPerPage = 1000,
+}: Props) {
   const [fiveMinutesAgo, setFiveMinutesAgo] = useState(getFiveMinutesAgo());
 
   useEffect(() => {
@@ -33,7 +38,7 @@ export default function SearchProvider({ children, authorId }: Props) {
 
   return (
     <InstantSearch searchClient={searchClient} indexName="photos">
-      <Configure filters={filters.join(" AND ")} />
+      <Configure filters={filters.join(" AND ")} hitsPerPage={hitsPerPage} />
       {children}
 
       <div style={{ width: 125, marginLeft: "auto" }}>

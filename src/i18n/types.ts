@@ -80,7 +80,7 @@ export type Texts = {
   "endGame.survival.description": (
     lastGuess: number,
     photoCount: number,
-    totalScore: number
+    totalScore: number,
   ) => ReactNode;
   "endGame.goal.description": (photoCount: number) => ReactNode;
   "endGame.chrono.description": (score: number) => ReactNode;
@@ -188,16 +188,16 @@ export type Texts = {
     gameMode: GameMode,
     gameDifficulty: Difficulty,
     photoCount: number,
-    rank: number
+    rank: number,
   ) => ReactNode;
   "leaderboards.daily.currentUserScore": (
     date: Date,
     score: number,
-    rank: number
+    rank: number,
   ) => ReactNode;
   "leaderboards.not-played-yet": (
     gameMode: GameMode,
-    gameDifficulty: Difficulty
+    gameDifficulty: Difficulty,
   ) => ReactNode;
   "leaderboards.daily.not-played-yet": (date: Date) => ReactNode;
   "notifications.none": string;
@@ -222,12 +222,21 @@ export type Texts = {
   "account.photos.filter": string;
   "account.photos.stats.suggestions": (
     count: string,
-    activeFilter: PhotoFilter
+    activeFilter: PhotoFilter,
   ) => ReactNode;
   "all-photos.stats.suggestions": (
     count: string,
-    activeFilter: PhotoFilter
+    activeFilter: PhotoFilter,
   ) => ReactNode;
+  "all-photos.title": string;
+  "all-photos.description": ReactNode;
+  "all-photos.empty": string;
+  "all-photos.load_more": string;
+  "all-photos.loading": string;
+  "all-photos.photo_count": (count: number) => ReactNode;
+  "all-photos.details.title": string;
+  "all-photos.details.characters": string;
+  "all-photos.details.no_characters": string;
   "account.your_photos.title": string;
   "account.albums.description": string;
   "account.albums.create.title": string;

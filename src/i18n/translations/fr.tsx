@@ -281,7 +281,7 @@ const fr: Texts = {
   "endGame.survival.description": (
     lastGuess: number,
     photoCount: number,
-    totalScore: number
+    totalScore: number,
   ) => (
     <>
       <p>
@@ -387,6 +387,22 @@ const fr: Texts = {
   "photos.filter.more_characters": "Afficher plus de personnages",
   "photos.filter.less_characters": "Afficher moins de personnages",
   "photos.filter.clear_characters": "Effacer les filtres de personnages",
+  "all-photos.title": "Galerie photos",
+  "all-photos.description": (
+    <>
+      Parcourez toutes les photos de <b>Mario Kart World Guessr</b>&nbsp;!
+    </>
+  ),
+  "all-photos.empty":
+    "Aucune photo ne correspond aux personnages sélectionnés. Essayez de retirer quelques filtres !",
+  "all-photos.load_more": "Afficher plus de photos",
+  "all-photos.loading": "Chargement…",
+  "all-photos.photo_count": (count) =>
+    `${count.toLocaleString("fr-FR")} ${count <= 1 ? "photo" : "photos"}`,
+  "all-photos.details.title": "Détails de la photo",
+  "all-photos.details.characters": "Personnages sur cette photo",
+  "all-photos.details.no_characters":
+    "Aucun personnage identifié pour le moment.",
   "photo.details.title": "Suggestions des joueurs",
   "photo.by": "Photo par",
   "album.by": "Un album par",
@@ -457,7 +473,7 @@ const fr: Texts = {
     gameMode: GameMode,
     gameDifficulty: Difficulty,
     photoCount: number,
-    rank: number
+    rank: number,
   ) => (
     <>
       Avec votre score de <b>{photoCount}</b> photo{photoCount > 1 ? "s" : ""},
@@ -478,7 +494,7 @@ const fr: Texts = {
   "leaderboards.daily.currentUserScore": (
     date: Date,
     score: number,
-    rank: number
+    rank: number,
   ) => (
     <>
       Avec votre score de <b>{score}</b> point{score > 1 ? "s" : ""}, vous êtes
@@ -505,7 +521,7 @@ const fr: Texts = {
   ),
   "leaderboards.not-played-yet": (
     gameMode: GameMode,
-    gameDifficulty: Difficulty
+    gameDifficulty: Difficulty,
   ) => (
     <>
       Vous n'avez pas encore joué au mode <i>{fr[`mode.${gameMode}.label`]}</i>{" "}
