@@ -7,6 +7,8 @@ jobs:
   process:
     runs-on: ubuntu-latest
     if: contains(github.event.issue.labels.*.name, 'pending-photo')
+    permissions:
+      issues: read
     steps:
       - name: Extract photo id from issue body
         id: extract
