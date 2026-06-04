@@ -27,11 +27,14 @@ if (!$photo) {
     exit;
 }
 
-$isAvailableOnCDN = $photo['validated_at'] !== null
+$isValidated = $photo['validated_at'] !== null;
+$isAvailableOnCDN = $isValidated
     && strtotime($photo['validated_at']) <= time() - 5 * 60;
 
 if ($isAvailableOnCDN) {
     $photoUrl = "https://ik.imagekit.io/mkwg/{$photo['id']}.jpg";
+} elseif ($isValidated) {
+    $photoUrl = "https://www.mariouniversalis.fr/mario-kart-world-guessr/photos/{$photo['id']}.jpg";
 } elseif ($photo['rejected_at'] !== null) {
     $photoUrl = "https://www.mariouniversalis.fr/mario-kart-world-guessr/photos/rejected/{$photo['id']}.jpg";
 } else {

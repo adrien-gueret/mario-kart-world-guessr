@@ -15,7 +15,7 @@ function _getAlbumCoverPhotos(PDO $pdo, int $albumId) {
           WHEN p.validated_at IS NOT NULL 
               AND p.validated_at <= NOW() - INTERVAL 5 MINUTE
           THEN CONCAT('https://www.mariouniversalis.fr/mario-kart-world-guessr/photos/', p.id, '.jpg')
-          ELSE CONCAT('https://www.mariouniversalis.fr/mario-kart-world-guessr/api/photo-proxy?pr_id=', p.github_pr_number)
+          ELSE CONCAT('https://www.mariouniversalis.fr/mario-kart-world-guessr/api/photo-proxy?id=', p.id)
       END AS photo_url
       FROM `mario-kart-world-albums-photos` AS ap
       LEFT JOIN `mario-kart-world-photos` AS p ON ap.id_photo = p.id
