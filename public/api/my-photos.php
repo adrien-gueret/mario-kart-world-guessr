@@ -41,6 +41,7 @@ try {
         LEFT JOIN `mario-kart-world-games` g
             ON g.id = s.game_id
         WHERE p.author_id = :authorId
+          AND p.rejected_at IS NULL
         GROUP BY p.id, p.difficulty, p.validated_at
         ORDER BY (p.validated_at IS NULL) DESC, p.validated_at DESC"
     );

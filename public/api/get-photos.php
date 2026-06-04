@@ -53,6 +53,8 @@ try {
             GROUP BY s.photo_id
         ) sug ON sug.photo_id = p.id
 
+        WHERE p.rejected_at IS NULL
+
         ORDER BY
             (p.validated_at IS NULL) DESC,
             CASE WHEN p.validated_at IS NULL THEN p.github_issue_number ELSE NULL END ASC,
