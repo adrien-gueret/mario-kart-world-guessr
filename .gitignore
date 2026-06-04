@@ -26,3 +26,8 @@ dist-ssr
 *.env
 .prettierignore
 public/api/vendor
+
+# Photos utilisateurs (servies depuis le serveur, hors versionnement)
+public/photos/*.jpg
+public/photos/pending/*.jpg
+public/photos/rejected/*.jpg
