@@ -8,7 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit('Method Not Allowed');
 }
 
-$authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
+$headers = function_exists('getallheaders') ? array_change_key_case(getallheaders(), CASE_LOWER) : [];
+$authHeader = $headers['authorization'] ?? ($_SERVER['HTTP_AUTHORIZATION'] ?? '');
 $expected = 'Bearer ' . getenv('MU_SECRET');
 if (!hash_equals($expected, $authHeader)) {
     http_response_code(401);
