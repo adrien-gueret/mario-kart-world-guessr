@@ -47,6 +47,15 @@ function Home() {
             borderColor="#9e9e9eff"
           />
         </li>
+
+        <li className="home-item__gallery">
+          <Card
+            icon={<HomeIcon icon="Gallery" />}
+            onClick={() => navigate("/gallery")}
+            title={translate("home.menu.gallery.title")}
+            borderColor="#e26788"
+          />
+        </li>
       </menu>
     </div>
   );

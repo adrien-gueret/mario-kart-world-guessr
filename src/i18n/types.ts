@@ -177,6 +177,7 @@ export type Texts = {
   "home.menu.account.title": string;
   "home.menu.leaderboards.title": string;
   "home.menu.upload.title": string;
+  "home.menu.gallery.title": string;
   "leaderboards.description": string;
   "leaderboards.mode": string;
   "leaderboards.difficulty": string;

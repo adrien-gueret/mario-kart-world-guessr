@@ -25,3 +25,7 @@
 .home-icon.Upload {
   --bx: -540px;
 }
+
+.home-icon.Gallery {
+  --bx: -720px;
+}
