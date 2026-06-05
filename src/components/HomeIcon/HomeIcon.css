@@ -3,7 +3,7 @@
   width: 180px;
   height: 182px;
   background-repeat: no-repeat;
-  background-image: url(./ui/home-icons.png);
+  background-image: url(./ui/home-icons.png?v=2);
   background-position: var(--bx, 0);
   overflow: hidden;
   transition: filter 0.15s cubic-bezier(0.4, 1.6, 0.55, 1);
