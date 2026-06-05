@@ -5,6 +5,40 @@ import type { ReleaseNotes } from "./types";
 
 const releaseNotes: ReleaseNotes = [
   {
+    version: "v4.3.0",
+    publishedAt: new Date("2026-06-05T00:00:00Z"),
+    notes: {
+      fr: (
+        <ul>
+          <Text component="li">
+            Pour fêter le premier anniversaire de <b>Mario Kart World</b>,
+            découvrez la toute nouvelle{" "}
+            <Link to="/gallery" viewTransition>
+              galerie des photos de <b>Mario Kart World Guessr</b>
+            </Link>{" "}
+            !<br />
+            Vous y retrouverez <b>toutes</b> les photos du jeu, avec la
+            possibilité de les filtrer par personnages présents dans les photos.
+          </Text>
+        </ul>
+      ),
+      en: (
+        <ul>
+          <Text component="li">
+            To celebrate the first anniversary of <b>Mario Kart World</b>, check
+            out the new{" "}
+            <Link to="/gallery" viewTransition>
+              Mario Kart World Guessr photo gallery
+            </Link>{" "}
+            !<br />
+            You'll find <b>all</b> the photos from the game, with the ability to
+            filter them by the characters present in the photos.
+          </Text>
+        </ul>
+      ),
+    },
+  },
+  {
     version: "v4.2.0",
     publishedAt: new Date("2025-12-21T00:00:00Z"),
     notes: {

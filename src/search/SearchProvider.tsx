@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { liteClient } from "algoliasearch/lite";
 import { InstantSearch, Configure, PoweredBy } from "react-instantsearch";
 
@@ -13,24 +13,12 @@ type Props = {
   hitsPerPage?: number;
 };
 
-const getFiveMinutesAgo = () => Math.floor(Date.now() / 1000) - 5 * 60;
-
 export default function SearchProvider({
   children,
   authorId,
   hitsPerPage = 1000,
 }: Props) {
-  const [fiveMinutesAgo, setFiveMinutesAgo] = useState(getFiveMinutesAgo());
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setFiveMinutesAgo(getFiveMinutesAgo());
-    }, 60 * 1000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const filters = [`validatedAt <= ${fiveMinutesAgo}`];
+  const filters = [];
 
   if (authorId !== undefined) {
     filters.push(`author.id:${authorId}`);
