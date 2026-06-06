@@ -3,25 +3,31 @@ import {
   useInstantSearch,
   useStats,
 } from "react-instantsearch";
+import { useMemo } from "react";
 
 import type { MarioCharacter, UsableMarioCharacter } from "@/characters";
 import { useTranslations } from "@/i18n";
-import { getCDNPhotoUrl } from "@/services/images";
+import type { Photo } from "@/types/photos";
 
 import Button from "../Button";
+import PhotoListContainer from "../PhotoListContainer";
 
 import "./AllPhotosList.css";
 
 export type HitPhoto = {
   id: string;
   photoUrl: string;
+  difficulty?: Photo["difficulty"];
+  suggestionCount?: number;
+  x?: number;
+  y?: number;
   author: {
     id: number;
     name: string;
     character: UsableMarioCharacter | null;
   };
   characters: MarioCharacter[];
-  validatedAt: number;
+  validatedAt: number | string | null;
 };
 
 type Props = {
@@ -35,6 +41,26 @@ export default function AllPhotosList({ onPhotoClick }: Props) {
   const { status } = useInstantSearch();
   const isLoading = status === "loading" || status === "stalled";
 
+  const photos = useMemo<Photo[]>(
+    () =>
+      items.map((photo) => ({
+        id: photo.id,
+        photoUrl: photo.photoUrl,
+        difficulty: photo.difficulty ?? null,
+        suggestionCount: photo.suggestionCount ?? 0,
+        characters: photo.characters,
+        validatedAt: photo.validatedAt ? String(photo.validatedAt) : "",
+        x: photo.x ?? 0,
+        y: photo.y ?? 0,
+      })),
+    [items],
+  );
+
+  const photosById = useMemo(
+    () => new Map(items.map((photo) => [photo.id, photo])),
+    [items],
+  );
+
   if (items.length === 0 && !isLoading) {
     return (
       <p className="all-photos-list__empty">{translate("all-photos.empty")}</p>
@@ -46,23 +72,19 @@ export default function AllPhotosList({ onPhotoClick }: Props) {
       <p className="all-photos-list__count">
         {translate("all-photos.photo_count")(nbHits)}
       </p>
-      <ul className="all-photos-list">
-        {items.map((photo) => (
-          <li key={photo.id} className="all-photos-list__item">
-            <button
-              type="button"
-              className="all-photos-list__button"
-              onClick={() => onPhotoClick(photo)}
-            >
-              <img
-                src={getCDNPhotoUrl(photo.photoUrl, { h: 225 })}
-                alt=""
-                loading="lazy"
-              />
-            </button>
-          </li>
-        ))}
-      </ul>
+      <PhotoListContainer
+        photos={photos}
+        shouldHidePhotoStats
+        shouldHideFiltersAndStats
+        isMini
+        onPhotoClick={(photo) => {
+          const hit = photosById.get(photo.id);
+
+          if (hit) {
+            onPhotoClick(hit);
+          }
+        }}
+      />
 
       {!isLastPage && (
         <div className="all-photos-list__load-more">

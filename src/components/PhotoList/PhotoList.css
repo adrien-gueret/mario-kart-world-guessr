@@ -13,12 +13,19 @@
 
 .photo-list > li {
   position: relative;
-  transition: transform 200ms ease-in, box-shadow 200ms ease-in;
+  transition:
+    transform 200ms ease-in,
+    box-shadow 200ms ease-in;
   cursor: pointer;
   width: 394px;
   height: 221px;
   border: 2px solid #222;
   overflow: hidden;
+}
+
+.photo-list.mini > li {
+  width: 197px;
+  height: 110px;
 }
 
 .photo-list > li.not-validated {

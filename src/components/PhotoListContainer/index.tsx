@@ -15,15 +15,23 @@ type Props = {
   photos: Photo[];
   canOpenDetailsOfNoValidatedPhotos?: boolean;
   canEditPhotoCharacters?: boolean;
+  shouldHideFiltersAndStats?: boolean;
+  shouldHidePhotoStats?: boolean;
+  onPhotoClick?: (photo: Photo) => void;
   suggestionLabelKey?:
     | "account.photos.stats.suggestions"
     | "all-photos.stats.suggestions";
+  isMini?: boolean;
 };
 
 export default function PhotoListContainer({
   photos,
   canOpenDetailsOfNoValidatedPhotos = false,
   canEditPhotoCharacters = false,
+  shouldHideFiltersAndStats = false,
+  shouldHidePhotoStats = false,
+  isMini = false,
+  onPhotoClick,
   suggestionLabelKey = "all-photos.stats.suggestions",
 }: Props) {
   const { translate, currentLocale } = useTranslations();
@@ -40,34 +48,34 @@ export default function PhotoListContainer({
 
   const suggestionCount = useMemo(
     () => filteredPhotos.reduce((acc, photo) => acc + photo.suggestionCount, 0),
-    [filteredPhotos]
+    [filteredPhotos],
   );
 
   const easyCount = useMemo(
     () =>
       photos.reduce(
         (acc, photo) => (photo.difficulty === "easy" ? acc + 1 : acc),
-        0
+        0,
       ),
-    [photos]
+    [photos],
   );
 
   const mediumCount = useMemo(
     () =>
       photos.reduce(
         (acc, photo) => (photo.difficulty === "medium" ? acc + 1 : acc),
-        0
+        0,
       ),
-    [photos]
+    [photos],
   );
 
   const hardCount = useMemo(
     () =>
       photos.reduce(
         (acc, photo) => (photo.difficulty === "hard" ? acc + 1 : acc),
-        0
+        0,
       ),
-    [photos]
+    [photos],
   );
 
   const photoCount = photos.length;
@@ -119,38 +127,45 @@ export default function PhotoListContainer({
     },
   ];
 
+  const displayedPhotos = shouldHideFiltersAndStats ? photos : filteredPhotos;
+
   return (
     <>
-      <ConstraintContainer>
-        <div className="photo-list-container-filters">
-          <Tabs
-            activeTab={selectedDifficulty}
-            onTabChange={setSelectedDifficulty}
-            tabs={photoTabs
-              .filter((tab) => tab.shouldBeRendered)
-              .map(({ shouldBeRendered, ...tabProps }) => tabProps)}
-            variant="chips-small"
-          />
-          <Surface>
-            <div>
-              <EyeIcon
-                width={24}
-                style={{ verticalAlign: "bottom", marginRight: 8 }}
-              />
+      {!shouldHideFiltersAndStats && (
+        <ConstraintContainer>
+          <div className="photo-list-container-filters">
+            <Tabs
+              activeTab={selectedDifficulty}
+              onTabChange={setSelectedDifficulty}
+              tabs={photoTabs
+                .filter((tab) => tab.shouldBeRendered)
+                .map(({ shouldBeRendered, ...tabProps }) => tabProps)}
+              variant="chips-small"
+            />
+            <Surface>
+              <div>
+                <EyeIcon
+                  width={24}
+                  style={{ verticalAlign: "bottom", marginRight: 8 }}
+                />
 
-              {translate(suggestionLabelKey)(
-                suggestionCount.toLocaleString(currentLocale),
-                selectedDifficulty
-              )}
-            </div>
-          </Surface>
-        </div>
-      </ConstraintContainer>
+                {translate(suggestionLabelKey)(
+                  suggestionCount.toLocaleString(currentLocale),
+                  selectedDifficulty,
+                )}
+              </div>
+            </Surface>
+          </div>
+        </ConstraintContainer>
+      )}
 
       <PhotoList
-        photos={filteredPhotos}
+        photos={displayedPhotos}
+        shouldHidePhotoStats={shouldHidePhotoStats}
         canOpenDetailsOfNoValidatedPhotos={canOpenDetailsOfNoValidatedPhotos}
         canEditPhotoCharacters={canEditPhotoCharacters}
+        onPhotoClick={onPhotoClick}
+        isMini={isMini}
       />
     </>
   );

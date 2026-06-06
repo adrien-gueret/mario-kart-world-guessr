@@ -19,12 +19,18 @@ type Props = {
   photos: Photo[];
   canOpenDetailsOfNoValidatedPhotos?: boolean;
   canEditPhotoCharacters?: boolean;
+  shouldHidePhotoStats?: boolean;
+  isMini?: boolean;
+  onPhotoClick?: (photo: Photo) => void;
 };
 
 export default function PhotoList({
   photos,
   canOpenDetailsOfNoValidatedPhotos = false,
   canEditPhotoCharacters = false,
+  shouldHidePhotoStats = false,
+  isMini = false,
+  onPhotoClick,
 }: Props) {
   const { translate } = useTranslations();
   const [areDetailsOpen, setAreDetailsOpen] = useState(false);
@@ -36,6 +42,11 @@ export default function PhotoList({
   }, [photos]);
 
   const selectPhoto = (photo: Photo) => {
+    if (onPhotoClick) {
+      onPhotoClick(photo);
+      return;
+    }
+
     setSelectedPhoto(photo);
     setAreDetailsOpen(true);
   };
@@ -56,7 +67,7 @@ export default function PhotoList({
 
   return (
     <>
-      <ul className="photo-list">
+      <ul className={`photo-list${isMini ? " mini" : ""}`}>
         {currentPhotos.map((photo) => {
           const { id, photoUrl, difficulty, suggestionCount, validatedAt } =
             photo;
@@ -94,31 +105,33 @@ export default function PhotoList({
               )}
 
               {validatedAt ? (
-                <>
-                  <span className="photo-suggestions">
-                    <Tag>
-                      <EyeIcon />
-                      <span>{suggestionCount}</span>
-                    </Tag>
-                  </span>
-
-                  <span className="photo-difficulty">
-                    {difficulty ? (
-                      <Tag variant={difficulty}>
-                        {translate(`photo.difficulty.${difficulty}`)}
+                !shouldHidePhotoStats && (
+                  <>
+                    <span className="photo-suggestions">
+                      <Tag>
+                        <EyeIcon />
+                        <span>{suggestionCount}</span>
                       </Tag>
-                    ) : (
-                      <span
-                        title={translate(`photo.difficulty.waiting.tooltip`)}
-                        style={{ cursor: "help" }}
-                      >
-                        <Tag variant="neutral">
-                          {translate(`photo.difficulty.waiting`)}
+                    </span>
+
+                    <span className="photo-difficulty">
+                      {difficulty ? (
+                        <Tag variant={difficulty}>
+                          {translate(`photo.difficulty.${difficulty}`)}
                         </Tag>
-                      </span>
-                    )}
-                  </span>
-                </>
+                      ) : (
+                        <span
+                          title={translate(`photo.difficulty.waiting.tooltip`)}
+                          style={{ cursor: "help" }}
+                        >
+                          <Tag variant="neutral">
+                            {translate(`photo.difficulty.waiting`)}
+                          </Tag>
+                        </span>
+                      )}
+                    </span>
+                  </>
+                )
               ) : (
                 <div className="photo-validation-pending">
                   {translate("photo.validation.pending")}
@@ -162,8 +175,8 @@ export default function PhotoList({
                       prevPhotos.map((photo) =>
                         photo.id === selectedPhoto.id
                           ? { ...photo, characters }
-                          : photo
-                      )
+                          : photo,
+                      ),
                     );
                     setAreDetailsOpen(false);
                   }}
