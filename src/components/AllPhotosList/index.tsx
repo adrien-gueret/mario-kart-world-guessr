@@ -27,7 +27,7 @@ export type HitPhoto = {
     character: UsableMarioCharacter | null;
   };
   characters: MarioCharacter[];
-  validatedAt: number | string | null;
+  validatedAt: string;
 };
 
 type Props = {
@@ -49,7 +49,7 @@ export default function AllPhotosList({ onPhotoClick }: Props) {
         difficulty: photo.difficulty ?? null,
         suggestionCount: photo.suggestionCount ?? 0,
         characters: photo.characters,
-        validatedAt: photo.validatedAt ? String(photo.validatedAt) : "",
+        validatedAt: photo.validatedAt,
         x: photo.x ?? 0,
         y: photo.y ?? 0,
       })),

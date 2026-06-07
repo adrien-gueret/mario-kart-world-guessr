@@ -1,4 +1,4 @@
-import { useState, useMemo, type CSSProperties } from "react";
+import { useState, useMemo, useEffect, type CSSProperties } from "react";
 import { flushSync, createPortal } from "react-dom";
 
 import Button from "@/components/Button";
@@ -62,7 +62,7 @@ export default function AlbumReadOnly({
 
   function toggleZoomedPhoto(
     newPhoto: MinimalPhoto | null = null,
-    callback?: () => void
+    callback?: () => void,
   ) {
     document.startViewTransition(() => {
       flushSync(() => {
@@ -71,6 +71,15 @@ export default function AlbumReadOnly({
       });
     });
   }
+
+  useEffect(() => {
+    albumPhotos.forEach(({ photo }) => {
+      if (photo) {
+        const img = new Image();
+        img.src = photo.photoUrl;
+      }
+    });
+  }, [albumPhotos]);
 
   return (
     <>
@@ -195,7 +204,7 @@ export default function AlbumReadOnly({
               }}
             />
           </div>,
-          document.body
+          document.body,
         )}
     </>
   );
