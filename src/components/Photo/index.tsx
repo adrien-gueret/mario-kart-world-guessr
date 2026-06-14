@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect } from "react";
+import { useState, useLayoutEffect, useRef, useCallback } from "react";
 
 import { useTranslations } from "@/i18n";
 
@@ -14,6 +14,7 @@ export default function Photo({
   author,
   minWidth = 0,
   minHeight = 0,
+  onReady,
 }: {
   photoName?: string;
   isMirrored?: boolean;
@@ -24,15 +25,57 @@ export default function Photo({
   } | null;
   minWidth?: number;
   minHeight?: number;
+  onReady?: () => void;
 }) {
   const [isComplete, setIsComplete] = useState(false);
   const [width, setWidth] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);
   const { translate } = useTranslations();
 
+  const imgRef = useRef<HTMLImageElement>(null);
+  const hasFiredReadyRef = useRef(false);
+
   const photoUrl = photoName
     ? `https://ik.imagekit.io/mkwg/${photoName}.jpg`
     : null;
+
+  // Marks the photo as ready. Guarded so it only runs once per loaded image,
+  // whether it was triggered by the <img> onLoad event or by the cache-safety
+  // check below.
+  const handleReady = useCallback(() => {
+    if (hasFiredReadyRef.current) {
+      return;
+    }
+
+    hasFiredReadyRef.current = true;
+
+    setIsComplete(true);
+
+    onReady?.();
+
+    const image = imgRef.current;
+
+    if (image) {
+      window.requestAnimationFrame(() => {
+        setHeight(image.height);
+        setWidth(image.width);
+      });
+    }
+  }, [onReady]);
+
+  // Cache-safety net: when the image comes from the browser cache it can already
+  // be "complete" before React attaches the onLoad handler, so onLoad would
+  // never fire. Re-check on every photo change and fire manually if needed.
+  useLayoutEffect(() => {
+    hasFiredReadyRef.current = false;
+    setIsComplete(false);
+
+    const image = imgRef.current;
+
+    if (image && image.complete && image.naturalWidth > 0) {
+      handleReady();
+    }
+  }, [photoUrl, handleReady]);
 
   useLayoutEffect(() => {
     const onResize = () => {
@@ -75,20 +118,12 @@ export default function Photo({
       {photoUrl && (
         <>
           <img
+            ref={imgRef}
             className={`game-photo ${isMirrored ? "mirrored" : ""}`}
             draggable={false}
             src={photoUrl}
             style={{ opacity: isComplete ? 1 : 0.1 }}
-            onLoad={(e) => {
-              setIsComplete(true);
-
-              const image = e.currentTarget as HTMLImageElement;
-
-              window.requestAnimationFrame(() => {
-                setHeight(image.height);
-                setWidth(image.width);
-              });
-            }}
+            onLoad={handleReady}
             alt=""
           />
 

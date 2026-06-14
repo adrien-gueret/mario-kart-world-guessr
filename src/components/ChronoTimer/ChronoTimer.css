@@ -1,0 +1,45 @@
+.chrono-timer {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  color: rgba(0, 0, 0, 0.8);
+  border: none;
+  font-size: 2rem;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 16px 32px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  text-align: right;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.chrono-timer-label {
+  font-size: 1.2rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.chrono-timer-value {
+  font-variant-numeric: tabular-nums;
+}
+
+.chrono-timer-low {
+  color: #c0392b;
+  animation: chrono-timer-pulse 1s ease-in-out infinite;
+}
+
+@keyframes chrono-timer-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}

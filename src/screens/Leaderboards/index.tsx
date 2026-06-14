@@ -54,7 +54,7 @@ function Leaderboards() {
     score: number;
   } | null>(null);
   const [currentUserDailies, setCurrentUserDailies] = useState<DailiesResponse>(
-    []
+    [],
   );
 
   const { user: currentUser, isAnonymous } = useCurrentUser();
@@ -66,8 +66,8 @@ function Leaderboards() {
     ? gameDifficulty === "today"
       ? new Date()
       : isDailyDate(gameDifficulty)
-      ? parseIsoDateToLocal(gameDifficulty)
-      : undefined
+        ? parseIsoDateToLocal(gameDifficulty)
+        : undefined
     : undefined;
 
   useEffect(() => {
@@ -110,7 +110,7 @@ function Leaderboards() {
       .then((response) => response.json())
       .then((leaderboard: LeaderboardsResponse) => {
         const currentUserRow = leaderboard.find(
-          ({ playerId }) => playerId === currentUser.id
+          ({ playerId }) => playerId === currentUser.id,
         );
         setLeaderboard(leaderboard);
         setCurrentUserLeaderboardData(
@@ -120,7 +120,7 @@ function Leaderboards() {
                 photoCount: currentUserRow.photoCount ?? 0,
                 score: currentUserRow.score ?? 0,
               }
-            : null
+            : null,
         );
       })
       .finally(() => setIsLoading(false));
@@ -183,7 +183,7 @@ function Leaderboards() {
               tileClassName={({ date }) => {
                 const isoDate = getIsoDate(date);
                 const hasPlayedThisDay = currentUserDailies.some(
-                  ({ dailyDate }) => dailyDate === isoDate
+                  ({ dailyDate }) => dailyDate === isoDate,
                 );
                 return hasPlayedThisDay ? "with-check-mark" : undefined;
               }}
@@ -225,30 +225,30 @@ function Leaderboards() {
             {isAnonymous
               ? translate("leaderboards.not-logged-in")
               : currentUserLeaderboardData
-              ? isDailyMode
-                ? currentDateToCheck
-                  ? translate("leaderboards.daily.currentUserScore")(
-                      currentDateToCheck,
-                      currentUserLeaderboardData.score,
-                      currentUserLeaderboardData.rank
+                ? isDailyMode
+                  ? currentDateToCheck
+                    ? translate("leaderboards.daily.currentUserScore")(
+                        currentDateToCheck,
+                        currentUserLeaderboardData.score,
+                        currentUserLeaderboardData.rank,
+                      )
+                    : null
+                  : translate("leaderboards.currentUserScore")(
+                      gameMode!,
+                      gameDifficulty as Difficulty,
+                      currentUserLeaderboardData.photoCount,
+                      currentUserLeaderboardData.rank,
                     )
-                  : null
-                : translate("leaderboards.currentUserScore")(
-                    gameMode!,
-                    gameDifficulty as Difficulty,
-                    currentUserLeaderboardData.photoCount,
-                    currentUserLeaderboardData.rank
-                  )
-              : isDailyMode
-              ? currentDateToCheck
-                ? translate("leaderboards.daily.not-played-yet")(
-                    currentDateToCheck
-                  )
-                : null
-              : translate("leaderboards.not-played-yet")(
-                  gameMode!,
-                  gameDifficulty as Difficulty
-                )}
+                : isDailyMode
+                  ? currentDateToCheck
+                    ? translate("leaderboards.daily.not-played-yet")(
+                        currentDateToCheck,
+                      )
+                    : null
+                  : translate("leaderboards.not-played-yet")(
+                      gameMode!,
+                      gameDifficulty as Difficulty,
+                    )}
           </Text>
 
           <div style={{ marginTop: "32px" }}>

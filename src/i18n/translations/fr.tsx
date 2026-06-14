@@ -137,10 +137,7 @@ const fr: Texts = {
   "difficulty.chrono.50cc": (
     <ul>
       <li>
-        Marquez le plus de points en <b>5 minutes</b>
-      </li>
-      <li>
-        Gagnez <b>15</b> secondes à chaque fois que vous marquez 4000 points
+        Marquez le plus de points en <b>50 secondes</b>
       </li>
       <li>
         Les photos <b>les plus faciles</b>
@@ -152,10 +149,7 @@ const fr: Texts = {
   "difficulty.chrono.100cc": (
     <ul>
       <li>
-        Marquez le plus de points en <b>4 minutes</b>
-      </li>
-      <li>
-        Gagnez <b>10</b> secondes à chaque fois que vous marquez 4000 points
+        Marquez le plus de points en <b>40 secondes</b>
       </li>
       <li>
         La plupart des photos, <b>sauf</b> les plus difficiles
@@ -167,10 +161,7 @@ const fr: Texts = {
   "difficulty.chrono.150cc": (
     <ul>
       <li>
-        Marquez le plus de points en <b>3 minutes</b>
-      </li>
-      <li>
-        Gagnez <b>5</b> secondes à chaque fois que vous marquez 4000 points
+        Marquez le plus de points en <b>30 secondes</b>
       </li>
       <li>
         <b>TOUTES</b> les photos, y compris les plus difficiles
@@ -189,30 +180,22 @@ const fr: Texts = {
   ),
   "difficulty.chrono.50cc.short": (
     <>
-      Marquez le plus de points en <b>5 minutes</b>.<br />
-      Augmentez ce temps de <b>15 secondes</b> à chaque fois que vous marquez{" "}
-      4000 points&nbsp;!
+      Marquez le plus de points en <b>50 secondes</b>&nbsp;!
     </>
   ),
   "difficulty.chrono.100cc.short": (
     <>
-      Marquez le plus de points en <b>4 minutes</b>.<br />
-      Augmentez ce temps de <b>10 secondes</b> à chaque fois que vous marquez{" "}
-      4000 points&nbsp;!
+      Marquez le plus de points en <b>40 secondes</b>&nbsp;!
     </>
   ),
   "difficulty.chrono.150cc.short": (
     <>
-      Marquez le plus de points en <b>3 minutes</b>.<br />
-      Augmentez ce temps de <b>5 secondes</b> à chaque fois que vous marquez{" "}
-      4000 points&nbsp;!
+      Marquez le plus de points en <b>30 secondes</b>&nbsp;!
     </>
   ),
   "difficulty.chrono.mirror.short": (
     <>
-      Marquez le plus de points en <b>3 minutes</b>.<br />
-      Augmentez ce temps de <b>5 secondes</b> à chaque fois que vous marquez{" "}
-      4000 points&nbsp;!
+      Marquez le plus de points en <b>30 secondes</b>&nbsp;!
     </>
   ),
   "difficulty.goal.50cc.short": (
@@ -336,6 +319,7 @@ const fr: Texts = {
   "game.globalScore.photoIndex": "Photo n° ",
   "game.globalScore.showOtherPlayers":
     "Afficher l'emplacement médian de tous les joueurs",
+  "game.chrono.timer": "Temps : ",
   "home.button": "Accueil",
   "upload.title": "Proposer une photo",
   "upload.description": "Envoyez une photo pour enrichir le jeu !",

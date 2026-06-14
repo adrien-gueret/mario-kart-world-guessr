@@ -104,6 +104,7 @@ export type Texts = {
   "game.globalScore": string;
   "game.globalScore.photoIndex": string;
   "game.globalScore.showOtherPlayers": string;
+  "game.chrono.timer": string;
   "home.button": string;
   "upload.title": string;
   "upload.description": string;

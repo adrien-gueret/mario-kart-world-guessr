@@ -136,10 +136,7 @@ const en: Texts = {
   "difficulty.chrono.50cc": (
     <ul>
       <li>
-        Score the most points in <b>5 minutes</b>
-      </li>
-      <li>
-        Gain <b>15</b> seconds each time you score 4000 points
+        Score the most points in <b>50 seconds</b>
       </li>
       <li>
         The <b>easiest</b> photos
@@ -151,10 +148,7 @@ const en: Texts = {
   "difficulty.chrono.100cc": (
     <ul>
       <li>
-        Score the most points in <b>4 minutes</b>
-      </li>
-      <li>
-        Gain <b>10</b> seconds each time you score 4000 points
+        Score the most points in <b>40 seconds</b>
       </li>
       <li>
         Most photos, <b>except</b> the most difficult ones
@@ -166,10 +160,7 @@ const en: Texts = {
   "difficulty.chrono.150cc": (
     <ul>
       <li>
-        Score the most points in <b>3 minutes</b>
-      </li>
-      <li>
-        Gain <b>5</b> seconds each time you score 4000 points
+        Score the most points in <b>30 seconds</b>
       </li>
       <li>
         <b>ALL</b> photos, including the most difficult ones
@@ -188,20 +179,17 @@ const en: Texts = {
   ),
   "difficulty.chrono.50cc.short": (
     <>
-      Score the most points in <b>5 minutes</b>.<br />
-      Increase this time by <b>15 seconds</b> each time you score 4000 points!
+      Score the most points in <b>50 seconds</b>!
     </>
   ),
   "difficulty.chrono.100cc.short": (
     <>
-      Score the most points in <b>4 minutes</b>.<br />
-      Increase this time by <b>10 seconds</b> each time you score 4000 points!
+      Score the most points in <b>40 seconds</b>!
     </>
   ),
   "difficulty.chrono.150cc.short": (
     <>
-      Score the most points in <b>3 minutes</b>.<br />
-      Increase this time by <b>5 seconds</b> each time you score 4000 points!
+      Score the most points in <b>30 seconds</b>!
     </>
   ),
   "difficulty.goal.50cc.short": (
@@ -229,8 +217,7 @@ const en: Texts = {
   ),
   "difficulty.chrono.mirror.short": (
     <>
-      Score the most points in <b>3 minutes</b>.<br />
-      Increase this time by <b>5 seconds</b> each time you score 4000 points!
+      Score the most points in <b>30 seconds</b>!
     </>
   ),
   "survival.harderGame.title": "Increased difficulty!",
@@ -326,6 +313,7 @@ const en: Texts = {
   "game.globalScore.photoIndex": "Photo #",
   "game.globalScore.showOtherPlayers":
     "Show the median location of all players",
+  "game.chrono.timer": "Time: ",
   "home.button": "Home",
   "upload.title": "Submit a photo",
   "upload.description": "Send a photo to enrich the game!",

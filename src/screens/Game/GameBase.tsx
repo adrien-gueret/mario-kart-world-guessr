@@ -33,6 +33,9 @@ import { useTranslations } from "@/i18n";
 import EndDailyGame from "./End/Daily";
 import EndGoalGame from "./End/Goal";
 import EndSurvivalGame from "./End/Survival";
+import EndChronoGame from "./End/Chrono";
+
+import ChronoTimer from "@/components/ChronoTimer";
 
 import "./Game.css";
 
@@ -93,6 +96,13 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     useState<boolean>(isGameEnded);
   const [isLeaderboardShown, setIsLeaderboardShown] = useState(false);
 
+  // Chrono mode: remaining time budget (ms), authoritative value from the server.
+  const [remainingMs, setRemainingMs] = useState<number | null>(null);
+  // Whether the current photo is loaded and visible: the chrono timer only runs
+  // while a photo is actually playable, so loading/network time isn't counted.
+  const [isPhotoReady, setIsPhotoReady] = useState(false);
+  const photoReadyAtRef = useRef<number | null>(null);
+
   const [guessResults, setGuessResults] = useState<{
     distance: number;
     score: number;
@@ -140,6 +150,8 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
         setMinimumScoreToContinue(game.minimumScoreToContinue);
       }
 
+      setRemainingMs(game.remainingTime ?? null);
+
       const isFinished = !Boolean(game.currentPhoto?.id);
 
       if (isFinished) {
@@ -163,6 +175,8 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     setNextPhotoAuthor(null);
     setUserGuess(null);
     setGuessResults(null);
+    setIsPhotoReady(false);
+    photoReadyAtRef.current = null;
 
     if (photoSubtitleRef.current) {
       photoSubtitleRef.current.scrollIntoView({
@@ -192,6 +206,17 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     formData.append("y", `${userGuess.y}`);
 
     formData.append("gameId", `${currentGameId}`);
+
+    // "Thinking time" actually spent on this photo (since it became visible),
+    // measured client-side so loading/network latency isn't counted. The server
+    // caps it at the wall-clock since the photo was served.
+    const thinkingMs =
+      photoReadyAtRef.current !== null
+        ? Math.max(0, Math.round(performance.now() - photoReadyAtRef.current))
+        : 0;
+    formData.append("thinkingMs", `${thinkingMs}`);
+
+    setIsPhotoReady(false);
 
     if (import.meta.env.DEV) {
       formData.append("noRegister", "1");
@@ -242,6 +267,8 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     historyLength.current = addGuessResponse.gameData.history.length;
     setTotalScore(addGuessResponse.gameData.totalScore);
 
+    setRemainingMs(addGuessResponse.gameData.remainingTime ?? null);
+
     setIsGameEnded(addGuessResponse.gameData.isFinished);
     setIsGameEndModalOpen(addGuessResponse.gameData.isFinished);
     setCupData(addGuessResponse.gameData.cupData);
@@ -272,6 +299,44 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
 
     navigate("/");
   };
+
+  const handlePhotoReady = useCallback(() => {
+    photoReadyAtRef.current = performance.now();
+    setIsPhotoReady(true);
+  }, []);
+
+  // Chrono timer reached zero. If a guess is placed, submit it (the server will
+  // end the game since no time is left). Otherwise finalize the game so the
+  // accumulated score is still recorded, and show the end screen.
+  const handleChronoTimeout = useCallback(() => {
+    if (isGuessing.current || isGameEnded) {
+      return;
+    }
+
+    if (userGuess) {
+      handleConfirmGuess();
+      return;
+    }
+
+    setIsPhotoReady(false);
+
+    const finalize = async () => {
+      const formData = new FormData();
+      formData.append("gameId", `${currentGameId}`);
+
+      try {
+        await fetchApi("/give-up", "PUT", formData);
+      } catch (error) {}
+
+      setRemainingMs(0);
+      setCupData((current) => current ?? { cup: "none", starRank: null });
+      setGameHistory(gameHistory);
+      setIsGameEnded(true);
+      setIsGameEndModalOpen(true);
+    };
+
+    finalize();
+  }, [userGuess, currentGameId, isGameEnded, gameHistory]);
 
   const gameModeToRules: Record<
     GameMode,
@@ -335,6 +400,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
             photoName={!currentPhotoId ? "" : currentPhotoId}
             isMirrored={difficulty === "mirror"}
             author={currentPhotoAuthor}
+            onReady={mode === "chrono" ? handlePhotoReady : undefined}
           />
         </div>
 
@@ -452,6 +518,14 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
         maxPhotos={mode === "daily" ? 5 : 0}
       />
 
+      {mode === "chrono" && remainingMs !== null && (
+        <ChronoTimer
+          running={canGuess && isPhotoReady && !hasRequestedGiveUp}
+          remainingMs={remainingMs}
+          onExpire={handleChronoTimeout}
+        />
+      )}
+
       {userGuess && !shouldShowAnswer && !hasZoomOnFloatingPhoto && (
         <StickyButtonContainer withSafeArea={user.withSafeArea}>
           <Button onClick={handleConfirmGuess}>
@@ -525,7 +599,17 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
               );
 
             case "chrono":
-              return "TODO"; // TODO: EndChronoGame component to be implemented
+              return (
+                <EndChronoGame
+                  totalScore={totalScore}
+                  gameId={currentGameId!}
+                  difficulty={difficulty!}
+                  onClose={onGameEndModalClose}
+                  onReplay={onReplay}
+                  onLeaderboardShow={() => setIsLeaderboardShown(true)}
+                  cupData={cupData ?? { cup: "none", starRank: null }}
+                />
+              );
 
             case "daily":
               return (

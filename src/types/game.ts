@@ -40,6 +40,7 @@ export type AddGuessResponse = {
     } | null;
     history: GameHistory;
     minimumScoreToContinue: number | null;
+    remainingTime?: number | null;
     nextPhoto: GamePhoto | null;
   };
 };
@@ -50,6 +51,7 @@ export type StartGameResponse = {
   totalScore: number;
   currentPhoto: GamePhoto | null;
   minimumScoreToContinue: number | null;
+  remainingTime?: number | null;
 };
 
 type LeaderboardRank = {

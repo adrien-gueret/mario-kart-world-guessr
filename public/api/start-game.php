@@ -108,6 +108,19 @@ try {
 
         $totalScore = array_sum($history);
 
+        // Reset the per-photo timing baseline so image loading / time spent away
+        // from the game isn't counted against the player (notably for chrono).
+        if (!empty($game['currentPhotoId'])) {
+            $resetServedAtStmt = $pdo->prepare(
+                "UPDATE `mario-kart-world-games` SET current_photo_served_at = NOW() WHERE id = :gameId");
+            $resetServedAtStmt->bindParam(':gameId', $game['id'], PDO::PARAM_INT);
+            $resetServedAtStmt->execute();
+        }
+
+        $remainingTime = $_POST['mode'] === 'chrono'
+            ? max(0, getChronoTimeLimitMs($_POST['difficulty']) - getChronoElapsedMs($pdo, $game['id']))
+            : null;
+
         echo json_encode([
             'id' => $game['id'],
             'history' => $history,
@@ -121,7 +134,7 @@ try {
                 ],
             ],
             'minimumScoreToContinue' => $_POST['mode'] === 'survival' ? getSurvivalMinimumScore($_POST['difficulty'], count($history)) : null,
-            // TODO: remainingTime
+            'remainingTime' => $remainingTime,
         ]);
         exit;
     }
@@ -131,8 +144,8 @@ try {
         : getRandomPhoto($pdo, $_POST['difficulty'], $currentUser['id']);
 
     $createGameStmt = $pdo->prepare(
-        "INSERT INTO `mario-kart-world-games` (player_id, mode, difficulty, current_photo_id)
-        VALUES (:player_id, :mode, :difficulty, :currentPhotoId)"
+        "INSERT INTO `mario-kart-world-games` (player_id, mode, difficulty, current_photo_id, current_photo_served_at)
+        VALUES (:player_id, :mode, :difficulty, :currentPhotoId, NOW())"
     );
     $createGameStmt->bindParam(':player_id', $currentUser['id'], PDO::PARAM_INT);
     $createGameStmt->bindParam(':mode', $_POST['mode'], PDO::PARAM_STR);
@@ -159,7 +172,7 @@ try {
             ],
         ],
         'minimumScoreToContinue' => $_POST['mode'] === 'survival' ? getSurvivalMinimumScore($_POST['difficulty'], 0) : null,
-        // TODO: remainingTime
+        'remainingTime' => $_POST['mode'] === 'chrono' ? getChronoTimeLimitMs($_POST['difficulty']) : null,
     ]);
 } catch (PDOException $e) {
     http_response_code(500);
