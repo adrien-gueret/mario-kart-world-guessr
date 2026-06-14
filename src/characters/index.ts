@@ -5,6 +5,10 @@ export const lockedCharacters = [
   "daisy",
   "green_yoshi",
   "wario",
+  "baby_mario",
+  "baby_luigi",
+  "baby_peach",
+  "bowser_jr",
   "dk",
   "toad",
   "king_boo",
@@ -18,12 +22,8 @@ export const lockedCharacters = [
 export type LockedMarioCharacter = (typeof lockedCharacters)[number];
 
 const unusableCharacters = [
-  "baby_mario",
-  "baby_luigi",
-  "baby_peach",
   "baby_daisy",
   "baby_rosalina",
-  "bowser_jr",
   "birdo",
   "koopa_troopa",
   "nabbit",

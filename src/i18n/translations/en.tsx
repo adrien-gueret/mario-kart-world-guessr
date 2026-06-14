@@ -748,6 +748,26 @@ const en: Texts = {
   "gold_mirror_goal.unlockedItem": "Pauline is unlocked!",
   "pauline.unlockClue": "Obtain the Gold Cup in Mirror Goal mode.",
 
+  "gold_50cc_chrono.description":
+    "You won the Gold Cup in Chrono mode at 50cc!",
+  "gold_50cc_chrono.unlockedItem": "Bowser Jr. is unlocked!",
+  "bowser_jr.unlockClue": "Obtain the Gold Cup in Chrono mode at 50cc.",
+
+  "gold_100cc_chrono.description":
+    "You won the Gold Cup in Chrono mode at 100cc!",
+  "gold_100cc_chrono.unlockedItem": "Baby Luigi is unlocked!",
+  "baby_luigi.unlockClue": "Obtain the Gold Cup in Chrono mode at 100cc.",
+
+  "gold_150cc_chrono.description":
+    "You won the Gold Cup in Chrono mode at 150cc!",
+  "gold_150cc_chrono.unlockedItem": "Baby Peach is unlocked!",
+  "baby_peach.unlockClue": "Obtain the Gold Cup in Chrono mode at 150cc.",
+
+  "gold_mirror_chrono.description":
+    "You won the Gold Cup in Chrono mode in Mirror!",
+  "gold_mirror_chrono.unlockedItem": "Baby Mario is unlocked!",
+  "baby_mario.unlockClue": "Obtain the Gold Cup in Chrono mode in Mirror.",
+
   "5000_points.description":
     "You placed a photo exactly at the right location!",
   "5000_points.unlockedItem": "Shy Guy is unlocked!",

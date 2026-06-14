@@ -772,6 +772,26 @@ const fr: Texts = {
   "gold_mirror_goal.unlockedItem": "Pauline est débloquée !",
   "pauline.unlockClue": "Obtenez la coupe d'or du mode Objectif en Miroir.",
 
+  "gold_50cc_chrono.description":
+    "Vous avez gagné la coupe d'or du mode Chrono en 50cc !",
+  "gold_50cc_chrono.unlockedItem": "Bowser Jr. est débloqué !",
+  "bowser_jr.unlockClue": "Obtenez la coupe d'or du mode Chrono en 50cc.",
+
+  "gold_100cc_chrono.description":
+    "Vous avez gagné la coupe d'or du mode Chrono en 100cc !",
+  "gold_100cc_chrono.unlockedItem": "Bébé Luigi est débloqué !",
+  "baby_luigi.unlockClue": "Obtenez la coupe d'or du mode Chrono en 100cc.",
+
+  "gold_150cc_chrono.description":
+    "Vous avez gagné la coupe d'or du mode Chrono en 150cc !",
+  "gold_150cc_chrono.unlockedItem": "Bébé Peach est débloquée !",
+  "baby_peach.unlockClue": "Obtenez la coupe d'or du mode Chrono en 150cc.",
+
+  "gold_mirror_chrono.description":
+    "Vous avez gagné la coupe d'or du mode Chrono en Miroir !",
+  "gold_mirror_chrono.unlockedItem": "Bébé Mario est débloqué !",
+  "baby_mario.unlockClue": "Obtenez la coupe d'or du mode Chrono en Miroir.",
+
   "5000_points.description": "Vous avez placé une photo pile au bon endroit !",
   "5000_points.unlockedItem": "Maskass est débloqué !",
   "shyguy.unlockClue": "Placez une photo pile au bon endroit.",

@@ -1,7 +1,7 @@
 import type { Achievement } from "@/types/achievements";
 
 export default function getAchievementIcon(
-  achievementId: Achievement
+  achievementId: Achievement,
 ): string | undefined {
   const iconMap: Record<Achievement, string> = {
     gold_50cc_goal: "./ui/characters/dk.png",
@@ -12,6 +12,10 @@ export default function getAchievementIcon(
     gold_100cc_survival: "./ui/characters/green_yoshi.png",
     gold_150cc_survival: "./ui/characters/wario.png",
     gold_mirror_survival: "./ui/characters/rosalina.png",
+    gold_50cc_chrono: "./ui/characters/bowser_jr.png",
+    gold_100cc_chrono: "./ui/characters/baby_luigi.png",
+    gold_150cc_chrono: "./ui/characters/baby_peach.png",
+    gold_mirror_chrono: "./ui/characters/baby_mario.png",
     "5000_points": "./ui/characters/shyguy.png",
     "4000_three_in_a_row": "./ui/characters/lakitu.png",
     photo_validated: "./ui/characters/toadette.png",
