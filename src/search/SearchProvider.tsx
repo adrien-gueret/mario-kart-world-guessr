@@ -25,7 +25,7 @@ export default function SearchProvider({
   }
 
   return (
-    <InstantSearch searchClient={searchClient} indexName="photos">
+    <InstantSearch searchClient={searchClient} indexName="photos" insights>
       <Configure filters={filters.join(" AND ")} hitsPerPage={hitsPerPage} />
       {children}
 
