@@ -201,7 +201,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
         difficulty === "mirror"
           ? MAP_SIZE_IN_PIXELS.width - userGuess.x
           : userGuess.x
-      }`
+      }`,
     );
     formData.append("y", `${userGuess.y}`);
 
@@ -262,7 +262,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     setNextPhotoAuthor(
       addGuessResponse.gameData.nextPhoto
         ? addGuessResponse.gameData.nextPhoto.author
-        : null
+        : null,
     );
     historyLength.current = addGuessResponse.gameData.history.length;
     setTotalScore(addGuessResponse.gameData.totalScore);
@@ -282,7 +282,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
           minimumScoreToContinue
       ) {
         setMinimumScoreToContinue(
-          addGuessResponse.gameData.minimumScoreToContinue
+          addGuessResponse.gameData.minimumScoreToContinue,
         );
         setShowHarderGameStepModal(true);
       }
@@ -324,12 +324,22 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
       const formData = new FormData();
       formData.append("gameId", `${currentGameId}`);
 
+      let cupDataFromResponse: AddGuessResponse["gameData"]["cupData"] | null =
+        null;
+
       try {
-        await fetchApi("/give-up", "PUT", formData);
+        const response = await fetchApi("/give-up", "PUT", formData);
+        const data = (await response.json()) as {
+          cupData?: AddGuessResponse["gameData"]["cupData"] | null;
+        };
+        cupDataFromResponse = data.cupData ?? null;
       } catch (error) {}
 
       setRemainingMs(0);
-      setCupData((current) => current ?? { cup: "none", starRank: null });
+      setCupData(
+        (current) =>
+          current ?? cupDataFromResponse ?? { cup: "none", starRank: null },
+      );
       setGameHistory(gameHistory);
       setIsGameEnded(true);
       setIsGameEndModalOpen(true);
@@ -385,7 +395,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
               <Text component="p">
                 {mode === "survival"
                   ? translate("difficulty.survival.short")(
-                      minimumScoreToContinue || 3000
+                      minimumScoreToContinue || 3000,
                     )
                   : translate(`difficulty.${mode}.${difficulty}.short`)}
               </Text>
@@ -485,7 +495,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
                     role="button"
                     onClick={() =>
                       setHasZoomOnFloatingPhoto(
-                        canGuess && !hasZoomOnFloatingPhoto
+                        canGuess && !hasZoomOnFloatingPhoto,
                       )
                     }
                     {...disableDoubleClickZoomOnHover}
@@ -556,7 +566,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
         title={
           isLeaderboardShown
             ? `${translate("endGame.title.leaderboard")} - ${translate(
-                `mode.${mode}.label`
+                `mode.${mode}.label`,
               )}${
                 difficulty
                   ? ` - ${translate(`difficulty.${difficulty}.title`)}`
@@ -662,7 +672,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
         >
           <div className="harder-game-modal-container">
             {translate("survival.harderGame.description")(
-              minimumScoreToContinue!
+              minimumScoreToContinue!,
             )}
 
             <div className="harder-game-modal-buttons">

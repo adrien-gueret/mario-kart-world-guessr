@@ -57,6 +57,8 @@ try {
     $updateGameStmt->bindParam(':playerId', $currentUser['id'], PDO::PARAM_INT);
     $updateGameStmt->execute();
 
+    $cupData = null;
+
     if ($updateGameStmt->rowCount() === 0) {
         http_response_code(409);
         echo json_encode([
@@ -86,7 +88,7 @@ try {
             return getScoreFromDistanceInKilometers($distanceInKm, $difficulty);
         }, $guesses);
 
-        recordGoalSurvivalChronoResult(
+        $cupData = recordGoalSurvivalChronoResult(
             $pdo,
             $currentUser['id'],
             'chrono',
@@ -98,7 +100,8 @@ try {
 
     echo json_encode([
         "error" => false,
-        "message" => "Game stopped successfully."
+        "message" => "Game stopped successfully.",
+        "cupData" => $cupData
     ]);
 } catch (PDOException $e) {
     http_response_code(500);
