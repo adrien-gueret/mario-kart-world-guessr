@@ -33,16 +33,32 @@
   background-image: url("./ui/characters/mario.png");
 }
 
+.leaderboard-cell-character.baby_mario::before {
+  background-image: url("./ui/characters/baby_mario.png");
+}
+
 .leaderboard-cell-character.luigi::before {
   background-image: url("./ui/characters/luigi.png");
+}
+
+.leaderboard-cell-character.baby_luigi::before {
+  background-image: url("./ui/characters/baby_luigi.png");
 }
 
 .leaderboard-cell-character.peach::before {
   background-image: url("./ui/characters/peach.png");
 }
 
+.leaderboard-cell-character.baby_peach::before {
+  background-image: url("./ui/characters/baby_peach.png");
+}
+
 .leaderboard-cell-character.bowser::before {
   background-image: url("./ui/characters/bowser.png");
+}
+
+.leaderboard-cell-character.bowser_jr::before {
+  background-image: url("./ui/characters/bowser_jr.png");
 }
 
 .leaderboard-cell-character.daisy::before {

@@ -17,6 +17,7 @@
 }
 
 .game-map-pin.variant-mario,
+.game-map-pin.variant-baby_mario,
 .game-map-pin.variant-toad,
 .game-map-pin.variant-shyguy,
 .game-map-pin.variant-pauline {
@@ -24,6 +25,7 @@
 }
 
 .game-map-pin.variant-luigi,
+.game-map-pin.variant-baby_luigi,
 .game-map-pin.variant-green_yoshi {
   background-image: url("./ui/pins/pin-green.png");
 }
@@ -34,11 +36,13 @@
 }
 
 .game-map-pin.variant-peach,
+.game-map-pin.variant-baby_peach,
 .game-map-pin.variant-toadette {
   background-image: url("./ui/pins/pin-pink.png");
 }
 
 .game-map-pin.variant-bowser,
+.game-map-pin.variant-bowser_jr,
 .game-map-pin.variant-daisy,
 .game-map-pin.variant-dk,
 .game-map-pin.variant-lakitu {
