@@ -32,8 +32,7 @@ import type {
 
 import "./Leaderboards.css";
 
-// TODO: add chrono mode
-const allGameModes: GameMode[] = ["goal", "survival", "daily"];
+const allGameModes: GameMode[] = ["goal", "survival", "chrono", "daily"];
 
 const allDifficulties: Difficulty[] = ["50cc", "100cc", "150cc", "mirror"];
 
@@ -237,6 +236,7 @@ function Leaderboards() {
                       gameMode!,
                       gameDifficulty as Difficulty,
                       currentUserLeaderboardData.photoCount,
+                      currentUserLeaderboardData.score,
                       currentUserLeaderboardData.rank,
                     )
                 : isDailyMode
@@ -276,8 +276,18 @@ function Leaderboards() {
                     rank={player.rank}
                     username={player.playerName}
                     marioCharacter={player.marioCharacter ?? void 0}
-                    score={isDailyMode ? player.score : player.photoCount!}
-                    secondaryScore={isDailyMode ? void 0 : player.score}
+                    score={
+                      isDailyMode || gameMode === "chrono"
+                        ? player.score
+                        : player.photoCount!
+                    }
+                    secondaryScore={
+                      isDailyMode
+                        ? void 0
+                        : gameMode === "chrono"
+                          ? player.photoCount!
+                          : player.score
+                    }
                     isHighlighted={
                       !isAnonymous && currentUser.id === player.playerId
                     }

@@ -5,6 +5,51 @@ import type { ReleaseNotes } from "./types";
 
 const releaseNotes: ReleaseNotes = [
   {
+    version: "v4.4.0",
+    publishedAt: new Date("2026-06-21T00:00:00Z"),
+    notes: {
+      fr: (
+        <ul>
+          <Text component="li">
+            <b>Mario Kart World Guessr</b> a déjà un an&nbsp;!
+            <br />
+            Pour fêter cet anniversaire, un tout nouveau mode fait son
+            apparition&nbsp;: découvrez le mode <b>Chrono</b>, qui vous demande
+            de faire le plus de points en un temps limité.
+            <br />
+            Obtenez les coupes d'or de ce mode pour débloquer quatre nouveaux
+            personnages pour votre compte&nbsp;!
+          </Text>
+          <Text component="li">
+            Le jeu a commencé avec une <b>soixantaine de photos</b>, un an après
+            il en a plus de <b>1200</b>&nbsp;! Merci à tous les photographes qui
+            ont contribué&nbsp;: c'est grâce à vous que le jeu est aussi riche
+            en contenu&nbsp;!
+          </Text>
+        </ul>
+      ),
+      en: (
+        <ul>
+          <Text component="li">
+            <b>Mario Kart World Guessr</b> is already one year old!
+            <br />
+            To celebrate this anniversary, a brand new mode makes its
+            appearance&nbsp;: discover the <b>Chrono</b> mode, which challenges
+            you to score as many points as possible within a time limit.
+            <br />
+            Earn the gold cups of this mode to unlock four new characters for
+            your account!
+          </Text>
+          <Text component="li">
+            The game started with around <b>sixty photos</b>, and one year later
+            it has more than <b>1200</b>! Thanks to all the photographers who
+            contributed: it's thanks to you that the game is so rich in content!
+          </Text>
+        </ul>
+      ),
+    },
+  },
+  {
     version: "v4.3.0",
     publishedAt: new Date("2026-06-05T00:00:00Z"),
     notes: {

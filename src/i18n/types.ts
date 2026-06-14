@@ -190,6 +190,7 @@ export type Texts = {
     gameMode: GameMode,
     gameDifficulty: Difficulty,
     photoCount: number,
+    score: number,
     rank: number,
   ) => ReactNode;
   "leaderboards.daily.currentUserScore": (

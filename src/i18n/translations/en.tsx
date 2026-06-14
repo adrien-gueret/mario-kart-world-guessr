@@ -446,11 +446,21 @@ const en: Texts = {
     gameMode: GameMode,
     gameDifficulty: Difficulty,
     photoCount: number,
+    score: number,
     rank: number,
   ) => (
     <>
-      With your score of <b>{photoCount}</b> photo{photoCount > 1 ? "s" : ""},
-      you are in{" "}
+      With your score of{" "}
+      {gameMode === "chrono" ? (
+        <>
+          <b>{score}</b> point{score > 1 ? "s" : ""}
+        </>
+      ) : (
+        <>
+          <b>{photoCount}</b> photo{photoCount > 1 ? "s" : ""}
+        </>
+      )}
+      , you are in{" "}
       {rank === 1 ? (
         <>
           <b>first</b> place

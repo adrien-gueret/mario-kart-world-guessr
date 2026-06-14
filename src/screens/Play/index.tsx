@@ -29,18 +29,16 @@ function Play() {
             borderColor="#599be5"
           />
         </li>
-        {/*
-          TODO: uncomment
-           <li>
-            <Card
+
+        <li>
+          <Card
             icon={<ModeIcon mode="chrono" />}
-            onClick={() => setCurrentScreenName("ChronoGame")}
+            onClick={() => navigate("/chronogame")}
             title={translate("mode.chrono.label")}
             content={translate("mode.chrono.description")}
             borderColor="#a500a5"
           />
         </li>
-        */}
 
         <li>
           <Card
