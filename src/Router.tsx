@@ -1,3 +1,5 @@
+import type { ComponentType } from "react";
+
 import {
   createBrowserRouter,
   RouterProvider,
@@ -7,26 +9,8 @@ import {
 import AccountLayout from "@/layouts/sublayouts/AccountLayout";
 import MainLayout from "@/layouts/MainLayout";
 
-import AccountNotifications from "@/screens/Account/Notifications";
-import AccountPhotos from "@/screens/Account/Photos";
-import AccountAlbums from "@/screens/Account/Albums";
-import AccountAlbumId from "@/screens/Account/Albums/ID";
-import AccountPreferences from "@/screens/Account/Preferences";
-import AlbumId from "@/screens/Albums/ID";
-import Gallery from "@/screens/Gallery";
 import ErrorBoundary from "@/screens/Error";
 import LogoutWarning from "@/screens/Error/LogoutWarning";
-import { SurvivalGame, GoalGame, DailyGame, ChronoGame } from "@/screens/Game";
-import Home from "@/screens/Home";
-import Leaderboards from "@/screens/Leaderboards";
-import Login from "@/screens/Login";
-import Photos from "@/screens/Photos";
-import Play from "@/screens/Play";
-import PrivacyPolicies from "@/screens/PrivacyPolicies";
-import Upload from "@/screens/Upload";
-import UploadHelp from "@/screens/UploadHelp";
-import ReleaseNotes from "@/screens/ReleaseNotes";
-import TermsServices from "@/screens/TermsServices";
 import fetchApi from "@/services/api";
 
 import type { Photo } from "@/types/photos";
@@ -39,6 +23,9 @@ const getReponseJsonGetter =
     return response.json();
   };
 
+const loadComponent = (importPath: Promise<{ default: ComponentType }>) =>
+  importPath.then((m) => ({ Component: m.default }));
+
 const router = createBrowserRouter(
   [
     {
@@ -49,7 +36,10 @@ const router = createBrowserRouter(
       element: <MainLayout shouldHideHomeButton logoVariant="big" />,
       ErrorBoundary,
       children: [
-        { index: true, Component: Home },
+        {
+          index: true,
+          lazy: () => loadComponent(import("@/screens/Home")),
+        },
         {
           path: "/home",
           element: <Navigate to="/" replace />,
@@ -62,7 +52,7 @@ const router = createBrowserRouter(
       children: [
         {
           path: "/account/albums/:id",
-          Component: AccountAlbumId,
+          lazy: () => loadComponent(import("@/screens/Account/Albums/ID")),
           loader: async ({ params }) => {
             const getReponseJson = getReponseJsonGetter(
               `Cannot fetch album ${params.id}`,
@@ -79,7 +69,7 @@ const router = createBrowserRouter(
         },
         {
           path: "/albums/:id",
-          Component: AlbumId,
+          lazy: () => loadComponent(import("@/screens/Albums/ID")),
           loader: async ({ params }) => {
             const getReponseJson = async (response: Response) => {
               if (!response.ok) {
@@ -111,19 +101,21 @@ const router = createBrowserRouter(
             },
             {
               path: "/account/preferences",
-              Component: AccountPreferences,
+              lazy: () =>
+                loadComponent(import("@/screens/Account/Preferences")),
             },
             {
               path: "/account/notifications",
-              Component: AccountNotifications,
+              lazy: () =>
+                loadComponent(import("@/screens/Account/Notifications")),
             },
             {
               path: "/account/photos",
-              Component: AccountPhotos,
+              lazy: () => loadComponent(import("@/screens/Account/Photos")),
             },
             {
               path: "/account/albums",
-              Component: AccountAlbums,
+              lazy: () => loadComponent(import("@/screens/Account/Albums")),
               loader: async () => {
                 const getReponseJson =
                   getReponseJsonGetter(`Cannot fetch albums`);
@@ -156,61 +148,67 @@ const router = createBrowserRouter(
             },
             {
               path: ":mode/:gameDifficulty?",
-              Component: Leaderboards,
+              lazy: () => loadComponent(import("@/screens/Leaderboards")),
             },
           ],
         },
         {
           path: "/login",
-          Component: Login,
+          lazy: () => loadComponent(import("@/screens/Login")),
         },
         {
           path: "/gallery",
-          Component: Gallery,
+          lazy: () => loadComponent(import("@/screens/Gallery")),
         },
         {
           path: "/photos",
-          Component: Photos,
+          lazy: () => loadComponent(import("@/screens/Photos")),
         },
         {
           path: "/play",
-          Component: Play,
+          lazy: () => loadComponent(import("@/screens/Play")),
         },
         {
           path: "/privacypolicies",
-          Component: PrivacyPolicies,
+          lazy: () => loadComponent(import("@/screens/PrivacyPolicies")),
         },
         {
           path: "/releasenotes",
-          Component: ReleaseNotes,
+          lazy: () => loadComponent(import("@/screens/ReleaseNotes")),
         },
         {
           path: "/dailygame",
-          Component: DailyGame,
+          lazy: () =>
+            import("@/screens/Game").then((m) => ({ Component: m.DailyGame })),
         },
         {
           path: "/goalgame",
-          Component: GoalGame,
+          lazy: () =>
+            import("@/screens/Game").then((m) => ({ Component: m.GoalGame })),
         },
         {
           path: "/chronogame",
-          Component: ChronoGame,
+          lazy: () =>
+            import("@/screens/Game").then((m) => ({ Component: m.ChronoGame })),
         },
         {
           path: "/survivalgame",
-          Component: SurvivalGame,
+          lazy: () =>
+            import("@/screens/Game").then((m) => ({
+              Component: m.SurvivalGame,
+            })),
         },
         {
           path: "/termsservices",
-          Component: TermsServices,
+          lazy: () => loadComponent(import("@/screens/TermsServices")),
         },
         {
           path: "/upload",
-          Component: Upload,
+          lazy: () => loadComponent(import("@/screens/Upload")),
         },
         {
           path: "/uploadhelp",
-          Component: UploadHelp,
+          lazy: () => loadComponent(import("@/screens/UploadHelp")),
         },
       ],
     },
