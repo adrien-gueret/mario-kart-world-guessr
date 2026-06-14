@@ -49,7 +49,7 @@ export default function Leaderboard({
   const [activeTab, setActiveTab] = useState<"all" | "bots">("bots");
 
   const [botLeaderboard, setBotLeaderboard] = useState<LeaderboardsResponse>(
-    []
+    [],
   );
 
   const [leaderboard, setLeaderboard] = useState<LeaderboardsResponse>([]);
@@ -76,8 +76,8 @@ export default function Leaderboard({
   const leaderboardToShow = areBothLeaderboardsIdentical
     ? leaderboard
     : activeTab === "all"
-    ? leaderboard
-    : botLeaderboard;
+      ? leaderboard
+      : botLeaderboard;
 
   return (
     <>
@@ -114,8 +114,12 @@ export default function Leaderboard({
                     rank={player.rank}
                     username={player.playerName}
                     marioCharacter={player.marioCharacter ?? void 0}
-                    score={player.photoCount!}
-                    secondaryScore={player.score}
+                    score={
+                      mode === "chrono" ? player.score : player.photoCount!
+                    }
+                    secondaryScore={
+                      mode === "chrono" ? player.photoCount! : player.score
+                    }
                     isHighlighted={user.id === player.playerId}
                   />
                 ))}
