@@ -166,6 +166,10 @@ export type Texts = {
   "account.tab.notifications": string;
   "account.tab.photos": string;
   "account.tab.albums": string;
+  "gallery.tab.photos": string;
+  "gallery.tab.albums": string;
+  "gallery.community-albums.description": string;
+  "gallery.community-albums.empty": string;
   "play.label": string;
   "account.marioCharacter.label": string;
   "account.marioCharacter.helper": string;

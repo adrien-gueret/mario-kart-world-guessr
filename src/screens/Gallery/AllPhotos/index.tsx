@@ -13,8 +13,6 @@ export default function AllPhotos() {
 
   return (
     <div className="photo-screen">
-      <h2>{translate("all-photos.title")}</h2>
-
       <div style={{ marginBottom: "1rem" }}>
         <Text component="p">{translate("all-photos.description")}</Text>
       </div>

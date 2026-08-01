@@ -13,12 +13,14 @@ import "./AlbumList.css";
 type Props = {
   albums: Album[];
   canCreateNewAlbum?: boolean;
+  showAuthor?: boolean;
   getAlbumURL: (albumId: number) => string;
 };
 
 export default function AlbumList({
   albums,
   canCreateNewAlbum,
+  showAuthor,
   getAlbumURL,
 }: Props) {
   const [isCreateAlbumModalOpen, setIsCreateAlbumModalOpen] = useState(false);
@@ -78,7 +80,7 @@ export default function AlbumList({
             </div>
           </li>
         )}
-        {albums.map(({ id, name, coverUrl }) => {
+        {albums.map(({ id, name, coverUrl, author }) => {
           return (
             <li
               key={id}
@@ -89,6 +91,11 @@ export default function AlbumList({
               style={{ backgroundImage: `url(${coverUrl})` }}
             >
               <div className="album-name">{name}</div>
+              {showAuthor && (
+                <div className="album-author">
+                  {translate("album.by")} <b>{author.name}</b>
+                </div>
+              )}
             </li>
           );
         })}

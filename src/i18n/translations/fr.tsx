@@ -430,6 +430,12 @@ const fr: Texts = {
   "account.tab.notifications": "Notifications",
   "account.tab.photos": "Mes photos",
   "account.tab.albums": "Mes albums",
+  "gallery.tab.photos": "Toutes les photos",
+  "gallery.tab.albums": "Albums de la communauté",
+  "gallery.community-albums.description":
+    "Découvrez les albums publiés par la communauté !",
+  "gallery.community-albums.empty":
+    "Aucun album n'a encore été publié par la communauté pour le moment.",
   "giveUp.label": "Abandonner",
   "giveUp.title": "Abandonner la partie ?",
   "giveUp.description":

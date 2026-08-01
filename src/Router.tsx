@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 import AccountLayout from "@/layouts/sublayouts/AccountLayout";
+import GalleryLayout from "@/layouts/sublayouts/GalleryLayout";
 import MainLayout from "@/layouts/MainLayout";
 
 import ErrorBoundary from "@/screens/Error";
@@ -158,7 +159,33 @@ const router = createBrowserRouter(
         },
         {
           path: "/gallery",
-          lazy: () => loadComponent(import("@/screens/Gallery")),
+          Component: GalleryLayout,
+          children: [
+            {
+              index: true,
+              element: <Navigate to="/gallery/photos" replace />,
+            },
+            {
+              path: "/gallery/photos",
+              lazy: () => loadComponent(import("@/screens/Gallery/AllPhotos")),
+            },
+            {
+              path: "/gallery/albums",
+              lazy: () =>
+                loadComponent(import("@/screens/Gallery/CommunityAlbums")),
+              loader: async () => {
+                const getReponseJson = getReponseJsonGetter(
+                  `Cannot fetch public albums`,
+                );
+
+                const albums = await fetchApi("/public-albums", "GET").then(
+                  getReponseJson,
+                );
+
+                return { albums };
+              },
+            },
+          ],
         },
         {
           path: "/photos",

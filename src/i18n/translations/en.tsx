@@ -418,6 +418,12 @@ const en: Texts = {
   "account.tab.notifications": "Notifications",
   "account.tab.photos": "My photos",
   "account.tab.albums": "My albums",
+  "gallery.tab.photos": "All photos",
+  "gallery.tab.albums": "Community albums",
+  "gallery.community-albums.description":
+    "Discover the albums published by the community!",
+  "gallery.community-albums.empty":
+    "No album has been published by the community yet.",
   "giveUp.label": "Give up",
   "giveUp.title": "Give up the game?",
   "giveUp.description":
