@@ -1,4 +1,5 @@
 import { getKey, storeKey } from "./store";
+import { resolveMock } from "./mocks";
 
 const ROOT_URL = "https://www.mariouniversalis.fr/mario-kart-world-guessr/api";
 
@@ -35,14 +36,18 @@ function getHeaders({
 export default async function fetchApi(
   path: `/${string}`,
   method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" = "GET",
-  body?: FormData
+  body?: FormData,
 ): Promise<Response> {
+  if (import.meta.env.VITE_USE_MOCKS === "true") {
+    return resolveMock(path, method, body);
+  }
+
   const documentLang = document.documentElement.lang;
   const currentUser = getKey("currentUser");
   const acceptLanguage =
     documentLang === "fr" || documentLang === "en"
       ? documentLang
-      : currentUser?.locale ?? "en";
+      : (currentUser?.locale ?? "en");
   let headers = getHeaders({
     accessToken: currentUser?.accessToken ?? undefined,
     acceptLanguage,

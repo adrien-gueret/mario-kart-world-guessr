@@ -6,6 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
+    "dev:mock": "vite --host --mode mock",
+    "dev:mock:anon": "vite --host --mode mock-anon",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
