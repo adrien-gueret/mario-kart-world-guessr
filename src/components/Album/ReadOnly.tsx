@@ -172,7 +172,7 @@ export default function AlbumReadOnly({
         </p>
       </article>
 
-      {photos.length > 0 && (
+      {photos.length > 0 && (isPublished || isCurrentUserTheAuthor) && (
         <div>
           <Button
             onClick={() => {

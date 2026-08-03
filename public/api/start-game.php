@@ -46,6 +46,32 @@ if ($isAlbumMode && (!isset($_POST['albumId']) || !is_numeric($_POST['albumId'])
 try {
     if ($isAlbumMode) {
         $albumId = (int) $_POST['albumId'];
+
+        // Only the author (or admin) may play an unpublished album; otherwise the
+        // album must be published. Prevents enumerating album IDs to leak the
+        // photos (i.e. the answers) of someone else's unpublished draft.
+        $albumAccessStmt = $pdo->prepare(
+            "SELECT author_id, is_published
+            FROM `mario-kart-world-albums`
+            WHERE id = :albumId
+            LIMIT 1");
+        $albumAccessStmt->bindValue(':albumId', $albumId, PDO::PARAM_INT);
+        $albumAccessStmt->execute();
+        $albumAccess = $albumAccessStmt->fetch(PDO::FETCH_ASSOC);
+
+        if (empty($albumAccess)) {
+            http_response_code(404);
+            die('{"error":true,"message":"Album not found"}');
+        }
+
+        $isAlbumAuthor = (int) $albumAccess['author_id'] === (int) $currentUser['id'];
+        $isAdmin = (int) $currentUser['id'] === 1;
+
+        if (!$isAlbumAuthor && !$isAdmin && (int) $albumAccess['is_published'] !== 1) {
+            http_response_code(403);
+            die('{"error":true,"message":"Album is not published"}');
+        }
+
         $photosHash = computeAlbumPhotosHash($pdo, $albumId);
         $albumPhotoCount = getAlbumPhotoCount($pdo, $albumId);
 
