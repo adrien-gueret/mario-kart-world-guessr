@@ -41,4 +41,9 @@ export type Album = {
     character: UsableMarioCharacter | null;
   };
   photos: AlbumPhoto[];
+  game?: {
+    hasPlayed: boolean;
+    score: number | null;
+    gameId: number | null;
+  };
 };

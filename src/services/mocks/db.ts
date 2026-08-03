@@ -12,6 +12,7 @@ export type GameState = {
   id: number;
   mode: GameMode;
   difficulty: Difficulty | null;
+  albumId: number | null;
   photoIds: string[];
   index: number;
   history: GameHistory;
@@ -27,6 +28,8 @@ type Database = {
   publicAlbums: Album[];
   notifications: Notification[];
   games: Map<number, GameState>;
+  /** Finished album games keyed by albumId, for one-play + hasPlayed. */
+  albumGames: Map<number, GameState>;
   counters: {
     album: number;
     game: number;
@@ -50,6 +53,7 @@ export const db: Database = {
   publicAlbums: clone(publicAlbums),
   notifications: clone(notificationsFixture),
   games: new Map(),
+  albumGames: new Map(),
   counters: {
     album: 1000,
     game: 5000,

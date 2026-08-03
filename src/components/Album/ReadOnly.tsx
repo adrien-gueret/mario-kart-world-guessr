@@ -32,6 +32,7 @@ export default function AlbumReadOnly({
   isPublished,
   backgroundColor,
   backgroundImage,
+  game,
   isCurrentUserTheAuthor,
 }: Props) {
   const { translate } = useTranslations();
@@ -170,6 +171,24 @@ export default function AlbumReadOnly({
           )}
         </p>
       </article>
+
+      {photos.length > 0 && (
+        <div>
+          <Button
+            onClick={() => {
+              if (game?.hasPlayed) {
+                navigate(`/albums/${id}/leaderboard`);
+              } else {
+                navigate(`/albumgame/${id}`);
+              }
+            }}
+          >
+            {game?.hasPlayed
+              ? translate("album.play.seeScore")
+              : translate("album.play.button")}
+          </Button>
+        </div>
+      )}
 
       <div>
         <Button

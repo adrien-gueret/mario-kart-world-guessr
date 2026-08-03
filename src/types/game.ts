@@ -4,7 +4,7 @@ import type { UsableMarioCharacter } from "@/characters";
 
 import type { IsoDate } from "@/services/daily";
 
-export type GameMode = "survival" | "goal" | "chrono" | "daily";
+export type GameMode = "survival" | "goal" | "chrono" | "daily" | "album";
 
 export type GameHistory = number[];
 

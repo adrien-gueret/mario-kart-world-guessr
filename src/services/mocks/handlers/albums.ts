@@ -21,7 +21,17 @@ const albumHandlers: MockHandlers = {
     const id = Number(query.get("id"));
     const album =
       findAlbum(id) ?? db.publicAlbums.find((current) => current.id === id);
-    return album ? jsonResponse(album) : notFound(`album ${id}`);
+    if (!album) return notFound(`album ${id}`);
+
+    const played = db.albumGames.get(id);
+    return jsonResponse({
+      ...album,
+      game: {
+        hasPlayed: Boolean(played),
+        score: played ? played.totalScore : null,
+        gameId: played ? played.id : null,
+      },
+    });
   },
 
   "GET /my-albums": () => jsonResponse(db.myAlbums),
@@ -74,6 +84,8 @@ const albumHandlers: MockHandlers = {
       });
     }
     album.photos = photos;
+    // The photo pool changed: reset the album game so it can be replayed.
+    db.albumGames.delete(album.id);
     syncPublicAlbums();
     return jsonResponse({ album });
   },

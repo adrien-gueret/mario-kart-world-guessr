@@ -4,9 +4,11 @@ require_once __DIR__ . '/___middleware.php';
 
 require_once __DIR__ . '/___coordinates.php';
 
+require_once __DIR__ . '/___album-game.php';
+
 allowMethod('GET');
 
-$possibleModes = ['survival', 'goal', 'daily', 'chrono'];
+$possibleModes = ['survival', 'goal', 'daily', 'chrono', 'album'];
 
 if (!isset($_GET['mode']) || !in_array($_GET['mode'], $possibleModes)) {
     http_response_code(400);
@@ -16,10 +18,16 @@ if (!isset($_GET['mode']) || !in_array($_GET['mode'], $possibleModes)) {
 $possibleDifficulties = ['50cc', '100cc', '150cc', 'mirror'];
 
 $isDailyMode = $_GET['mode'] === 'daily';
+$isAlbumMode = $_GET['mode'] === 'album';
 
-if (!$isDailyMode && (!isset($_GET['difficulty']) || !in_array($_GET['difficulty'], $possibleDifficulties))) {
+if (!$isDailyMode && !$isAlbumMode && (!isset($_GET['difficulty']) || !in_array($_GET['difficulty'], $possibleDifficulties))) {
     http_response_code(400);
     die('{"error":true,"message":"Invalid difficulty"}');
+}
+
+if ($isAlbumMode && (!isset($_GET['albumId']) || !is_numeric($_GET['albumId']))) {
+    http_response_code(400);
+    die('{"error":true,"message":"Invalid album ID"}');
 }
 
 try {
@@ -53,6 +61,26 @@ try {
         ");
 
         $stmt->bindParam(':dailyDate', $date, PDO::PARAM_STR);
+    } else if ($isAlbumMode) {
+        $albumId = (int) $_GET['albumId'];
+        $photosHash = computeAlbumPhotosHash($pdo, $albumId);
+
+        $stmt = $pdo->prepare(
+            "SELECT
+                l.player_id playerId,
+                l.score,
+                NULL as photoCount,
+                IF(u.email IS NULL, '$anonymousUserName', u.username) AS playerName,
+                IF(u.email IS NULL, 1, 0) AS isAnonymous,
+                u.mario_character marioCharacter,
+                ROW_NUMBER() OVER (ORDER BY l.score DESC, l.created_at ASC) AS rank
+            FROM `mario-kart-world-leaderboard-album` l
+            LEFT JOIN `mario-kart-world-users` u ON l.player_id = u.id
+            WHERE l.album_id = :albumId AND l.photos_hash = :photosHash AND l.player_id NOT IN (3,4,5,6)
+        ");
+
+        $stmt->bindParam(':albumId', $albumId, PDO::PARAM_INT);
+        $stmt->bindParam(':photosHash', $photosHash, PDO::PARAM_STR);
     } else {
         $photoCountOrderType = $_GET['mode'] === 'survival' ? 'DESC' : 'ASC';
         $rowLeaderBoardOrderBy = $_GET['mode'] === 'chrono'

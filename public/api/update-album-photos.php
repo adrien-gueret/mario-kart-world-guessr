@@ -6,6 +6,8 @@ require_once __DIR__ . '/___check-album-author.php';
 
 require_once __DIR__ . '/___album-cover.php';
 
+require_once __DIR__ . '/___album-game.php';
+
 $_POST = allowMethod('POST');
 
 if (empty($currentUser) || empty($currentUser['email'])) {
@@ -73,7 +75,16 @@ try {
     }
 
     createAlbumCover($pdo, $_POST['albumId']);
-    
+
+    // Refresh the album's photo-pool signature so album-mode leaderboards are
+    // scoped to the new pool (adding/removing a photo makes the album replayable).
+    $photosHash = computeAlbumPhotosHash($pdo, (int) $_POST['albumId']);
+    $updateHashStmt = $pdo->prepare(
+        "UPDATE `mario-kart-world-albums` SET photos_hash = :photosHash WHERE id = :albumId");
+    $updateHashStmt->bindValue(':photosHash', $photosHash, PDO::PARAM_STR);
+    $updateHashStmt->bindValue(':albumId', (int) $_POST['albumId'], PDO::PARAM_INT);
+    $updateHashStmt->execute();
+
     echo json_encode(["success" => true]);
 } catch (PDOException $e) {
     http_response_code(500);

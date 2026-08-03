@@ -86,6 +86,25 @@ const router = createBrowserRouter(
             return { album };
           },
         },
+        {
+          path: "/albums/:id/leaderboard",
+          lazy: () => loadComponent(import("@/screens/AlbumLeaderboard")),
+          loader: async ({ params }) => {
+            const getReponseJson = getReponseJsonGetter(
+              `Cannot fetch album ${params.id} leaderboard`,
+            );
+
+            const [album, leaderboard] = await Promise.all([
+              fetchApi(`/album?id=${params.id}`, "GET").then(getReponseJson),
+              fetchApi(
+                `/leaderboards?mode=album&albumId=${params.id}`,
+                "GET",
+              ).then(getReponseJson),
+            ]);
+
+            return { album, leaderboard };
+          },
+        },
       ],
     },
     {
@@ -224,6 +243,11 @@ const router = createBrowserRouter(
             import("@/screens/Game").then((m) => ({
               Component: m.SurvivalGame,
             })),
+        },
+        {
+          path: "/albumgame/:albumId",
+          lazy: () =>
+            import("@/screens/Game").then((m) => ({ Component: m.AlbumGame })),
         },
         {
           path: "/termsservices",

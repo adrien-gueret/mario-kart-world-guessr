@@ -27,6 +27,9 @@ const fr: Texts = {
   "mode.daily.label": "Photos du jour",
   "mode.daily.description":
     "Chaque jour, une nouvelle sélection de cinq photos : faites un meilleur score que vos amis&nbsp;!",
+  "mode.album.label": "Photos d'un album",
+  "mode.album.description":
+    "Jouez avec les photos d'un album créé par un joueur.",
   "choose.difficulty": "Choisissez la difficulté",
   "difficulty.label": "Difficulté : ",
   "difficulty.50cc.title": "50cc",
@@ -248,6 +251,9 @@ const fr: Texts = {
   "rules.mode.daily.title": "Mode Photos du jour",
   "rules.mode.daily.description":
     "Faite le meilleur score possible sur cinq photos du jour !",
+  "rules.mode.album.title": "Mode Album",
+  "rules.mode.album.description":
+    "Faites le meilleur score possible sur les photos de cet album !",
   "rules.mode.chrono.title": "Mode Chrono",
   "rules.mode.chrono.description":
     "Marquez le plus de points possible en temps limité !",
@@ -299,6 +305,8 @@ const fr: Texts = {
   "endGame.daily.description":
     "Vous avez fini de localiser les 5 photos du jour !",
   "endGame.daily.next": "Prochaines photos du jour dans : ",
+  "endGame.album.description":
+    "Vous avez fini de localiser toutes les photos de cet album !",
   "endGame.next-button.label": "Suivant",
   "endGame.see-leaderboards": "Voir tout le classement",
   "share.daily.title": "Mario Kart World Guessr - Photos du jour",
@@ -686,6 +694,12 @@ const fr: Texts = {
   "album.status.unpublished":
     "Cet album est privé et n'est visible que par vous.",
   "album.create.myOwn": "Créer mon propre album",
+  "album.play.button": "Jouer avec les photos de cet album",
+  "album.play.seeScore": "Voir mon score",
+  "album.play.backToAlbum": "Retour à l'album",
+  "album.leaderboard.title": "Classement de l'album",
+  "album.leaderboard.empty":
+    "Personne n'a encore joué cette version de l'album.",
   "error.title": "Oups ! Une erreur est survenue.",
   "error.description":
     "Une erreur inattendue s'est produite... Tout est cassé !",

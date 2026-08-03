@@ -14,7 +14,7 @@ import type { GameMode, Difficulty, Cup, StarRank } from "@/types/game";
 import "./DifficultySelector.css";
 
 type Props = {
-  mode: Exclude<GameMode, "daily">;
+  mode: Exclude<GameMode, "daily" | "album">;
   onSelect: (difficulty: Difficulty) => void;
 };
 

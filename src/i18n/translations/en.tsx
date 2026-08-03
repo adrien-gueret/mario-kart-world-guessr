@@ -26,6 +26,9 @@ const en: Texts = {
   "mode.daily.label": "Daily Photos",
   "mode.daily.description":
     "Every day, a new selection of five photos: get a better score than your friends!",
+  "mode.album.label": "Album Photos",
+  "mode.album.description":
+    "Play with the photos of an album created by a player.",
   "choose.difficulty": "Choose difficulty",
   "difficulty.label": "Difficulty: ",
   "difficulty.50cc.title": "50cc",
@@ -246,6 +249,9 @@ const en: Texts = {
   "rules.mode.daily.title": "Daily Photos Mode",
   "rules.mode.daily.description":
     "Get the best possible score on five daily photos!",
+  "rules.mode.album.title": "Album Mode",
+  "rules.mode.album.description":
+    "Get the best possible score on this album's photos!",
   "rules.mode.chrono.title": "Chrono Mode",
   "rules.mode.chrono.description":
     "Score as many points as possible within a time limit!",
@@ -293,6 +299,8 @@ const en: Texts = {
   "endGame.daily.description":
     "You have finished locating all 5 photos of the day!",
   "endGame.daily.next": "Next daily photos in: ",
+  "endGame.album.description":
+    "You have finished locating all the photos of this album!",
   "endGame.next-button.label": "Next",
   "endGame.see-leaderboards": "See whole leaderboard",
   "share.daily.title": "Mario Kart World Guessr - Daily Photos",
@@ -667,6 +675,11 @@ const en: Texts = {
   "account.albums.delete.photo": "Delete this photo from the album",
   "account.albums.move.photo": "Move this photo in the album",
   "album.create.myOwn": "Create my own album",
+  "album.play.button": "Play with this album's photos",
+  "album.play.seeScore": "See my score",
+  "album.play.backToAlbum": "Back to album",
+  "album.leaderboard.title": "Album leaderboard",
+  "album.leaderboard.empty": "No one has played this version of the album yet.",
   "error.title": "Oops! Something went wrong.",
   "error.description": "An unexpected error occurred... Everything is broken!",
   "error.button": "Back to home",

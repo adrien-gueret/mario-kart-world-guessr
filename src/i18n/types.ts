@@ -27,6 +27,8 @@ export type Texts = {
   "mode.chrono.description": string;
   "mode.daily.label": string;
   "mode.daily.description": string;
+  "mode.album.label": string;
+  "mode.album.description": string;
   "choose.difficulty": string;
   "difficulty.label": string;
   "difficulty.50cc.title": string;
@@ -68,6 +70,8 @@ export type Texts = {
   "rules.mode.chrono.description": string;
   "rules.mode.daily.title": string;
   "rules.mode.daily.description": string;
+  "rules.mode.album.title": string;
+  "rules.mode.album.description": string;
   "leaderboard.tab.bots": string;
   "leaderboard.tab.allPlayers": string;
   "leaderboard.congrats": string;
@@ -86,6 +90,7 @@ export type Texts = {
   "endGame.chrono.description": (score: number) => ReactNode;
   "endGame.daily.description": string;
   "endGame.daily.next": string;
+  "endGame.album.description": string;
   "endGame.next-button.label": string;
   "endGame.see-leaderboards": string;
   "share.daily.title": string;
@@ -277,6 +282,11 @@ export type Texts = {
   "account.albums.photo.select.none": string;
   "account.albums.no_photos": string;
   "album.create.myOwn": string;
+  "album.play.button": string;
+  "album.play.seeScore": string;
+  "album.play.backToAlbum": string;
+  "album.leaderboard.title": string;
+  "album.leaderboard.empty": string;
   "error.title": string;
   "error.description": string;
   "error.button": string;

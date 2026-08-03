@@ -4,6 +4,8 @@ require_once __DIR__ . '/___middleware.php';
 
 require_once __DIR__ . '/___coordinates.php';
 
+require_once __DIR__ . '/___album-game.php';
+
 allowMethod('GET');
 
 if (!isset($_GET['gameId'])) {
@@ -142,6 +144,72 @@ try {
         $stmt->bindValue(':marioCharacter', $currentUser['marioCharacter'], PDO::PARAM_STR);
         $startedAtDate = (new DateTime($game['started_at']))->format('Y-m-d');
         $stmt->bindValue(':startedAt', $startedAtDate, PDO::PARAM_STR);
+    } else if ($game['mode'] === 'album') {
+        $albumLink = getAlbumGameLink($pdo, (int) $game['id']);
+        $albumId = $albumLink ? (int) $albumLink['album_id'] : 0;
+        $photosHash = $albumLink ? $albumLink['photos_hash'] : sha1('');
+
+        $stmt = $pdo->prepare("WITH
+        all_players AS (
+            SELECT
+                l.player_id,
+                l.score,
+                IF(u.email IS NULL, '$anonymousUserName', u.username) AS username,
+                u.mario_character
+            FROM `mario-kart-world-leaderboard-album` l
+            LEFT JOIN `mario-kart-world-users` u ON l.player_id = u.id
+            WHERE l.album_id = :albumId AND l.photos_hash = :photosHash
+            AND l.player_id != :playerId
+
+            UNION ALL
+
+            SELECT
+                CAST(:playerId AS UNSIGNED) AS player_id,
+                CAST(:score AS UNSIGNED) AS score,
+                :username AS username,
+                :marioCharacter AS mario_character
+        ),
+        ranked AS (
+            SELECT
+                player_id,
+                score,
+                username,
+                mario_character,
+                ROW_NUMBER() OVER (
+                    ORDER BY score DESC
+                ) AS rank
+            FROM all_players
+            ),
+        your_rank AS (
+            SELECT rank AS your_rank FROM ranked WHERE player_id = :playerId LIMIT 1
+        ),
+        max_rank AS (
+            SELECT MAX(rank) AS max_rank FROM ranked
+        ),
+        window_bounds AS (
+            SELECT
+                GREATEST(
+                    LEAST(your_rank - 2, max_rank - 4),
+                    1
+                ) AS window_start
+            FROM your_rank, max_rank
+        )
+        SELECT
+            player_id as playerId,
+            score,
+            username as playerName,
+            mario_character as marioCharacter,
+            ranked.rank
+        FROM ranked, window_bounds
+        WHERE ranked.rank BETWEEN window_bounds.window_start AND window_bounds.window_start + 4
+        ORDER BY ranked.rank");
+
+        $stmt->bindParam(':score', $totalScore, PDO::PARAM_INT);
+        $stmt->bindParam(':playerId', $currentUser['id'], PDO::PARAM_INT);
+        $stmt->bindValue(':username', $currentUser['username'], PDO::PARAM_STR);
+        $stmt->bindValue(':marioCharacter', $currentUser['marioCharacter'], PDO::PARAM_STR);
+        $stmt->bindValue(':albumId', $albumId, PDO::PARAM_INT);
+        $stmt->bindValue(':photosHash', $photosHash, PDO::PARAM_STR);
     } else {
         $shouldShowOnlyBots = isset($_GET['only-bots']);
         $photoCountOrderType = $game['mode'] === 'survival' ? 'DESC' : 'ASC';

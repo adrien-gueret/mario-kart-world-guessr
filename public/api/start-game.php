@@ -8,6 +8,8 @@ require_once __DIR__ . '/___photos.php';
 
 require_once __DIR__ . '/___game.php';
 
+require_once __DIR__ . '/___album-game.php';
+
 allowMethod('POST');
 
 if (empty($currentUser)) {
@@ -16,7 +18,7 @@ if (empty($currentUser)) {
     exit;
 }
 
-$possibleModes = ['daily', 'survival', 'goal', 'chrono'];
+$possibleModes = ['daily', 'survival', 'goal', 'chrono', 'album'];
 
 if (
     !isset($_POST['mode']) ||
@@ -29,13 +31,148 @@ if (
 $possibleDifficulties = ['50cc', '100cc', '150cc', 'mirror'];
 
 $isDailyMode = $_POST['mode'] === 'daily';
+$isAlbumMode = $_POST['mode'] === 'album';
 
-if (!$isDailyMode && (!isset($_POST['difficulty']) || !in_array($_POST['difficulty'], $possibleDifficulties))) {
+if (!$isDailyMode && !$isAlbumMode && (!isset($_POST['difficulty']) || !in_array($_POST['difficulty'], $possibleDifficulties))) {
     http_response_code(400);
     die('{"error":true,"message":"Invalid difficulty"}');
 }
 
+if ($isAlbumMode && (!isset($_POST['albumId']) || !is_numeric($_POST['albumId']))) {
+    http_response_code(400);
+    die('{"error":true,"message":"Invalid album ID"}');
+}
+
 try {
+    if ($isAlbumMode) {
+        $albumId = (int) $_POST['albumId'];
+        $photosHash = computeAlbumPhotosHash($pdo, $albumId);
+        $albumPhotoCount = getAlbumPhotoCount($pdo, $albumId);
+
+        if ($albumPhotoCount === 0) {
+            http_response_code(400);
+            die('{"error":true,"message":"Album has no photos"}');
+        }
+
+        // One play per album pool: resume the game already linked to this album
+        // and current pool version, if any (in progress or finished).
+        $resumeStmt = $pdo->prepare(
+            "SELECT
+                g.id AS id,
+                g.current_photo_id AS currentPhotoId,
+                photoAuthor.author_id AS authorId,
+                u.username AS authorName,
+                u.mario_character AS authorCharacter,
+                COALESCE(
+                    JSON_ARRAYAGG(
+                        CASE
+                            WHEN s.id IS NOT NULL THEN JSON_OBJECT(
+                                'guess_x', s.x,
+                                'guess_y', s.y,
+                                'actual_x', p.x,
+                                'actual_y', p.y
+                            )
+                            ELSE NULL
+                        END
+                    ),
+                    JSON_ARRAY()
+                ) AS guesses
+            FROM `mario-kart-world-games` g
+            JOIN `mario-kart-world-album-games` ag ON ag.game_id = g.id
+            LEFT JOIN `mario-kart-world-suggestions` s ON s.game_id = g.id
+            LEFT JOIN `mario-kart-world-photos` p ON s.photo_id = p.id
+            LEFT JOIN `mario-kart-world-photos` photoAuthor ON g.current_photo_id = photoAuthor.id
+            LEFT JOIN `mario-kart-world-users` u ON photoAuthor.author_id = u.id
+            WHERE g.player_id = :playerId
+                AND g.mode = 'album'
+                AND ag.album_id = :albumId
+                AND ag.photos_hash = :photosHash
+            GROUP BY g.id
+            LIMIT 1");
+        $resumeStmt->bindValue(':playerId', $currentUser['id'], PDO::PARAM_INT);
+        $resumeStmt->bindValue(':albumId', $albumId, PDO::PARAM_INT);
+        $resumeStmt->bindValue(':photosHash', $photosHash, PDO::PARAM_STR);
+        $resumeStmt->execute();
+        $game = $resumeStmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!empty($game)) {
+            $guesses = json_decode($game['guesses'] ?? '[]', true) ?: [];
+            $guesses = array_values(array_filter($guesses, function ($item) {
+                return $item !== null;
+            }));
+
+            $history = array_map(function ($guess) {
+                $distanceInKm = distanceBetweenCoordinatesInKilometers(
+                    ['x' => $guess['guess_x'], 'y' => $guess['guess_y']],
+                    ['x' => $guess['actual_x'], 'y' => $guess['actual_y']]
+                );
+
+                return getScoreFromDistanceInKilometers($distanceInKm, '150cc');
+            }, $guesses);
+
+            if (!empty($game['currentPhotoId'])) {
+                $resetServedAtStmt = $pdo->prepare(
+                    "UPDATE `mario-kart-world-games` SET current_photo_served_at = NOW() WHERE id = :gameId");
+                $resetServedAtStmt->bindValue(':gameId', $game['id'], PDO::PARAM_INT);
+                $resetServedAtStmt->execute();
+            }
+
+            echo json_encode([
+                'id' => (int) $game['id'],
+                'history' => $history,
+                'totalScore' => array_sum($history),
+                'currentPhoto' => empty($game['currentPhotoId']) ? null : [
+                    'id' => $game['currentPhotoId'],
+                    'author' => [
+                        'id' => $game['authorId'] ?? null,
+                        'name' => $game['authorName'] ?? null,
+                        'character' => $game['authorCharacter'] ?? null,
+                    ],
+                ],
+                'minimumScoreToContinue' => null,
+                'remainingTime' => null,
+            ]);
+            exit;
+        }
+
+        // No existing play: create a new album game starting at the first photo.
+        $firstPhoto = getAlbumPhotoByIndex($pdo, $albumId, 0);
+
+        $createGameStmt = $pdo->prepare(
+            "INSERT INTO `mario-kart-world-games` (player_id, mode, difficulty, current_photo_id, current_photo_served_at)
+            VALUES (:player_id, 'album', NULL, :currentPhotoId, NOW())");
+        $createGameStmt->bindValue(':player_id', $currentUser['id'], PDO::PARAM_INT);
+        $createGameStmt->bindValue(':currentPhotoId', $firstPhoto['id'], PDO::PARAM_STR);
+        $createGameStmt->execute();
+        $gameId = (int) $pdo->lastInsertId();
+
+        $linkStmt = $pdo->prepare(
+            "INSERT INTO `mario-kart-world-album-games` (game_id, album_id, photos_hash)
+            VALUES (:gameId, :albumId, :photosHash)");
+        $linkStmt->bindValue(':gameId', $gameId, PDO::PARAM_INT);
+        $linkStmt->bindValue(':albumId', $albumId, PDO::PARAM_INT);
+        $linkStmt->bindValue(':photosHash', $photosHash, PDO::PARAM_STR);
+        $linkStmt->execute();
+
+        http_response_code(201);
+        echo json_encode([
+            'id' => $gameId,
+            'history' => [],
+            'totalScore' => 0,
+            'currentPhoto' => empty($firstPhoto) ? null : [
+                'id' => $firstPhoto['id'],
+                'author' => [
+                    'id' => $firstPhoto['authorId'] ?? null,
+                    'name' => $firstPhoto['authorName'] ?? null,
+                    'character' => $firstPhoto['authorCharacter'] ?? null,
+                ],
+            ],
+            'minimumScoreToContinue' => null,
+            'remainingTime' => null,
+        ]);
+        exit;
+    }
+
     $selectGameStmt = $pdo->prepare(
         "SELECT
             g.id AS id,

@@ -34,6 +34,7 @@ import EndDailyGame from "./End/Daily";
 import EndGoalGame from "./End/Goal";
 import EndSurvivalGame from "./End/Survival";
 import EndChronoGame from "./End/Chrono";
+import EndAlbumGame from "./End/Album";
 
 import ChronoTimer from "@/components/ChronoTimer";
 
@@ -42,10 +43,11 @@ import "./Game.css";
 type Props = {
   mode: GameMode;
   difficulty?: Difficulty;
+  albumId?: number;
   onReplay: () => void;
 };
 
-export default function Game({ mode, difficulty, onReplay }: Props) {
+export default function Game({ mode, difficulty, albumId, onReplay }: Props) {
   const hasBeenInit = useRef(false);
 
   const [hasZoomOnFloatingPhoto, setHasZoomOnFloatingPhoto] = useState(false);
@@ -131,6 +133,10 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
         formData.append("difficulty", difficulty);
       }
 
+      if (albumId) {
+        formData.append("albumId", `${albumId}`);
+      }
+
       const response = await fetchApi("/start-game", "POST", formData);
 
       if (!response.ok) {
@@ -162,7 +168,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
     };
 
     initGame();
-  }, [mode, difficulty]);
+  }, [mode, difficulty, albumId]);
 
   const shouldShowAnswer = Boolean(guessResults);
   const canGuess = !shouldShowAnswer && !isGameEnded;
@@ -368,6 +374,10 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
       title: translate("rules.mode.chrono.title"),
       description: translate("rules.mode.chrono.description"),
     },
+    album: {
+      title: translate("rules.mode.album.title"),
+      description: translate("rules.mode.album.description"),
+    },
   };
 
   const gameModeRules = gameModeToRules[mode];
@@ -386,7 +396,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
           <h3>{gameModeRules.title}</h3>
           <Text component="p">{gameModeRules.description}</Text>
 
-          {difficulty && mode !== "daily" && (
+          {difficulty && mode !== "daily" && mode !== "album" && (
             <>
               <h3>
                 {translate("difficulty.label")}{" "}
@@ -575,7 +585,7 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
             : translate("endGame.title")
         }
         isOpen={isGameEndModalOpen}
-        disableSkew={mode === "daily" || isLeaderboardShown}
+        disableSkew={mode === "daily" || mode === "album" || isLeaderboardShown}
         noDelay={!hasEndGameModalDelay}
       >
         {(() => {
@@ -626,6 +636,16 @@ export default function Game({ mode, difficulty, onReplay }: Props) {
                 <EndDailyGame
                   gameHistory={gameHistory}
                   gameId={currentGameId!}
+                  onLeaderboardShow={() => setIsLeaderboardShown(true)}
+                />
+              );
+
+            case "album":
+              return (
+                <EndAlbumGame
+                  gameHistory={gameHistory}
+                  gameId={currentGameId!}
+                  albumId={albumId!}
                   onLeaderboardShow={() => setIsLeaderboardShown(true)}
                 />
               );

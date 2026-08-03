@@ -2,6 +2,8 @@
 
 require_once __DIR__ . '/___album-cover.php';
 
+require_once __DIR__ . '/___album-game.php';
+
 function getAlbumById(PDO $pdo, string $albumId, int $currentUserId = 0): ?array {
     $isAdmin = $currentUserId === 1;
 
@@ -47,6 +49,49 @@ function getAlbumById(PDO $pdo, string $albumId, int $currentUserId = 0): ?array
 
     $fetchedPhotos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    // Current user's play state for this album's current photo pool.
+    $gameState = [
+        'hasPlayed' => false,
+        'score' => null,
+        'gameId' => null,
+    ];
+
+    if ($currentUserId > 0) {
+        $photosHash = computeAlbumPhotosHash($pdo, (int) $albumId);
+
+        $gameStmt = $pdo->prepare(
+            "SELECT
+                l.score AS score,
+                (
+                    SELECT ag.game_id
+                    FROM `mario-kart-world-album-games` ag
+                    JOIN `mario-kart-world-games` g ON g.id = ag.game_id
+                    WHERE ag.album_id = :albumId
+                        AND ag.photos_hash = :photosHash
+                        AND g.player_id = :playerId
+                    ORDER BY g.id DESC
+                    LIMIT 1
+                ) AS gameId
+            FROM `mario-kart-world-leaderboard-album` l
+            WHERE l.player_id = :playerId
+                AND l.album_id = :albumId
+                AND l.photos_hash = :photosHash
+            LIMIT 1");
+        $gameStmt->bindValue(':albumId', (int) $albumId, PDO::PARAM_INT);
+        $gameStmt->bindValue(':photosHash', $photosHash, PDO::PARAM_STR);
+        $gameStmt->bindValue(':playerId', $currentUserId, PDO::PARAM_INT);
+        $gameStmt->execute();
+        $playRow = $gameStmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!empty($playRow)) {
+            $gameState = [
+                'hasPlayed' => true,
+                'score' => (int) $playRow['score'],
+                'gameId' => $playRow['gameId'] !== null ? (int) $playRow['gameId'] : null,
+            ];
+        }
+    }
+
     return [
         'id' => (int) $albumData['id'],
         'name' => $albumData['album_name'],
@@ -68,5 +113,6 @@ function getAlbumById(PDO $pdo, string $albumId, int $currentUserId = 0): ?array
             'photoUrl' => $photo['photo_url'],
             'position' => $photo['position'],
         ], $fetchedPhotos),
+        'game' => $gameState,
     ];
 }

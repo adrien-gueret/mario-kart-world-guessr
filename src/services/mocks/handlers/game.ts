@@ -41,16 +41,48 @@ function computeCup(totalScore: number): {
   return { cup: "none", starRank: null };
 }
 
+/** Photo ids of an album (owned or public), ordered by position. */
+function albumPhotoIds(albumId: number): string[] {
+  const album =
+    db.myAlbums.find((current) => current.id === albumId) ??
+    db.publicAlbums.find((current) => current.id === albumId);
+  if (!album) return [];
+  return [...album.photos]
+    .sort((a, b) => a.position - b.position)
+    .map((photo) => photo.id);
+}
+
 const gameHandlers: MockHandlers = {
   "POST /start-game": ({ body }) => {
     const mode = (field(body, "mode") ?? "goal") as GameMode;
     const difficulty = field(body, "difficulty") as Difficulty | undefined;
+    const albumIdField = field(body, "albumId");
+    const albumId = albumIdField ? Number(albumIdField) : null;
+
+    // Album mode: one play per album pool. Replay the finished game if any.
+    if (mode === "album" && albumId) {
+      const existing = db.albumGames.get(albumId);
+      if (existing) {
+        const finishedResponse: StartGameResponse = {
+          id: existing.id,
+          history: existing.history,
+          totalScore: existing.totalScore,
+          currentPhoto: null,
+          minimumScoreToContinue: null,
+          remainingTime: null,
+        };
+        return jsonResponse(finishedResponse);
+      }
+    }
 
     const id = db.counters.game++;
-    const photoIds = db.photos
-      .filter((photo) => photo.validatedAt)
-      .slice(0, ROUNDS)
-      .map((photo) => photo.id);
+    const photoIds =
+      mode === "album" && albumId
+        ? albumPhotoIds(albumId)
+        : db.photos
+            .filter((photo) => photo.validatedAt)
+            .slice(0, ROUNDS)
+            .map((photo) => photo.id);
 
     const remainingTime = mode === "chrono" ? CHRONO_TIME_MS : null;
 
@@ -58,6 +90,7 @@ const gameHandlers: MockHandlers = {
       id,
       mode,
       difficulty: difficulty ?? null,
+      albumId,
       photoIds,
       index: 0,
       history: [],
@@ -107,7 +140,13 @@ const gameHandlers: MockHandlers = {
     const hasNext = game.index < game.photoIds.length && survivedRound;
     const nextPhoto = hasNext ? gamePhoto(game.photoIds[game.index]) : null;
     const isFinished = !nextPhoto;
-    if (isFinished) game.finished = true;
+    if (isFinished) {
+      game.finished = true;
+      // Album mode: record the finished run so the album is now "played".
+      if (game.mode === "album" && game.albumId) {
+        db.albumGames.set(game.albumId, game);
+      }
+    }
 
     const cupData = isFinished ? computeCup(game.totalScore) : null;
 

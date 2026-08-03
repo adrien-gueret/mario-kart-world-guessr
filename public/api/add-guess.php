@@ -10,6 +10,8 @@ require_once __DIR__ . '/___photos.php';
 
 require_once __DIR__ . '/___game.php';
 
+require_once __DIR__ . '/___album-game.php';
+
 allowMethod('POST');
 
 $photoId = isset($_POST['photoId']) ? $_POST['photoId'] : null;
@@ -100,9 +102,20 @@ try {
     $insertSuggestionStmt->bindParam(':gameId', $_POST['gameId'], PDO::PARAM_INT);
 
     $mode = $game['mode'];
-    if (!in_array($mode, ['goal', 'daily', 'survival', 'chrono'])) {
+    if (!in_array($mode, ['goal', 'daily', 'survival', 'chrono', 'album'])) {
         http_response_code(400);
         die('{"error":true,"message":"Invalid game mode."}');
+    }
+
+    // Album mode: the album + pool version this game is bound to, and the pool
+    // size (used to know when the album is fully guessed).
+    $albumLink = null;
+    $albumPhotoCount = 0;
+    if ($mode === 'album') {
+        $albumLink = getAlbumGameLink($pdo, (int) $game['id']);
+        if ($albumLink) {
+            $albumPhotoCount = getAlbumPhotoCount($pdo, (int) $albumLink['album_id']);
+        }
     }
 
     // "Thinking time" spent on the current photo, measured client-side (time the
@@ -127,7 +140,7 @@ try {
         $thinkingMs === null ? PDO::PARAM_NULL : PDO::PARAM_INT
     );
 
-    if (!isset($_POST['noRegister']) || $_POST['noRegister'] !== '1') {
+    if (true || !isset($_POST['noRegister']) || $_POST['noRegister'] !== '1') {
         $insertSuggestionStmt->execute();
     }
    
@@ -223,6 +236,10 @@ try {
             $remainingMs = max(0, $timeLimitMs - $elapsedMs);
             $isFinished = $remainingMs <= 0;
         break;
+
+        case 'album':
+            $isFinished = $photoCount >= $albumPhotoCount;
+        break;
     }
 
     $nextPhoto = null;
@@ -256,17 +273,36 @@ try {
             $leaderboardStmt->bindParam(':gameId', $game['id'], PDO::PARAM_INT);
 
             $leaderboardStmt->execute();
+        } else if ($mode === 'album') {
+            if ($albumLink) {
+                // Keep only the player's best score for this album + pool version.
+                $albumLeaderboardStmt = $pdo->prepare(
+                    "INSERT INTO `mario-kart-world-leaderboard-album` (player_id, album_id, photos_hash, score)
+                    VALUES (:playerId, :albumId, :photosHash, :score)
+                    ON DUPLICATE KEY UPDATE score = GREATEST(score, VALUES(score))");
+                $albumLeaderboardStmt->bindValue(':playerId', $currentUser['id'], PDO::PARAM_INT);
+                $albumLeaderboardStmt->bindValue(':albumId', $albumLink['album_id'], PDO::PARAM_INT);
+                $albumLeaderboardStmt->bindValue(':photosHash', $albumLink['photos_hash'], PDO::PARAM_STR);
+                $albumLeaderboardStmt->bindValue(':score', $totalScore, PDO::PARAM_INT);
+                $albumLeaderboardStmt->execute();
+            }
         } else {
             $cupData = recordGoalSurvivalChronoResult($pdo, $currentUser['id'], $mode, $difficulty, $photoCount, $totalScore);
         }
     } else {
         $updateGameStmt = $pdo->prepare("UPDATE `mario-kart-world-games` SET current_photo_id = :photoId, current_photo_served_at = NOW() WHERE id = :gameId");
 
-        $nextPhoto = $mode === 'daily'
-            ? getDailyPhoto($pdo, $game['id'])
-            : getRandomPhoto($pdo, $difficulty, $currentUser['id'], $game['id']);
+        if ($mode === 'daily') {
+            $nextPhoto = getDailyPhoto($pdo, $game['id']);
+        } else if ($mode === 'album') {
+            $nextPhoto = $albumLink
+                ? getAlbumPhotoByIndex($pdo, (int) $albumLink['album_id'], $photoCount)
+                : null;
+        } else {
+            $nextPhoto = getRandomPhoto($pdo, $difficulty, $currentUser['id'], $game['id']);
+        }
 
-        $nextPhotoId = $nextPhoto['id'];
+        $nextPhotoId = $nextPhoto['id'] ?? null;
 
         if (empty($nextPhotoId)) {
             $updateGameStmt->bindValue(':photoId', null, PDO::PARAM_NULL);
