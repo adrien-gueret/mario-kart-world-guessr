@@ -39,6 +39,7 @@ try {
     $selectGameStmt = $pdo->prepare(
         "SELECT
             g.id AS id,
+            g.difficulty AS difficulty,
             g.current_photo_id as currentPhotoId,
             photoAuthor.author_id as authorId,
             u.username as authorName,
