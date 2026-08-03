@@ -21,12 +21,14 @@ jobs:
           npm run build
         env:
           CI: true
-      - name: Upload to MU via FTP
+      - name: Upload to MU via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          security: strict
           server-dir: "httpdocs/mario-kart-world-guessr/"
           local-dir: dist/
           exclude: |
