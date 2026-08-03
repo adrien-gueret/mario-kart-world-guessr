@@ -307,6 +307,8 @@ const fr: Texts = {
   "endGame.daily.next": "Prochaines photos du jour dans : ",
   "endGame.album.description":
     "Vous avez fini de localiser toutes les photos de cet album !",
+  "endGame.album.modified":
+    "L'album a été modifié pendant votre partie : celle-ci a donc été arrêtée et votre score n'a pas été enregistré. Vous pouvez rejouer avec la nouvelle version.",
   "endGame.next-button.label": "Suivant",
   "endGame.see-leaderboards": "Voir tout le classement",
   "share.daily.title": "Mario Kart World Guessr - Photos du jour",
@@ -674,6 +676,9 @@ const fr: Texts = {
     "Vous n'avez pas encore de photo validée, vous ne pouvez donc pas créer d'album.",
   "album.edit.name.success": "Nom de l'album mis à jour.",
   "album.edit.photos.success": "Photos de l'album mises à jour.",
+  "album.edit.leaderboardReset.title": "Un classement existe déjà",
+  "album.edit.leaderboardReset.warning":
+    "Cet album possède déjà un classement. En ajoutant ou en supprimant des photos, ce classement ne sera plus affiché et un nouveau classement démarrera pour cette nouvelle sélection. L'ancien classement n'est pas supprimé : il réapparaîtra si vous rétablissez exactement les mêmes photos. Réorganiser les photos ne change rien au classement.",
   "album.edit.photo.processing": "Sauvegarde...",
   "album.edit.back": "Tous mes albums",
   "album.edit.this": "Modifier cet album",

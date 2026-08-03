@@ -5,6 +5,19 @@
   align-items: center;
 }
 
+/* Self-contained layout so CharacterMenu renders as horizontally wrapped chips
+   even on routes that don't load AllCharactersCheckboxes.css (e.g. album edit),
+   matching the gallery style. */
+.character-menu .characters-checkboxes {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+}
+
 .character-menu__show-more {
   color: inherit;
   background: none;

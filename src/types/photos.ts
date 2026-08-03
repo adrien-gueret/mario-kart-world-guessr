@@ -46,4 +46,5 @@ export type Album = {
     score: number | null;
     gameId: number | null;
   };
+  hasLeaderboard?: boolean;
 };

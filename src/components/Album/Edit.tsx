@@ -36,6 +36,7 @@ export default function AlbumEdit({
   isPublished,
   backgroundColor,
   backgroundImage,
+  hasLeaderboard,
 }: Props) {
   const [isEditingName, setIsEditingName] = useState(false);
   const [albumName, setAlbumName] = useState(name);
@@ -51,6 +52,8 @@ export default function AlbumEdit({
     position: number;
   } | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isLeaderboardResetModalOpen, setIsLeaderboardResetModalOpen] =
+    useState(false);
   const navigate = useNavigate();
 
   const isMovingPhoto = movingPhoto !== null;
@@ -72,26 +75,60 @@ export default function AlbumEdit({
   const selectedPhotoIds = useMemo(
     () =>
       albumPhotos.filter((item) => item.photo).map((item) => item.photo!.id),
-    [albumPhotos]
+    [albumPhotos],
   );
+
+  // The album's photo pool when the page loaded, order-independent. Reordering
+  // keeps the same leaderboard; only adding/removing photos scopes it to a new
+  // pool version (see computeAlbumPhotosHash server-side).
+  const initialPhotoIds = useMemo(
+    () => photos.map((photo) => photo.id).sort(),
+    [photos],
+  );
+
+  const hasPhotoSetChanged = useMemo(() => {
+    const current = [...selectedPhotoIds].sort();
+    return (
+      current.length !== initialPhotoIds.length ||
+      current.some((photoId, index) => photoId !== initialPhotoIds[index])
+    );
+  }, [selectedPhotoIds, initialPhotoIds]);
+
+  const shouldWarnLeaderboardReset =
+    Boolean(hasLeaderboard) && hasPhotoSetChanged;
+
+  const submitAlbumPhotos = () => {
+    const form = document.getElementById(
+      "edit-album-photos",
+    ) as HTMLFormElement | null;
+    form?.requestSubmit();
+  };
+
+  const onApplyClick = () => {
+    if (shouldWarnLeaderboardReset) {
+      setIsLeaderboardResetModalOpen(true);
+    } else {
+      submitAlbumPhotos();
+    }
+  };
 
   const isPhotoSelected = useCallback(
     (photoId: Photo["id"]) => selectedPhotoIds.includes(photoId),
-    [selectedPhotoIds]
+    [selectedPhotoIds],
   );
 
   const setPhotoAtPosition = (
     position: number,
     photo?:
       | (Omit<AlbumPhoto, "position" | "difficulty"> & { position?: number })
-      | undefined
+      | undefined,
   ) => {
     setAlbumPhotos((prev) =>
       prev.map((item) =>
         item.position === position
           ? { ...item, photo: photo ? { ...photo, position } : undefined }
-          : item
-      )
+          : item,
+      ),
     );
   };
 
@@ -295,15 +332,50 @@ export default function AlbumEdit({
           <StickyButtonContainer>
             <Button
               disabled={isProcessing}
-              form="edit-album-photos"
-              type="submit"
+              type="button"
+              onClick={onApplyClick}
             >
               {translate(
-                isProcessing ? "album.edit.photo.processing" : "global.apply"
+                isProcessing ? "album.edit.photo.processing" : "global.apply",
               )}
             </Button>
           </StickyButtonContainer>
         )}
+
+        <Modal
+          title={translate("album.edit.leaderboardReset.title")}
+          disableSkew
+          noDelay
+          isOpen={isLeaderboardResetModalOpen}
+          onClose={() => setIsLeaderboardResetModalOpen(false)}
+        >
+          <div className="row">
+            <span>{translate("album.edit.leaderboardReset.warning")}</span>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              gap: 12,
+              justifyContent: "center",
+              marginTop: 16,
+            }}
+          >
+            <Button
+              variant="secondary"
+              onClick={() => setIsLeaderboardResetModalOpen(false)}
+            >
+              {translate("form.cancel")}
+            </Button>
+            <Button
+              onClick={() => {
+                setIsLeaderboardResetModalOpen(false);
+                submitAlbumPhotos();
+              }}
+            >
+              {translate("form.confirm")}
+            </Button>
+          </div>
+        </Modal>
 
         <p className="album-author">
           <span>

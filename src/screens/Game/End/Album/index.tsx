@@ -7,6 +7,7 @@ import { useTranslations } from "@/i18n";
 import type { GameHistory, LeaderboardsResponse } from "@/types/game";
 
 import Button from "@/components/Button";
+import Callout from "@/components/Callout";
 import LeaderboardRow from "@/components/LeaderboardRow";
 import Loader from "@/components/Loader";
 import Table from "@/components/Table";
@@ -20,6 +21,7 @@ type Props = {
   gameHistory: GameHistory;
   gameId: number;
   albumId: number;
+  wasAlbumModified?: boolean;
   onLeaderboardShow: () => void;
 };
 
@@ -27,6 +29,7 @@ export default function AlbumEnd({
   gameHistory,
   gameId,
   albumId,
+  wasAlbumModified = false,
   onLeaderboardShow,
 }: Props) {
   const { translate, currentLocale } = useTranslations();
@@ -38,7 +41,7 @@ export default function AlbumEnd({
   const totalScore = gameHistory.reduce((acc, score) => acc + score, 0);
 
   useEffect(() => {
-    if (hasBeenInit.current) {
+    if (hasBeenInit.current || wasAlbumModified) {
       return;
     }
 
@@ -47,7 +50,27 @@ export default function AlbumEnd({
     fetchApi(`/relative-leaderboards?gameId=${gameId}`, "GET")
       .then((response) => response.json())
       .then(setLeaderboard);
-  }, [gameId, currentLocale]);
+  }, [gameId, currentLocale, wasAlbumModified]);
+
+  // Album edited mid-game: the play is incomplete and unscored, so there is no
+  // leaderboard to show. Render a standalone screen without the second step.
+  if (wasAlbumModified) {
+    return (
+      <div className="game-album-end">
+        <div style={{ margin: "0 auto 16px", maxWidth: "90%" }}>
+          <Callout type="warning">
+            {translate("endGame.album.modified")}
+          </Callout>
+        </div>
+
+        <div className="end-game-content-buttons">
+          <Button onClick={() => navigate(`/albums/${albumId}`)}>
+            {translate("album.play.backToAlbum")}
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="game-album-end">

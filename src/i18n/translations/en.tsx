@@ -301,6 +301,8 @@ const en: Texts = {
   "endGame.daily.next": "Next daily photos in: ",
   "endGame.album.description":
     "You have finished locating all the photos of this album!",
+  "endGame.album.modified":
+    "The album was modified during your game, so it was stopped and your score was not saved. You can replay the new version.",
   "endGame.next-button.label": "Next",
   "endGame.see-leaderboards": "See whole leaderboard",
   "share.daily.title": "Mario Kart World Guessr - Daily Photos",
@@ -639,6 +641,9 @@ const en: Texts = {
   "account.albums.create.success": "Album created successfully.",
   "album.edit.name.success": "Album name updated successfully.",
   "album.edit.photos.success": "Album photos updated successfully.",
+  "album.edit.leaderboardReset.title": "A leaderboard already exists",
+  "album.edit.leaderboardReset.warning":
+    "This album already has a leaderboard. Adding or removing photos will hide it and start a new leaderboard for this new selection. The previous leaderboard is not deleted: it will reappear if you restore the exact same photos. Reordering photos doesn't affect the leaderboard.",
   "album.edit.photo.processing": "Processing...",
   "album.edit.back": "Back to my albums",
   "album.edit.this": "Edit this album",

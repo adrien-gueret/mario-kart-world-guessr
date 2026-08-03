@@ -111,10 +111,19 @@ try {
     // size (used to know when the album is fully guessed).
     $albumLink = null;
     $albumPhotoCount = 0;
+    $albumWasModified = false;
     if ($mode === 'album') {
         $albumLink = getAlbumGameLink($pdo, (int) $game['id']);
         if ($albumLink) {
             $albumPhotoCount = getAlbumPhotoCount($pdo, (int) $albumLink['album_id']);
+
+            // Detect an album edited mid-game: the current pool signature no
+            // longer matches the one frozen when this game started. The photo
+            // sequence and finish condition below read live data, so we must
+            // stop the game here rather than let it desync (repeated/skipped
+            // photos, wrong length).
+            $currentPhotosHash = computeAlbumPhotosHash($pdo, (int) $albumLink['album_id']);
+            $albumWasModified = $currentPhotosHash !== $albumLink['photos_hash'];
         }
     }
 
@@ -238,7 +247,7 @@ try {
         break;
 
         case 'album':
-            $isFinished = $photoCount >= $albumPhotoCount;
+            $isFinished = $albumWasModified || $photoCount >= $albumPhotoCount;
         break;
     }
 
@@ -274,7 +283,9 @@ try {
 
             $leaderboardStmt->execute();
         } else if ($mode === 'album') {
-            if ($albumLink) {
+            // When the album was modified mid-game the play is incomplete and
+            // scoped to a pool version that no longer exists: don't record it.
+            if ($albumLink && !$albumWasModified) {
                 // Keep only the player's best score for this album + pool version.
                 $albumLeaderboardStmt = $pdo->prepare(
                     "INSERT INTO `mario-kart-world-leaderboard-album` (player_id, album_id, photos_hash, score)
@@ -334,6 +345,7 @@ try {
             "history" => $game['history'],
             "minimumScoreToContinue" => $mode === 'survival' ? getSurvivalMinimumScore($difficulty, $photoCount) : null,
             "remainingTime" => $remainingMs,
+            "albumWasModified" => $albumWasModified,
             "nextPhoto" => empty($nextPhotoId) ? null : [
                 'id' => $nextPhotoId,
                 'author' => [

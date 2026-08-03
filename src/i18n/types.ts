@@ -91,6 +91,7 @@ export type Texts = {
   "endGame.daily.description": string;
   "endGame.daily.next": string;
   "endGame.album.description": string;
+  "endGame.album.modified": string;
   "endGame.next-button.label": string;
   "endGame.see-leaderboards": string;
   "share.daily.title": string;
@@ -262,6 +263,8 @@ export type Texts = {
   "account.albums.background.color": string;
   "album.edit.name.success": string;
   "album.edit.photos.success": string;
+  "album.edit.leaderboardReset.title": string;
+  "album.edit.leaderboardReset.warning": string;
   "album.edit.photo.processing": string;
   "album.edit.back": string;
   "album.edit.this": string;

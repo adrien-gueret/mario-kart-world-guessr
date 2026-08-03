@@ -92,6 +92,18 @@ function getAlbumById(PDO $pdo, string $albumId, int $currentUserId = 0): ?array
         }
     }
 
+    // Whether the current photo pool already has a (real player) leaderboard.
+    // Used to warn the author before adding/removing photos, which scopes the
+    // leaderboard to a new pool version (the current one is kept but hidden).
+    $poolHash = computeAlbumPhotosHash($pdo, (int) $albumId);
+    $leaderboardCountStmt = $pdo->prepare(
+        "SELECT COUNT(*) FROM `mario-kart-world-leaderboard-album`
+        WHERE album_id = :albumId AND photos_hash = :photosHash AND player_id NOT IN (3, 4, 5, 6)");
+    $leaderboardCountStmt->bindValue(':albumId', (int) $albumId, PDO::PARAM_INT);
+    $leaderboardCountStmt->bindValue(':photosHash', $poolHash, PDO::PARAM_STR);
+    $leaderboardCountStmt->execute();
+    $hasLeaderboard = ((int) $leaderboardCountStmt->fetchColumn()) > 0;
+
     return [
         'id' => (int) $albumData['id'],
         'name' => $albumData['album_name'],
@@ -114,5 +126,6 @@ function getAlbumById(PDO $pdo, string $albumId, int $currentUserId = 0): ?array
             'position' => $photo['position'],
         ], $fetchedPhotos),
         'game' => $gameState,
+        'hasLeaderboard' => $hasLeaderboard,
     ];
 }

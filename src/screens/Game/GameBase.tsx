@@ -94,6 +94,7 @@ export default function Game({ mode, difficulty, albumId, onReplay }: Props) {
   const [canShowPlayersCoordinates, setCanShowPlayersCoordinates] =
     useState(false);
   const [isGameEnded, setIsGameEnded] = useState(false);
+  const [wasAlbumModified, setWasAlbumModified] = useState(false);
   const [isGameEndModalOpen, setIsGameEndModalOpen] =
     useState<boolean>(isGameEnded);
   const [isLeaderboardShown, setIsLeaderboardShown] = useState(false);
@@ -278,6 +279,7 @@ export default function Game({ mode, difficulty, albumId, onReplay }: Props) {
     setIsGameEnded(addGuessResponse.gameData.isFinished);
     setIsGameEndModalOpen(addGuessResponse.gameData.isFinished);
     setCupData(addGuessResponse.gameData.cupData);
+    setWasAlbumModified(Boolean(addGuessResponse.gameData.albumWasModified));
 
     if (addGuessResponse.gameData.isFinished) {
       setGameHistory(addGuessResponse.gameData.history);
@@ -646,6 +648,7 @@ export default function Game({ mode, difficulty, albumId, onReplay }: Props) {
                   gameHistory={gameHistory}
                   gameId={currentGameId!}
                   albumId={albumId!}
+                  wasAlbumModified={wasAlbumModified}
                   onLeaderboardShow={() => setIsLeaderboardShown(true)}
                 />
               );

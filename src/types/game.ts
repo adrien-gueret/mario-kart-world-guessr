@@ -41,6 +41,7 @@ export type AddGuessResponse = {
     history: GameHistory;
     minimumScoreToContinue: number | null;
     remainingTime?: number | null;
+    albumWasModified?: boolean;
     nextPhoto: GamePhoto | null;
   };
 };
