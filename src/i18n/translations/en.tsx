@@ -539,6 +539,11 @@ const en: Texts = {
       .
     </>
   ),
+  "leaderboards.percentile": (percentile: number) => (
+    <>
+      You are in the <b>top {percentile}%</b> of players!
+    </>
+  ),
   "notifications.none":
     "No notifications. You'll be notified here when photos you submitted are validated.",
   "notifications.title": "Notifications",
@@ -685,6 +690,13 @@ const en: Texts = {
   "album.play.backToAlbum": "Back to album",
   "album.leaderboard.title": "Album leaderboard",
   "album.leaderboard.empty": "No one has played this version of the album yet.",
+  "album.tab.photos": "Photos",
+  "album.tab.leaderboard": "Leaderboard",
+  "album.stats.players": "Players",
+  "album.stats.averageScore": "Average score",
+  "album.stats.bestScore": "Best score",
+  "album.stats.totalGames": "Games played",
+  "album.stats.yourRank": "Your rank",
   "error.title": "Oops! Something went wrong.",
   "error.description": "An unexpected error occurred... Everything is broken!",
   "error.button": "Back to home",

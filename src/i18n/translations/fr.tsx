@@ -552,6 +552,11 @@ const fr: Texts = {
       .
     </>
   ),
+  "leaderboards.percentile": (percentile: number) => (
+    <>
+      Vous faites partie du <b>top {percentile}&nbsp;%</b> des joueurs&nbsp;!
+    </>
+  ),
   "notifications.none":
     "Aucune notification. Vous serez notifié ici de la validation des photos que vous proposez.",
   "notifications.title": "Notifications",
@@ -705,6 +710,13 @@ const fr: Texts = {
   "album.leaderboard.title": "Classement de l'album",
   "album.leaderboard.empty":
     "Personne n'a encore joué cette version de l'album.",
+  "album.tab.photos": "Photos",
+  "album.tab.leaderboard": "Classement",
+  "album.stats.players": "Joueurs",
+  "album.stats.averageScore": "Score moyen",
+  "album.stats.bestScore": "Meilleur score",
+  "album.stats.totalGames": "Parties jouées",
+  "album.stats.yourRank": "Votre rang",
   "error.title": "Oups ! Une erreur est survenue.",
   "error.description":
     "Une erreur inattendue s'est produite... Tout est cassé !",

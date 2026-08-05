@@ -16,6 +16,7 @@ import Text from "@/components/Text";
 import { useTranslations } from "@/i18n";
 
 import fetchApi from "@/services/api";
+import { getPercentile } from "@/services/leaderboard";
 import {
   type IsoDate,
   isDailyDate,
@@ -250,6 +251,21 @@ function Leaderboards() {
                       gameDifficulty as Difficulty,
                     )}
           </Text>
+
+          {!isAnonymous &&
+            currentUserLeaderboardData &&
+            leaderboard.length > 0 && (
+              <div style={{ marginTop: "8px" }}>
+                <Text>
+                  {translate("leaderboards.percentile")(
+                    getPercentile(
+                      currentUserLeaderboardData.rank,
+                      leaderboard.length,
+                    ),
+                  )}
+                </Text>
+              </div>
+            )}
 
           <div style={{ marginTop: "32px" }}>
             <Checkbox

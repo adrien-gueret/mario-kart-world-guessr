@@ -104,6 +104,21 @@ function getAlbumById(PDO $pdo, string $albumId, int $currentUserId = 0): ?array
     $leaderboardCountStmt->execute();
     $hasLeaderboard = ((int) $leaderboardCountStmt->fetchColumn()) > 0;
 
+    // Total number of finished games played on the current photo pool by real
+    // players (bots 3,4,5,6 excluded). Scoped to the current pool version.
+    $totalGamesStmt = $pdo->prepare(
+        "SELECT COUNT(*)
+        FROM `mario-kart-world-album-games` ag
+        JOIN `mario-kart-world-games` g ON g.id = ag.game_id
+        WHERE ag.album_id = :albumId
+            AND ag.photos_hash = :photosHash
+            AND g.finished_at IS NOT NULL
+            AND g.player_id NOT IN (3, 4, 5, 6)");
+    $totalGamesStmt->bindValue(':albumId', (int) $albumId, PDO::PARAM_INT);
+    $totalGamesStmt->bindValue(':photosHash', $poolHash, PDO::PARAM_STR);
+    $totalGamesStmt->execute();
+    $totalGamesPlayed = (int) $totalGamesStmt->fetchColumn();
+
     return [
         'id' => (int) $albumData['id'],
         'name' => $albumData['album_name'],
@@ -127,5 +142,8 @@ function getAlbumById(PDO $pdo, string $albumId, int $currentUserId = 0): ?array
         ], $fetchedPhotos),
         'game' => $gameState,
         'hasLeaderboard' => $hasLeaderboard,
+        'stats' => [
+            'totalGamesPlayed' => $totalGamesPlayed,
+        ],
     ];
 }

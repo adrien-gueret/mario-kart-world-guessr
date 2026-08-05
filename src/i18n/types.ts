@@ -213,6 +213,7 @@ export type Texts = {
     gameDifficulty: Difficulty,
   ) => ReactNode;
   "leaderboards.daily.not-played-yet": (date: Date) => ReactNode;
+  "leaderboards.percentile": (percentile: number) => ReactNode;
   "notifications.none": string;
   "notifications.title": string;
   "notifications.photo_validated.title": string;
@@ -290,6 +291,13 @@ export type Texts = {
   "album.play.backToAlbum": string;
   "album.leaderboard.title": string;
   "album.leaderboard.empty": string;
+  "album.tab.photos": string;
+  "album.tab.leaderboard": string;
+  "album.stats.players": string;
+  "album.stats.averageScore": string;
+  "album.stats.bestScore": string;
+  "album.stats.totalGames": string;
+  "album.stats.yourRank": string;
   "error.title": string;
   "error.description": string;
   "error.button": string;

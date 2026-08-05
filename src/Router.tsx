@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 import AccountLayout from "@/layouts/sublayouts/AccountLayout";
+import AlbumLayout from "@/layouts/sublayouts/AlbumLayout";
 import GalleryLayout from "@/layouts/sublayouts/GalleryLayout";
 import MainLayout from "@/layouts/MainLayout";
 
@@ -70,7 +71,7 @@ const router = createBrowserRouter(
         },
         {
           path: "/albums/:id",
-          lazy: () => loadComponent(import("@/screens/Albums/ID")),
+          Component: AlbumLayout,
           loader: async ({ params }) => {
             const getReponseJson = async (response: Response) => {
               if (!response.ok) {
@@ -85,25 +86,29 @@ const router = createBrowserRouter(
 
             return { album };
           },
-        },
-        {
-          path: "/albums/:id/leaderboard",
-          lazy: () => loadComponent(import("@/screens/AlbumLeaderboard")),
-          loader: async ({ params }) => {
-            const getReponseJson = getReponseJsonGetter(
-              `Cannot fetch album ${params.id} leaderboard`,
-            );
+          children: [
+            {
+              index: true,
+              lazy: () => loadComponent(import("@/screens/Albums/ID/Photos")),
+            },
+            {
+              path: "leaderboard",
+              lazy: () =>
+                loadComponent(import("@/screens/Albums/ID/Leaderboard")),
+              loader: async ({ params }) => {
+                const getReponseJson = getReponseJsonGetter(
+                  `Cannot fetch album ${params.id} leaderboard`,
+                );
 
-            const [album, leaderboard] = await Promise.all([
-              fetchApi(`/album?id=${params.id}`, "GET").then(getReponseJson),
-              fetchApi(
-                `/leaderboards?mode=album&albumId=${params.id}`,
-                "GET",
-              ).then(getReponseJson),
-            ]);
+                const leaderboard = await fetchApi(
+                  `/leaderboards?mode=album&albumId=${params.id}`,
+                  "GET",
+                ).then(getReponseJson);
 
-            return { album, leaderboard };
-          },
+                return { leaderboard };
+              },
+            },
+          ],
         },
       ],
     },

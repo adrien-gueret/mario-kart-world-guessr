@@ -1,44 +1,29 @@
-import { useState, useMemo, useEffect, type CSSProperties } from "react";
-import { flushSync, createPortal } from "react-dom";
+import { useEffect, useMemo, useState, type CSSProperties } from "react";
+import { createPortal, flushSync } from "react-dom";
+import { useOutletContext } from "react-router-dom";
 
-import Button from "@/components/Button";
-import { useTranslations } from "@/i18n";
+import getPositionedAlbumPhotos from "@/components/Album/getPositionedAlbumPhotos";
+import type { AlbumOutletContext } from "@/layouts/sublayouts/AlbumLayout";
 import { getCDNPhotoUrl } from "@/services/images";
-import useNavigate from "@/services/useNavigate";
-import type { Album, AlbumPhoto } from "@/types/photos";
+import type { AlbumPhoto } from "@/types/photos";
 
-import getPositionedAlbumPhotos from "./getPositionedAlbumPhotos";
-import AlbumPublicationCallout from "../AlbumPublicationCallout";
-
-type Props = Album & {
-  isCurrentUserTheAuthor?: boolean;
-};
-
-function getTransitionName(photoId: string) {
-  return `album-photo-${photoId}`;
-}
+import "@/components/Album/Album.css";
 
 type MinimalPhoto = {
   id: string;
   photoUrl: string;
 };
 
-export default function AlbumReadOnly({
-  id,
-  coverUrl,
-  name,
-  author,
-  photos,
-  isPublished,
-  backgroundColor,
-  backgroundImage,
-  game,
-  isCurrentUserTheAuthor,
-}: Props) {
-  const { translate } = useTranslations();
+function getTransitionName(photoId: string) {
+  return `album-photo-${photoId}`;
+}
+
+export default function AlbumPhotos() {
+  const { album } = useOutletContext<AlbumOutletContext>();
+  const { photos, backgroundColor, backgroundImage } = album;
+
   const [zoomedPhoto, setZoomedPhoto] = useState<MinimalPhoto | null>(null);
   const [hoveredPhoto, setHoveredPhoto] = useState<MinimalPhoto | null>(null);
-  const navigate = useNavigate();
 
   const albumPhotos = useMemo<
     Array<{
@@ -51,15 +36,6 @@ export default function AlbumReadOnly({
     ["--album-color"]: backgroundColor,
     ["--album-image"]: `url("./backgrounds/albums/${backgroundImage}.jpg")`,
   };
-
-  const publishCallout = isCurrentUserTheAuthor ? (
-    <AlbumPublicationCallout
-      albumId={id}
-      albumName={name}
-      isPublished={isPublished}
-      hideShowButton
-    />
-  ) : null;
 
   function toggleZoomedPhoto(
     newPhoto: MinimalPhoto | null = null,
@@ -84,23 +60,7 @@ export default function AlbumReadOnly({
 
   return (
     <>
-      <img
-        style={{
-          width: "80%",
-          maxWidth: "768px",
-          margin: "auto",
-        }}
-        src={coverUrl}
-        alt=""
-      />
-
-      {publishCallout}
-
       <article className="album-container" style={albumStyle}>
-        <header className="album-header">
-          <h2 className="album-name">{name}</h2>
-        </header>
-
         <div className="album-photos">
           {albumPhotos.map(({ position, photo }) => {
             const hasPhoto = Boolean(photo);
@@ -157,50 +117,7 @@ export default function AlbumReadOnly({
             );
           })}
         </div>
-
-        <p className="album-author">
-          <span>
-            {translate("album.by")} <b>{author.name}</b>
-          </span>
-          {author.character && (
-            <img
-              style={{ width: "32px", verticalAlign: "text-bottom" }}
-              src={`./ui/pins/icon-${author.character}.png`}
-              alt=""
-            />
-          )}
-        </p>
       </article>
-
-      {photos.length > 0 && (isPublished || isCurrentUserTheAuthor) && (
-        <div>
-          <Button
-            onClick={() => {
-              if (game?.hasPlayed) {
-                navigate(`/albums/${id}/leaderboard`);
-              } else {
-                navigate(`/albumgame/${id}`);
-              }
-            }}
-          >
-            {game?.hasPlayed
-              ? translate("album.play.seeScore")
-              : translate("album.play.button")}
-          </Button>
-        </div>
-      )}
-
-      <div>
-        <Button
-          onClick={() => {
-            navigate("/account/albums");
-          }}
-        >
-          {isCurrentUserTheAuthor
-            ? translate("account.tab.albums")
-            : translate("album.create.myOwn")}
-        </Button>
-      </div>
 
       {zoomedPhoto &&
         createPortal(

@@ -1,0 +1,43 @@
+.album-layout {
+  text-align: center;
+}
+
+.album-layout__cover {
+  display: block;
+  width: 80%;
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+.album-layout__name {
+  font-size: 2.2rem;
+  margin: 16px 0 8px;
+  font-weight: 900;
+  color: #213547;
+  text-shadow: 1px 1px 0px #ffffff;
+}
+
+.album-layout__author {
+  margin: 0 0 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+  color: #213547;
+  text-shadow: 1px 1px 0px #ffffff;
+  font-weight: bold;
+}
+
+.album-layout__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  margin: 16px 0;
+}
+
+.album-layout__tabs {
+  margin: 24px 0;
+}
