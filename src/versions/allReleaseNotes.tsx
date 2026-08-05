@@ -5,6 +5,59 @@ import type { ReleaseNotes } from "./types";
 
 const releaseNotes: ReleaseNotes = [
   {
+    version: "v4.5.0",
+    publishedAt: new Date("2026-08-05T00:00:00Z"),
+    notes: {
+      fr: (
+        <ul>
+          <Text component="li">
+            La galerie des photos dispose désormais d'un onglet affichant{" "}
+            <Link to="/gallery/albums" viewTransition>
+              les albums publiques
+            </Link>{" "}
+            des photographes&nbsp;!
+          </Text>
+          <Text component="li">
+            En consultant un album, vous pouvez également lancer une partie de{" "}
+            <b>Mario Kart World Guessr</b> qui ne contiendra que les photos de
+            cet album. Chaque album possède son propre classement&nbsp;!
+          </Text>
+          <Text component="li">
+            Vous êtes un joueur&nbsp;? Alors mesurez-vous aux autres en étant le
+            mieux classé sur un maximum d'albums&nbsp;!
+            <br />
+            Vous êtes un photographe&nbsp;? Alors créez vos propres albums avec
+            vos photos et partagez-les pour qu'ils soient joués par les autres
+            utilisateurs&nbsp;!
+          </Text>
+        </ul>
+      ),
+      en: (
+        <ul>
+          <Text component="li">
+            The photo gallery now has a tab displaying{" "}
+            <Link to="/gallery/albums" viewTransition>
+              public albums
+            </Link>{" "}
+            from photographers!
+          </Text>
+          <Text component="li">
+            When viewing an album, you can also start a game of{" "}
+            <b>Mario Kart World Guessr</b> that will only include the photos
+            from that album. Each album has its own leaderboard!
+          </Text>
+          <Text component="li">
+            Are you a player? Then challenge others by topping the leaderboard
+            on as many albums as possible!
+            <br />
+            Are you a photographer? Then create your own albums with your photos
+            and share them so they can be played by other users!
+          </Text>
+        </ul>
+      ),
+    },
+  },
+  {
     version: "v4.4.0",
     publishedAt: new Date("2026-06-21T00:00:00Z"),
     notes: {
