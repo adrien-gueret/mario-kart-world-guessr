@@ -13,7 +13,7 @@ const releaseNotes: ReleaseNotes = [
           <Text component="li">
             La galerie des photos dispose désormais d'un onglet affichant{" "}
             <Link to="/gallery/albums" viewTransition>
-              les albums publiques
+              les albums publics
             </Link>{" "}
             des photographes&nbsp;!
           </Text>
