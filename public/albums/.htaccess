@@ -4,4 +4,4 @@ RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-RewriteRule ^([^/]+)/?$ index.php?id=$1 [L,QSA]
+RewriteRule ^([^/]+)(/.*)?$ index.php?id=$1 [L,QSA]

@@ -38,6 +38,7 @@ export default function AlbumLayout() {
   const isCurrentUserTheAuthor = user?.id === album.author.id;
 
   const baseUrl = `/albums/${album.id}`;
+  const isOnLeaderboardTab = activeTab === `${baseUrl}/leaderboard`;
   const canPlay =
     album.photos.length > 0 && (album.isPublished || isCurrentUserTheAuthor);
 
@@ -112,7 +113,7 @@ export default function AlbumLayout() {
             : translate("album.create.myOwn")}
         </Button>
 
-        {canPlay && (
+        {canPlay && !(album.game?.hasPlayed && isOnLeaderboardTab) && (
           <Button
             onClick={() => {
               if (album.game?.hasPlayed) {
