@@ -8,7 +8,6 @@ type Props = {
   players: number;
   averageScore: number;
   bestScore: number;
-  totalGames: number;
   yourRank?: { rank: number; percentile: number } | null;
 };
 
@@ -25,7 +24,6 @@ export default function AlbumStats({
   players,
   averageScore,
   bestScore,
-  totalGames,
   yourRank,
 }: Props) {
   const { translate } = useTranslations();
@@ -37,10 +35,6 @@ export default function AlbumStats({
       <StatCard
         label={translate("album.stats.averageScore")}
         value={averageScore}
-      />
-      <StatCard
-        label={translate("album.stats.totalGames")}
-        value={totalGames}
       />
       {yourRank && (
         <StatCard

@@ -47,7 +47,4 @@ export type Album = {
     gameId: number | null;
   };
   hasLeaderboard?: boolean;
-  stats?: {
-    totalGamesPlayed: number;
-  };
 };

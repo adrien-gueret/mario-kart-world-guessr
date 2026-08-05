@@ -296,7 +296,6 @@ export type Texts = {
   "album.stats.players": string;
   "album.stats.averageScore": string;
   "album.stats.bestScore": string;
-  "album.stats.totalGames": string;
   "album.stats.yourRank": string;
   "error.title": string;
   "error.description": string;

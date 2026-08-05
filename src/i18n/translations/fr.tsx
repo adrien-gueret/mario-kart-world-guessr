@@ -715,7 +715,6 @@ const fr: Texts = {
   "album.stats.players": "Joueurs",
   "album.stats.averageScore": "Score moyen",
   "album.stats.bestScore": "Meilleur score",
-  "album.stats.totalGames": "Parties jouées",
   "album.stats.yourRank": "Votre rang",
   "error.title": "Oups ! Une erreur est survenue.",
   "error.description":

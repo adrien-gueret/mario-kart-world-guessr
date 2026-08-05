@@ -57,7 +57,6 @@ export default function AlbumLeaderboard() {
         players={playerCount}
         averageScore={averageScore}
         bestScore={bestScore}
-        totalGames={album.stats?.totalGamesPlayed ?? 0}
         yourRank={yourRank}
       />
 

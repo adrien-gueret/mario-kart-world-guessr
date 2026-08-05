@@ -695,7 +695,6 @@ const en: Texts = {
   "album.stats.players": "Players",
   "album.stats.averageScore": "Average score",
   "album.stats.bestScore": "Best score",
-  "album.stats.totalGames": "Games played",
   "album.stats.yourRank": "Your rank",
   "error.title": "Oops! Something went wrong.",
   "error.description": "An unexpected error occurred... Everything is broken!",
