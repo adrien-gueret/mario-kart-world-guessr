@@ -1,5 +1,7 @@
 <?php
 
+const DAILY_PHOTO_COUNT = 5;
+
 function getRandomPhoto($pdo, $difficulty, $currentUserId, $gameId = null) {
     $photoDifficulty = '';
     switch ($difficulty) {
@@ -108,7 +110,7 @@ function getDailyPhoto($pdo, $gameId = null) {
         return null;
     }
 
-    $index = min((int)$game['suggestions_count'], 4) + 1;
+    $index = min((int)$game['suggestions_count'], DAILY_PHOTO_COUNT - 1) + 1;
     $col = "d.photo_{$index}_id";
 
     $stmt = $pdo->prepare(

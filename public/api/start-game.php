@@ -157,6 +157,7 @@ try {
                 ],
                 'minimumScoreToContinue' => null,
                 'remainingTime' => null,
+                'totalPhotos' => $albumPhotoCount,
             ]);
             exit;
         }
@@ -195,6 +196,7 @@ try {
             ],
             'minimumScoreToContinue' => null,
             'remainingTime' => null,
+            'totalPhotos' => $albumPhotoCount,
         ]);
         exit;
     }
@@ -297,6 +299,7 @@ try {
             ],
             'minimumScoreToContinue' => $_POST['mode'] === 'survival' ? getSurvivalMinimumScore($_POST['difficulty'], count($history)) : null,
             'remainingTime' => $remainingTime,
+            'totalPhotos' => $isDailyMode ? DAILY_PHOTO_COUNT : null,
         ]);
         exit;
     }
@@ -335,6 +338,7 @@ try {
         ],
         'minimumScoreToContinue' => $_POST['mode'] === 'survival' ? getSurvivalMinimumScore($_POST['difficulty'], 0) : null,
         'remainingTime' => $_POST['mode'] === 'chrono' ? getChronoTimeLimitMs($_POST['difficulty']) : null,
+        'totalPhotos' => $isDailyMode ? DAILY_PHOTO_COUNT : null,
     ]);
 } catch (PDOException $e) {
     http_response_code(500);

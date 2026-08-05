@@ -69,6 +69,7 @@ export default function Game({ mode, difficulty, albumId, onReplay }: Props) {
   } | null>(null);
   const [hasRequestedGiveUp, setHasRequestedGiveUp] = useState(false);
   const [photoCount, setPhotoCount] = useState(0);
+  const [totalPhotos, setTotalPhotos] = useState(0);
   const historyLength = useRef(0);
   const [totalScore, setTotalScore] = useState(0);
   const [cupData, setCupData] = useState<
@@ -151,6 +152,7 @@ export default function Game({ mode, difficulty, albumId, onReplay }: Props) {
       setCurrentPhotoAuthor(game.currentPhoto?.author || null);
       setTotalScore(game.totalScore);
       setPhotoCount(game.history.length + 1);
+      setTotalPhotos(game.totalPhotos ?? 0);
       historyLength.current = game.history.length;
 
       if (mode === "survival") {
@@ -537,7 +539,7 @@ export default function Game({ mode, difficulty, albumId, onReplay }: Props) {
       <GlobalScore
         score={totalScore}
         photoIndex={photoCount}
-        maxPhotos={mode === "daily" ? 5 : 0}
+        maxPhotos={totalPhotos}
       />
 
       {mode === "chrono" && remainingMs !== null && (

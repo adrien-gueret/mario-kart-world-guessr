@@ -53,6 +53,7 @@ export type StartGameResponse = {
   currentPhoto: GamePhoto | null;
   minimumScoreToContinue: number | null;
   remainingTime?: number | null;
+  totalPhotos?: number;
 };
 
 type LeaderboardRank = {

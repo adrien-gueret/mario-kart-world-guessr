@@ -69,30 +69,6 @@ export default function AlbumLayout() {
         />
       )}
 
-      <div className="album-layout__actions">
-        {canPlay && (
-          <Button
-            onClick={() => {
-              if (album.game?.hasPlayed) {
-                navigate(`${baseUrl}/leaderboard`);
-              } else {
-                navigate(`/albumgame/${album.id}`);
-              }
-            }}
-          >
-            {album.game?.hasPlayed
-              ? translate("album.play.seeScore")
-              : translate("album.play.button")}
-          </Button>
-        )}
-
-        <Button variant="secondary" onClick={() => navigate("/account/albums")}>
-          {isCurrentUserTheAuthor
-            ? translate("account.tab.albums")
-            : translate("album.create.myOwn")}
-        </Button>
-      </div>
-
       <div className="album-layout__tabs">
         <Tabs
           activeTab={activeTab}
@@ -124,6 +100,34 @@ export default function AlbumLayout() {
           }
         />
       )}
+
+      <div className="album-layout__actions">
+        <Button variant="tertiary" onClick={() => navigate("/gallery/albums")}>
+          {translate("gallery.tab.albums")}
+        </Button>
+
+        <Button variant="secondary" onClick={() => navigate("/account/albums")}>
+          {isCurrentUserTheAuthor
+            ? translate("account.tab.albums")
+            : translate("album.create.myOwn")}
+        </Button>
+
+        {canPlay && (
+          <Button
+            onClick={() => {
+              if (album.game?.hasPlayed) {
+                navigate(`${baseUrl}/leaderboard`);
+              } else {
+                navigate(`/albumgame/${album.id}`);
+              }
+            }}
+          >
+            {album.game?.hasPlayed
+              ? translate("album.play.seeScore")
+              : translate("album.play.button")}
+          </Button>
+        )}
+      </div>
     </div>
   );
 }
