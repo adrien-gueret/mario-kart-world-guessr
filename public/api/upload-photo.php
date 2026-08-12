@@ -75,15 +75,30 @@ finfo_close($finfo);
 $isJpgExtension = $extension === 'jpg' || $extension === 'jpeg';
 $isJpgMimeType = $mimeType === 'image/jpeg';
 
-$isSizeValid = true;
-
-if (!$isJpgExtension || !$isJpgMimeType  || !$isSizeValid) {
+if (!$isJpgExtension || !$isJpgMimeType) {
     http_response_code(400);
     die(json_encode([
         'error' => true,
         'message' => $headers['accept-language'] === 'fr'
             ? 'Votre photo semble invalide. Veuillez fournir une photo envoyée depuis le système de partage de votre "Nintendo Switch 2".'
             : 'Your photo seems invalid. Please provide a photo sent from "Nintendo Switch 2" sharing system.'
+    ]));
+}
+
+$targetRatio = 16 / 9;
+$isLandscape = $width > $height;
+$isRatioValid = abs(($width / $height) - $targetRatio) < 0.01;
+$isMinSizeValid = $width >= 1600 && $height >= 900;
+
+$isSizeValid = $isLandscape && $isRatioValid && $isMinSizeValid;
+
+if (!$isSizeValid) {
+    http_response_code(400);
+    die(json_encode([
+        'error' => true,
+        'message' => $headers['accept-language'] === 'fr'
+            ? 'Les dimensions de votre photo sont invalides. Elle doit être au format paysage, respecter le ratio 16:9 (par exemple 1920x1080) et mesurer au minimum 1600x900 pixels.'
+            : 'Your photo dimensions are invalid. It must be in landscape format, follow the 16:9 ratio (for example 1920x1080) and be at least 1600x900 pixels.'
     ]));
 }
 
