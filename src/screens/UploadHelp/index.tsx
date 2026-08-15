@@ -90,13 +90,14 @@ function UploadHelp() {
 
             <Surface disableSkew>
               <Text component="p">
-                Assurez-vous également de n'utiliser aucun cadre spécial, afin
-                de garder une certaine homogénéité dans toutes les photos de{" "}
+                Assurez-vous également de ne <b>PAS</b> utiliser un cadre
+                spécial trop envahissant, comme celui du journal, afin de garder
+                une certaine homogénéité dans toutes les photos de{" "}
                 <b>Mario Kart World Guessr</b>.
                 <br />
                 <b>
-                  Notez qu'une photo avec un cadre spécial sera systématiquement
-                  refusée.
+                  Notez qu'une photo avec un cadre spécial aura bien plus de
+                  chances d'être refusée.
                 </b>
               </Text>
             </Surface>
@@ -104,8 +105,9 @@ function UploadHelp() {
             <figure>
               <img src="./ui/upload/help/wrong-photo-frames.jpg" alt="" />
               <figcaption>
-                Cette photo utilise un cadre spécial. Pour garder une cohérence
-                entre toutes les photos du jeu, <b>elle sera refusée</b>.
+                Cette photo utilise un cadre spécial envahissant. Pour garder
+                une cohérence entre toutes les photos du jeu,{" "}
+                <b>elle sera refusée</b>.
               </figcaption>
             </figure>
 
@@ -367,12 +369,13 @@ function UploadHelp() {
 
             <Surface disableSkew>
               <Text component="p">
-                Also make sure not to use any special frames, to maintain
-                consistency across all <b>Mario Kart World Guessr</b> photos.
+                Also make sure not to use any overly intrusive special frame,
+                like the newspaper one, to maintain a certain consistency across
+                all <b>Mario Kart World Guessr</b> photos.
                 <br />
                 <b>
-                  Note that a photo with a special frame will be systematically
-                  rejected.
+                  Note that a photo with a special frame will be far more likely
+                  to be rejected.
                 </b>
               </Text>
             </Surface>
@@ -380,8 +383,8 @@ function UploadHelp() {
             <figure>
               <img src="./ui/upload/help/wrong-photo-frames.jpg" alt="" />
               <figcaption>
-                This photo uses a special frame. To maintain consistency between
-                all game photos, <b>it will be rejected</b>.
+                This photo uses an intrusive special frame. To maintain
+                consistency between all game photos, <b>it will be rejected</b>.
               </figcaption>
             </figure>
 

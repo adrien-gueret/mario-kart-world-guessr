@@ -5,6 +5,65 @@ import type { ReleaseNotes } from "./types";
 
 const releaseNotes: ReleaseNotes = [
   {
+    version: "v4.5.1",
+    publishedAt: new Date("2026-08-15T00:00:00Z"),
+    notes: {
+      fr: (
+        <ul>
+          <Text component="li">
+            Depuis quelques jours, <b>Mario Kart World Guessr</b> reçoit
+            BEAUCOUP de photos&nbsp;:&nbsp;il y a actuellement plus de{" "}
+            <b>170</b> photos en attente de validation&nbsp;!
+            <br />
+            Le temps d'attente pour la validation des photos est donc un peu
+            plus long que d'habitude, merci de votre patience&nbsp;!
+          </Text>
+          <Text component="li">
+            Les règles de validation des photos ont d'ailleurs un peu
+            changé&nbsp;:&nbsp;les photos avec un cadre spécial <em>peuvent</em>{" "}
+            désormais être acceptées (il est dommage de refuser de belles photos
+            à cause d'un cadre), mais elles resteront moins prioritaires que les
+            photos sans cadre.
+            <br />
+            Une taille minimum est également exigée pour les photos. Elles
+            doivent être au format paysage, respecter le ratio 16:9 (par exemple
+            1920x1080) et mesurer au minimum 1600x900 pixels.
+          </Text>
+          <Text component="li">
+            Merci encore à tous les photographes qui contribuent à enrichir le
+            jeu&nbsp;!
+          </Text>
+        </ul>
+      ),
+      en: (
+        <ul>
+          <Text component="li">
+            For the past few days, <b>Mario Kart World Guessr</b> has been
+            receiving A LOT of photos&nbsp;:&nbsp;there are currently more than{" "}
+            <b>170</b> photos awaiting validation&nbsp;!
+            <br />
+            The wait time for photo validation is therefore a bit longer than
+            usual, thank you for your patience&nbsp;!
+          </Text>
+          <Text component="li">
+            By the way, the photo validation rules have changed a
+            little&nbsp;:&nbsp;photos with a special frame <em>can</em> now be
+            accepted (it's a shame to reject beautiful photos just because of a
+            frame), but they will remain lower priority than photos without a
+            frame.
+            <br />A minimum size is also required for photos. They must be in
+            landscape format, respect the 16:9 ratio (for example 1920x1080) and
+            measure at least 1600x900 pixels.
+          </Text>
+          <Text component="li">
+            Thanks again to all the photographers who help enrich the
+            game&nbsp;!
+          </Text>
+        </ul>
+      ),
+    },
+  },
+  {
     version: "v4.5.0",
     publishedAt: new Date("2026-08-05T00:00:00Z"),
     notes: {
