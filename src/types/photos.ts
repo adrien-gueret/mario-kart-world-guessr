@@ -8,6 +8,8 @@ export type Photo = {
   photoUrl: string;
   suggestionCount: number;
   characters: MarioCharacter[];
+  githubIssueNumber?: number | null;
+  githubIssueUrl?: string | null;
 } & Coordinates;
 
 export type PhotoFilter = NonNullable<Photo["difficulty"]> | "all";

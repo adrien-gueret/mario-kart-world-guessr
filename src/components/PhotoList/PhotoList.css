@@ -82,6 +82,17 @@
   font-size: 1.2rem;
 }
 
+.photo-validation-issue {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.9rem;
+  color: white;
+}
+
+a.photo-validation-issue {
+  text-decoration: underline;
+}
+
 .photo-details-modal-content {
   display: flex;
   flex-direction: column;

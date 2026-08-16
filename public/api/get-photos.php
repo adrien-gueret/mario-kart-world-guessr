@@ -12,6 +12,7 @@ try {
             p.validated_at AS validatedAt,
             p.x,
             p.y,
+            p.github_issue_number AS githubIssueNumber,
 
             COALESCE(ch.characters, JSON_ARRAY()) AS characters,
             CAST(COALESCE(sug.suggestionCount, 0) AS UNSIGNED) AS suggestionCount,
@@ -64,11 +65,23 @@ try {
     
     $photos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    $githubOwner = getenv('GITHUB_OWNER');
+    $githubRepo = getenv('GITHUB_REPOSITORY');
+
     foreach ($photos as &$photo) {
         if (isset($photo['characters']) && $photo['characters'] !== null) {
             $photo['characters'] = json_decode($photo['characters'], true);
         } else {
             $photo['characters'] = [];
+        }
+
+        if ($photo['githubIssueNumber'] !== null) {
+            $photo['githubIssueNumber'] = (int) $photo['githubIssueNumber'];
+            $photo['githubIssueUrl'] = ($githubOwner && $githubRepo)
+                ? "https://github.com/$githubOwner/$githubRepo/issues/{$photo['githubIssueNumber']}"
+                : null;
+        } else {
+            $photo['githubIssueUrl'] = null;
         }
     }
     

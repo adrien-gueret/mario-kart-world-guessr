@@ -135,6 +135,22 @@ export default function PhotoList({
               ) : (
                 <div className="photo-validation-pending">
                   {translate("photo.validation.pending")}
+                  {typeof photo.githubIssueNumber === "number" &&
+                    (photo.githubIssueUrl ? (
+                      <a
+                        className="photo-validation-issue"
+                        href={photo.githubIssueUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        #{photo.githubIssueNumber}
+                      </a>
+                    ) : (
+                      <span className="photo-validation-issue">
+                        #{photo.githubIssueNumber}
+                      </span>
+                    ))}
                 </div>
               )}
             </li>
